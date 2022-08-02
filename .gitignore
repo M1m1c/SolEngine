@@ -32,4 +32,6 @@
 *.app
 
 
-*/SDL2
+*.vs
+**/binaries
+**/intermediate
