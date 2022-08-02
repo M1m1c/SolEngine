@@ -11,4 +11,6 @@ namespace Nebula
 		virtual ~Application();
 		void Run();
 	};
+
+	Application* CreateApplication();
 }

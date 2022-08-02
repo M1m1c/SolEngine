@@ -146,6 +146,7 @@
     <ClInclude Include="Source\Nebula.h" />
     <ClInclude Include="Source\Nebula\Application.h" />
     <ClInclude Include="Source\Nebula\Core.h" />
+    <ClInclude Include="Source\Nebula\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Nebula\Application.cpp" />

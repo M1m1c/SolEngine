@@ -24,6 +24,9 @@
     <ClInclude Include="Source\Nebula\Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Nebula\EntryPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Nebula\Application.cpp">

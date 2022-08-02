@@ -7,10 +7,15 @@ public:
 	~Sandbox(){}
 };
 
-int main() 
+Nebula::Application* Nebula::CreateApplication()
 {
-	auto sandbox = new Sandbox();
-	sandbox->Run();
-	delete sandbox;
-	return 0;
+	return new Sandbox();
 }
+
+//int main() 
+//{
+//	auto sandbox = new Sandbox();
+//	sandbox->Run();
+//	delete sandbox;
+//	return 0;
+//}
