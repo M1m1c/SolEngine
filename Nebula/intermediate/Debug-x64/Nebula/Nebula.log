@@ -1,0 +1,4 @@
+﻿  Application.cpp
+F:\FG Projects\NebulaEngine\NebulaEngine\Nebula\Nebula\Source\Nebula\Application.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     Creating library F:\FG Projects\NebulaEngine\NebulaEngine\Nebula\binaries\Debug-x64\Nebula\Nebula.lib and object F:\FG Projects\NebulaEngine\NebulaEngine\Nebula\binaries\Debug-x64\Nebula\Nebula.exp
+  Nebula.vcxproj -> F:\FG Projects\NebulaEngine\NebulaEngine\Nebula\binaries\Debug-x64\Nebula\Nebula.dll
