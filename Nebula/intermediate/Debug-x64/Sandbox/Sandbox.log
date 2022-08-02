@@ -1,1 +1,3 @@
-﻿  Sandbox.vcxproj -> F:\FG Projects\NebulaEngine\NebulaEngine\Nebula\binaries\Debug-x64\Sandbox\Sandbox.exe
+﻿  SandboxApp.cpp
+F:\FG Projects\NebulaEngine\NebulaEngine\Nebula\Nebula\Source\Nebula\Application.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Sandbox.vcxproj -> F:\FG Projects\NebulaEngine\NebulaEngine\Nebula\binaries\Debug-x64\Sandbox\Sandbox.exe
