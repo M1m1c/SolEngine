@@ -1,0 +1,3 @@
+[submodule "Sol/thirdparty/spdlog"]
+	path = Sol/thirdparty/spdlog
+	url = https://github.com/gabime/spdlog

@@ -27,9 +27,15 @@
     <ClInclude Include="Source\Sol\EntryPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sol\Log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Sol\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
