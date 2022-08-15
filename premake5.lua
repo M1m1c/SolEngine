@@ -26,6 +26,7 @@ project "Sol"
 
 	includedirs
 	{
+		"%{prj.name}/Source",
 		"%{prj.name}/thirdparty/spdlog/include;"
 	}
 

@@ -4,17 +4,32 @@
     <Filter Include="Sol">
       <UniqueIdentifier>{B322880B-1F2C-887C-A8A7-9E7C14B0937C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sol\Events">
+      <UniqueIdentifier>{37674B7E-231F-8DCB-8C26-662778FD27BC}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Sol.h" />
     <ClInclude Include="Source\Sol\Application.h">
       <Filter>Sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\CORE.H">
+    <ClInclude Include="Source\Sol\Core.H">
       <Filter>Sol</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\EntryPoint.h">
       <Filter>Sol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Events\ApplicationEvent.h">
+      <Filter>Sol\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Events\Event.h">
+      <Filter>Sol\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Events\KeyEvent.h">
+      <Filter>Sol\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Events\MouseEvent.h">
+      <Filter>Sol\Events</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\Log.h">
       <Filter>Sol</Filter>

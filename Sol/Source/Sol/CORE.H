@@ -9,3 +9,5 @@
 #else
 #error Sol only supports windows!
 #endif // SOL_PLATFORM_WINDOWS
+
+#define BIT(x) (1<<x)
