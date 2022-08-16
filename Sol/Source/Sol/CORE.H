@@ -10,4 +10,27 @@
 #error Sol only supports windows!
 #endif // SOL_PLATFORM_WINDOWS
 
+#ifdef SOl_ENABLE_ASSERT
+#define SOL_ASSERT(x, ...) 
+{
+	if(!(x)) 
+	{
+		SOL_ERROR("Assertion failed: {0}", __VA_ARGS__);
+		__debugbreak;
+	} 
+}
+#define SOL_CORE_ASSERT(x, ...)
+{
+	if (!(x))
+	{
+		SOL_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__);
+		__debugbreak;
+	}
+}
+#else
+#define SOL_ASSERT(x, ...)
+#define SOL_CORE_ASSERT(x, ...)
+#endif // SOl_ENABLE_ASSERT
+
+
 #define BIT(x) (1<<x)

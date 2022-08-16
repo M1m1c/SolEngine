@@ -10,10 +10,16 @@ workspace "Sol"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir ={}
+IncludeDir ["GLFW"] = "Sol/thirdparty/GLFW/include"
+
+include "Sol/thirdparty/GLFW"
+
 project "Sol"
 	location "Sol"
 	kind "SharedLib"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("binaries/" .. outputdir .. "/%{prj.name}/")
 	objdir ("intermediate/" .. outputdir .. "/%{prj.name}/")
@@ -30,13 +36,22 @@ project "Sol"
 	includedirs
 	{
 		"%{prj.name}/Source",
-		"%{prj.name}/thirdparty/spdlog/include;"
+		"%{prj.name}/thirdparty/spdlog/include;",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
 		cppdialect "C++17"
 		staticruntime "On"
 		systemversion "latest"
+		buildoptions "/MDd"
+
 
 		defines
 		{
@@ -51,14 +66,17 @@ project "Sol"
 
 	filter "configurations:Debug"
 		defines "SOL_DEBUG"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "SOL_RELEASE"
+		runtime "Release"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "SOL_DIST"
+		runtime "Release"
 		optimize "On"
 
 project "Sandbox"
