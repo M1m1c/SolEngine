@@ -18,6 +18,9 @@ project "Sol"
 	targetdir ("binaries/" .. outputdir .. "/%{prj.name}/")
 	objdir ("intermediate/" .. outputdir .. "/%{prj.name}/")
 
+	pchheader"solpch.h"
+	pchsource "Sol/Source/solpch.cpp"
+
 	files
 	{
 		"%{prj.name}/Source/**.h",

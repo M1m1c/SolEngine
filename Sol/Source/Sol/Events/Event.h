@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Sol/Core.h"
 
-#include <string>
-#include <functional>
+#include "solpch.h"
+#include "Sol/Core.h"
 
 namespace Sol
 {

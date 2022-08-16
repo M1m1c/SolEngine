@@ -13,7 +13,7 @@
     <ClInclude Include="Source\Sol\Application.h">
       <Filter>Sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Core.H">
+    <ClInclude Include="Source\Sol\Core.h">
       <Filter>Sol</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\EntryPoint.h">
@@ -34,6 +34,7 @@
     <ClInclude Include="Source\Sol\Log.h">
       <Filter>Sol</Filter>
     </ClInclude>
+    <ClInclude Include="Source\solpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Sol\Application.cpp">
@@ -42,5 +43,6 @@
     <ClCompile Include="Source\Sol\Log.cpp">
       <Filter>Sol</Filter>
     </ClCompile>
+    <ClCompile Include="Source\solpch.cpp" />
   </ItemGroup>
 </Project>

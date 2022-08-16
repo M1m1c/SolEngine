@@ -1,5 +1,6 @@
-#include "Application.h"
 
+#include "solpch.h"
+#include "Application.h"
 #include "Sol/Events/ApplicationEvent.h"
 #include "Sol/Log.h"
 

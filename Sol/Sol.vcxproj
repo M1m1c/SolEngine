@@ -76,7 +76,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;SOL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -96,7 +97,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;SOL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -120,7 +122,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;SOL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -145,17 +148,21 @@
   <ItemGroup>
     <ClInclude Include="Source\Sol.h" />
     <ClInclude Include="Source\Sol\Application.h" />
-    <ClInclude Include="Source\Sol\Core.H" />
+    <ClInclude Include="Source\Sol\Core.h" />
     <ClInclude Include="Source\Sol\EntryPoint.h" />
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h" />
     <ClInclude Include="Source\Sol\Events\Event.h" />
     <ClInclude Include="Source\Sol\Events\KeyEvent.h" />
     <ClInclude Include="Source\Sol\Events\MouseEvent.h" />
     <ClInclude Include="Source\Sol\Log.h" />
+    <ClInclude Include="Source\solpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Sol\Application.cpp" />
     <ClCompile Include="Source\Sol\Log.cpp" />
+    <ClCompile Include="Source\solpch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
