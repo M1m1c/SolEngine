@@ -4,10 +4,11 @@
 #include "Sol/Events/ApplicationEvent.h"
 #include "Sol/Log.h"
 
-namespace Sol 
+namespace Sol
 {
 	Application::Application()
 	{
+		m_Window = std::unique_ptr<Window>(Window::Create());
 	}
 
 	Application::~Application()
@@ -15,12 +16,9 @@ namespace Sol
 	}
 	void Application::Run()
 	{
-		WindowResizeEvent temp(1920, 1080);
-		SOL_TRACE(temp);
-
-		while (true)
+		while (m_Running)
 		{
-
+			m_Window->OnUpdate();
 		}
 	}
 }
