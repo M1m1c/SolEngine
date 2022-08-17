@@ -50,7 +50,7 @@ project "Sol"
 		cppdialect "C++17"
 		staticruntime "On"
 		systemversion "latest"
-		buildoptions "/MDd"
+		
 
 
 		defines
@@ -68,16 +68,19 @@ project "Sol"
 		defines "SOL_DEBUG"
 		runtime "Debug"
 		symbols "On"
+		buildoptions "/MDd"
 
 	filter "configurations:Release"
 		defines "SOL_RELEASE"
 		runtime "Release"
 		optimize "On"
+		buildoptions "/MD"
 
 	filter "configurations:Dist"
 		defines "SOL_DIST"
 		runtime "Release"
 		optimize "On"
+		buildoptions "/MD"
 
 project "Sandbox"
 	location "Sandbox"
@@ -117,11 +120,14 @@ project "Sandbox"
 	filter "configurations:Debug"
 		defines "SOL_DEBUG"
 		symbols "On"
+		buildoptions "/MDd"
 
 	filter "configurations:Release"
 		defines "SOL_RELEASE"
 		optimize "On"
+		buildoptions "/MD"
 
 	filter "configurations:Dist"
 		defines "SOL_DIST"
 		optimize "On"
+		buildoptions "/MD"

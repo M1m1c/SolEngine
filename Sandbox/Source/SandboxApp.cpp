@@ -1,9 +1,33 @@
 #include "Sol.h"
 
+
+class ExampleLayer : public Sol::Layer
+{
+public:
+	ExampleLayer() : Layer("Example") {}
+
+	void OnUpdate() override
+	{
+		SOL_INFO("ExampleLayer::Update");
+	}
+
+	virtual void OnEvent(Sol::Event& event) override
+	{
+		SOL_TRACE("{0}", event);
+	}
+
+private:
+
+};
+
 class Sandbox : public Sol::Application
 {
 public:
-	Sandbox(){}
+	Sandbox()
+	{
+		PushLayer(new ExampleLayer());
+	}
+
 	~Sandbox(){}
 };
 
