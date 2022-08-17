@@ -110,7 +110,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -137,7 +137,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -161,6 +161,8 @@
     <ClInclude Include="Source\Sol\Events\Event.h" />
     <ClInclude Include="Source\Sol\Events\KeyEvent.h" />
     <ClInclude Include="Source\Sol\Events\MouseEvent.h" />
+    <ClInclude Include="Source\Sol\Layer.h" />
+    <ClInclude Include="Source\Sol\LayerStack.h" />
     <ClInclude Include="Source\Sol\Log.h" />
     <ClInclude Include="Source\Sol\Window.h" />
     <ClInclude Include="Source\solpch.h" />
@@ -168,6 +170,8 @@
   <ItemGroup>
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="Source\Sol\Application.cpp" />
+    <ClCompile Include="Source\Sol\Layer.cpp" />
+    <ClCompile Include="Source\Sol\LayerStack.cpp" />
     <ClCompile Include="Source\Sol\Log.cpp" />
     <ClCompile Include="Source\solpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

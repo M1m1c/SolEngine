@@ -40,6 +40,12 @@
     <ClInclude Include="Source\Sol\Events\MouseEvent.h">
       <Filter>Sol\Events</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sol\Layer.h">
+      <Filter>Sol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\LayerStack.h">
+      <Filter>Sol</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Sol\Log.h">
       <Filter>Sol</Filter>
     </ClInclude>
@@ -53,6 +59,12 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\Application.cpp">
+      <Filter>Sol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\Layer.cpp">
+      <Filter>Sol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\LayerStack.cpp">
       <Filter>Sol</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\Log.cpp">
