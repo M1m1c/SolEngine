@@ -12,8 +12,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir ={}
 IncludeDir ["GLFW"] = "Sol/thirdparty/GLFW/include"
+IncludeDir ["Glad"] = "Sol/thirdparty/Glad/include"
 
 include "Sol/thirdparty/GLFW"
+include "Sol/thirdparty/Glad"
 
 project "Sol"
 	location "Sol"
@@ -37,12 +39,14 @@ project "Sol"
 	{
 		"%{prj.name}/Source",
 		"%{prj.name}/thirdparty/spdlog/include;",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links
 	{
 		"GLFW",
+		"Glad",
 		"opengl32.lib"
 	}
 
@@ -56,7 +60,8 @@ project "Sol"
 		defines
 		{
 			"SOL_PLATFORM_WINDOWS",
-			"SOL_BUILD_DLL"
+			"SOL_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands
