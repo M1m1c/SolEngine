@@ -4,6 +4,7 @@
 #include "Sol/Application.h"
 #include "Sol/Layer.h"
 #include "Sol/Log.h"
+#include "Sol/ImGui/ImGuiLayer.h"
 
 
 

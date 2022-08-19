@@ -4,6 +4,9 @@
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
@@ -13,8 +16,17 @@
     <Filter Include="Sol\Events">
       <UniqueIdentifier>{37674B7E-231F-8DCB-8C26-662778FD27BC}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sol\ImGui">
+      <UniqueIdentifier>{1D929A13-89FC-4E8A-D23A-00303EE42CDF}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Platform\OpenGL\ImGuiOpenGLLoader.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Platform\OpenGL\ImGuiOpenGLRenderer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -40,6 +52,9 @@
     <ClInclude Include="Source\Sol\Events\MouseEvent.h">
       <Filter>Sol\Events</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h">
+      <Filter>Sol\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Sol\Layer.h">
       <Filter>Sol</Filter>
     </ClInclude>
@@ -55,11 +70,17 @@
     <ClInclude Include="Source\solpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\Application.cpp">
       <Filter>Sol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp">
+      <Filter>Sol\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\Layer.cpp">
       <Filter>Sol</Filter>
