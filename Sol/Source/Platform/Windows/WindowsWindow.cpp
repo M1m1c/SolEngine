@@ -6,6 +6,8 @@
 #include "Sol/Events/KeyEvent.h"
 #include "Sol/Events/MouseEvent.h"
 
+#include <glad/glad.h>
+
 namespace Sol
 {
 	static bool s_GLFWInitalised = false;
@@ -43,7 +45,7 @@ namespace Sol
 		if (!s_GLFWInitalised)
 		{
 			int sucess = glfwInit();
-			SOL_CORE_ASSERT(sucess, "Could not initalise GLFW!");
+			SOL_CORE_ASSERT(sucess, "Could not initialize GLFW!");
 
 			glfwSetErrorCallback(GLFWErrorCallback);
 			s_GLFWInitalised = true;
@@ -57,6 +59,8 @@ namespace Sol
 			nullptr);
 
 		glfwMakeContextCurrent(m_Window);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		SOL_CORE_ASSERT(status,"Failed to initialize Glad!");
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
