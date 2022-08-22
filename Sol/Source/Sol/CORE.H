@@ -10,7 +10,11 @@
 #error Sol only supports windows!
 #endif // SOL_PLATFORM_WINDOWS
 
-#ifdef SOl_ENABLE_ASSERT
+#ifdef SOL_DEBUG
+	#define SOL_ENABLE_ASSERTS
+#endif
+
+#ifdef SOl_ENABLE_ASSERTS
 #define SOL_ASSERT(x, ...) 
 {
 	if(!(x)) 

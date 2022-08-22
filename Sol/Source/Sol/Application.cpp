@@ -4,6 +4,8 @@
 #include "Sol/Log.h"
 #include <glad/glad.h>
 
+#include "Sol/Input.h"
+
 namespace Sol
 {
 
@@ -31,6 +33,9 @@ namespace Sol
 				layer->OnUpdate();
 			}
 
+			/*auto [x, y] = Input::GetMousePosition();
+			SOL_CORE_TRACE("{0}, {1}", x, y);*/
+
 			m_Window->OnUpdate();
 		}
 	}
@@ -41,7 +46,7 @@ namespace Sol
 
 		dispatcher.Dispatch<WindowClosedEvent>(SOL_BIND_EVENT_FN(Application::OnWindowClose));
 
-		SOL_CORE_TRACE("{0}", e);
+		/*SOL_CORE_TRACE("{0}", e);*/
 
 		for (auto i = m_LayerStack.end(); i != m_LayerStack.begin();)
 		{
