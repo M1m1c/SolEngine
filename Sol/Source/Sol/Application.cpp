@@ -4,6 +4,8 @@
 #include "Sol/Log.h"
 #include <glad/glad.h>
 
+#include "Sol/Input.h"
+
 namespace Sol
 {
 
@@ -30,6 +32,9 @@ namespace Sol
 			{
 				layer->OnUpdate();
 			}
+
+			auto [x, y] = Input::GetMousePosition();
+			SOL_CORE_WARN("{0}, {1}", x, y);
 
 			m_Window->OnUpdate();
 		}

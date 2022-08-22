@@ -68,6 +68,8 @@
       <Filter>Sol</Filter>
     </ClInclude>
     <ClInclude Include="Source\solpch.h" />
+    <ClInclude Include="Source\Sol\Input.h" />
+    <ClInclude Include="Source\Platform\Windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
@@ -92,5 +94,6 @@
       <Filter>Sol</Filter>
     </ClCompile>
     <ClCompile Include="Source\solpch.cpp" />
+    <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
 </Project>
