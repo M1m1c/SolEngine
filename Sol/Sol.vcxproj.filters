@@ -70,6 +70,9 @@
     <ClInclude Include="Source\solpch.h" />
     <ClInclude Include="Source\Sol\Input.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="Source\Sol\KeyCodes.h" />
+    <ClInclude Include="Source\Sol\MouseButtonCodes.h" />
+    <ClInclude Include="Source\Sol\GamepadKeyCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">

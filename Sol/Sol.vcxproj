@@ -163,11 +163,14 @@
     <ClInclude Include="Source\Sol\Events\Event.h" />
     <ClInclude Include="Source\Sol\Events\KeyEvent.h" />
     <ClInclude Include="Source\Sol\Events\MouseEvent.h" />
+    <ClInclude Include="Source\Sol\GamepadKeyCodes.h" />
     <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h" />
     <ClInclude Include="Source\Sol\Input.h" />
+    <ClInclude Include="Source\Sol\KeyCodes.h" />
     <ClInclude Include="Source\Sol\Layer.h" />
     <ClInclude Include="Source\Sol\LayerStack.h" />
     <ClInclude Include="Source\Sol\Log.h" />
+    <ClInclude Include="Source\Sol\MouseButtonCodes.h" />
     <ClInclude Include="Source\Sol\Window.h" />
     <ClInclude Include="Source\solpch.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsInput.h" />

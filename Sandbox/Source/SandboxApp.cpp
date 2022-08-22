@@ -8,12 +8,16 @@ public:
 
 	void OnUpdate() override
 	{
-		SOL_INFO("ExampleLayer::Update");
+		//SOL_INFO("ExampleLayer::Update");
+
+		if (Sol::Input::IsKeyPressed(SOL_KEY_SPACE))
+			SOL_INFO("space was pressed");
+
 	}
 
 	virtual void OnEvent(Sol::Event& event) override
 	{
-		SOL_TRACE("{0}", event);
+		//SOL_TRACE("{0}", event);
 	}
 
 private:
