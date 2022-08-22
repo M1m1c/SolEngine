@@ -1,6 +1,7 @@
 workspace "Sol"
 	architecture "x64"
-	
+	startproject "Sandbox"
+
 	configurations
 	{
 		"Debug",
@@ -15,9 +16,11 @@ IncludeDir ["GLFW"] = "Sol/thirdparty/GLFW/include"
 IncludeDir ["Glad"] = "Sol/thirdparty/Glad/include"
 IncludeDir ["ImGui"] = "Sol/thirdparty/imgui"
 
-include "Sol/thirdparty/GLFW"
-include "Sol/thirdparty/Glad"
-include "Sol/thirdparty/imgui"
+group "Dependencies"
+	include "Sol/thirdparty/GLFW"
+	include "Sol/thirdparty/Glad"
+	include "Sol/thirdparty/imgui"
+group ""
 
 project "Sol"
 	location "Sol"
@@ -56,7 +59,6 @@ project "Sol"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 		
 
@@ -70,7 +72,7 @@ project "Sol"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../binaries/".. outputdir .."/Sandbox")
+			("{COPY} %{cfg.buildtarget.relpath} \"../binaries/".. outputdir .."/Sandbox\"")
 		}
 
 	filter "configurations:Debug"
@@ -95,6 +97,7 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("binaries/" .. outputdir .. "/%{prj.name}/")
 	objdir ("intermediate/" .. outputdir .. "/%{prj.name}/")
@@ -118,7 +121,6 @@ project "Sandbox"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines

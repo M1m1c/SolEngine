@@ -83,7 +83,7 @@
       <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -94,7 +94,7 @@
       <ImportLibrary>..\binaries\Debug-windows-x86_64\Sol\Sol.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\binaries\Debug-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Debug-windows-x86_64\Sol\Sol.dll ..\binaries\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Debug-windows-x86_64\Sol\Sol.dll ..\binaries\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\binaries\Debug-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Debug-windows-x86_64\Sol\Sol.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Debug-windows-x86_64\Sol\Sol.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -109,7 +109,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -121,7 +121,7 @@
       <ImportLibrary>..\binaries\Release-windows-x86_64\Sol\Sol.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\binaries\Release-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Release-windows-x86_64\Sol\Sol.dll ..\binaries\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Release-windows-x86_64\Sol\Sol.dll ..\binaries\Release-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\binaries\Release-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Release-windows-x86_64\Sol\Sol.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Release-windows-x86_64\Sol\Sol.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -136,7 +136,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -148,7 +148,7 @@
       <ImportLibrary>..\binaries\Dist-windows-x86_64\Sol\Sol.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\binaries\Dist-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Dist-windows-x86_64\Sol\Sol.dll ..\binaries\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Dist-windows-x86_64\Sol\Sol.dll ..\binaries\Dist-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\binaries\Dist-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Dist-windows-x86_64\Sol\Sol.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Dist-windows-x86_64\Sol\Sol.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
