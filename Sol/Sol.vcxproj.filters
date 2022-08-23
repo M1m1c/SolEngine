@@ -63,6 +63,12 @@
     <ClInclude Include="Source\GalaxyDraw\Mesh.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Model.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Renderer.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
@@ -1398,6 +1404,12 @@
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Mesh.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Model.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp">

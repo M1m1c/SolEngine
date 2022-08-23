@@ -154,8 +154,6 @@ int main()
 
 	cubeVAO.LinkAttrib(cubeVBO, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
 
-	Renderer cubeRenderer(cubeVAO, );
-
 	cubeVAO.Unbind();
 	cubeVBO.Unbind();
 	cubeEBO.Unbind();

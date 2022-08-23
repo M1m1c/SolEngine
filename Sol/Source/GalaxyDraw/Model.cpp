@@ -1,3 +1,5 @@
+#include "solpch.h"
+
 #include "Model.h"
 
 Model::Model(std::string const& path, bool gamma) : gammaCorrection(gamma)

@@ -1,3 +1,5 @@
+#include "solpch.h"
+
 #include "ModelBuilder.h"
 
 ModelBuilder::ModelBuilder()

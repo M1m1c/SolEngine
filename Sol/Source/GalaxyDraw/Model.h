@@ -5,7 +5,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "stb/stb_image.h"
+#include "stb_image.h"
 #include "Mesh.h"
 
 unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
