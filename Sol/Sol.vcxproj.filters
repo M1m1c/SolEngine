@@ -4,6 +4,9 @@
     <Filter Include="Source">
       <UniqueIdentifier>{56EB95D1-428D-C0A7-2B48-D4FB178947F8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GalaxyDraw">
+      <UniqueIdentifier>{39723F18-A588-3DAE-EEFF-C8CF5A550E36}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Platform">
       <UniqueIdentifier>{6A48A913-D6D3-16D8-DFE4-99CC4BEF72D8}</UniqueIdentifier>
     </Filter>
@@ -45,6 +48,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\GalaxyDraw\Camera.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\EBO.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\GLMacros.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\IBuildable.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Mesh.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Model.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Renderer.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Texture.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\VAO.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\VBO.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\shaderClass.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Platform\OpenGL\ImGuiOpenGLLoader.h">
       <Filter>Source\Platform\OpenGL</Filter>
     </ClInclude>
@@ -1356,18 +1395,47 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp">
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Camera.h" />
-    <ClInclude Include="Source\GalaxyDraw\EBO.h" />
-    <ClInclude Include="Source\GalaxyDraw\GLMacros.h" />
-    <ClInclude Include="Source\GalaxyDraw\IBuildable.h" />
-    <ClInclude Include="Source\GalaxyDraw\Mesh.h" />
-    <ClInclude Include="Source\GalaxyDraw\Renderer.h" />
-    <ClInclude Include="Source\GalaxyDraw\shaderClass.h" />
-    <ClInclude Include="Source\GalaxyDraw\Texture.h" />
-    <ClInclude Include="Source\GalaxyDraw\VAO.h" />
-    <ClInclude Include="Source\GalaxyDraw\VBO.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GalaxyDraw\Camera.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\EBO.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Mesh.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Model.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Renderer.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Texture.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\VAO.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\VBO.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\mainGraphicsOld.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\shaderClass.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\stb.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
       <Filter>Source\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1395,55 +1463,5 @@
     <ClCompile Include="Source\solpch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Camera.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\EBO.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\glad.c" />
-    <ClCompile Include="Source\GalaxyDraw\mainGraphicsOld.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Mesh.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Renderer.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\shaderClass.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\stb.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Texture.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\VAO.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\VBO.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Source\GalaxyDraw\default.frag" />
-    <None Include="Source\GalaxyDraw\default.vert" />
-    <None Include="Source\GalaxyDraw\depthBuffer.frag" />
-    <None Include="Source\GalaxyDraw\directionalLight.frag" />
-    <None Include="Source\GalaxyDraw\light.frag" />
-    <None Include="Source\GalaxyDraw\light.vert" />
-    <None Include="Source\GalaxyDraw\multiLight.frag" />
-    <None Include="Source\GalaxyDraw\pointLight.frag" />
-    <None Include="Source\GalaxyDraw\quadUV.frag" />
-    <None Include="Source\GalaxyDraw\quadUV.vert" />
-    <None Include="Source\GalaxyDraw\spotlight.frag" />
-    <None Include="Source\GalaxyDraw\stencilOutline.frag" />
-    <None Include="Source\GalaxyDraw\stencilOutline.vert" />
-    <None Include="Source\GalaxyDraw\Shaders\default.frag" />
-    <None Include="Source\GalaxyDraw\Shaders\default.vert" />
-    <None Include="Source\GalaxyDraw\Shaders\depthBuffer.frag" />
-    <None Include="Source\GalaxyDraw\Shaders\directionalLight.frag" />
-    <None Include="Source\GalaxyDraw\Shaders\light.frag" />
-    <None Include="Source\GalaxyDraw\Shaders\light.vert" />
-    <None Include="Source\GalaxyDraw\Shaders\multiLight.frag" />
-    <None Include="Source\GalaxyDraw\Shaders\pointLight.frag" />
-    <None Include="Source\GalaxyDraw\Shaders\quadUV.frag" />
-    <None Include="Source\GalaxyDraw\Shaders\quadUV.vert" />
-    <None Include="Source\GalaxyDraw\Shaders\spotlight.frag" />
-    <None Include="Source\GalaxyDraw\Shaders\stencilOutline.frag" />
-    <None Include="Source\GalaxyDraw\Shaders\stencilOutline.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Source\GalaxyDraw\Ghost_Alvin_512.png" />
-    <Image Include="Source\GalaxyDraw\KristerSphere.png" />
-    <Image Include="Source\GalaxyDraw\PebblesTile.png" />
-    <Image Include="Source\GalaxyDraw\PebblesTileSpecular.png" />
-    <Image Include="Source\GalaxyDraw\Textures\PebblesTileSpecular.png" />
-    <Image Include="Source\GalaxyDraw\Textures\Ghost_Alvin_512.png" />
-    <Image Include="Source\GalaxyDraw\Textures\KristerSphere.png" />
-    <Image Include="Source\GalaxyDraw\Textures\PebblesTile.png" />
   </ItemGroup>
 </Project>
