@@ -7,3 +7,6 @@
 [submodule "Sol/thirdparty/imgui"]
 	path = Sol/thirdparty/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "Sol/thirdparty/glm"]
+	path = Sol/thirdparty/glm
+	url = https://github.com/g-truc/glm

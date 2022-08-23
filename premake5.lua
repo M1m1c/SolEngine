@@ -15,6 +15,7 @@ IncludeDir ={}
 IncludeDir ["GLFW"] = "Sol/thirdparty/GLFW/include"
 IncludeDir ["Glad"] = "Sol/thirdparty/Glad/include"
 IncludeDir ["ImGui"] = "Sol/thirdparty/imgui"
+IncludeDir ["glm"] = "Sol/thirdparty/glm"
 
 group "Dependencies"
 	include "Sol/thirdparty/GLFW"
@@ -37,7 +38,9 @@ project "Sol"
 	files
 	{
 		"%{prj.name}/Source/**.h",
-		"%{prj.name}/Source/**.cpp"
+		"%{prj.name}/Source/**.cpp",
+		"%{prj.name}/thirdparty/glm/glm/**.hpp",
+		"%{prj.name}/thirdparty/glm/glm/**.inl"
 	}
 
 	includedirs
@@ -46,7 +49,8 @@ project "Sol"
 		"%{prj.name}/thirdparty/spdlog/include;",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 
 	links
@@ -111,7 +115,8 @@ project "Sandbox"
 	includedirs
 	{
 		"Sol/thirdparty/spdlog/include;",
-		"Sol/Source"
+		"Sol/Source",
+		"%{IncludeDir.glm}"
 	}
 
 	links
