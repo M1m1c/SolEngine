@@ -15,12 +15,16 @@ IncludeDir ={}
 IncludeDir ["GLFW"] = "Sol/thirdparty/GLFW/include"
 IncludeDir ["Glad"] = "Sol/thirdparty/Glad/include"
 IncludeDir ["ImGui"] = "Sol/thirdparty/imgui"
+IncludeDir ["stb"] = "Sol/thirdparty/stb"
 IncludeDir ["glm"] = "Sol/thirdparty/glm"
+IncludeDir ["assimp"] = "Sol/thirdparty/assimp/include"
 
 group "Dependencies"
 	include "Sol/thirdparty/GLFW"
 	include "Sol/thirdparty/Glad"
 	include "Sol/thirdparty/imgui"
+	include "Sol/thirdparty/assimp"
+	include "Sol/thirdparty/stb"
 group ""
 
 project "Sol"
@@ -50,14 +54,19 @@ project "Sol"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.assimp}",
+		"%{IncludeDir.assimp}/include",
+		"%{IncludeDir.stb}",
 		"%{IncludeDir.glm}"
 	}
-
+	
 	links
 	{
 		"GLFW",
 		"Glad",
 		"ImGui",
+		"stb",
+		"assimp",
 		"opengl32.lib"
 	}
 

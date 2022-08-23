@@ -10,3 +10,6 @@
 [submodule "Sol/thirdparty/GLFW"]
 	path = Sol/thirdparty/GLFW
 	url = https://github.com/glfw/glfw
+[submodule "Sol\\thirdparty\\stb"]
+	path = Sol\\thirdparty\\stb
+	url = https://github.com/nothings/stb
