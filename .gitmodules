@@ -7,3 +7,6 @@
 [submodule "Sol/thirdparty/glm"]
 	path = Sol/thirdparty/glm
 	url = https://github.com/g-truc/glm
+[submodule "Sol/thirdparty/GLFW"]
+	path = Sol/thirdparty/GLFW
+	url = https://github.com/glfw/glfw
