@@ -47,11 +47,6 @@ project "Sol"
 		"%{prj.name}/thirdparty/glm/glm/**.inl"
 	}
 
-	libdirs 
-	{ 
-		"assimp_location/lib" 
-	}
-
 	includedirs
 	{
 		"%{prj.name}/Source",
@@ -71,7 +66,7 @@ project "Sol"
 		"Glad",
 		"ImGui",
 		"stb",
-		"assimp.lib",
+		"assimp",
 		"opengl32.lib"
 	}
 
