@@ -1426,11 +1426,28 @@
     <None Include="Source\GalaxyDraw\spotlight.frag" />
     <None Include="Source\GalaxyDraw\stencilOutline.frag" />
     <None Include="Source\GalaxyDraw\stencilOutline.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\default.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\default.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\depthBuffer.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\directionalLight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\light.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\light.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\multiLight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\pointLight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\quadUV.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\quadUV.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\spotlight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\stencilOutline.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\stencilOutline.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Source\GalaxyDraw\Ghost_Alvin_512.png" />
     <Image Include="Source\GalaxyDraw\KristerSphere.png" />
     <Image Include="Source\GalaxyDraw\PebblesTile.png" />
     <Image Include="Source\GalaxyDraw\PebblesTileSpecular.png" />
+    <Image Include="Source\GalaxyDraw\Textures\PebblesTileSpecular.png" />
+    <Image Include="Source\GalaxyDraw\Textures\Ghost_Alvin_512.png" />
+    <Image Include="Source\GalaxyDraw\Textures\KristerSphere.png" />
+    <Image Include="Source\GalaxyDraw\Textures\PebblesTile.png" />
   </ItemGroup>
 </Project>

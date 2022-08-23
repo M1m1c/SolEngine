@@ -3,6 +3,7 @@
 
 #include<glad/glad.h>
 
+#include "solpch.h"
 #include "GLMacros.h"
 
 class VBO
