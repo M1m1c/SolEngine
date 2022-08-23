@@ -1,3 +1,5 @@
+#include "solpch.h"
+
 #include"VAO.h"
 
 // Constructor that generates a VAO ID

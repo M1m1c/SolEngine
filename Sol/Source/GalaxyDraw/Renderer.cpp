@@ -1,3 +1,5 @@
+#include "solpch.h"
+
 #include "Renderer.h"
 
 void Renderer::Draw(const Shader& shader) const

@@ -157,8 +157,6 @@
     <ClInclude Include="Source\GalaxyDraw\GLMacros.h" />
     <ClInclude Include="Source\GalaxyDraw\IBuildable.h" />
     <ClInclude Include="Source\GalaxyDraw\Mesh.h" />
-    <ClInclude Include="Source\GalaxyDraw\Model.h" />
-    <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h" />
     <ClInclude Include="Source\GalaxyDraw\Renderer.h" />
     <ClInclude Include="Source\GalaxyDraw\shaderClass.h" />
     <ClInclude Include="Source\GalaxyDraw\Texture.h" />
@@ -608,8 +606,6 @@
     <ClCompile Include="Source\GalaxyDraw\glad.c" />
     <ClCompile Include="Source\GalaxyDraw\mainGraphicsOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Mesh.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Model.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp" />
     <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Renderer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\shaderClass.cpp" />

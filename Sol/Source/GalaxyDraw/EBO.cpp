@@ -1,4 +1,6 @@
-#include"EBO.h"
+#include "solpch.h"
+
+#include "EBO.h"
 
 // Constructor that generates a Elements Buffer Object and links it to indices
 EBO::EBO(GLuint* indicesArray, unsigned int elementCount) : count (elementCount)
