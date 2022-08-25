@@ -20,6 +20,8 @@ project "ImGui"
 		"imgui_tables.cpp"
 	}
 
+	defines { "IMGUI_API=__declspec(dllexport)" }
+
 	filter "system:windows"
 		systemversion "latest"
 		cppdialect "C++17"
