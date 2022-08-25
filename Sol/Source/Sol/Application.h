@@ -5,6 +5,7 @@
 #include "LayerStack.h"
 #include "Events/Event.h";
 #include "Sol/Events/ApplicationEvent.h"
+#include "Sol/ImGui/ImGuiLayer.h"
 
 namespace Sol 
 {
@@ -27,6 +28,7 @@ namespace Sol
 		bool OnWindowClose(WindowClosedEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
