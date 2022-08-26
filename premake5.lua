@@ -85,7 +85,9 @@ project "Sol"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} \"../binaries/".. outputdir .."/Sandbox\"")
+			("{COPY} %{cfg.buildtarget.relpath} \"../binaries/".. outputdir .."/Sandbox\""),
+			("{COPY} ../Sol/thirdparty/assimp/lib/*.dll \"../binaries/".. outputdir .."/Sandbox\"")
+
 		}
 
 	filter "configurations:Debug"
