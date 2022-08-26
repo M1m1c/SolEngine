@@ -94,7 +94,8 @@
       <ImportLibrary>..\binaries\Debug-windows-x86_64\Sol\Sol.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\binaries\Debug-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Debug-windows-x86_64\Sol\Sol.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Debug-windows-x86_64\Sol\Sol.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul)</Command>
+      <Command>IF EXIST ..\binaries\Debug-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Debug-windows-x86_64\Sol\Sol.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Debug-windows-x86_64\Sol\Sol.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul)
+IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -121,7 +122,8 @@
       <ImportLibrary>..\binaries\Release-windows-x86_64\Sol\Sol.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\binaries\Release-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Release-windows-x86_64\Sol\Sol.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Release-windows-x86_64\Sol\Sol.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul)</Command>
+      <Command>IF EXIST ..\binaries\Release-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Release-windows-x86_64\Sol\Sol.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Release-windows-x86_64\Sol\Sol.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul)
+IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -148,7 +150,8 @@
       <ImportLibrary>..\binaries\Dist-windows-x86_64\Sol\Sol.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\binaries\Dist-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Dist-windows-x86_64\Sol\Sol.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Dist-windows-x86_64\Sol\Sol.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul)</Command>
+      <Command>IF EXIST ..\binaries\Dist-windows-x86_64\Sol\Sol.dll\ (xcopy /Q /E /Y /I ..\binaries\Dist-windows-x86_64\Sol\Sol.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\binaries\Dist-windows-x86_64\Sol\Sol.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul)
+IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -159,13 +162,11 @@
     <ClInclude Include="Source\GalaxyDraw\Mesh.h" />
     <ClInclude Include="Source\GalaxyDraw\Model.h" />
     <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h" />
-    <ClInclude Include="Source\GalaxyDraw\Renderer.h" />
+    <ClInclude Include="Source\GalaxyDraw\RenderScreen.h" />
     <ClInclude Include="Source\GalaxyDraw\Texture.h" />
     <ClInclude Include="Source\GalaxyDraw\VAO.h" />
     <ClInclude Include="Source\GalaxyDraw\VBO.h" />
     <ClInclude Include="Source\GalaxyDraw\shaderClass.h" />
-    <ClInclude Include="Source\Platform\OpenGL\ImGuiOpenGLLoader.h" />
-    <ClInclude Include="Source\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="Source\Sol.h" />
@@ -609,17 +610,17 @@
     <ClCompile Include="Source\GalaxyDraw\Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp" />
     <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Renderer.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\RenderScreen.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Texture.cpp" />
     <ClCompile Include="Source\GalaxyDraw\VAO.cpp" />
     <ClCompile Include="Source\GalaxyDraw\VBO.cpp" />
     <ClCompile Include="Source\GalaxyDraw\mainGraphicsOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\shaderClass.cpp" />
     <ClCompile Include="Source\GalaxyDraw\stb.cpp" />
-    <ClCompile Include="Source\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="Source\Sol\Application.cpp" />
+    <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="Source\Sol\Layer.cpp" />
     <ClCompile Include="Source\Sol\LayerStack.cpp" />

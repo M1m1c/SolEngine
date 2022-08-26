@@ -8,6 +8,10 @@ VAO::VAO()
 	GLCall(glGenVertexArrays(1, &ID));
 }
 
+VAO::VAO(const unsigned int vaoID) : ID(vaoID)
+{
+}
+
 // Links a VBO to the VAO using a certain layout
 void VAO::LinkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset)
 {

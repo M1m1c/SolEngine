@@ -10,9 +10,6 @@
     <Filter Include="Source\Platform">
       <UniqueIdentifier>{6A48A913-D6D3-16D8-DFE4-99CC4BEF72D8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Platform\OpenGL">
-      <UniqueIdentifier>{5E160775-4A10-30C7-337D-C6D71F169633}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Platform\Windows">
       <UniqueIdentifier>{A4BC056E-10F4-4D05-19FE-B12885B474FE}</UniqueIdentifier>
     </Filter>
@@ -69,7 +66,7 @@
     <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Renderer.h">
+    <ClInclude Include="Source\GalaxyDraw\RenderScreen.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Texture.h">
@@ -83,12 +80,6 @@
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\shaderClass.h">
       <Filter>Source\GalaxyDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Platform\OpenGL\ImGuiOpenGLLoader.h">
-      <Filter>Source\Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Platform\OpenGL\ImGuiOpenGLRenderer.h">
-      <Filter>Source\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Platform\Windows\WindowsInput.h">
       <Filter>Source\Platform\Windows</Filter>
@@ -1415,7 +1406,7 @@
     <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Renderer.cpp">
+    <ClCompile Include="Source\GalaxyDraw\RenderScreen.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Texture.cpp">
@@ -1436,9 +1427,6 @@
     <ClCompile Include="Source\GalaxyDraw\stb.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
-      <Filter>Source\Platform\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp">
       <Filter>Source\Platform\Windows</Filter>
     </ClCompile>
@@ -1447,6 +1435,9 @@
     </ClCompile>
     <ClCompile Include="Source\Sol\Application.cpp">
       <Filter>Source\Sol</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp">
+      <Filter>Source\Sol\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp">
       <Filter>Source\Sol\ImGui</Filter>
