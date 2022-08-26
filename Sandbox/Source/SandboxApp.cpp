@@ -30,7 +30,6 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Sol::ImGuiLayer());
 	}
 
 	~Sandbox(){}
