@@ -1,11 +1,15 @@
 #pragma once
 
 #ifdef SOL_PLATFORM_WINDOWS
+#if SOL_DYNAMIC_LINK
 	#ifdef SOL_BUILD_DLL
 		#define SOL_API __declspec(dllexport)
 	#else
 		#define SOL_API __declspec(dllimport)
 	#endif // SOL_BUILD_DLL
+#else
+#define SOL_API
+#endif
 #else
 #error Sol only supports windows!
 #endif // SOL_PLATFORM_WINDOWS
