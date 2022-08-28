@@ -29,9 +29,10 @@ group ""
 
 project "Sol"
 	location "Sol"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("binaries/" .. outputdir .. "/%{prj.name}/")
 	objdir ("intermediate/" .. outputdir .. "/%{prj.name}/")
@@ -45,6 +46,11 @@ project "Sol"
 		"%{prj.name}/Source/**.cpp",
 		"%{prj.name}/thirdparty/glm/glm/**.hpp",
 		"%{prj.name}/thirdparty/glm/glm/**.inl"
+	}
+
+	defines
+	{
+		"_CRT_SECURE_NO_WARNINGS"
 	}
 
 	includedirs
@@ -71,7 +77,6 @@ project "Sol"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 		
 
@@ -85,7 +90,6 @@ project "Sol"
 
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} \"../binaries/".. outputdir .."/Sandbox\""),
 			("{COPY} ../Sol/thirdparty/assimp/lib/*.dll \"../binaries/".. outputdir .."/Sandbox\"")
 
 		}
@@ -93,26 +97,27 @@ project "Sol"
 	filter "configurations:Debug"
 		defines "SOL_DEBUG"
 		runtime "Debug"
-		symbols "On"
+		symbols "on"
 		buildoptions "/MDd"
 
 	filter "configurations:Release"
 		defines "SOL_RELEASE"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 		buildoptions "/MD"
 
 	filter "configurations:Dist"
 		defines "SOL_DIST"
 		runtime "Release"
-		optimize "On"
+		optimize "on"
 		buildoptions "/MD"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
-	staticruntime "off"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("binaries/" .. outputdir .. "/%{prj.name}/")
 	objdir ("intermediate/" .. outputdir .. "/%{prj.name}/")
@@ -136,7 +141,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
 		systemversion "latest"
 
 		defines
@@ -146,15 +150,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "SOL_DEBUG"
-		symbols "On"
+		symbols "on"
 		buildoptions "/MDd"
 
 	filter "configurations:Release"
 		defines "SOL_RELEASE"
-		optimize "On"
+		optimize "on"
 		buildoptions "/MD"
 
 	filter "configurations:Dist"
 		defines "SOL_DIST"
-		optimize "On"
+		optimize "on"
 		buildoptions "/MD"

@@ -5,8 +5,9 @@
 #include "Sol/Events/ApplicationEvent.h"
 #include "Sol/Events/KeyEvent.h"
 #include "Sol/Events/MouseEvent.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 
-#include <glad/glad.h>
+
 
 namespace Sol
 {
@@ -58,9 +59,10 @@ namespace Sol
 			nullptr,
 			nullptr);
 
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		SOL_CORE_ASSERT(status,"Failed to initialize Glad!");
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
+
+		
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -162,7 +164,7 @@ namespace Sol
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void Sol::WindowsWindow::SetVSync(bool enabled)
