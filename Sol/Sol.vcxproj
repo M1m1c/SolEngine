@@ -182,6 +182,8 @@
     <ClInclude Include="Source\Sol\LayerStack.h" />
     <ClInclude Include="Source\Sol\Log.h" />
     <ClInclude Include="Source\Sol\MouseButtonCodes.h" />
+    <ClInclude Include="Source\Sol\Renderer\RenderingContext.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="Source\Sol\Window.h" />
     <ClInclude Include="Source\solpch.h" />
     <ClInclude Include="thirdparty\glm\glm\common.hpp" />
@@ -625,6 +627,7 @@
     <ClCompile Include="Source\solpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\Platform\OpenGL\OpenGLContext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="thirdparty\GLFW\GLFW.vcxproj">

@@ -1386,6 +1386,8 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp">
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sol\Renderer\RenderingContext.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGLContext.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Camera.cpp">
@@ -1454,5 +1456,6 @@
     <ClCompile Include="Source\solpch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Platform\OpenGL\OpenGLContext.cpp" />
   </ItemGroup>
 </Project>
