@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Sol/Window.h"
+#include"Sol/Renderer/RenderingContext.h"
+
 #include <GLFW/glfw3.h>
 
 namespace Sol 
@@ -27,6 +29,7 @@ namespace Sol
 
 	private:
 		GLFWwindow* m_Window;
+		RenderingContext* m_Context;
 
 		struct WindowData
 		{
