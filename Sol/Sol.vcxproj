@@ -184,6 +184,7 @@
     <ClInclude Include="Source\Sol\MouseButtonCodes.h" />
     <ClInclude Include="Source\Sol\Renderer\RenderingContext.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="Source\Sol\Renderer\Shader.h" />
     <ClInclude Include="Source\Sol\Window.h" />
     <ClInclude Include="Source\solpch.h" />
     <ClInclude Include="thirdparty\glm\glm\common.hpp" />
@@ -628,6 +629,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="Source\Sol\Renderer\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="thirdparty\GLFW\GLFW.vcxproj">
