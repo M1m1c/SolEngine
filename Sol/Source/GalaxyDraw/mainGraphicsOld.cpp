@@ -16,7 +16,7 @@
 #include "Camera.h"
 #include "Model.h"
 #include "ModelBuilder.h"
-#include "Renderer.h"
+#include "RenderScreen.h"
 
 #pragma region quadMesh
 
@@ -133,9 +133,6 @@ int main()
 
 	quadVAO.LinkAttrib(quadVBO, 0, 3, GL_FLOAT, 5 * sizeof(float), (void*)0);
 	quadVAO.LinkAttrib(quadVBO, 1, 2, GL_FLOAT, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-
-	//const VAO& VArrayObject, const EBO& IndexBufferObject, const Shader& shader
-	Renderer quadRenderer(quadVAO, quadEBO);
 
 #pragma endregion
 
