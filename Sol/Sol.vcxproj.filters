@@ -1388,6 +1388,7 @@
     </ClInclude>
     <ClInclude Include="Source\Sol\Renderer\RenderingContext.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="Source\Sol\Renderer\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Camera.cpp">
@@ -1457,5 +1458,6 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="Source\Sol\Renderer\Shader.cpp" />
   </ItemGroup>
 </Project>

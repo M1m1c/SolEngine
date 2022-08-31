@@ -30,7 +30,7 @@ class Mesh {
 public:
 	std::vector<Vertex>       vertices;
 	std::vector<unsigned int> indices;
-	std::vector<MeshTexture >      textures;
+	std::vector<MeshTexture>  textures;
 	unsigned int VAO;
 
 	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<MeshTexture > textures);

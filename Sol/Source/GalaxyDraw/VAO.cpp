@@ -1,11 +1,15 @@
 #include "solpch.h"
 
-#include"VAO.h"
+#include "VAO.h"
 
 // Constructor that generates a VAO ID
 VAO::VAO()
 {
 	GLCall(glGenVertexArrays(1, &ID));
+}
+
+VAO::VAO(const unsigned int vaoID) : ID(vaoID)
+{
 }
 
 // Links a VBO to the VAO using a certain layout
