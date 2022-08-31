@@ -1389,6 +1389,9 @@
     <ClInclude Include="Source\Sol\Renderer\RenderingContext.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="Source\Sol\Renderer\Shader.h" />
+    <ClInclude Include="Source\Sol\Renderer\Buffer.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="Source\Sol\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Camera.cpp">
@@ -1459,5 +1462,8 @@
     </ClCompile>
     <ClCompile Include="Source\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="Source\Sol\Renderer\Shader.cpp" />
+    <ClCompile Include="Source\Sol\Renderer\Buffer.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="Source\Sol\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>
