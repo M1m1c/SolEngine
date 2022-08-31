@@ -7,6 +7,10 @@
 #include "Sol/Events/ApplicationEvent.h"
 #include "Sol/ImGui/ImGuiLayer.h"
 
+//TEMPORARY, WILL BE REMOVED LATER
+#include "Renderer/Shader.h"
+#include <Sol/Renderer/Buffer.h>
+
 namespace Sol 
 {
 	class SOL_API Application
@@ -32,7 +36,10 @@ namespace Sol
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		unsigned int m_VertexArray;
+		std::unique_ptr<Shader> m_Shader;
+		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 
 		static Application* s_Instance;
 	};
