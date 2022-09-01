@@ -4,22 +4,30 @@
 #include <glad/glad.h>
 
 #include "GLMacros.h"
+#include "Buffer.h"
 
-class EBO
+namespace GalaxyDraw 
 {
-public:
-	// ID reference of Elements Buffer Object
-	GLuint ID;
-	const unsigned int count;
-	// Constructor that generates a Elements Buffer Object and links it to indices
-	EBO(GLuint* indices, unsigned int elementCount);
+	class EBO : public IndexBuffer
+	{
+	public:
+		// ID reference of Elements Buffer Object
+		GLuint ID;
+		const unsigned int count;
+		// Constructor that generates a Elements Buffer Object and links it to indices
+		EBO(GLuint* indices, unsigned int elementCount);
 
-	// Binds the EBO
-	void Bind() const;
-	// Unbinds the EBO
-	void Unbind() const;
-	// Deletes the EBO
-	void Delete();
-};
+		// Destructor that hanldes deleting the buffer when this class gets deleted
+		virtual ~EBO();
 
+		// Binds the EBO
+		virtual void Bind() const override;
+		// Unbinds the EBO
+		virtual void Unbind() const override;
+		// Deletes the EBO
+		void Delete();
+
+		virtual uint32_t GetCount()const override{ return (uint32_t)count; }
+	};
+}
 #endif
