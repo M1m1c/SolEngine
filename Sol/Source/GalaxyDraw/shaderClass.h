@@ -1,22 +1,18 @@
 #ifndef SHADER_CLASS_H
 #define SHADER_CLASS_H
 
-#include <glad/glad.h>
+#include "solpch.h"
 #include <glm/glm.hpp>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <cerrno>
 
-#include "GLMacros.h"
+
+//#include "GLMacros.h"
 
 std::string get_file_contents(const char* filename);
 
 class Shader
 {
 public: 
-	GLuint ID;
+    unsigned int ID;
 	Shader(const char* vertexFile, const char* fragmentFile);
 
 	void Bind() const;
