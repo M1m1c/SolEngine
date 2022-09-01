@@ -9,8 +9,7 @@
 
 //TEMPORARY, WILL BE REMOVED LATER
 //#include "Renderer/Shader.h"
-#include "GalaxyDraw/shaderClass.h"
-#include <GalaxyDraw/Buffer.h>
+#include <GalaxyDraw/GalaxyDraw.h>
 
 namespace Sol 
 {
@@ -39,8 +38,8 @@ namespace Sol
 
 		unsigned int m_VertexArray;
 		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<GDraw_VBO> m_VertexBuffer;
-		std::unique_ptr<GDraw_EBO> m_IndexBuffer;
+		std::unique_ptr<GD_VBO> m_VertexBuffer;
+		std::unique_ptr<GD_EBO> m_IndexBuffer;
 
 		static Application* s_Instance;
 	};

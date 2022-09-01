@@ -12,8 +12,6 @@ namespace GalaxyDraw
 	class VBO : public VertexBuffer
 	{
 	public:
-		// Reference ID of the Vertex Buffer Object
-		GLuint ID;
 		// Constructor that generates a Vertex Buffer Object and links it to vertices
 		VBO(GLfloat* vertices, GLsizeiptr size);
 
@@ -26,6 +24,14 @@ namespace GalaxyDraw
 		virtual void Unbind() const override;
 		// Deletes the VBO
 		void Delete();
+
+		virtual void SetLayout(const BufferLayout& layout) override { m_Layout = layout; }
+		virtual const BufferLayout& GetLayout() const override { return m_Layout; }
+
+	private:
+		// Reference ID of the Vertex Buffer Object
+		GLuint ID;
+		BufferLayout m_Layout;
 	};
 }
 #endif
