@@ -152,6 +152,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\GalaxyDraw\Buffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Camera.h" />
     <ClInclude Include="Source\GalaxyDraw\EBO.h" />
     <ClInclude Include="Source\GalaxyDraw\GLMacros.h" />
@@ -159,12 +160,14 @@
     <ClInclude Include="Source\GalaxyDraw\Mesh.h" />
     <ClInclude Include="Source\GalaxyDraw\Model.h" />
     <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h" />
+    <ClInclude Include="Source\GalaxyDraw\RenderScreen.h" />
     <ClInclude Include="Source\GalaxyDraw\Renderer.h" />
     <ClInclude Include="Source\GalaxyDraw\Texture.h" />
     <ClInclude Include="Source\GalaxyDraw\VAO.h" />
     <ClInclude Include="Source\GalaxyDraw\VBO.h" />
     <ClInclude Include="Source\GalaxyDraw\shaderClass.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="Source\Sol.h" />
@@ -183,10 +186,7 @@
     <ClInclude Include="Source\Sol\LayerStack.h" />
     <ClInclude Include="Source\Sol\Log.h" />
     <ClInclude Include="Source\Sol\MouseButtonCodes.h" />
-    <ClInclude Include="Source\Sol\Renderer\Buffer.h" />
-    <ClInclude Include="Source\Sol\Renderer\Renderer.h" />
     <ClInclude Include="Source\Sol\Renderer\RenderingContext.h" />
-    <ClInclude Include="Source\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="Source\Sol\Renderer\Shader.h" />
     <ClInclude Include="Source\Sol\Window.h" />
     <ClInclude Include="Source\solpch.h" />
@@ -607,20 +607,21 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\GalaxyDraw\Buffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Camera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\EBO.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Mesh.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\RenderScreen.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Renderer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Texture.cpp" />
     <ClCompile Include="Source\GalaxyDraw\VAO.cpp" />
     <ClCompile Include="Source\GalaxyDraw\VBO.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\mainGraphicsOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\shaderClass.cpp" />
     <ClCompile Include="Source\GalaxyDraw\stb.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="Source\Sol\Application.cpp" />
@@ -629,13 +630,10 @@
     <ClCompile Include="Source\Sol\Layer.cpp" />
     <ClCompile Include="Source\Sol\LayerStack.cpp" />
     <ClCompile Include="Source\Sol\Log.cpp" />
+    <ClCompile Include="Source\Sol\Renderer\Shader.cpp" />
     <ClCompile Include="Source\solpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Source\Platform\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="Source\Sol\Renderer\Buffer.cpp" />
-    <ClCompile Include="Source\Sol\Renderer\Renderer.cpp" />
-    <ClCompile Include="Source\Sol\Renderer\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="thirdparty\GLFW\GLFW.vcxproj">
