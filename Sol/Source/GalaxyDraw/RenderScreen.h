@@ -6,10 +6,13 @@
 #include "shaderClass.h"
 #include "Model.h"
 
-class RenderScreen
+namespace GalaxyDraw 
 {
-public:
-    void Draw(const VAO& va, const EBO& ib, const Shader& shader) const;
-    void Draw(const Model& model, const Shader& shader) const;
-    void Clear() const;
-};
+	class RenderScreen
+	{
+	public:
+		void Draw(const GalaxyDraw::VAO& va, const GalaxyDraw::EBO& ib, const Shader& shader) const;
+		void Draw(const Model& model, const Shader& shader) const;
+		void Clear() const;
+	};
+}
