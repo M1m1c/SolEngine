@@ -8,8 +8,9 @@
 #include "Sol/ImGui/ImGuiLayer.h"
 
 //TEMPORARY, WILL BE REMOVED LATER
-#include "Renderer/Shader.h"
-#include <Sol/Renderer/Buffer.h>
+//#include "Renderer/Shader.h"
+#include "GalaxyDraw/shaderClass.h"
+#include <GalaxyDraw/Buffer.h>
 
 namespace Sol 
 {
@@ -38,8 +39,8 @@ namespace Sol
 
 		unsigned int m_VertexArray;
 		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		std::unique_ptr<GDraw_VBO> m_VertexBuffer;
+		std::unique_ptr<GDraw_EBO> m_IndexBuffer;
 
 		static Application* s_Instance;
 	};

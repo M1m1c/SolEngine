@@ -33,15 +33,15 @@ namespace Sol
 			0.0f, 0.5f, 0.0f
 		};
 
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
+		m_VertexBuffer.reset(GDraw_VBO::Create(vertices, sizeof(vertices)));
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
 		uint32_t indices[3] = { 0,1,2 };
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		m_IndexBuffer.reset(GDraw_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 
-		std::string vertexSrc = R"(
+		/*std::string vertexSrc = R"(
 		#version 330 core
 
 		layout(location = 0) in vec3 a_Position;
@@ -52,10 +52,10 @@ namespace Sol
 			gl_Position = vec4(a_Position, 1.0);
 		}
 			
-		)";
+		)";*/
 
 
-		std::string fragmentSrc = R"(
+	/*	std::string fragmentSrc = R"(
 		#version 330 core
 
 		layout(location = 0) out vec4 color;
@@ -66,9 +66,11 @@ namespace Sol
 			color = vec4(v_Position, 1.0);
 		}
 			
-		)";
+		)";*/
 
-		m_Shader.reset(new Shader(vertexSrc,fragmentSrc));
+		m_Shader.reset(new Shader(
+			"../Triangle.vert",
+			"../Triangle.frag"));
 	}
 
 	Application::~Application()
