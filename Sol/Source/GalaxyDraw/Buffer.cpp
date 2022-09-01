@@ -2,10 +2,11 @@
 #include "Buffer.h"
 
 #include "Renderer.h"
-#include "Platform/OpenGL/OpenGLBuffer.h"
+#include "VBO.h"
+#include "EBO.h"
 #include <Sol/Core.h>
 
-namespace Sol
+namespace GalaxyDraw
 {
 	VertexBuffer* VertexBuffer::Create(float* verts, uint32_t size)
 	{
@@ -15,7 +16,7 @@ namespace Sol
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::OpenGL: return new OpenGlVertexBuffer(verts, size);
+		case RendererAPI::OpenGL: return new VBO(verts, size);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
@@ -29,7 +30,7 @@ namespace Sol
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::OpenGL: return new OpenGlIndexBuffer(indices, count);
+		case RendererAPI::OpenGL: return new EBO(indices, count);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;

@@ -1,6 +1,9 @@
 #pragma once
 
-namespace Sol 
+#define GDraw_VBO GalaxyDraw::VertexBuffer
+#define GDraw_EBO GalaxyDraw::IndexBuffer
+
+namespace GalaxyDraw 
 {
 	class VertexBuffer
 	{
@@ -8,7 +11,7 @@ namespace Sol
 		virtual ~VertexBuffer() {};
 
 		virtual void Bind() const = 0;
-		virtual void UnBind() const = 0;
+		virtual void Unbind() const = 0;
 		static VertexBuffer* Create(float* verts,uint32_t size);
 	};
 
@@ -18,7 +21,7 @@ namespace Sol
 		virtual ~IndexBuffer() {};
 
 		virtual void Bind() const = 0;
-		virtual void UnBind() const = 0;
+		virtual void Unbind() const = 0;
 
 		virtual uint32_t GetCount()const = 0;
 
