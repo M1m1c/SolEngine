@@ -155,6 +155,7 @@
     <ClInclude Include="Source\GalaxyDraw\Buffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Camera.h" />
     <ClInclude Include="Source\GalaxyDraw\EBO.h" />
+    <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h" />
     <ClInclude Include="Source\GalaxyDraw\GLMacros.h" />
     <ClInclude Include="Source\GalaxyDraw\IBuildable.h" />
     <ClInclude Include="Source\GalaxyDraw\Mesh.h" />
