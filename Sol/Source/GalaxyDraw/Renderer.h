@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Sol 
+namespace GalaxyDraw 
 {
 	enum class RendererAPI
 	{

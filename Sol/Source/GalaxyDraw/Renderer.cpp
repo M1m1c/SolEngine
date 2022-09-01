@@ -1,6 +1,7 @@
 #include "solpch.h"
+
 #include "Renderer.h"
 
-namespace Sol {
+namespace GalaxyDraw {
 	RendererAPI Renderer::s_RendererAPI = RendererAPI::OpenGL;
 }
