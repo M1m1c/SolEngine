@@ -167,6 +167,7 @@
     <ClInclude Include="Source\GalaxyDraw\VAO.h" />
     <ClInclude Include="Source\GalaxyDraw\VBO.h" />
     <ClInclude Include="Source\GalaxyDraw\shaderClass.h" />
+    <ClInclude Include="Source\GalaxyDraw\VertexArray.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsInput.h" />
@@ -621,6 +622,7 @@
     <ClCompile Include="Source\GalaxyDraw\VBO.cpp" />
     <ClCompile Include="Source\GalaxyDraw\shaderClass.cpp" />
     <ClCompile Include="Source\GalaxyDraw\stb.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\VertexArray.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />

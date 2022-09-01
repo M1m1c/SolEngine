@@ -1411,6 +1411,7 @@
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h" />
+    <ClInclude Include="Source\GalaxyDraw\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Buffer.cpp">
@@ -1488,5 +1489,6 @@
     <ClCompile Include="Source\solpch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\VertexArray.cpp" />
   </ItemGroup>
 </Project>

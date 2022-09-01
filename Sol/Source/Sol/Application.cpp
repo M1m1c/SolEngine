@@ -11,27 +11,7 @@ namespace Sol
 
 	Application* Application::s_Instance = nullptr;
 
-	//Temporary location
-	static GLenum ShaderDataTypeToGLBaseType(GD_ShaderDataType type) 
-	{
-		switch (type)
-		{
-			case GalaxyDraw::ShaderDataType::Float:		return GL_FLOAT;
-			case GalaxyDraw::ShaderDataType::Float2:	return GL_FLOAT;
-			case GalaxyDraw::ShaderDataType::Float3:	return GL_FLOAT;
-			case GalaxyDraw::ShaderDataType::Float4:	return GL_FLOAT;
-			case GalaxyDraw::ShaderDataType::Mat3:		return GL_FLOAT;
-			case GalaxyDraw::ShaderDataType::Mat4:		return GL_FLOAT;
-			case GalaxyDraw::ShaderDataType::Int:		return GL_INT;
-			case GalaxyDraw::ShaderDataType::Int2:		return GL_INT;
-			case GalaxyDraw::ShaderDataType::Int3:		return GL_INT;
-			case GalaxyDraw::ShaderDataType::Int4:		return GL_INT;
-			case GalaxyDraw::ShaderDataType::Bool:		return GL_BOOL;
-		}
-		SOL_CORE_ASSERT(false, "Unkown ShaderDataType!")
-			return 0;
-	}
-	//Temporary location
+	
 
 	Application::Application()
 	{
@@ -44,10 +24,7 @@ namespace Sol
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
-
-		
+		m_VertexArray.reset(GD_VAO::Create());
 
 		float vertices[3 * 3] = {
 			-0.5f, -0.5f, 0.0f,
@@ -55,7 +32,8 @@ namespace Sol
 			0.0f, 0.5f, 0.0f
 		};
 
-		m_VertexBuffer.reset(GD_VBO::Create(vertices, sizeof(vertices)));
+		std::shared_ptr<GD_VBO> vertexBuffer;
+		vertexBuffer.reset(GD_VBO::Create(vertices, sizeof(vertices)));
 
 		GD_BufferLayout layout = 
 		{
@@ -63,25 +41,14 @@ namespace Sol
 		/*	{GD_ShaderDataType::Float3, "a_Normal"},
 			{GD_ShaderDataType::Float4, "a_Color"},*/
 		};
-		uint32_t index = 0;
-		for (const auto& element:layout)
-		{
-			glEnableVertexAttribArray(index);
 
-			glVertexAttribPointer(index,
-				element.GetComponentCount(),
-				ShaderDataTypeToGLBaseType(element.Type),
-				element.Normalized ? GL_TRUE: GL_FALSE,
-				layout.GetStride(),
-				(const void*)element.Offset);
-
-			index++;
-		}
-
-		
+		vertexBuffer->SetLayout(layout);
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0,1,2 };
-		m_IndexBuffer.reset(GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		std::shared_ptr<GD_EBO> indexBuffer;
+		indexBuffer.reset(GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 		/*std::string vertexSrc = R"(
 		#version 330 core
@@ -125,9 +92,9 @@ namespace Sol
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			m_Shader->Bind();
+			m_VertexArray->Bind();
 
-			glBindVertexArray(m_VertexArray);
-			glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 			for (Layer* layer : m_LayerStack)
 			{

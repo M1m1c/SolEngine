@@ -36,10 +36,9 @@ namespace Sol
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		unsigned int m_VertexArray;
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<GD_VBO> m_VertexBuffer;
-		std::unique_ptr<GD_EBO> m_IndexBuffer;
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<GD_VAO> m_VertexArray;
+	
 
 		static Application* s_Instance;
 	};
