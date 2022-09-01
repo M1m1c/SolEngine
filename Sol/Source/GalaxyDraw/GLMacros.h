@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <glad/glad.h>
+//TODO it seems that it cannot find glad.h when it is included in a header file,
+//for now I removed the use of these macros since they are unable to compile wiht this issue
 
 #define ASSERT(x) if (!(x)) __debugbreak();
 
