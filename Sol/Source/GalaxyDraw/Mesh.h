@@ -1,47 +1,40 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include <glad/glad.h> // holds all OpenGL type declarations
-
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
-#include <string>
-#include <vector>
+namespace GalaxyDraw {
 
-#include "shaderClass.h"
+	class Shader;
 
-#include "GLMacros.h"
+	struct Vertex {
+		glm::vec3 Position;
+		glm::vec3 Normal;
+		glm::vec2 TexCoords;
+	};
 
+	struct MeshTexture {
+		uint32_t id;
+		std::string type;
+		std::string path;
+	};
 
-struct Vertex {
-	glm::vec3 Position;
-	glm::vec3 Normal;
-	glm::vec2 TexCoords;
-};
+	class Mesh {
+	public:
+		std::vector<Vertex>       vertices;
+		std::vector<uint32_t> indices;
+		std::vector<MeshTexture>  textures;
+		unsigned int VAO;
 
-struct MeshTexture {
-	unsigned int id;
-	std::string type;
-	std::string path;
-};
+		Mesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<MeshTexture > textures);
 
-class Mesh {
-public:
-	std::vector<Vertex>       vertices;
-	std::vector<unsigned int> indices;
-	std::vector<MeshTexture>  textures;
-	unsigned int VAO;
+		void Draw(Shader& shader);
 
-	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<MeshTexture > textures);
+	private:
+		// Mesh requires a VAO, VBO and EBO, but only exposes the VAO publicly ...?
+		unsigned int VBO, EBO;
 
-	void Draw(Shader& shader);
-
-private:
-	// Mesh requires a VAO, VBO and EBO, but only exposes the VAO publicly ...?
-	unsigned int VBO, EBO;
-
-	void setupMesh();
-};
-
+		void setupMesh();
+	};
+}
 #endif

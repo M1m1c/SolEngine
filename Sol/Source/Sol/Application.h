@@ -8,8 +8,8 @@
 #include "Sol/ImGui/ImGuiLayer.h"
 
 //TEMPORARY, WILL BE REMOVED LATER
-#include "Renderer/Shader.h"
-#include <Sol/Renderer/Buffer.h>
+//#include "Renderer/Shader.h"
+#include <GalaxyDraw/GalaxyDraw.h>
 
 namespace Sol 
 {
@@ -36,10 +36,9 @@ namespace Sol
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		unsigned int m_VertexArray;
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<GD_Shader> m_Shader;
+		std::shared_ptr<GD_VAO> m_VertexArray;
+	
 
 		static Application* s_Instance;
 	};

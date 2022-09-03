@@ -1,28 +1,51 @@
 #include "solpch.h"
 
 #include "RenderScreen.h"
+#include <glad/glad.h>
+#include "VAO.h"
+#include "EBO.h"
+#include "shaderClass.h"
+#include "Model.h"
 
-void RenderScreen::Draw(const VAO& va, const EBO& ib, const Shader& shader) const
+namespace GalaxyDraw
 {
-    shader.Bind();
-    va.Bind();
-    ib.Bind();
 
-    glDrawElements(GL_TRIANGLES, ib.count, GL_UNSIGNED_INT, nullptr);
-}
+	void RenderScreen::Draw(const VAO& va, const EBO& ib, const Shader& shader) const
+	{
+		shader.Bind();
+		va.Bind();
+		ib.Bind();
 
-void RenderScreen::Draw(const Model& model, const Shader& shader) const
-{
-    for (size_t i = 0; i < model.meshes.size(); i++)
-    {
-        Mesh mesh = model.meshes[i];
-        VAO vao(mesh.VAO);
-        EBO ebo(&(mesh.indices[0]), model.meshes[i].indices.size());
-        this->Draw(vao, ebo,shader);
-    }
-}
+		glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
+	}
 
-void RenderScreen::Clear() const
-{
-    glClear(GL_COLOR_BUFFER_BIT);
+	void RenderScreen::Draw(const Model& model, const Shader& shader) const
+	{
+		for (size_t i = 0; i < model.meshes.size(); i++)
+		{
+			Mesh mesh = model.meshes[i];
+			VAO vao(mesh.VAO);
+			EBO ebo(&(mesh.indices[0]), model.meshes[i].indices.size());
+			this->Draw(vao, ebo, shader);
+		}
+	}
+
+	void RenderScreen::DrawIndexed(const std::shared_ptr<VertexArray> va)
+	{
+		glDrawElements(GL_TRIANGLES, va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+	}
+
+	void RenderScreen::SetClearColor(const glm::vec4& color)
+	{
+		glClearColor(color.r, color.g, color.b, color.a);
+	}
+
+	void RenderScreen::Clear() const
+	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+
+
+	
+
 }
