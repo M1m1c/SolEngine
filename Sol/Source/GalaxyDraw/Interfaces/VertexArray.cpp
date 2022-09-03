@@ -1,7 +1,7 @@
 #include "solpch.h"
 #include "VertexArray.h"
 #include "Renderer.h"
-#include "VAO.h"
+#include "GalaxyDraw/VAO.h"
 
 namespace GalaxyDraw 
 {
@@ -9,11 +9,11 @@ namespace GalaxyDraw
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:
+		case RendererAPI::API::None:
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::OpenGL: return new VAO();
+		case RendererAPI::API::OpenGL: return new VAO();
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
