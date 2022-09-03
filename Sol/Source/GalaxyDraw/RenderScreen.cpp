@@ -1,6 +1,11 @@
 #include "solpch.h"
 
 #include "RenderScreen.h"
+#include <glad/glad.h>
+#include "VAO.h"
+#include "EBO.h"
+#include "shaderClass.h"
+#include "Model.h"
 
 namespace GalaxyDraw
 {
@@ -25,9 +30,22 @@ namespace GalaxyDraw
 		}
 	}
 
+	void RenderScreen::DrawIndexed(const std::shared_ptr<VertexArray> va)
+	{
+		glDrawElements(GL_TRIANGLES, va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+	}
+
+	void RenderScreen::SetClearColor(const glm::vec4& color)
+	{
+		glClearColor(color.r, color.g, color.b, color.a);
+	}
+
 	void RenderScreen::Clear() const
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
+
+
+	
 
 }

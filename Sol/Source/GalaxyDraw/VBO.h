@@ -5,7 +5,7 @@
 
 #include "solpch.h"
 #include "GLMacros.h"
-#include "Buffer.h"
+#include "Interfaces/Buffer.h"
 
 namespace GalaxyDraw
 {

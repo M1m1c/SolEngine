@@ -1,7 +1,14 @@
 #include "solpch.h"
-
 #include "Model.h"
 
+#include "GLMacros.h"
+#include <glad/glad.h>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <stb_image.h>
+
+namespace GalaxyDraw{
 Model::Model(std::string const& path, bool gamma) : gammaCorrection(gamma)
 {
 	loadModel(path);
@@ -182,4 +189,5 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
 	}
 
 	return textureID;
+}
 }

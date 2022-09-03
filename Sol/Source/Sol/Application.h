@@ -36,7 +36,7 @@ namespace Sol
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<GD_Shader> m_Shader;
 		std::shared_ptr<GD_VAO> m_VertexArray;
 	
 

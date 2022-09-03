@@ -152,22 +152,24 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\GalaxyDraw\Buffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Camera.h" />
     <ClInclude Include="Source\GalaxyDraw\EBO.h" />
-    <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h" />
     <ClInclude Include="Source\GalaxyDraw\GLMacros.h" />
+    <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h" />
     <ClInclude Include="Source\GalaxyDraw\IBuildable.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\RenderCommand.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\RendererAPI.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\VertexArray.h" />
     <ClInclude Include="Source\GalaxyDraw\Mesh.h" />
     <ClInclude Include="Source\GalaxyDraw\Model.h" />
     <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h" />
     <ClInclude Include="Source\GalaxyDraw\RenderScreen.h" />
-    <ClInclude Include="Source\GalaxyDraw\Renderer.h" />
     <ClInclude Include="Source\GalaxyDraw\Texture.h" />
     <ClInclude Include="Source\GalaxyDraw\VAO.h" />
     <ClInclude Include="Source\GalaxyDraw\VBO.h" />
     <ClInclude Include="Source\GalaxyDraw\shaderClass.h" />
-    <ClInclude Include="Source\GalaxyDraw\VertexArray.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsInput.h" />
@@ -609,20 +611,23 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\GalaxyDraw\Buffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Camera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\EBO.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\GLMacros.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderCommand.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\RendererAPI.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\VertexArray.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Mesh.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp" />
     <ClCompile Include="Source\GalaxyDraw\RenderScreen.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Renderer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Texture.cpp" />
     <ClCompile Include="Source\GalaxyDraw\VAO.cpp" />
     <ClCompile Include="Source\GalaxyDraw\VBO.cpp" />
     <ClCompile Include="Source\GalaxyDraw\shaderClass.cpp" />
     <ClCompile Include="Source\GalaxyDraw\stb.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\VertexArray.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />

@@ -1,13 +1,20 @@
 #pragma once
 #include "shaderClass.h"
-#include "Buffer.h"
-#include "VertexArray.h"
+#include "Interfaces/Buffer.h"
+#include "Interfaces/VertexArray.h"
+#include "Interfaces/Renderer.h"
+#include "Interfaces/RenderCommand.h"
 
 // This file is meant to be the only file you need to include to use GalaxyDraw.
 // It should mostly contain typedefs and macros for ease of use outside of GalaxyDraw.
 /////////////////////////////////////////////////////
 
 #define GD_ GalaxyDraw
+
+//Defined in shaderClass.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::Shader GD_Shader;
+/////////////////////////////////////////////////////
 
 
 //Defined in Buffer.h
@@ -22,4 +29,16 @@ typedef GalaxyDraw::BufferLayout GD_BufferLayout;
 //Defined in VertexArray.h
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::VertexArray GD_VAO;
+/////////////////////////////////////////////////////
+
+
+//Defined in Renderer.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::Renderer GD_Renderer;
+/////////////////////////////////////////////////////
+
+
+//Defined in RenderCommand.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::RenderCommand GD_RenderCommand;
 /////////////////////////////////////////////////////

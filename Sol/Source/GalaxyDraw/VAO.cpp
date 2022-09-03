@@ -1,6 +1,8 @@
 #include "solpch.h"
 
 #include "VAO.h"
+#include "GLMacros.h"
+#include <glad/glad.h>
 
 namespace GalaxyDraw
 {
@@ -42,7 +44,7 @@ namespace GalaxyDraw
 	}
 
 	// Links a VBO to the VAO using a certain layout
-	void VAO::LinkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset)
+	void VAO::LinkAttrib(VBO& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset)
 	{
 		VBO.Bind();
 

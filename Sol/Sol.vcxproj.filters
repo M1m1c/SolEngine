@@ -7,6 +7,9 @@
     <Filter Include="Source\GalaxyDraw">
       <UniqueIdentifier>{39723F18-A588-3DAE-EEFF-C8CF5A550E36}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GalaxyDraw\Interfaces">
+      <UniqueIdentifier>{EC600C87-D81B-FC32-81D3-747D6D6D46C3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Platform">
       <UniqueIdentifier>{6A48A913-D6D3-16D8-DFE4-99CC4BEF72D8}</UniqueIdentifier>
     </Filter>
@@ -51,9 +54,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\GalaxyDraw\Buffer.h">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Camera.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
@@ -63,8 +63,26 @@
     <ClInclude Include="Source\GalaxyDraw\GLMacros.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\IBuildable.h">
       <Filter>Source\GalaxyDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\RenderCommand.h">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer.h">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\RendererAPI.h">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\VertexArray.h">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Mesh.h">
       <Filter>Source\GalaxyDraw</Filter>
@@ -76,9 +94,6 @@
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\RenderScreen.h">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Renderer.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Texture.h">
@@ -1410,18 +1425,28 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp">
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h" />
-    <ClInclude Include="Source\GalaxyDraw\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\GalaxyDraw\Buffer.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Camera.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\EBO.cpp">
       <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderCommand.cpp">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer.cpp">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\RendererAPI.cpp">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\VertexArray.cpp">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Mesh.cpp">
       <Filter>Source\GalaxyDraw</Filter>
@@ -1433,9 +1458,6 @@
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\RenderScreen.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Renderer.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Texture.cpp">
@@ -1489,6 +1511,6 @@
     <ClCompile Include="Source\solpch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\VertexArray.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\GLMacros.cpp" />
   </ItemGroup>
 </Project>

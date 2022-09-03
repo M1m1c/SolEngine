@@ -1,11 +1,9 @@
 #ifndef VAO_CLASS_H
 #define VAO_CLASS_H
 
-#include <glad/glad.h>
 
-#include "VertexArray.h"
+#include "Interfaces/VertexArray.h"
 #include "VBO.h"
-#include "GLMacros.h"
 
 namespace GalaxyDraw 
 {
@@ -14,14 +12,14 @@ namespace GalaxyDraw
 	{
 	public:
 		// ID reference for the Vertex Array Object
-		GLuint ID;
+		uint32_t ID;
 		// Constructor that generates a VAO ID
 		VAO();
 		VAO(const unsigned int vaoID);
 		virtual ~VAO();
 
 		// Links a VBO Attribute such as a position or color to the VAO
-		void LinkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset);
+		void LinkAttrib(VBO& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset);
 		// Binds the VAO
 		virtual void Bind() const override;
 		// Unbinds the VAO

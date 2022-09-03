@@ -1,16 +1,18 @@
 #include "solpch.h"
-
 #include "EBO.h"
+
+#include "GLMacros.h"
+#include <glad/glad.h>
 
 namespace GalaxyDraw
 {
 
 	// Constructor that generates a Elements Buffer Object and links it to indices
-	EBO::EBO(GLuint* indicesArray, unsigned int elementCount) : count(elementCount)
+	EBO::EBO(uint32_t* indicesArray, unsigned int elementCount) : count(elementCount)
 	{
 		GLCall(glGenBuffers(1, &ID));
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID));
-		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), indicesArray, GL_STATIC_DRAW));
+		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indicesArray, GL_STATIC_DRAW));
 	}
 
 	// Destructor that hanldes deleting the buffer when this class gets deleted

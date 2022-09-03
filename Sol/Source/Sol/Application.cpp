@@ -2,8 +2,6 @@
 #include "solpch.h"
 #include "Application.h"
 #include "Sol/Log.h"
-#include <glad/glad.h>
-
 #include "Sol/Input.h"
 
 namespace Sol
@@ -77,7 +75,7 @@ namespace Sol
 			
 		)";*/
 
-		m_Shader.reset(new Shader(
+		m_Shader.reset(new GD_Shader(
 			"../Triangle.vert",
 			"../Triangle.frag"));
 	}
@@ -89,12 +87,15 @@ namespace Sol
 	{
 		while (m_Running)
 		{
-			glClear(GL_COLOR_BUFFER_BIT);
+			GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+			GD_RenderCommand::Clear();
 
-			m_Shader->Bind();
-			m_VertexArray->Bind();
+			GD_Renderer::BeginScene();
 
-			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			m_Shader->Bind();	
+			GD_Renderer::Submit(m_VertexArray);
+
+			GD_Renderer::EndScene();
 
 			for (Layer* layer : m_LayerStack)
 			{

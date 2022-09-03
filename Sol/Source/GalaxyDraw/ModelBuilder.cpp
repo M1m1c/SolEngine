@@ -2,17 +2,19 @@
 
 #include "ModelBuilder.h"
 
-ModelBuilder::ModelBuilder()
-{
+namespace GalaxyDraw {
+	ModelBuilder::ModelBuilder()
+	{
 
-}
+	}
 
-ModelBuilder::~ModelBuilder()
-{
+	ModelBuilder::~ModelBuilder()
+	{
 
-}
+	}
 
-Model ModelBuilder::Build()
-{
-	return Model(path);
+	Model ModelBuilder::Build()
+	{
+		return Model(path);
+	}
 }
