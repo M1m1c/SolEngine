@@ -1,29 +1,28 @@
 #ifndef TEXTURE_CLASS_H
 #define TEXTURE_CLASS_H
 
-#include <glad/glad.h>
-#include <stb_image.h>
-
-#include "shaderClass.h"
-#include "GLMacros.h"
-
-class Texture
+namespace GalaxyDraw 
 {
-public:
-	unsigned char* m_LocalBuffer;
-	GLuint ID;
-	GLenum type;
-	GLuint unit;
+	class Shader;
 
-	Texture(const char* image, GLenum texType, GLuint slot, GLenum format, GLenum pixelType);
+	class Texture
+	{
+	public:
+		unsigned char* m_LocalBuffer;
+		uint32_t ID;
+		uint32_t type;
+		uint32_t unit;
 
-	// Assigns a texture unit to a texture
-	void texUnit(Shader& shader, const char* uniform, GLuint _unit);
-	// Binds a texture
-	void Bind() const;
-	// Unbinds a texture
-	void Unbind() const;
-	// Deletes a texture
-	void Delete();
-};
+		Texture(const char* image, uint32_t texType, uint32_t slot, uint32_t format, uint32_t pixelType);
+
+		// Assigns a texture unit to a texture
+		void texUnit(Shader& shader, const char* uniform, uint32_t _unit);
+		// Binds a texture
+		void Bind() const;
+		// Unbinds a texture
+		void Unbind() const;
+		// Deletes a texture
+		void Delete();
+	};
+}
 #endif

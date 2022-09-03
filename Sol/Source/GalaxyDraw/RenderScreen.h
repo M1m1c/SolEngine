@@ -1,15 +1,24 @@
 #pragma once
 
-#include <glad/glad.h>
-#include "VAO.h"
-#include "EBO.h"
-#include "shaderClass.h"
-#include "Model.h"
+#include "Interfaces/RendererAPI.h"
 
-class RenderScreen
+namespace GalaxyDraw 
 {
-public:
-    void Draw(const VAO& va, const EBO& ib, const Shader& shader) const;
-    void Draw(const Model& model, const Shader& shader) const;
-    void Clear() const;
-};
+	class VAO;
+	class EBO;
+	class Shader;
+	class Model;
+
+	class RenderScreen : public RendererAPI
+	{
+	public:
+		void Draw(const VAO& va, const EBO& ib, const Shader& shader) const;
+		void Draw(const Model& model, const Shader& shader) const;
+
+		virtual void DrawIndexed(const std::shared_ptr<VertexArray> va) override;
+		virtual void SetClearColor(const glm::vec4& color) override;
+		void Clear() const override;
+
+		
+	};
+}

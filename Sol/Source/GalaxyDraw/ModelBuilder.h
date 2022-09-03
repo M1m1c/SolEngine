@@ -3,16 +3,17 @@
 
 #include "IBuildable.h"
 #include "Model.h"
-
-class ModelBuilder : public IBuildable<Model>
+namespace GalaxyDraw 
 {
-public:
-	BUILDABLE_PROPERTY(ModelBuilder, std::string, path)
+	class ModelBuilder : public IBuildable<Model>
+	{
+	public:
+		BUILDABLE_PROPERTY(ModelBuilder, std::string, path)
 
-	ModelBuilder();
-	~ModelBuilder();
+			ModelBuilder();
+		~ModelBuilder();
 
-	Model Build();
-};
-
+		Model Build();
+	};
+}
 #endif
