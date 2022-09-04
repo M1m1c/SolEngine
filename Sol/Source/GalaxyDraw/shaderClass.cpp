@@ -4,13 +4,15 @@
 #include "GLMacros.h"
 #include <glad/glad.h>
 
-
 namespace GalaxyDraw 
 {
-	//TODO I seem unable to send afile path and have this find it
 	std::string get_file_contents(const char* filename)
 	{
-		std::ifstream in(filename, std::ios::binary);
+		std::string targetPath = "../Sol/Source/GalaxyDraw/Shaders/";
+		std::string targetPathDebug = "../Sol/Source/GalaxyDraw/Shaders/";
+		targetPath.append(filename);
+
+		std::ifstream in(targetPath, std::ios::binary);
 
 		if (in)
 		{
@@ -22,6 +24,10 @@ namespace GalaxyDraw
 			in.close();
 			return (contents);
 		}
+
+		//TODO Luds, I seem to need the Sol/Log.h file to run the engine's logs, so as a hacky fix, I'm using std::cout for now
+		std::cout << "Filepath not found within >" << targetPathDebug;
+
 		throw (errno);
 	}
 

@@ -126,7 +126,7 @@
     <ClInclude Include="Source\Sol\Application.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Core.h">
+    <ClInclude Include="Source\Sol\CORE.H">
       <Filter>Source\Sol</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\EntryPoint.h">
@@ -1433,6 +1433,9 @@
     <ClCompile Include="Source\GalaxyDraw\EBO.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\GLMacros.cpp">
+      <Filter>Source\GalaxyDraw</Filter>
+    </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClCompile>
@@ -1511,6 +1514,22 @@
     <ClCompile Include="Source\solpch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\GLMacros.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\GalaxyDraw\Shaders\Triangle.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\default.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\default.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\depthBuffer.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\directionalLight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\light.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\light.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\multiLight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\pointLight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\quadUV.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\quadUV.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\spotlight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\stencilOutline.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\stencilOutline.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\Triangle.frag" />
   </ItemGroup>
 </Project>
