@@ -76,8 +76,8 @@ namespace Sol
 		)";*/
 
 		m_Shader.reset(new GD_Shader(
-			"../Triangle.vert",
-			"../Triangle.frag"));
+			"Triangle.vert",
+			"Triangle.frag"));
 	}
 
 	Application::~Application()

@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>F:\FG Projects\SolEngine\SolEngine\Sol\Sol\thirdparty\assimp\bin\Debug-windows-x86_64\assimp\assimp.dll</FullPath>
+      <FullPath>D:\StudyingVSCode\SolEngine\Sol\thirdparty\assimp\bin\Debug-windows-x86_64\assimp\assimp.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
