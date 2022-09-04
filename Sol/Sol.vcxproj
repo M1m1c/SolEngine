@@ -176,7 +176,7 @@
     <ClInclude Include="Source\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="Source\Sol.h" />
     <ClInclude Include="Source\Sol\Application.h" />
-    <ClInclude Include="Source\Sol\Core.h" />
+    <ClInclude Include="Source\Sol\CORE.H" />
     <ClInclude Include="Source\Sol\EntryPoint.h" />
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h" />
     <ClInclude Include="Source\Sol\Events\Event.h" />
@@ -659,6 +659,23 @@
     <ProjectReference Include="thirdparty\assimp\assimp.vcxproj">
       <Project>{724885F2-5EEA-AFC8-47A5-C31C33E63619}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\GalaxyDraw\Shaders\default.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\default.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\depthBuffer.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\directionalLight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\light.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\light.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\multiLight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\pointLight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\quadUV.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\quadUV.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\spotlight.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\stencilOutline.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\stencilOutline.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\Triangle.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\Triangle.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
