@@ -1531,5 +1531,6 @@
     <None Include="Source\GalaxyDraw\Shaders\stencilOutline.frag" />
     <None Include="Source\GalaxyDraw\Shaders\stencilOutline.vert" />
     <None Include="Source\GalaxyDraw\Shaders\Triangle.frag" />
+    <None Include="Source\GalaxyDraw\Shaders\uvMangoPixelated.frag" />
   </ItemGroup>
 </Project>
