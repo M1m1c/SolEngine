@@ -11,7 +11,7 @@ namespace Sol
 
 	
 
-	Application::Application()
+	Application::Application() : m_Camera(10, 10, glm::vec3(0.f))
 	{
 		SOL_CORE_ASSERT(!s_Instance, "Application already exists!")
 		s_Instance = this;
@@ -90,10 +90,11 @@ namespace Sol
 			GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 			GD_RenderCommand::Clear();
 
-			GD_Renderer::BeginScene();
+			m_Camera.SetRotation({ 0.5f,0.0f,0.f });
 
-			m_Shader->Bind();	
-			GD_Renderer::Submit(m_VertexArray);
+			GD_Renderer::BeginScene(m_Camera);
+
+			GD_Renderer::Submit(m_Shader,m_VertexArray);
 
 			GD_Renderer::EndScene();
 
