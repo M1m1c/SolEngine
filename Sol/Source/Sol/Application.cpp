@@ -9,12 +9,12 @@ namespace Sol
 
 	Application* Application::s_Instance = nullptr;
 
+	
 
-
-	Application::Application()
+	Application::Application() : m_Camera(10, 10, glm::vec3(0.f))
 	{
 		SOL_CORE_ASSERT(!s_Instance, "Application already exists!")
-			s_Instance = this;
+		s_Instance = this;
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SOL_BIND_EVENT_FN(Application::OnEvent));
@@ -24,21 +24,20 @@ namespace Sol
 
 		m_VertexArray.reset(GD_VAO::Create());
 
-		float vertices[5 * 3] = {
-			-0.5f, -0.5f, 0.0f,		0.0f, 0.0f,
-			0.5f, -0.5f, 0.0f, 			1.0f, 0.0f,
-			0.0f, 0.5f, 0.0f,  			0.5f, 1.0f,
+		float vertices[3 * 3] = {
+			-0.5f, -0.5f, 0.0f,
+			0.5f, -0.5f, 0.0f,
+			0.0f, 0.5f, 0.0f
 		};
-
 
 		std::shared_ptr<GD_VBO> vertexBuffer;
 		vertexBuffer.reset(GD_VBO::Create(vertices, sizeof(vertices)));
 
-		GD_BufferLayout layout =
+		GD_BufferLayout layout = 
 		{
-			{GD_ShaderDataType::Float3, "aPos"},
-			{GD_ShaderDataType::Float2, "aTexCoords"},
-			/*	{GD_ShaderDataType::Float4, "a_Color"},*/
+			{GD_ShaderDataType::Float3, "a_Position"},
+		/*	{GD_ShaderDataType::Float3, "a_Normal"},
+			{GD_ShaderDataType::Float4, "a_Color"},*/
 		};
 
 		vertexBuffer->SetLayout(layout);
@@ -59,33 +58,26 @@ namespace Sol
 			v_Position = a_Position + 0.5;
 			gl_Position = vec4(a_Position, 1.0);
 		}
-
+			
 		)";*/
 
 
-		/*	std::string fragmentSrc = R"(
-			#version 330 core
+	/*	std::string fragmentSrc = R"(
+		#version 330 core
 
-			layout(location = 0) out vec4 color;
-			in vec3 v_Position;
+		layout(location = 0) out vec4 color;
+		in vec3 v_Position;
+		
+		void main()
+		{
+			color = vec4(v_Position, 1.0);
+		}
+			
+		)";*/
 
-			void main()
-			{
-				color = vec4(v_Position, 1.0);
-			}
-
-			)";*/
 		m_Shader.reset(new GD_Shader(
-			"quadUV.vert",
-			"uvMangoPixelated.frag"));
-
-		m_Shader->Bind();
-
-		glm::mat4 baseMatrix = glm::mat4(1.0f);
-
-		m_Shader->setMat4("model", baseMatrix);
-		m_Shader->setMat4("view", baseMatrix);
-		m_Shader->setMat4("projection", baseMatrix);
+			"Triangle.vert",
+			"Triangle.frag"));
 	}
 
 	Application::~Application()
@@ -98,10 +90,11 @@ namespace Sol
 			GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 			GD_RenderCommand::Clear();
 
-			GD_Renderer::BeginScene();
+			m_Camera.SetRotation({ 0.5f,0.0f,0.f });
 
-			m_Shader->Bind();
-			GD_Renderer::Submit(m_VertexArray);
+			GD_Renderer::BeginScene(m_Camera);
+
+			GD_Renderer::Submit(m_Shader,m_VertexArray);
 
 			GD_Renderer::EndScene();
 
@@ -151,7 +144,7 @@ namespace Sol
 		overlay->OnAttach();
 	}
 
-
+	
 
 	bool Application::OnWindowClose(WindowClosedEvent& e)
 	{

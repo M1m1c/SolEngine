@@ -4,6 +4,7 @@
 #include "Interfaces/VertexArray.h"
 #include "Interfaces/Renderer.h"
 #include "Interfaces/RenderCommand.h"
+#include "Camera.h"
 
 // This file is meant to be the only file you need to include to use GalaxyDraw.
 // It should mostly contain typedefs and macros for ease of use outside of GalaxyDraw.
@@ -41,4 +42,9 @@ typedef GalaxyDraw::Renderer GD_Renderer;
 //Defined in RenderCommand.h
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::RenderCommand GD_RenderCommand;
+/////////////////////////////////////////////////////
+
+//Defined in Camera.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::Camera GD_Camera;
 /////////////////////////////////////////////////////

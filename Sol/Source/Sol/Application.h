@@ -39,7 +39,7 @@ namespace Sol
 		std::shared_ptr<GD_Shader> m_Shader;
 		std::shared_ptr<GD_VAO> m_VertexArray;
 	
-
+		GD_Camera m_Camera;
 		static Application* s_Instance;
 	};
 
