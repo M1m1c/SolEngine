@@ -12,6 +12,6 @@
 #include "Sol/Log.h"
 #include "Sol/ImGui/ImGuiLayer.h"
 
-
+#include <GalaxyDraw/GalaxyDraw.h>
 
 #include "Sol/EntryPoint.h"

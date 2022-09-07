@@ -9,7 +9,7 @@
 
 //TEMPORARY, WILL BE REMOVED LATER
 //#include "Renderer/Shader.h"
-#include <GalaxyDraw/GalaxyDraw.h>
+
 
 namespace Sol 
 {
@@ -36,10 +36,6 @@ namespace Sol
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		std::shared_ptr<GD_Shader> m_Shader;
-		std::shared_ptr<GD_VAO> m_VertexArray;
-	
-		GD_Camera m_Camera;
 		static Application* s_Instance;
 	};
 
