@@ -177,6 +177,7 @@
     <ClInclude Include="Source\Sol.h" />
     <ClInclude Include="Source\Sol\Application.h" />
     <ClInclude Include="Source\Sol\CORE.H" />
+    <ClInclude Include="Source\Sol\Core\TimeStep.h" />
     <ClInclude Include="Source\Sol\EntryPoint.h" />
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h" />
     <ClInclude Include="Source\Sol\Events\Event.h" />

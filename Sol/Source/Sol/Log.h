@@ -30,6 +30,7 @@ namespace Sol
 #define SOL_CORE_INFO(...)  ::Sol::Log::GetCoreLogger()->info(__VA_ARGS__)
 #define SOL_CORE_TRACE(...) ::Sol::Log::GetCoreLogger()->trace(__VA_ARGS__)
 
+//Example of engine logging call SOL_CORE_TRACE("deltaTime {0}, ({1})ms", X, Y);
 
 //Client Log Macros
 #define SOL_CRITICAL(...) ::Sol::Log::GetClientLogger()->critical(__VA_ARGS__)
@@ -38,3 +39,4 @@ namespace Sol
 #define SOL_INFO(...)  ::Sol::Log::GetClientLogger()->info(__VA_ARGS__)
 #define SOL_TRACE(...) ::Sol::Log::GetClientLogger()->trace(__VA_ARGS__)
 
+//Example of client logging call SOL_TRACE("deltaTime {0}, ({1})ms", X, Y);

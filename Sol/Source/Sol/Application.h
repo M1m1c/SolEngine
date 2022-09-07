@@ -6,10 +6,11 @@
 #include "Events/Event.h";
 #include "Sol/Events/ApplicationEvent.h"
 #include "Sol/ImGui/ImGuiLayer.h"
+#include "Sol/Core/TimeStep.h"
 
 //TEMPORARY, WILL BE REMOVED LATER
 //#include "Renderer/Shader.h"
-#include <GalaxyDraw/GalaxyDraw.h>
+
 
 namespace Sol 
 {
@@ -35,10 +36,7 @@ namespace Sol
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
-
-		std::shared_ptr<GD_Shader> m_Shader;
-		std::shared_ptr<GD_VAO> m_VertexArray;
-	
+		float m_LastFrameTime = 0.0f;
 
 		static Application* s_Instance;
 	};

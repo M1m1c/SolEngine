@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Sol/Log.h"
 #include "Sol/Input.h"
+#include <GLFW/glfw3.h>
 
 namespace Sol
 {
@@ -11,7 +12,7 @@ namespace Sol
 
 	
 
-	Application::Application()
+	Application::Application() 
 	{
 		SOL_CORE_ASSERT(!s_Instance, "Application already exists!")
 		s_Instance = this;
@@ -21,85 +22,24 @@ namespace Sol
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
-
-		m_VertexArray.reset(GD_VAO::Create());
-
-		float vertices[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f
-		};
-
-		std::shared_ptr<GD_VBO> vertexBuffer;
-		vertexBuffer.reset(GD_VBO::Create(vertices, sizeof(vertices)));
-
-		GD_BufferLayout layout = 
-		{
-			{GD_ShaderDataType::Float3, "a_Position"},
-		/*	{GD_ShaderDataType::Float3, "a_Normal"},
-			{GD_ShaderDataType::Float4, "a_Color"},*/
-		};
-
-		vertexBuffer->SetLayout(layout);
-		m_VertexArray->AddVertexBuffer(vertexBuffer);
-
-		uint32_t indices[3] = { 0,1,2 };
-		std::shared_ptr<GD_EBO> indexBuffer;
-		indexBuffer.reset(GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-		m_VertexArray->SetIndexBuffer(indexBuffer);
-
-		/*std::string vertexSrc = R"(
-		#version 330 core
-
-		layout(location = 0) in vec3 a_Position;
-		out vec3 v_Position;
-		void main()
-		{
-			v_Position = a_Position + 0.5;
-			gl_Position = vec4(a_Position, 1.0);
-		}
-			
-		)";*/
-
-
-	/*	std::string fragmentSrc = R"(
-		#version 330 core
-
-		layout(location = 0) out vec4 color;
-		in vec3 v_Position;
-		
-		void main()
-		{
-			color = vec4(v_Position, 1.0);
-		}
-			
-		)";*/
-
-		m_Shader.reset(new GD_Shader(
-			"Triangle.vert",
-			"Triangle.frag"));
 	}
 
 	Application::~Application()
 	{
 	}
+
+	//TODO implement FixedUpdate
 	void Application::Run()
 	{
 		while (m_Running)
 		{
-			GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-			GD_RenderCommand::Clear();
-
-			GD_Renderer::BeginScene();
-
-			m_Shader->Bind();	
-			GD_Renderer::Submit(m_VertexArray);
-
-			GD_Renderer::EndScene();
+			float time = glfwGetTime();//Should be in a platform class
+			TimeStep m_TimeStep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
 
 			for (Layer* layer : m_LayerStack)
 			{
-				layer->OnUpdate();
+				layer->OnUpdate(m_TimeStep);
 			}
 
 			m_ImGuiLayer->Begin();

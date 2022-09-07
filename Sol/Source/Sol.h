@@ -3,6 +3,8 @@
 
 #include "Sol/Application.h"
 
+#include "Sol/Core/TimeStep.h"
+
 #include "Sol/Input.h"
 #include "Sol/KeyCodes.h"
 #include "Sol/MouseButtonCodes.h"
@@ -12,6 +14,6 @@
 #include "Sol/Log.h"
 #include "Sol/ImGui/ImGuiLayer.h"
 
-
+#include <GalaxyDraw/GalaxyDraw.h>
 
 #include "Sol/EntryPoint.h"
