@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Sol/Log.h"
 #include "Sol/Input.h"
+#include <GLFW/glfw3.h>
 
 namespace Sol
 {
@@ -26,15 +27,19 @@ namespace Sol
 	Application::~Application()
 	{
 	}
+
+	//TODO implement FixedUpdate
 	void Application::Run()
 	{
 		while (m_Running)
 		{
-			
+			float time = glfwGetTime();//Should be in a platform class
+			TimeStep m_TimeStep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
 
 			for (Layer* layer : m_LayerStack)
 			{
-				layer->OnUpdate();
+				layer->OnUpdate(m_TimeStep);
 			}
 
 			m_ImGuiLayer->Begin();

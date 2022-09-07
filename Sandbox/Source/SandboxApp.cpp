@@ -36,27 +36,27 @@ public:
 			"Triangle.frag"));
 	}
 
-	void OnUpdate() override
+	void OnUpdate(Sol::TimeStep deltaTime) override
 	{
 
 		if (Sol::Input::IsKeyPressed(SOL_KEY_D))
 		{
-			m_CameraPosition.x += m_CameraSpeed;
+			m_CameraPosition.x += m_CameraSpeed * deltaTime;
 		}
 
 		if (Sol::Input::IsKeyPressed(SOL_KEY_A))
 		{
-			m_CameraPosition.x += -m_CameraSpeed;
+			m_CameraPosition.x += -m_CameraSpeed * deltaTime;
 		}
 
 		if (Sol::Input::IsKeyPressed(SOL_KEY_W))
 		{
-			m_CameraPosition.y += m_CameraSpeed;
+			m_CameraPosition.y += m_CameraSpeed * deltaTime;
 		}
 
 		if (Sol::Input::IsKeyPressed(SOL_KEY_S))
 		{
-			m_CameraPosition.y += -m_CameraSpeed;
+			m_CameraPosition.y += -m_CameraSpeed * deltaTime;
 		}
 
 
@@ -86,7 +86,7 @@ private:
 
 	GD_Camera m_Camera;
 	glm::vec3 m_CameraPosition = glm::vec3(0.f);
-	float m_CameraSpeed = 0.05f;
+	float m_CameraSpeed = 1.f;
 };
 
 class Sandbox : public Sol::Application

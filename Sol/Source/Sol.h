@@ -3,6 +3,8 @@
 
 #include "Sol/Application.h"
 
+#include "Sol/Core/TimeStep.h"
+
 #include "Sol/Input.h"
 #include "Sol/KeyCodes.h"
 #include "Sol/MouseButtonCodes.h"

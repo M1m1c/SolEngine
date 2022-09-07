@@ -6,6 +6,7 @@
 #include "Events/Event.h";
 #include "Sol/Events/ApplicationEvent.h"
 #include "Sol/ImGui/ImGuiLayer.h"
+#include "Sol/Core/TimeStep.h"
 
 //TEMPORARY, WILL BE REMOVED LATER
 //#include "Renderer/Shader.h"
@@ -35,6 +36,7 @@ namespace Sol
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+		float m_LastFrameTime = 0.0f;
 
 		static Application* s_Instance;
 	};
