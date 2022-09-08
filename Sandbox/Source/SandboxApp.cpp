@@ -1,5 +1,7 @@
 #include "Sol.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 class ExampleLayer : public Sol::Layer
 {
 public:
@@ -59,7 +61,6 @@ public:
 			m_CameraPosition.y += -m_CameraSpeed * deltaTime;
 		}
 
-
 		//SOL_INFO("ExampleLayer::Update");
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
@@ -68,9 +69,20 @@ public:
 
 		m_Camera.SetRotation({ 0.5f,0.0f,0.f });
 
+		static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
 		GD_Renderer::BeginScene(m_Camera);
 
-		GD_Renderer::Submit(m_Shader, m_VertexArray);
+		for (int x = -5; x < 5; x++)
+		{
+			for (int y = -5; y < 5; y++)
+			{
+				glm::vec3 pos(x * 0.12f, y * 0.12f, 0.f);
+				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+
+				GD_Renderer::Submit(m_Shader, m_VertexArray, transform);
+			}
+		}
 
 		GD_Renderer::EndScene();
 	}
@@ -83,6 +95,8 @@ public:
 private:
 	std::shared_ptr<GD_Shader> m_Shader;
 	std::shared_ptr<GD_VAO> m_VertexArray;
+
+	glm::vec3 m_TrianglePos = glm::vec3(0.f);
 
 	GD_Camera m_Camera;
 	glm::vec3 m_CameraPosition = glm::vec3(0.f);
