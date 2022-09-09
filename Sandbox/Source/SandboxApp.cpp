@@ -33,7 +33,7 @@ public:
 		indexBuffer.reset(GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_Shader.reset(new GD_Shader(
+		m_Shader.reset(GD_Shader::Create(
 			"Triangle.vert",
 			"Triangle.frag"));
 	}

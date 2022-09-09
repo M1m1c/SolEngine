@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include "VAO.h"
 #include "EBO.h"
-#include "shaderClass.h"
+#include "Interfaces/Shader.h"
 #include "Model.h"
 
 namespace GalaxyDraw
