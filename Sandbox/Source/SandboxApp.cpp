@@ -1,6 +1,8 @@
 #include "Sol.h"
 
+#include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class ExampleLayer : public Sol::Layer
 {
@@ -73,6 +75,8 @@ public:
 
 		GD_Renderer::BeginScene(m_Camera);
 
+		m_Shader->setVec3("u_Color", m_TriangleColor);
+
 		for (int x = -5; x < 5; x++)
 		{
 			for (int y = -5; y < 5; y++)
@@ -85,6 +89,13 @@ public:
 		}
 
 		GD_Renderer::EndScene();
+	}
+
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Triangle Color", glm::value_ptr(m_TriangleColor));
+		ImGui::End();
 	}
 
 	virtual void OnEvent(Sol::Event& event) override
@@ -101,6 +112,8 @@ private:
 	GD_Camera m_Camera;
 	glm::vec3 m_CameraPosition = glm::vec3(0.f);
 	float m_CameraSpeed = 1.f;
+
+	glm::vec3 m_TriangleColor = { 0.f, 0.8f, 0.8f };
 };
 
 class Sandbox : public Sol::Application

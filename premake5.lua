@@ -131,13 +131,15 @@ project "Sandbox"
 	includedirs
 	{
 		"Sol/thirdparty/spdlog/include;",
+		"%{IncludeDir.ImGui}",
 		"Sol/Source",
 		"%{IncludeDir.glm}"
 	}
 
 	links
 	{
-		"Sol"
+		"Sol",
+		"ImGui"
 	}
 
 	filter "system:windows"

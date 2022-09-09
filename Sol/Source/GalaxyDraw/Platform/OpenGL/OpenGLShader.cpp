@@ -110,7 +110,9 @@ namespace GalaxyDraw
 
 	void OpenGLShader::setVec3(const std::string& name, const glm::vec3& value) const
 	{
-		GLCall(glUniform3fv(GetUniformLocation(name.c_str()), 1, &value[0]));
+		//TODO for some reson this GLCALL triggerd a break point when everything was right, look into why
+		//GLCall(glUniform3fv(GetUniformLocation(name.c_str()), 1, &value[0]));
+		glUniform3fv(GetUniformLocation(name.c_str()), 1, &value[0]);
 	}
 
 	void OpenGLShader::setVec3(const std::string& name, float x, float y, float z) const
