@@ -1,13 +1,13 @@
 #include "solpch.h"
-#include "OpenGLShader.h"
+#include "OpenGL_Shader.h"
 #include "GalaxyDraw/Interfaces/GalaxyMacros.h"
-#include "GalaxyDraw/GLMacros.h"
+#include "GLMacros.h"
 #include <glad/glad.h>
 
 namespace GalaxyDraw 
 {
 
-	OpenGLShader::OpenGLShader(const char* vertexFile, const char* fragmentFile)
+	OpenGL_Shader::OpenGL_Shader(const char* vertexFile, const char* fragmentFile)
 	{
 		std::string vertexCode = GalaxyMacros::get_file_contents(vertexFile);
 		std::string fragmentCode = GalaxyMacros::get_file_contents(fragmentFile);
@@ -35,29 +35,29 @@ namespace GalaxyDraw
 		GLCall(glDeleteShader(fragmentShader));
 	}
 
-	OpenGLShader::~OpenGLShader()
+	OpenGL_Shader::~OpenGL_Shader()
 	{
 		GLCall(glDeleteProgram(m_RendererID));
 	}
 
-	const uint32_t OpenGLShader::GetID() const
+	const uint32_t OpenGL_Shader::GetID() const
 	{
 		return m_RendererID;
 	}
 
 
-	void OpenGLShader::Bind() const
+	void OpenGL_Shader::Bind() const
 	{
 		GLCall(glUseProgram(m_RendererID));
 	}
 
-	void OpenGLShader::Delete() const
+	void OpenGL_Shader::Delete() const
 	{
 		GLCall(glDeleteProgram(m_RendererID));
 	}
 
 	// Checks if the different Shaders have compiled properly
-	void OpenGLShader::compileErrors(unsigned int shader, const char* type)
+	void OpenGL_Shader::compileErrors(unsigned int shader, const char* type)
 	{
 		// Stores status of compilation
 		GLint hasCompiled;
@@ -83,69 +83,69 @@ namespace GalaxyDraw
 		}
 	}
 
-	void OpenGLShader::setBool(const std::string& name, bool value) const
+	void OpenGL_Shader::setBool(const std::string& name, bool value) const
 	{
 		GLCall(glUniform1i(GetUniformLocation(name.c_str()), (int)value));
 	}
 
-	void OpenGLShader::setInt(const std::string& name, int value) const
+	void OpenGL_Shader::setInt(const std::string& name, int value) const
 	{
 		GLCall(glUniform1i(GetUniformLocation(name.c_str()), value));
 	}
 
-	void OpenGLShader::setFloat(const std::string& name, float value) const
+	void OpenGL_Shader::setFloat(const std::string& name, float value) const
 	{
 		GLCall(glUniform1f(GetUniformLocation(name.c_str()), value));
 	}
 
-	void OpenGLShader::setVec2(const std::string& name, const glm::vec2& value) const
+	void OpenGL_Shader::setVec2(const std::string& name, const glm::vec2& value) const
 	{
 		GLCall(glUniform2fv(GetUniformLocation(name.c_str()), 1, &value[0]));
 	}
 
-	void OpenGLShader::setVec2(const std::string& name, float x, float y) const
+	void OpenGL_Shader::setVec2(const std::string& name, float x, float y) const
 	{
 		GLCall(glUniform2f(GetUniformLocation(name.c_str()), x, y));
 	}
 
-	void OpenGLShader::setVec3(const std::string& name, const glm::vec3& value) const
+	void OpenGL_Shader::setVec3(const std::string& name, const glm::vec3& value) const
 	{
 		//TODO for some reson this GLCALL triggerd a break point when everything was right, look into why
 		//GLCall(glUniform3fv(GetUniformLocation(name.c_str()), 1, &value[0]));
 		glUniform3fv(GetUniformLocation(name.c_str()), 1, &value[0]);
 	}
 
-	void OpenGLShader::setVec3(const std::string& name, float x, float y, float z) const
+	void OpenGL_Shader::setVec3(const std::string& name, float x, float y, float z) const
 	{
 		GLCall(glUniform3f(GetUniformLocation(name.c_str()), x, y, z));
 	}
 
-	void OpenGLShader::setVec4(const std::string& name, const glm::vec4& value) const
+	void OpenGL_Shader::setVec4(const std::string& name, const glm::vec4& value) const
 	{
 		GLCall(glUniform4fv(GetUniformLocation(name.c_str()), 1, &value[0]));
 	}
 
-	void OpenGLShader::setVec4(const std::string& name, float x, float y, float z, float w) const
+	void OpenGL_Shader::setVec4(const std::string& name, float x, float y, float z, float w) const
 	{
 		GLCall(glUniform4f(GetUniformLocation(name.c_str()), x, y, z, w));
 	}
 
-	void OpenGLShader::setMat2(const std::string& name, const glm::mat2& mat) const
+	void OpenGL_Shader::setMat2(const std::string& name, const glm::mat2& mat) const
 	{
 		GLCall(glUniformMatrix2fv(GetUniformLocation(name.c_str()), 1, GL_FALSE, &mat[0][0]));
 	}
 
-	void OpenGLShader::setMat3(const std::string& name, const glm::mat3& mat) const
+	void OpenGL_Shader::setMat3(const std::string& name, const glm::mat3& mat) const
 	{
 		GLCall(glUniformMatrix3fv(GetUniformLocation(name.c_str()), 1, GL_FALSE, &mat[0][0]));
 	}
 
-	void OpenGLShader::setMat4(const std::string& name, const glm::mat4& mat) const
+	void OpenGL_Shader::setMat4(const std::string& name, const glm::mat4& mat) const
 	{
 		GLCall(glUniformMatrix4fv(GetUniformLocation(name.c_str()), 1, GL_FALSE, &mat[0][0]));
 	}
 
-	GLint OpenGLShader::GetUniformLocation(const std::string& name) const
+	GLint OpenGL_Shader::GetUniformLocation(const std::string& name) const
 	{
 		GLint location = glGetUniformLocation(m_RendererID, name.c_str());
 		if (location == -1)

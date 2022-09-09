@@ -2,7 +2,7 @@
 
 #include "Shader.h"
 #include "Renderer.h"
-#include "GalaxyDraw/Platform/OpenGL/OpenGLShader.h"
+#include "GalaxyDraw/Platform/OpenGL/OpenGL_Shader.h"
 
 namespace GalaxyDraw 
 {
@@ -14,7 +14,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return new OpenGLShader(vertexFile, fragmentFile);
+		case RendererAPI::API::OpenGL: return new OpenGL_Shader(vertexFile, fragmentFile);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;

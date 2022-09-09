@@ -2,8 +2,8 @@
 #include "Buffer.h"
 
 #include "Renderer.h"
-#include "GalaxyDraw/VBO.h"
-#include "GalaxyDraw/EBO.h"
+#include "GalaxyDraw/Platform/OpenGL/OpenGL_VBO.h"
+#include "GalaxyDraw/Platform/OpenGL/OpenGL_EBO.h"
 #include <Sol/Core.h>
 
 namespace GalaxyDraw
@@ -16,7 +16,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return new VBO(verts, size);
+		case RendererAPI::API::OpenGL: return new OpenGL_VBO(verts, size);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
@@ -30,7 +30,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return new EBO(indices, count);
+		case RendererAPI::API::OpenGL: return new OpenGL_EBO(indices, count);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;

@@ -1,7 +1,7 @@
 #include "solpch.h"
 #include "Camera.h"
 
-#include "GLMacros.h"
+#include "Platform/OpenGL/GLMacros.h"
 #include "Interfaces/Shader.h"
 
 #include <glad/glad.h>

@@ -7,12 +7,12 @@
 //#include "GLMacros.h"
 namespace GalaxyDraw
 {
-	class OpenGLShader : public Shader
+	class OpenGL_Shader : public Shader
 	{
 	public:
 		
-		OpenGLShader(const char* vertexFile, const char* fragmentFile);
-		virtual ~OpenGLShader() override;
+		OpenGL_Shader(const char* vertexFile, const char* fragmentFile);
+		virtual ~OpenGL_Shader() override;
 		virtual const uint32_t GetID() const override;
 
 		virtual void Bind() const override;

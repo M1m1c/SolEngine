@@ -3,7 +3,7 @@
 #include "Texture.h"
 
 #include "Interfaces/Shader.h"
-#include "GLMacros.h"
+#include "Platform/OpenGL/GLMacros.h"
 
 #include <glad/glad.h>
 #include <stb_image.h>

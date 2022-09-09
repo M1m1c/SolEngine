@@ -3,7 +3,7 @@
 
 
 #include "Interfaces/Shader.h"
-#include "GLMacros.h"
+#include "Platform/OpenGL/GLMacros.h"
 
 #include <glad/glad.h> // holds all OpenGL type declarations
 #include <glm/glm.hpp>
