@@ -17,7 +17,7 @@ public:
 			0.0f, 0.5f, 0.0f
 		};
 
-		std::shared_ptr<GD_VBO> vertexBuffer;
+		Sol::s_ptr<GD_VBO> vertexBuffer;
 		vertexBuffer.reset(GD_VBO::Create(vertices, sizeof(vertices)));
 
 		GD_BufferLayout layout =
@@ -31,7 +31,7 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0,1,2 };
-		std::shared_ptr<GD_EBO> indexBuffer;
+		Sol::s_ptr<GD_EBO> indexBuffer;
 		indexBuffer.reset(GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
@@ -104,8 +104,8 @@ public:
 	}
 
 private:
-	std::shared_ptr<GD_Shader> m_Shader;
-	std::shared_ptr<GD_VAO> m_VertexArray;
+	Sol::s_ptr<GD_Shader> m_Shader;
+	Sol::s_ptr<GD_VAO> m_VertexArray;
 
 	glm::vec3 m_TrianglePos = glm::vec3(0.f);
 
