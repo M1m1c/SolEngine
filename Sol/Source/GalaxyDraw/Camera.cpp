@@ -1,8 +1,8 @@
 #include "solpch.h"
 #include "Camera.h"
 
-#include "GLMacros.h"
-#include "shaderClass.h"
+#include "Platform/OpenGL/GLMacros.h"
+#include "Interfaces/Shader.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -40,7 +40,7 @@ namespace GalaxyDraw {
 	void Camera::MatrixUniform(GalaxyDraw::Shader& shader, const char* uniform)
 	{
 		// Exports camera matrix
-		GLCall(glUniformMatrix4fv(glGetUniformLocation(shader.ID, uniform), 1, GL_FALSE, glm::value_ptr(m_CameraMatrix)));
+		GLCall(glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), uniform), 1, GL_FALSE, glm::value_ptr(m_CameraMatrix)));
 	}
 
 	void Camera::Inputs(GLFWwindow* window)

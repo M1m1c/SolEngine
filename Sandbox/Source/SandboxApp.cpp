@@ -1,6 +1,8 @@
 #include "Sol.h"
 
+#include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class ExampleLayer : public Sol::Layer
 {
@@ -15,7 +17,7 @@ public:
 			0.0f, 0.5f, 0.0f
 		};
 
-		std::shared_ptr<GD_VBO> vertexBuffer;
+		Sol::s_ptr<GD_VBO> vertexBuffer;
 		vertexBuffer.reset(GD_VBO::Create(vertices, sizeof(vertices)));
 
 		GD_BufferLayout layout =
@@ -29,11 +31,11 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0,1,2 };
-		std::shared_ptr<GD_EBO> indexBuffer;
+		Sol::s_ptr<GD_EBO> indexBuffer;
 		indexBuffer.reset(GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_Shader.reset(new GD_Shader(
+		m_Shader.reset(GD_Shader::Create(
 			"Triangle.vert",
 			"Triangle.frag"));
 	}
@@ -73,6 +75,8 @@ public:
 
 		GD_Renderer::BeginScene(m_Camera);
 
+		m_Shader->setVec3("u_Color", m_TriangleColor);
+
 		for (int x = -5; x < 5; x++)
 		{
 			for (int y = -5; y < 5; y++)
@@ -87,20 +91,29 @@ public:
 		GD_Renderer::EndScene();
 	}
 
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Triangle Color", glm::value_ptr(m_TriangleColor));
+		ImGui::End();
+	}
+
 	virtual void OnEvent(Sol::Event& event) override
 	{
 		//SOL_TRACE("{0}", event);
 	}
 
 private:
-	std::shared_ptr<GD_Shader> m_Shader;
-	std::shared_ptr<GD_VAO> m_VertexArray;
+	Sol::s_ptr<GD_Shader> m_Shader;
+	Sol::s_ptr<GD_VAO> m_VertexArray;
 
 	glm::vec3 m_TrianglePos = glm::vec3(0.f);
 
 	GD_Camera m_Camera;
 	glm::vec3 m_CameraPosition = glm::vec3(0.f);
 	float m_CameraSpeed = 1.f;
+
+	glm::vec3 m_TriangleColor = { 0.f, 0.8f, 0.8f };
 };
 
 class Sandbox : public Sol::Application

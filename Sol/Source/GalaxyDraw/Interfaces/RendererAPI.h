@@ -3,7 +3,7 @@
 #include "glm/glm.hpp"
 #include "VertexArray.h"
 #include "Buffer.h"
-#include "GalaxyDraw/shaderClass.h"
+#include "Shader.h"
 #include "GalaxyDraw/Model.h"
 
 namespace GalaxyDraw 

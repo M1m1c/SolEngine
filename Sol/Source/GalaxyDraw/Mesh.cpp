@@ -2,8 +2,8 @@
 #include "Mesh.h"
 
 
-#include "shaderClass.h"
-#include "GLMacros.h"
+#include "Interfaces/Shader.h"
+#include "Platform/OpenGL/GLMacros.h"
 
 #include <glad/glad.h> // holds all OpenGL type declarations
 #include <glm/glm.hpp>
@@ -45,7 +45,7 @@ namespace GalaxyDraw
 				number = std::to_string(heightNr++); // transfer unsigned int to string
 
 			// now set the sampler to the correct texture unit
-			GLCall(glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i));
+			GLCall(glUniform1i(glGetUniformLocation(shader.GetID(), (name + number).c_str()), i));
 			// and finally bind the texture
 			GLCall(glBindTexture(GL_TEXTURE_2D, textures[i].id));
 		}

@@ -2,8 +2,8 @@
 
 #include "Texture.h"
 
-#include "shaderClass.h"
-#include "GLMacros.h"
+#include "Interfaces/Shader.h"
+#include "Platform/OpenGL/GLMacros.h"
 
 #include <glad/glad.h>
 #include <stb_image.h>
@@ -55,7 +55,7 @@ namespace GalaxyDraw {
 	void Texture::texUnit(Shader& shader, const char* uniform, uint32_t _unit)
 	{
 		// Gets the location of the uniform
-		GLCall(GLuint texUni = glGetUniformLocation(shader.ID, uniform));
+		GLCall(GLuint texUni = glGetUniformLocation(shader.GetID(), uniform));
 		// Shader needs to be activated before changing the value of a uniform
 		shader.Bind();
 		// Sets the value of the uniform

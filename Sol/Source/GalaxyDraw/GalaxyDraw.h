@@ -1,5 +1,5 @@
 #pragma once
-#include "shaderClass.h"
+#include "Interfaces/Shader.h"
 #include "Interfaces/Buffer.h"
 #include "Interfaces/VertexArray.h"
 #include "Interfaces/Renderer.h"
@@ -12,7 +12,7 @@
 
 #define GD_ GalaxyDraw
 
-//Defined in shaderClass.h
+//Defined in Shader.h
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::Shader GD_Shader;
 /////////////////////////////////////////////////////
