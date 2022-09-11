@@ -38,6 +38,13 @@ namespace Sol
 		LayerStack m_LayerStack;
 		float m_LastFrameTime = 0.0f;
 
+		float m_AccumulatedTime = 0.0f;
+		TimeStep m_FixedTimeStep = 0.0f;
+		const float m_FixedUpdateTime = 0.01f;
+
+		/*State m_Previous;
+		State m_Current;*/
+
 		static Application* s_Instance;
 	};
 

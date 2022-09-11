@@ -40,6 +40,11 @@ public:
 			"Triangle.frag"));
 	}
 
+	void OnFixedUpdate(Sol::TimeStep fixedStep,const float fixedTime) override
+	{
+
+	}
+
 	void OnUpdate(Sol::TimeStep deltaTime) override
 	{
 
