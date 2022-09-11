@@ -33,13 +33,40 @@ namespace Sol
 	{
 		while (m_Running)
 		{
-			float time = glfwGetTime();//Should be in a platform class
-			TimeStep m_TimeStep = time - m_LastFrameTime;
-			m_LastFrameTime = time;
+			float currentTime = glfwGetTime();//Should be in a platform class
+			TimeStep deltaTime = currentTime - m_LastFrameTime;
+			m_LastFrameTime = currentTime;
+			
+			TimeStep frameTime = deltaTime;
+			if (frameTime > 0.25) { frameTime = 0.25; }
+
+			m_AccumulatedTime += frameTime;
+
+			while (m_AccumulatedTime >= m_FixedUpdateTime)
+			{
+				//TODO need to introduce the concept of states on objects, 
+				// that holds things such as positions and other physics related things.
+				// These states will be used for interpolating between just before OnUpdate.
+				//previousState = currentState;
+
+				for (Layer* layer : m_LayerStack)
+				{
+					layer->OnFixedUpdate(m_FixedTimeStep, m_FixedUpdateTime);
+				}
+				m_FixedTimeStep += m_FixedUpdateTime;
+				m_AccumulatedTime -= m_FixedUpdateTime;
+			}
+
+		/*	const float alpha = m_AccumulatedTime / m_FixedUpdateTime;
+
+			State state = currentState * alpha +
+				previousState * (1.0 - alpha);
+
+			OnUpdateRender(state);*/
 
 			for (Layer* layer : m_LayerStack)
 			{
-				layer->OnUpdate(m_TimeStep);
+				layer->OnUpdate(deltaTime);
 			}
 
 			m_ImGuiLayer->Begin();
