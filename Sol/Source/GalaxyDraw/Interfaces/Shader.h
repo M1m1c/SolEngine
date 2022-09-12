@@ -11,6 +11,8 @@ namespace GalaxyDraw
 	class Shader
 	{
 	public:
+
+		//TODO turn into shared_ptr
 		static Shader* Create(const char* vertexFile, const char* fragmentFile);
 
 		virtual ~Shader() = default;
