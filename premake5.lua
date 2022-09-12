@@ -44,8 +44,6 @@ project "Sol"
 	{
 		"%{prj.name}/Source/**.h",
 		"%{prj.name}/Source/**.cpp",
-		"%{prj.name}/thirdparty/stb/**.cpp",
-		"%{prj.name}/thirdparty/stb/**.h",
 		"%{prj.name}/thirdparty/glm/glm/**.hpp",
 		"%{prj.name}/thirdparty/glm/glm/**.inl"
 	}
