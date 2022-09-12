@@ -19,7 +19,7 @@ namespace GalaxyDraw {
 
 
 		//TODO turn into shared_ptr
-		static VertexArray* Create();
+		static std::shared_ptr <VertexArray> Create();
 
 	};
 }

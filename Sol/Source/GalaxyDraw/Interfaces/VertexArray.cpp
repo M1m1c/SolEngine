@@ -5,7 +5,7 @@
 
 namespace GalaxyDraw 
 {
-	VertexArray* VertexArray::Create()
+	std::shared_ptr <VertexArray> VertexArray::Create()
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -13,7 +13,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return new OpenGL_VAO();
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_VAO>();
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;

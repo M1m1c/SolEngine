@@ -9,7 +9,7 @@ class ExampleLayer : public Sol::Layer
 public:
 	ExampleLayer() : Layer("Example"), m_Camera(10, 10, glm::vec3(0.f))
 	{
-		m_VertexArray.reset(GD_VAO::Create());
+		m_VertexArray = GD_VAO::Create();
 
 		float vertices[3 * 3] = {
 			-0.5f, -0.5f, 0.0f,
@@ -24,8 +24,7 @@ public:
 			-0.5f, 0.5f, 0.0f, 0.f, 1.f,
 		};
 
-		Sol::s_ptr<GD_VBO> vertexBuffer;
-		vertexBuffer.reset(GD_VBO::Create(squareVertices, sizeof(squareVertices)));
+		auto vertexBuffer = GD_VBO::Create(squareVertices, sizeof(squareVertices));
 
 		GD_BufferLayout layout =
 		{
@@ -39,13 +38,12 @@ public:
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0,1,2 };
-		Sol::s_ptr<GD_EBO> indexBuffer;
-		indexBuffer.reset(GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		auto indexBuffer = GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_Shader.reset(GD_Shader::Create(
+		m_Shader = GD_Shader::Create(
 			"Square.vert",
-			"Square.frag"));
+			"Square.frag");
 
 		m_Texture = GD_Texture2D::Create("assets/textures/think.png");
 		

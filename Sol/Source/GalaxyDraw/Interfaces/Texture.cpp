@@ -14,7 +14,7 @@ namespace GalaxyDraw {
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_Texture2D>(OpenGL_Texture2D(path));
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_Texture2D>(path);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;

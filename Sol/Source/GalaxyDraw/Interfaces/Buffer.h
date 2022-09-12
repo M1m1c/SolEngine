@@ -123,7 +123,7 @@ namespace GalaxyDraw
 		virtual const BufferLayout& GetLayout() const = 0;
 
 		//TODO turn into shared_ptr
-		static VertexBuffer* Create(float* verts, uint32_t size);
+		static std::shared_ptr <VertexBuffer> Create(float* verts, uint32_t size);
 	};
 
 	class IndexBuffer
@@ -136,7 +136,7 @@ namespace GalaxyDraw
 
 		virtual uint32_t GetCount()const = 0;
 
-		static IndexBuffer* Create(uint32_t* indices, uint32_t count);
+		static std::shared_ptr <IndexBuffer> Create(uint32_t* indices, uint32_t count);
 	};
 }
 
