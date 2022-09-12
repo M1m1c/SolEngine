@@ -1,16 +1,40 @@
 #include "solpch.h"
 
-#include "Texture.h"
+#include "OpenGL_Texture.h"
+#include "GLMacros.h"
 
-#include "Interfaces/Shader.h"
-#include "Platform/OpenGL/GLMacros.h"
+#include "Sol/Log.h"
+#include "GalaxyDraw/Interfaces/Shader.h"
 
 #include <glad/glad.h>
 #include <stb_image.h>
 
-namespace GalaxyDraw {
-	Texture::Texture(const char* image, uint32_t texType, uint32_t slot, uint32_t format, uint32_t pixelType)
+namespace GalaxyDraw 
+{
+	OpenGL_Texture2D::OpenGL_Texture2D(const std::string& path) : m_Path(path)
 	{
+		int widthImg, heightImg, numColCh;
+		stbi_set_flip_vertically_on_load(true);
+		stbi_uc* data= stbi_load(path.c_str(), &widthImg, &heightImg, &numColCh, 0);
+
+		SOL_CORE_ASSERT(data, "Failed to Load image!");
+		m_Width = widthImg;
+		m_Height = heightImg;
+
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+		glTextureStorage2D(m_RendererID, 1, GL_RGB8, m_Width, m_Height);
+
+		glTexParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+		stbi_image_free(data);
+	}
+
+	OpenGL_Texture2D::OpenGL_Texture2D(const char* image, uint32_t texType, uint32_t slot, uint32_t format, uint32_t pixelType)
+	{
+		m_Path = image;
 		// Assigns the type of the texture ot the texture object
 		type = texType;
 
@@ -21,12 +45,16 @@ namespace GalaxyDraw {
 		// Reads the image from a file and stores it in bytes
 		unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColCh, 0);
 
+		SOL_CORE_ASSERT(bytes, "Failed to Load image!");
+		m_Width = widthImg;
+		m_Height = heightImg;
+
 		// Generates an OpenGL texture object
-		GLCall(glGenTextures(1, &ID));
+		GLCall(glGenTextures(1, &m_RendererID));
 		// Assigns the texture to a Texture Unit
 		GLCall(glActiveTexture(GL_TEXTURE0 + slot));
 		unit = slot;
-		GLCall(glBindTexture(texType, ID));
+		GLCall(glBindTexture(texType, m_RendererID));
 
 		// Configures the type of algorithm that is used to make the image smaller or bigger
 		GLCall(glTexParameteri(texType, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
@@ -52,7 +80,12 @@ namespace GalaxyDraw {
 		GLCall(glBindTexture(texType, 0));
 	}
 
-	void Texture::texUnit(Shader& shader, const char* uniform, uint32_t _unit)
+	OpenGL_Texture2D::~OpenGL_Texture2D()
+	{
+		glDeleteTextures(1, &m_RendererID);
+	}
+
+	void OpenGL_Texture2D::texUnit(Shader& shader, const char* uniform, uint32_t _unit)
 	{
 		// Gets the location of the uniform
 		GLCall(GLuint texUni = glGetUniformLocation(shader.GetID(), uniform));
@@ -62,19 +95,20 @@ namespace GalaxyDraw {
 		GLCall(glUniform1i(texUni, _unit));
 	}
 
-	void Texture::Bind() const
+	void OpenGL_Texture2D::Bind(uint32_t slot) const
 	{
-		GLCall(glActiveTexture(GL_TEXTURE0 + unit));
-		GLCall(glBindTexture(type, ID));
+		glBindTextureUnit(slot, m_RendererID);
+	/*	GLCall(glActiveTexture(GL_TEXTURE0 + unit));
+		GLCall(glBindTexture(type, m_RendererID));*/
 	}
 
-	void Texture::Unbind() const
+	void OpenGL_Texture2D::Unbind() const
 	{
 		GLCall(glBindTexture(type, 0));
 	}
 
-	void Texture::Delete()
+	void OpenGL_Texture2D::Delete()
 	{
-		GLCall(glDeleteTextures(1, &ID));
+		GLCall(glDeleteTextures(1, &m_RendererID));
 	}
 }
