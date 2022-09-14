@@ -66,12 +66,6 @@
     <ClInclude Include="Source\GalaxyDraw\Camera.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.h">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.h">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
@@ -96,6 +90,9 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Shader.h">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Texture.h">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Interfaces\VertexArray.h">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClInclude>
@@ -108,19 +105,25 @@
     <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.h">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.h">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Shader.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\RenderScreen.h">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Texture.h">
-      <Filter>Source\GalaxyDraw</Filter>
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.h">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VAO.h">
-      <Filter>Source\GalaxyDraw</Filter>
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VBO.h">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
     <ClInclude Include="Source\Platform\OpenGL\OpenGLBuffer.h">
@@ -1448,12 +1451,6 @@
     <ClCompile Include="Source\GalaxyDraw\Camera.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClCompile>
@@ -1472,6 +1469,9 @@
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Shader.cpp">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Texture.cpp">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\VertexArray.cpp">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClCompile>
@@ -1484,19 +1484,25 @@
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.cpp">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Shader.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\RenderScreen.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Texture.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.cpp">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VAO.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VBO.cpp">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\stb.cpp">

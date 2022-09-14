@@ -9,6 +9,8 @@ namespace GalaxyDraw
 	{
 	public:
 
+		static void Init();
+
 		static void BeginScene(Camera& cam);
 		static void EndScene();
 

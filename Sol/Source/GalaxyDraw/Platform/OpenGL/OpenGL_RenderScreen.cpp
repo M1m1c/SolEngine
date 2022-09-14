@@ -1,16 +1,21 @@
 #include "solpch.h"
 
-#include "RenderScreen.h"
+#include "OpenGL_RenderScreen.h"
 #include <glad/glad.h>
-#include "Platform/OpenGL/OpenGL_VAO.h"
-#include "Platform/OpenGL/OpenGL_EBO.h"
-#include "Interfaces/Shader.h"
-#include "Model.h"
+#include "OpenGL_VAO.h"
+#include "OpenGL_EBO.h"
+#include "GalaxyDraw/Interfaces/Shader.h"
+#include "GalaxyDraw/Model.h"
 
 namespace GalaxyDraw
 {
+	void OpenGL_RenderScreen::Init()
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
 
-	void RenderScreen::Draw(const OpenGL_VAO& va, const OpenGL_EBO& ib, const Shader& shader) const
+	void OpenGL_RenderScreen::Draw(const OpenGL_VAO& va, const OpenGL_EBO& ib, const Shader& shader) const
 	{
 		shader.Bind();
 		va.Bind();
@@ -19,7 +24,7 @@ namespace GalaxyDraw
 		glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
-	void RenderScreen::Draw(const Model& model, const Shader& shader) const
+	void OpenGL_RenderScreen::Draw(const Model& model, const Shader& shader) const
 	{
 		for (size_t i = 0; i < model.meshes.size(); i++)
 		{
@@ -30,17 +35,17 @@ namespace GalaxyDraw
 		}
 	}
 
-	void RenderScreen::DrawIndexed(const std::shared_ptr<VertexArray> va)
+	void OpenGL_RenderScreen::DrawIndexed(const std::shared_ptr<VertexArray> va)
 	{
 		glDrawElements(GL_TRIANGLES, va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
-	void RenderScreen::SetClearColor(const glm::vec4& color)
+	void OpenGL_RenderScreen::SetClearColor(const glm::vec4& color)
 	{
 		glClearColor(color.r, color.g, color.b, color.a);
 	}
 
-	void RenderScreen::Clear() const
+	void OpenGL_RenderScreen::Clear() const
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
