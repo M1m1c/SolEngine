@@ -37,7 +37,7 @@ public:
 		vertexBuffer->SetLayout(layout);
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-		uint32_t indices[3] = { 0,1,2 };
+		uint32_t indices[6] = { 0,1,2,2,3,0};
 		auto indexBuffer = GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
