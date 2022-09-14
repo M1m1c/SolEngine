@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Interfaces/RendererAPI.h"
+#include "GalaxyDraw/Interfaces/RendererAPI.h"
 
 namespace GalaxyDraw 
 {
@@ -9,9 +9,12 @@ namespace GalaxyDraw
 	class Shader;
 	class Model;
 
-	class RenderScreen : public RendererAPI
+	class OpenGL_RenderScreen : public RendererAPI
 	{
 	public:
+
+		virtual void Init() override;
+
 		void Draw(const OpenGL_VAO& va, const OpenGL_EBO& ib, const Shader& shader) const;
 		void Draw(const Model& model, const Shader& shader) const;
 

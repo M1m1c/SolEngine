@@ -9,7 +9,7 @@ class ExampleLayer : public Sol::Layer
 public:
 	ExampleLayer() : Layer("Example"), m_Camera(10, 10, glm::vec3(0.f))
 	{
-		m_VertexArray.reset(GD_VAO::Create());
+		m_VertexArray = GD_VAO::Create();
 
 		float vertices[3 * 3] = {
 			-0.5f, -0.5f, 0.0f,
@@ -17,12 +17,19 @@ public:
 			0.0f, 0.5f, 0.0f
 		};
 
-		Sol::s_ptr<GD_VBO> vertexBuffer;
-		vertexBuffer.reset(GD_VBO::Create(vertices, sizeof(vertices)));
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.f, 0.f,
+			0.5f, -0.5f, 0.0f, 1.f, 0.f,
+			0.5f, 0.5f, 0.0f, 1.f, 1.f,
+			-0.5f, 0.5f, 0.0f, 0.f, 1.f,
+		};
+
+		auto vertexBuffer = GD_VBO::Create(squareVertices, sizeof(squareVertices));
 
 		GD_BufferLayout layout =
 		{
 			{GD_ShaderDataType::Float3, "a_Position"},
+			{GD_ShaderDataType::Float2, "a_TexCoord"},
 			/*	{GD_ShaderDataType::Float3, "a_Normal"},
 				{GD_ShaderDataType::Float4, "a_Color"},*/
 		};
@@ -30,17 +37,22 @@ public:
 		vertexBuffer->SetLayout(layout);
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-		uint32_t indices[3] = { 0,1,2 };
-		Sol::s_ptr<GD_EBO> indexBuffer;
-		indexBuffer.reset(GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		uint32_t indices[6] = { 0,1,2,2,3,0};
+		auto indexBuffer = GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_Shader.reset(GD_Shader::Create(
-			"Triangle.vert",
-			"Triangle.frag"));
+		m_Shader = GD_Shader::Create(
+			"Square.vert",
+			"Square.frag");
+
+		m_Texture = GD_Texture2D::Create("assets/textures/think.png");
+		
+		m_Shader->Bind();
+		m_Shader->setInt("u_Texture", 0);
+		
 	}
 
-	void OnFixedUpdate(Sol::TimeStep fixedStep,const float fixedTime) override
+	void OnFixedUpdate(Sol::TimeStep fixedStep, const float fixedTime) override
 	{
 
 	}
@@ -80,9 +92,9 @@ public:
 
 		GD_Renderer::BeginScene(m_Camera);
 
-		m_Shader->setVec3("u_Color", m_TriangleColor);
+		//m_Shader->setVec3("u_Color", m_TriangleColor);
 
-		for (int x = -5; x < 5; x++)
+	/*	for (int x = -5; x < 5; x++)
 		{
 			for (int y = -5; y < 5; y++)
 			{
@@ -91,8 +103,12 @@ public:
 
 				GD_Renderer::Submit(m_Shader, m_VertexArray, transform);
 			}
-		}
+		}*/
+		glm::vec3 pos(0.f,0.f,0.f);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
+		GD_Renderer::Submit(m_Shader, m_VertexArray, transform);
 
+		m_Texture->Bind();
 		GD_Renderer::EndScene();
 	}
 
@@ -111,6 +127,7 @@ public:
 private:
 	Sol::s_ptr<GD_Shader> m_Shader;
 	Sol::s_ptr<GD_VAO> m_VertexArray;
+	Sol::s_ptr<GD_Texture2D> m_Texture;
 
 	glm::vec3 m_TrianglePos = glm::vec3(0.f);
 

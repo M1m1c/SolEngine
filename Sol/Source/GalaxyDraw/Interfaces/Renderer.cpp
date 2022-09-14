@@ -8,6 +8,11 @@ namespace GalaxyDraw
 
 	Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData();
 
+	void Renderer::Init()
+	{
+		RenderCommand::Init();
+	}
+
 	void Renderer::BeginScene(Camera& cam)
 	{
 		s_SceneData->CameraMatrix = cam.GetCameraMatrix();

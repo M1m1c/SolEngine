@@ -6,7 +6,7 @@
 
 namespace GalaxyDraw 
 {
-	Shader* Shader::Create(const char* vertexFile, const char* fragmentFile)
+	std::shared_ptr <Shader> Shader::Create(const char* vertexFile, const char* fragmentFile)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -14,7 +14,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return new OpenGL_Shader(vertexFile, fragmentFile);
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_Shader>(vertexFile, fragmentFile);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
