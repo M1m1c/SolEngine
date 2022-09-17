@@ -41,14 +41,12 @@ public:
 		auto indexBuffer = GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_Shader = GD_Shader::Create(
-			"Square.vert",
-			"Square.frag");
+		auto shader = m_ShaderLib.Load("Square", "Square.vert", "Square.frag");
 
 		m_Texture = GD_Texture2D::Create("assets/textures/think.png");
 		
-		m_Shader->Bind();
-		m_Shader->setInt("u_Texture", 0);
+		shader->Bind();
+		shader->setInt("u_Texture", 0);
 		
 	}
 
@@ -106,7 +104,10 @@ public:
 		}*/
 		glm::vec3 pos(0.f,0.f,0.f);
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
-		GD_Renderer::Submit(m_Shader, m_VertexArray, transform);
+
+		auto shader = m_ShaderLib.Get("Square");
+
+		GD_Renderer::Submit(shader, m_VertexArray, transform);
 
 		m_Texture->Bind();
 		GD_Renderer::EndScene();
@@ -125,6 +126,8 @@ public:
 	}
 
 private:
+
+	GD_ShaderLibrary m_ShaderLib;
 	Sol::s_ptr<GD_Shader> m_Shader;
 	Sol::s_ptr<GD_VAO> m_VertexArray;
 	Sol::s_ptr<GD_Texture2D> m_Texture;

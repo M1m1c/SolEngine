@@ -2,20 +2,25 @@
 #define SHADER_CLASS_H
 
 #include <glm/glm.hpp>
+#include <unordered_map>
 
 
 //#include "GLMacros.h"
 namespace GalaxyDraw
 {
-
+	//TODO ikmplement so we only have to read one file instead of a vertex and fragmen file if we want
 	class Shader
 	{
 	public:
 
-		static std::shared_ptr<Shader> Create(const char* vertexFile, const char* fragmentFile);
+		static std::shared_ptr<Shader> Create(
+			const std::string& vertexFile,
+			const std::string& fragmentFile,
+			const std::string& nameToSet = "");
 
 		virtual ~Shader() = default;
 
+		virtual const std::string& GetName() const = 0;
 		virtual const uint32_t GetID() const = 0;
 
 		virtual void Bind() const = 0;
@@ -38,5 +43,30 @@ namespace GalaxyDraw
 		virtual void setMat3(const std::string& name, const glm::mat3& mat) const = 0;
 		virtual void setMat4(const std::string& name, const glm::mat4& mat) const = 0;
 	};
+
+	class ShaderLibrary
+	{
+	public:
+		void Add(const std::string& nameToSet, const std::shared_ptr<Shader>& shader);
+		void Add(const std::shared_ptr<Shader>& shader);
+
+		std::shared_ptr<Shader> Load(
+			const std::string& vertexFilePath,
+			const std::string& fragmentFilePath);
+
+		std::shared_ptr<Shader> Load(
+			const std::string& nameToSet,
+			const std::string& vertexFilePath,
+			const std::string& fragmentFilePath);
+
+		std::shared_ptr<Shader> Get(const std::string& name);
+
+		bool Exists(const std::string& name);
+
+	private:
+		std::unordered_map<std::string, std::shared_ptr<Shader>> m_Shaders;
+	};
+
+
 }
 #endif
