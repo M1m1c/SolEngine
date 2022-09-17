@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Sol/Window.h"
-#include"Sol/Renderer/RenderingContext.h"
 
+#include"GalaxyDraw/GalaxyDraw.h"
 #include <GLFW/glfw3.h>
 
 namespace Sol 
@@ -29,7 +29,7 @@ namespace Sol
 
 	private:
 		GLFWwindow* m_Window;
-		RenderingContext* m_Context;
+		s_ptr<GD_RenderingContext> m_Context;
 
 		struct WindowData
 		{
