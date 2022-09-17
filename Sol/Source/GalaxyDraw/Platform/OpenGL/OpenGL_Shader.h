@@ -11,8 +11,11 @@ namespace GalaxyDraw
 	{
 	public:
 		
-		OpenGL_Shader(const char* vertexFile, const char* fragmentFile);
+		OpenGL_Shader(const std::string& vertexFile, const std::string& fragmentFile);
+		OpenGL_Shader(const std::string& nameToSet, const std::string& vertexFile, const std::string& fragmentFile);
 		virtual ~OpenGL_Shader() override;
+
+		virtual const std::string& GetName() const override;
 		virtual const uint32_t GetID() const override;
 
 		virtual void Bind() const override;
@@ -36,10 +39,12 @@ namespace GalaxyDraw
 		void setMat4(const std::string& name, const glm::mat4& mat) const override;
 
 	private:
+		void Compile(const std::string& vertexFile, const std::string& fragmentFile);
 		// Checks if the different Shaders have compiled properly
 		void compileErrors(unsigned int shader, const char* type);
 		int GetUniformLocation(const std::string& name) const;
 
 		uint32_t m_RendererID;
+		std::string m_Name;
 	};
 }
