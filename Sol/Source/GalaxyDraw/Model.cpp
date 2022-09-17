@@ -1,7 +1,7 @@
 #include "solpch.h"
 #include "Model.h"
 
-#include "GLMacros.h"
+#include "Platform/OpenGL/GLMacros.h"
 #include <glad/glad.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>

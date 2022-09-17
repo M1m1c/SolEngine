@@ -3,7 +3,7 @@
 #include "glm/glm.hpp"
 #include "VertexArray.h"
 #include "Buffer.h"
-#include "GalaxyDraw/shaderClass.h"
+#include "Shader.h"
 #include "GalaxyDraw/Model.h"
 
 namespace GalaxyDraw 
@@ -17,6 +17,8 @@ namespace GalaxyDraw
 			OpenGL = 1
 
 		};
+
+		virtual void Init() = 0;
 
 		virtual void SetClearColor(const glm::vec4& color) = 0;
 

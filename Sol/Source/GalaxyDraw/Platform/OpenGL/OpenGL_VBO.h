@@ -5,18 +5,18 @@
 
 #include "solpch.h"
 #include "GLMacros.h"
-#include "Interfaces/Buffer.h"
+#include "GalaxyDraw/Interfaces/Buffer.h"
 
 namespace GalaxyDraw
 {
-	class VBO : public VertexBuffer
+	class OpenGL_VBO : public VertexBuffer
 	{
 	public:
 		// Constructor that generates a Vertex Buffer Object and links it to vertices
-		VBO(GLfloat* vertices, GLsizeiptr size);
+		OpenGL_VBO(GLfloat* vertices, GLsizeiptr size);
 
 		// Destructor that hanldes deleting the buffer when this class gets deleted
-		virtual ~VBO();
+		virtual ~OpenGL_VBO();
 
 		// Binds the VBO
 		virtual void Bind() const override;

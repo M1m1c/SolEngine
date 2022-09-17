@@ -1,9 +1,10 @@
 #pragma once
-#include "shaderClass.h"
+#include "Interfaces/Shader.h"
 #include "Interfaces/Buffer.h"
 #include "Interfaces/VertexArray.h"
 #include "Interfaces/Renderer.h"
 #include "Interfaces/RenderCommand.h"
+#include "Interfaces/Texture.h"
 #include "Camera.h"
 
 // This file is meant to be the only file you need to include to use GalaxyDraw.
@@ -12,7 +13,7 @@
 
 #define GD_ GalaxyDraw
 
-//Defined in shaderClass.h
+//Defined in Shader.h
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::Shader GD_Shader;
 /////////////////////////////////////////////////////
@@ -42,6 +43,12 @@ typedef GalaxyDraw::Renderer GD_Renderer;
 //Defined in RenderCommand.h
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::RenderCommand GD_RenderCommand;
+/////////////////////////////////////////////////////
+
+//Defined in Texture.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::Texture GD_Texture;
+typedef GalaxyDraw::Texture2D GD_Texture2D;
 /////////////////////////////////////////////////////
 
 //Defined in Camera.h

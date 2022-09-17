@@ -3,6 +3,8 @@
 #include "Application.h"
 #include "Sol/Log.h"
 #include "Sol/Input.h"
+#include "GalaxyDraw/GalaxyDraw.h"
+#include <GLFW/glfw3.h>
 
 namespace Sol
 {
@@ -11,7 +13,7 @@ namespace Sol
 
 	
 
-	Application::Application() : m_Camera(10, 10, glm::vec3(0.f))
+	Application::Application() 
 	{
 		SOL_CORE_ASSERT(!s_Instance, "Application already exists!")
 		s_Instance = this;
@@ -19,88 +21,55 @@ namespace Sol
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SOL_BIND_EVENT_FN(Application::OnEvent));
 
+		GD_Renderer::Init();
+
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
-
-		m_VertexArray.reset(GD_VAO::Create());
-
-		float vertices[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f
-		};
-
-		std::shared_ptr<GD_VBO> vertexBuffer;
-		vertexBuffer.reset(GD_VBO::Create(vertices, sizeof(vertices)));
-
-		GD_BufferLayout layout = 
-		{
-			{GD_ShaderDataType::Float3, "a_Position"},
-		/*	{GD_ShaderDataType::Float3, "a_Normal"},
-			{GD_ShaderDataType::Float4, "a_Color"},*/
-		};
-
-		vertexBuffer->SetLayout(layout);
-		m_VertexArray->AddVertexBuffer(vertexBuffer);
-
-		uint32_t indices[3] = { 0,1,2 };
-		std::shared_ptr<GD_EBO> indexBuffer;
-		indexBuffer.reset(GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t)));
-		m_VertexArray->SetIndexBuffer(indexBuffer);
-
-		/*std::string vertexSrc = R"(
-		#version 330 core
-
-		layout(location = 0) in vec3 a_Position;
-		out vec3 v_Position;
-		void main()
-		{
-			v_Position = a_Position + 0.5;
-			gl_Position = vec4(a_Position, 1.0);
-		}
-			
-		)";*/
-
-
-	/*	std::string fragmentSrc = R"(
-		#version 330 core
-
-		layout(location = 0) out vec4 color;
-		in vec3 v_Position;
-		
-		void main()
-		{
-			color = vec4(v_Position, 1.0);
-		}
-			
-		)";*/
-
-		m_Shader.reset(new GD_Shader(
-			"Triangle.vert",
-			"Triangle.frag"));
 	}
 
 	Application::~Application()
 	{
 	}
+
+	//TODO implement FixedUpdate
 	void Application::Run()
 	{
 		while (m_Running)
 		{
-			GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-			GD_RenderCommand::Clear();
+			float currentTime = glfwGetTime();//Should be in a platform class
+			TimeStep deltaTime = currentTime - m_LastFrameTime;
+			m_LastFrameTime = currentTime;
+			
+			TimeStep frameTime = deltaTime;
+			if (frameTime > 0.25) { frameTime = 0.25; }
 
-			m_Camera.SetRotation({ 0.5f,0.0f,0.f });
+			m_AccumulatedTime += frameTime;
 
-			GD_Renderer::BeginScene(m_Camera);
+			while (m_AccumulatedTime >= m_FixedUpdateTime)
+			{
+				//TODO need to introduce the concept of states on objects, 
+				// that holds things such as positions and other physics related things.
+				// These states will be used for interpolating between just before OnUpdate.
+				//previousState = currentState;
 
-			GD_Renderer::Submit(m_Shader,m_VertexArray);
+				for (Layer* layer : m_LayerStack)
+				{
+					layer->OnFixedUpdate(m_FixedTimeStep, m_FixedUpdateTime);
+				}
+				m_FixedTimeStep += m_FixedUpdateTime;
+				m_AccumulatedTime -= m_FixedUpdateTime;
+			}
 
-			GD_Renderer::EndScene();
+		/*	const float alpha = m_AccumulatedTime / m_FixedUpdateTime;
+
+			State state = currentState * alpha +
+				previousState * (1.0 - alpha);
+
+			OnUpdateRender(state);*/
 
 			for (Layer* layer : m_LayerStack)
 			{
-				layer->OnUpdate();
+				layer->OnUpdate(deltaTime);
 			}
 
 			m_ImGuiLayer->Begin();

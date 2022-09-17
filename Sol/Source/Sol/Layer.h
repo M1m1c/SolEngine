@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 #include "Events/Event.h"
+#include "Sol/Core/TimeStep.h"
 
 namespace Sol 
 {
@@ -13,7 +14,12 @@ namespace Sol
 		
 		virtual void OnAttach(){};
 		virtual void OnDetach(){};
-		virtual void OnUpdate(){};
+		//Updates once each frame.
+		virtual void OnUpdate(TimeStep deltaTime){};
+		//Updates at a fixed rate each frame. 
+		// fixedStep is the size of each step.
+		// fixedTime is the update frequency.
+		virtual void OnFixedUpdate(TimeStep fixedStep, const float fixedTime){};
 		virtual void OnImGuiRender() {};
 		virtual void OnEvent(Event& event){};
 

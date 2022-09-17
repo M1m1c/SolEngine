@@ -2,24 +2,24 @@
 #define VAO_CLASS_H
 
 
-#include "Interfaces/VertexArray.h"
-#include "VBO.h"
+#include "GalaxyDraw/Interfaces/VertexArray.h"
+#include "OpenGL_VBO.h"
 
 namespace GalaxyDraw 
 {
 
-	class VAO : public VertexArray
+	class OpenGL_VAO : public VertexArray
 	{
 	public:
 		// ID reference for the Vertex Array Object
 		uint32_t ID;
 		// Constructor that generates a VAO ID
-		VAO();
-		VAO(const unsigned int vaoID);
-		virtual ~VAO();
+		OpenGL_VAO();
+		OpenGL_VAO(const unsigned int vaoID);
+		virtual ~OpenGL_VAO();
 
 		// Links a VBO Attribute such as a position or color to the VAO
-		void LinkAttrib(VBO& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset);
+		void LinkAttrib(OpenGL_VBO& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset);
 		// Binds the VAO
 		virtual void Bind() const override;
 		// Unbinds the VAO

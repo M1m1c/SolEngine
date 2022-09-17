@@ -1,21 +1,21 @@
 #ifndef EBO_CLASS_H
 #define EBO_CLASS_H
 
-#include "Interfaces/Buffer.h"
+#include "GalaxyDraw/Interfaces/Buffer.h"
 
 namespace GalaxyDraw 
 {
-	class EBO : public IndexBuffer
+	class OpenGL_EBO : public IndexBuffer
 	{
 	public:
 		// ID reference of Elements Buffer Object
 		uint32_t ID;
 		const unsigned int count;
 		// Constructor that generates a Elements Buffer Object and links it to indices
-		EBO(uint32_t* indices, unsigned int elementCount);
+		OpenGL_EBO(uint32_t* indices, unsigned int elementCount);
 
 		// Destructor that hanldes deleting the buffer when this class gets deleted
-		virtual ~EBO();
+		virtual ~OpenGL_EBO();
 
 		// Binds the EBO
 		virtual void Bind() const override;

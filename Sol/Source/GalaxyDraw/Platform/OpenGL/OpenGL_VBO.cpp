@@ -1,11 +1,11 @@
 #include "solpch.h"
 
-#include "VBO.h"
+#include "OpenGL_VBO.h"
 
 namespace GalaxyDraw
 {
 	// Constructor that generates a Vertex Buffer Object and links it to vertices
-	VBO::VBO(GLfloat* vertices, GLsizeiptr size)
+	OpenGL_VBO::OpenGL_VBO(GLfloat* vertices, GLsizeiptr size)
 	{
 		GLCall(glGenBuffers(1, &ID));
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, ID));
@@ -13,26 +13,26 @@ namespace GalaxyDraw
 	}
 
 	// Destructor that hanldes deleting the buffer when this class gets deleted
-	VBO::~VBO()
+	OpenGL_VBO::~OpenGL_VBO()
 	{
 		GLCall(glDeleteBuffers(1, &ID));
 	}
 
 	// Binds the VBO
-	void VBO::Bind() const
+	void OpenGL_VBO::Bind() const
 	{
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, ID));
 	}
 
 	// Unbinds the VBO
-	void VBO::Unbind() const
+	void OpenGL_VBO::Unbind() const
 	{
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	}
 
 	//TODO Maybe this is no longer needed when we have a destructor that does the same thing
 	// Deletes the VBO
-	void VBO::Delete()
+	void OpenGL_VBO::Delete()
 	{
 		GLCall(glDeleteBuffers(1, &ID));
 	}
