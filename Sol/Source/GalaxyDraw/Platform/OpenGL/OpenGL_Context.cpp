@@ -1,19 +1,19 @@
 #include "solpch.h"
-#include "OpenGLContext.h"
+#include "OpenGL_Context.h"
 #include "Sol/Core.h"
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 #include <Sol/Log.h>
 
-namespace Sol 
+namespace GalaxyDraw 
 {
-	OpenGLContext::OpenGLContext(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
+	OpenGL_Context::OpenGL_Context(GLFWwindow* windowHandle) : m_WindowHandle(windowHandle)
 	{
 		SOL_CORE_ASSERT(windowHandle, "Window Handle is null");
 	}
 
-	void OpenGLContext::Init()
+	void OpenGL_Context::Init()
 	{
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
@@ -27,7 +27,7 @@ namespace Sol
 
 	}
 
-	void OpenGLContext::SwapBuffers()
+	void OpenGL_Context::SwapBuffers()
 	{
 
 		glfwSwapBuffers(m_WindowHandle);

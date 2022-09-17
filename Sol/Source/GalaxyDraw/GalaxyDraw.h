@@ -4,6 +4,7 @@
 #include "Interfaces/VertexArray.h"
 #include "Interfaces/Renderer.h"
 #include "Interfaces/RenderCommand.h"
+#include "Interfaces/RenderingContext.h"
 #include "Interfaces/Texture.h"
 #include "Camera.h"
 
@@ -43,6 +44,11 @@ typedef GalaxyDraw::Renderer GD_Renderer;
 //Defined in RenderCommand.h
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::RenderCommand GD_RenderCommand;
+/////////////////////////////////////////////////////
+
+//Defined in RenderingContext.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::RenderingContext GD_RenderingContext;
 /////////////////////////////////////////////////////
 
 //Defined in Texture.h
