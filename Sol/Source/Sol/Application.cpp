@@ -11,12 +11,12 @@ namespace Sol
 
 	Application* Application::s_Instance = nullptr;
 
-	
 
-	Application::Application() 
+
+	Application::Application()
 	{
 		SOL_CORE_ASSERT(!s_Instance, "Application already exists!")
-		s_Instance = this;
+			s_Instance = this;
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(SOL_BIND_EVENT_FN(Application::OnEvent));
@@ -36,41 +36,45 @@ namespace Sol
 	{
 		while (m_Running)
 		{
-			float currentTime = glfwGetTime();//Should be in a platform class
-			TimeStep deltaTime = currentTime - m_LastFrameTime;
-			m_LastFrameTime = currentTime;
-			
-			TimeStep frameTime = deltaTime;
-			if (frameTime > 0.25) { frameTime = 0.25; }
-
-			m_AccumulatedTime += frameTime;
-
-			while (m_AccumulatedTime >= m_FixedUpdateTime)
+			if (!m_Minimized)
 			{
-				//TODO need to introduce the concept of states on objects, 
-				// that holds things such as positions and other physics related things.
-				// These states will be used for interpolating between just before OnUpdate.
-				//previousState = currentState;
+				float currentTime = glfwGetTime();//Should be in a platform class
+				TimeStep deltaTime = currentTime - m_LastFrameTime;
+				m_LastFrameTime = currentTime;
+
+				TimeStep frameTime = deltaTime;
+				if (frameTime > 0.25) { frameTime = 0.25; }
+
+				m_AccumulatedTime += frameTime;
+
+				while (m_AccumulatedTime >= m_FixedUpdateTime)
+				{
+					//TODO need to introduce the concept of states on objects, 
+					// that holds things such as positions and other physics related things.
+					// These states will be used for interpolating between just before OnUpdate.
+					//previousState = currentState;
+
+					for (Layer* layer : m_LayerStack)
+					{
+						layer->OnFixedUpdate(m_FixedTimeStep, m_FixedUpdateTime);
+					}
+					m_FixedTimeStep += m_FixedUpdateTime;
+					m_AccumulatedTime -= m_FixedUpdateTime;
+				}
+
+				/*	const float alpha = m_AccumulatedTime / m_FixedUpdateTime;
+
+					State state = currentState * alpha +
+						previousState * (1.0 - alpha);
+
+					OnUpdateRender(state);*/
 
 				for (Layer* layer : m_LayerStack)
 				{
-					layer->OnFixedUpdate(m_FixedTimeStep, m_FixedUpdateTime);
+					layer->OnUpdate(deltaTime);
 				}
-				m_FixedTimeStep += m_FixedUpdateTime;
-				m_AccumulatedTime -= m_FixedUpdateTime;
 			}
 
-		/*	const float alpha = m_AccumulatedTime / m_FixedUpdateTime;
-
-			State state = currentState * alpha +
-				previousState * (1.0 - alpha);
-
-			OnUpdateRender(state);*/
-
-			for (Layer* layer : m_LayerStack)
-			{
-				layer->OnUpdate(deltaTime);
-			}
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)
@@ -91,6 +95,7 @@ namespace Sol
 		EventDispatcher dispatcher(e);
 
 		dispatcher.Dispatch<WindowClosedEvent>(SOL_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(SOL_BIND_EVENT_FN(Application::OnWindowResize));
 
 		/*SOL_CORE_TRACE("{0}", e);*/
 
@@ -113,11 +118,23 @@ namespace Sol
 		overlay->OnAttach();
 	}
 
-	
+
 
 	bool Application::OnWindowClose(WindowClosedEvent& e)
 	{
 		m_Running = false;
 		return true;
+	}
+	bool Application::OnWindowResize(WindowResizeEvent& e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			m_Minimized = true;
+			return false;
+		}
+		m_Minimized = false;
+		GD_Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+		return false;
 	}
 }
