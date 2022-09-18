@@ -40,6 +40,11 @@ namespace GalaxyDraw
 		glDrawElements(GL_TRIANGLES, va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
+	void OpenGL_RenderScreen::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+	{
+		glViewport(x, y, width, height);
+	}
+
 	void OpenGL_RenderScreen::SetClearColor(const glm::vec4& color)
 	{
 		glClearColor(color.r, color.g, color.b, color.a);

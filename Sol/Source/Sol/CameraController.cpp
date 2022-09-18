@@ -35,7 +35,7 @@ namespace Sol
 		}
 
 		m_Camera.SetPosition(m_CameraPosition);
-		m_Camera.SetRotation({ 0.5f,0.0f,0.f });
+		//m_Camera.SetRotation({ 0.5f,0.0f,0.f });
 		/*if (m_EnableRotation) 
 		{
 
