@@ -4,10 +4,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+
 class ExampleLayer : public Sol::Layer
 {
 public:
-	ExampleLayer() : Layer("Example"), m_Camera(10, 10, glm::vec3(0.f))
+	ExampleLayer() : Layer("Example"), m_CameraController(10, 10,glm::vec2(1.6f,0.9f), glm::vec3(0.f))
 	{
 		m_VertexArray = GD_VAO::Create();
 
@@ -57,38 +58,17 @@ public:
 
 	void OnUpdate(Sol::TimeStep deltaTime) override
 	{
+		//UPDATE STEP
+		m_CameraController.OnUpdate(deltaTime);
+		
 
-		if (Sol::Input::IsKeyPressed(SOL_KEY_D))
-		{
-			m_CameraPosition.x += m_CameraSpeed * deltaTime;
-		}
-
-		if (Sol::Input::IsKeyPressed(SOL_KEY_A))
-		{
-			m_CameraPosition.x += -m_CameraSpeed * deltaTime;
-		}
-
-		if (Sol::Input::IsKeyPressed(SOL_KEY_W))
-		{
-			m_CameraPosition.y += m_CameraSpeed * deltaTime;
-		}
-
-		if (Sol::Input::IsKeyPressed(SOL_KEY_S))
-		{
-			m_CameraPosition.y += -m_CameraSpeed * deltaTime;
-		}
-
-		//SOL_INFO("ExampleLayer::Update");
+		//RENDER STEP
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
 
-		m_Camera.SetPosition(m_CameraPosition);
-
-		m_Camera.SetRotation({ 0.5f,0.0f,0.f });
-
 		static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-		GD_Renderer::BeginScene(m_Camera);
+		GD_Renderer::BeginScene(m_CameraController.GetCamera());
 
 		//m_Shader->setVec3("u_Color", m_TriangleColor);
 
@@ -120,9 +100,10 @@ public:
 		ImGui::End();
 	}
 
-	virtual void OnEvent(Sol::Event& event) override
+	virtual void OnEvent(Sol::Event& e) override
 	{
 		//SOL_TRACE("{0}", event);
+		m_CameraController.OnEvent(e);
 	}
 
 private:
@@ -134,9 +115,9 @@ private:
 
 	glm::vec3 m_TrianglePos = glm::vec3(0.f);
 
-	GD_Camera m_Camera;
-	glm::vec3 m_CameraPosition = glm::vec3(0.f);
-	float m_CameraSpeed = 1.f;
+	Sol::CameraController m_CameraController;
+	//glm::vec3 m_CameraPosition = glm::vec3(0.f);
+	//float m_CameraSpeed = 1.f;
 
 	glm::vec3 m_TriangleColor = { 0.f, 0.8f, 0.8f };
 };

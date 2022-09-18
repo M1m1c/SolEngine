@@ -178,6 +178,7 @@
     <ClInclude Include="Source\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="Source\Sol.h" />
     <ClInclude Include="Source\Sol\Application.h" />
+    <ClInclude Include="Source\Sol\CameraController.h" />
     <ClInclude Include="Source\Sol\Core.h" />
     <ClInclude Include="Source\Sol\Core\TimeStep.h" />
     <ClInclude Include="Source\Sol\EntryPoint.h" />
@@ -638,6 +639,7 @@
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="Source\Sol\Application.cpp" />
+    <ClCompile Include="Source\Sol\CameraController.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="Source\Sol\Layer.cpp" />

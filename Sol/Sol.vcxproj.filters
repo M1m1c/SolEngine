@@ -1438,6 +1438,7 @@
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Interfaces\RenderingContext.h" />
+    <ClInclude Include="Source\Sol\CameraController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Camera.cpp">
@@ -1531,5 +1532,6 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderingContext.cpp" />
+    <ClCompile Include="Source\Sol\CameraController.cpp" />
   </ItemGroup>
 </Project>

@@ -13,13 +13,20 @@
 
 namespace GalaxyDraw {
 	
-	Camera::Camera(int width, int height, glm::vec3 position)
+	Camera::Camera(int width, int height,glm::vec2 aspectRatio, glm::vec3 position)
 	{
 		Camera::width = width;
 		Camera::height = height;
 		m_Position = position;
 		//16:9 aspect ratio
-		m_ProjectionMatrix = glm::ortho(-1.6f, 1.6f, -.9f, .9f);
+		m_ProjectionMatrix = glm::ortho(-aspectRatio.x, aspectRatio.x, -aspectRatio.y, aspectRatio.y);
+		//m_ProjectionMatrix = glm::ortho(-1.6f, 1.6f, -.9f, .9f);
+		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
+	}
+
+	void Camera::SetProjection(glm::vec2 aspectRatio)
+	{
+		m_ProjectionMatrix = glm::ortho(-aspectRatio.x, aspectRatio.x, -aspectRatio.y, aspectRatio.y);
 		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
@@ -43,6 +50,7 @@ namespace GalaxyDraw {
 		GLCall(glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), uniform), 1, GL_FALSE, glm::value_ptr(m_CameraMatrix)));
 	}
 
+	//TODO move all input to camera controller class
 	void Camera::Inputs(GLFWwindow* window)
 	{
 		// Handles key inputs
@@ -133,7 +141,7 @@ namespace GalaxyDraw {
 
 	void Camera::SetRotation(const glm::vec3& newRotation)
 	{
-		//TODO currently cares about one axis, should be able to set all axcies of rotation
+		//TODO currently cares about one axis, should be able to set all axies of rotation
 		m_Rotation = glm::rotate(m_Rotation, glm::radians(-newRotation.r), m_UpDir);
 		RecalculateViewMatrix();
 	}

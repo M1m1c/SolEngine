@@ -15,5 +15,6 @@
 #include "Sol/ImGui/ImGuiLayer.h"
 
 #include <GalaxyDraw/GalaxyDraw.h>
+#include "Sol/CameraController.h"
 
 #include "Sol/EntryPoint.h"
