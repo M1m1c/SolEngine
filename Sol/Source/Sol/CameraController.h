@@ -16,8 +16,8 @@ namespace Sol
 		void OnUpdate(TimeStep deltaTime);
 		void OnEvent(Event& e);
 
-		GD_Camera& GetCamera() { return m_Camera; }
-		const GD_Camera& GetCamera() const { return m_Camera; }
+		GD_Camera& GetCamera() { return *m_Camera; }
+		const GD_Camera& GetCamera() const { return *m_Camera; }
 
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
@@ -26,7 +26,7 @@ namespace Sol
 
 		glm::vec2 m_AspectRatio;
 		float m_ZoomLevel = 1.0f;
-		GD_Camera m_Camera;
+		s_ptr<GD_Camera> m_Camera;
 		//bool m_EnableRotation;
 
 		glm::vec3 m_CameraPosition = glm::vec3(0.f);

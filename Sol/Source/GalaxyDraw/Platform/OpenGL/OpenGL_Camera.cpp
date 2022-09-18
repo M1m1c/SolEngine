@@ -1,8 +1,8 @@
 #include "solpch.h"
-#include "Camera.h"
+#include "OpenGL_Camera.h"
 
-#include "Platform/OpenGL/GLMacros.h"
-#include "Interfaces/Shader.h"
+#include "GLMacros.h"
+#include "GalaxyDraw/Interfaces/Shader.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -13,10 +13,10 @@
 
 namespace GalaxyDraw {
 	
-	Camera::Camera(int width, int height,glm::vec2 aspectRatio, glm::vec3 position)
+	OpenGL_Camera::OpenGL_Camera(int width, int height,glm::vec2 aspectRatio, glm::vec3 position)
 	{
-		Camera::width = width;
-		Camera::height = height;
+		OpenGL_Camera::width = width;
+		OpenGL_Camera::height = height;
 		m_Position = position;
 		//16:9 aspect ratio
 		m_ProjectionMatrix = glm::ortho(-aspectRatio.x, aspectRatio.x, -aspectRatio.y, aspectRatio.y);
@@ -24,13 +24,13 @@ namespace GalaxyDraw {
 		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	void Camera::SetProjection(glm::vec2 aspectRatio)
+	void OpenGL_Camera::SetProjection(glm::vec2 aspectRatio)
 	{
 		m_ProjectionMatrix = glm::ortho(-aspectRatio.x, aspectRatio.x, -aspectRatio.y, aspectRatio.y);
 		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	void Camera::updateMatrix(float FOVdeg, float nearPlane, float farPlane)
+	void OpenGL_Camera::updateMatrix(float FOVdeg, float nearPlane, float farPlane)
 	{
 		// Makes camera look in the right direction from the right position
 		m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Rotation, m_UpDir);
@@ -44,14 +44,14 @@ namespace GalaxyDraw {
 		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	void Camera::MatrixUniform(GalaxyDraw::Shader& shader, const char* uniform)
+	void OpenGL_Camera::MatrixUniform(GalaxyDraw::Shader& shader, const char* uniform)
 	{
 		// Exports camera matrix
 		GLCall(glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), uniform), 1, GL_FALSE, glm::value_ptr(m_CameraMatrix)));
 	}
 
 	//TODO move all input to camera controller class
-	void Camera::Inputs(GLFWwindow* window)
+	void OpenGL_Camera::Inputs(GLFWwindow* window)
 	{
 		// Handles key inputs
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -125,7 +125,7 @@ namespace GalaxyDraw {
 
 	}
 
-	void Camera::RecalculateViewMatrix()
+	void OpenGL_Camera::RecalculateViewMatrix()
 	{
 		m_ViewMatrix = m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Rotation, m_UpDir);
 		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
@@ -133,13 +133,13 @@ namespace GalaxyDraw {
 			glm::rotate(glm::mat4(1.0f), 1.0f, m_Rotation);*/
 	}
 
-	void Camera::SetPosition(const glm::vec3& newPosition)
+	void OpenGL_Camera::SetPosition(const glm::vec3& newPosition)
 	{
 		m_Position = newPosition;
 		RecalculateViewMatrix();
 	}
 
-	void Camera::SetRotation(const glm::vec3& newRotation)
+	void OpenGL_Camera::SetRotation(const glm::vec3& newRotation)
 	{
 		//TODO currently cares about one axis, should be able to set all axies of rotation
 		m_Rotation = glm::rotate(m_Rotation, glm::radians(-newRotation.r), m_UpDir);

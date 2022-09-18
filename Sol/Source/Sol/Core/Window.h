@@ -2,7 +2,7 @@
 
 #include "solpch.h"
 
-#include "Sol/Core.h"
+#include "Core.h"
 #include "Sol/Events/Event.h"
 
 namespace Sol 

@@ -2,7 +2,7 @@
 
 
 #include "solpch.h"
-#include "Sol/Core.h"
+#include "Sol/Core/Core.h"
 
 namespace Sol
 {

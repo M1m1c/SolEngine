@@ -6,7 +6,7 @@
 #include "Interfaces/RenderCommand.h"
 #include "Interfaces/RenderingContext.h"
 #include "Interfaces/Texture.h"
-#include "Camera.h"
+#include "Interfaces/Camera.h"
 
 // This file is meant to be the only file you need to include to use GalaxyDraw.
 // It should mostly contain typedefs and macros for ease of use outside of GalaxyDraw.

@@ -1,6 +1,6 @@
 #include "solpch.h"
 #include "WindowsWindow.h"
-#include "Sol/Log.h"
+#include "Sol/Core/Log.h"
 
 #include "Sol/Events/ApplicationEvent.h"
 #include "Sol/Events/KeyEvent.h"

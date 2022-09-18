@@ -1,7 +1,7 @@
 #pragma once
 #include "RendererAPI.h"
 #include "Shader.h"
-#include "GalaxyDraw/Camera.h"
+#include "Camera.h"
 namespace GalaxyDraw 
 {
 	
