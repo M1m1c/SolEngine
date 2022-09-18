@@ -10,10 +10,11 @@ namespace GalaxyDraw
 		targetPath.append(filename);
 
 		std::ifstream in(targetPath, std::ios::binary);
+		std::string contents="";
 
 		if (in)
 		{
-			std::string contents;
+			
 			in.seekg(0, std::ios::end);
 			contents.resize(in.tellg());
 			in.seekg(0, std::ios::beg);
@@ -22,9 +23,7 @@ namespace GalaxyDraw
 			return (contents);
 		}
 
-		//TODO Luds, I seem to need the Sol/Log.h file to run the engine's logs, so as a hacky fix, I'm using std::cout for now
-		std::cout << "Filepath not found within >" << targetPathDebug;
-
+		SOL_CORE_ASSERT(contents != "", "Filepath not found within >" + targetPath);
 		throw (errno);
 	}
 }

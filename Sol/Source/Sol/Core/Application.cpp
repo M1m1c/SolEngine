@@ -1,7 +1,6 @@
 
 #include "solpch.h"
 #include "Application.h"
-#include "Sol/Core/Log.h"
 #include "Sol/Core/Input.h"
 #include "GalaxyDraw/GalaxyDraw.h"
 #include <GLFW/glfw3.h>

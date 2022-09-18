@@ -14,6 +14,8 @@
 #include <fstream>
 #include <cerrno>
 
+#include "Sol/Core/Log.h"
+
 #ifdef SOL_PLATFORM_WINDOWS
 	#include<Windows.h>
 #endif
