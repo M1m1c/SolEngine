@@ -3,7 +3,7 @@
 #include "OpenGL_Texture.h"
 #include "GLMacros.h"
 
-#include "Sol/Log.h"
+#include "Sol/Core/Log.h"
 #include "GalaxyDraw/Interfaces/Shader.h"
 
 #include <glad/glad.h>

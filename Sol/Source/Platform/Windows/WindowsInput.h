@@ -1,5 +1,5 @@
 #pragma once
-#include "Sol/Input.h"
+#include "Sol/Core/Input.h"
 
 namespace Sol 
 {

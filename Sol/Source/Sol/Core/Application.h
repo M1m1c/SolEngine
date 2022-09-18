@@ -3,7 +3,7 @@
 #include "Core.h";
 #include "Window.h";
 #include "LayerStack.h"
-#include "Events/Event.h";
+#include "Sol/Events/Event.h";
 #include "Sol/Events/ApplicationEvent.h"
 #include "Sol/ImGui/ImGuiLayer.h"
 #include "Sol/Core/TimeStep.h"

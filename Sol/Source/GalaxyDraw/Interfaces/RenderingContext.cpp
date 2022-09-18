@@ -3,7 +3,7 @@
 
 #include "Renderer.h"
 #include "GalaxyDraw/Platform/OpenGL/OpenGL_Context.h"
-#include <Sol/Core.h>
+#include <Sol/Core/Core.h>
 #include <GLFW/glfw3.h>
 
 namespace GalaxyDraw

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Sol/Core.h"
+#include "Core.h"
 
 namespace Sol 
 {

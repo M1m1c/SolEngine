@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Sol/Layer.h"
+#include "Sol/Core/Layer.h"
 
-#include "Sol/Core.h"
+#include "Sol/Core/Core.h"
 #include "Sol/Events/ApplicationEvent.h"
 #include "Sol/Events/KeyEvent.h"
 #include "Sol/Events/MouseEvent.h"

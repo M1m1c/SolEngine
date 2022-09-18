@@ -1,7 +1,7 @@
 #include "solpch.h"
 #include "CameraController.h"
-#include "Sol/Input.h"
-#include <Sol/KeyCodes.h>
+#include "Sol/Core/Input.h"
+#include "Sol/Core/KeyCodes.h"
 
 namespace Sol
 {

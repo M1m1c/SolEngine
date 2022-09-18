@@ -1,6 +1,6 @@
 #pragma once
 #include "Core.h"
-#include "Events/Event.h"
+#include "Sol/Events/Event.h"
 #include "Sol/Core/TimeStep.h"
 
 namespace Sol 

@@ -1,5 +1,5 @@
 #pragma once
-#include "Sol/Core.h"
+#include "Sol/Core/Core.h"
 #include <String>
 
 namespace GalaxyDraw {

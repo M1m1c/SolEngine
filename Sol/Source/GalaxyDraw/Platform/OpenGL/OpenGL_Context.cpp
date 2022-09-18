@@ -1,10 +1,10 @@
 #include "solpch.h"
 #include "OpenGL_Context.h"
-#include "Sol/Core.h"
+#include "Sol/Core/Core.h"
 
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
-#include <Sol/Log.h>
+#include <Sol/Core/Log.h>
 
 namespace GalaxyDraw 
 {

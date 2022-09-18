@@ -4,7 +4,7 @@
 #include "Renderer.h"
 #include "GalaxyDraw/Platform/OpenGL/OpenGL_VBO.h"
 #include "GalaxyDraw/Platform/OpenGL/OpenGL_EBO.h"
-#include <Sol/Core.h>
+#include <Sol/Core/Core.h>
 
 namespace GalaxyDraw
 {

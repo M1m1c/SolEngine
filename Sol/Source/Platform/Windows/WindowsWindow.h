@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Sol/Window.h"
+#include "Sol/Core/Window.h"
 
 #include"GalaxyDraw/GalaxyDraw.h"
 #include <GLFW/glfw3.h>

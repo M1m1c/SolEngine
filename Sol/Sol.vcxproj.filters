@@ -138,16 +138,16 @@
     <ClInclude Include="Source\Sol.h">
       <Filter>Source</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Application.h">
+    <ClInclude Include="Source\Sol\Core\Application.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Core.h">
+    <ClInclude Include="Source\Sol\Core\Core.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\Core\TimeStep.h">
       <Filter>Source\Sol\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\EntryPoint.h">
+    <ClInclude Include="Source\Sol\Core\EntryPoint.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h">
@@ -162,31 +162,31 @@
     <ClInclude Include="Source\Sol\Events\MouseEvent.h">
       <Filter>Source\Sol\Events</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\GamepadKeyCodes.h">
+    <ClInclude Include="Source\Sol\Core\GamepadKeyCodes.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h">
       <Filter>Source\Sol\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Input.h">
+    <ClInclude Include="Source\Sol\Core\Input.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\KeyCodes.h">
+    <ClInclude Include="Source\Sol\Core\KeyCodes.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Layer.h">
+    <ClInclude Include="Source\Sol\Core\Layer.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\LayerStack.h">
+    <ClInclude Include="Source\Sol\Core\LayerStack.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Log.h">
+    <ClInclude Include="Source\Sol\Core\Log.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\MouseButtonCodes.h">
+    <ClInclude Include="Source\Sol\Core\MouseButtonCodes.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Window.h">
+    <ClInclude Include="Source\Sol\Core\Window.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
     <ClInclude Include="Source\solpch.h">
@@ -1510,7 +1510,7 @@
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp">
       <Filter>Source\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sol\Application.cpp">
+    <ClCompile Include="Source\Sol\Core\Application.cpp">
       <Filter>Source\Sol</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp">
@@ -1519,13 +1519,13 @@
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp">
       <Filter>Source\Sol\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sol\Layer.cpp">
+    <ClCompile Include="Source\Sol\Core\Layer.cpp">
       <Filter>Source\Sol</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sol\LayerStack.cpp">
+    <ClCompile Include="Source\Sol\Core\LayerStack.cpp">
       <Filter>Source\Sol</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sol\Log.cpp">
+    <ClCompile Include="Source\Sol\Core\Log.cpp">
       <Filter>Source\Sol</Filter>
     </ClCompile>
     <ClCompile Include="Source\solpch.cpp">
