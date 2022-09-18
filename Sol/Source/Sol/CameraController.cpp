@@ -5,10 +5,10 @@
 
 namespace Sol
 {
-	CameraController::CameraController(int width, int height, glm::vec2 aspectRatio, glm::vec3 position) : 
-		m_AspectRatio(aspectRatio),
-		m_Camera(width, height, aspectRatio* m_ZoomLevel, position)
+	CameraController::CameraController(int width, int height, glm::vec2 aspectRatio, glm::vec3 position) :
+		m_AspectRatio(aspectRatio)
 	{
+		m_Camera = GD_Camera::Create(width, height, aspectRatio * m_ZoomLevel, position);
 	}
 
 	//TODO add controls for rotating Camera
@@ -34,7 +34,7 @@ namespace Sol
 			m_CameraPosition.y += -m_CameraSpeed * deltaTime;
 		}
 
-		m_Camera.SetPosition(m_CameraPosition);
+		m_Camera->SetPosition(m_CameraPosition);
 		//m_Camera.SetRotation({ 0.5f,0.0f,0.f });
 		/*if (m_EnableRotation) 
 		{
@@ -56,7 +56,7 @@ namespace Sol
 	{
 		
 		m_ZoomLevel = glm::max(m_ZoomLevel- e.GetYOffset(),0.1f);
-		m_Camera.SetProjection(m_AspectRatio * m_ZoomLevel);
+		m_Camera->SetProjection(m_AspectRatio * m_ZoomLevel);
 		return false;
 	}
 
@@ -64,7 +64,7 @@ namespace Sol
 	{
 		auto tempRatio = (float)e.GetWidth() / (float)e.GetHeight();
 		m_AspectRatio = glm::vec2(tempRatio * m_ZoomLevel, m_ZoomLevel);
-		m_Camera.SetProjection(m_AspectRatio * m_ZoomLevel);
+		m_Camera->SetProjection(m_AspectRatio * m_ZoomLevel);
 		return false;
 	}
 

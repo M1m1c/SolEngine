@@ -152,7 +152,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\GalaxyDraw\Camera.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Camera.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.h" />
     <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h" />
     <ClInclude Include="Source\GalaxyDraw\IBuildable.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h" />
@@ -614,7 +615,8 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\GalaxyDraw\Camera.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Camera.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderCommand.cpp" />

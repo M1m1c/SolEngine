@@ -1,31 +1,31 @@
 #ifndef CAMERA_CLASS_H
 #define CAMERA_CLASS_H
 
+#include "GalaxyDraw/Interfaces/Camera.h"
 
-#include <glm/glm.hpp>
 struct GLFWwindow;
 
 namespace GalaxyDraw {
 	class Shader;
 
 	//TODO turn this into an interface and make OpenGL_Camera the implementation
-	class Camera
+	class OpenGL_Camera : public Camera
 	{
 	public:
-		Camera(int width, int height, glm::vec2 aspectRatio, glm::vec3 position);
-		void SetProjection( glm::vec2 aspectRatio);
+		OpenGL_Camera(int width, int height, glm::vec2 aspectRatio, glm::vec3 position);
+		virtual void SetProjection( glm::vec2 aspectRatio) override;
 
-		const glm::vec3& GetPosition() { return m_Position; }
-		void SetPosition(const glm::vec3& newPosition);
+		virtual const glm::vec3& GetPosition() override { return m_Position; }
+		virtual void SetPosition(const glm::vec3& newPosition) override;
 		
 
-		const glm::vec3& GetRotation() { return m_Rotation; }
-		void SetRotation(const glm::vec3& newRotation);
+		virtual const glm::vec3& GetRotation() override { return m_Rotation; }
+		virtual void SetRotation(const glm::vec3& newRotation)override;
 		
 
-		const glm::mat4& GetViewMatrix() { return m_ViewMatrix; }
-		const glm::mat4& GetProjectionMatrix() { return m_ProjectionMatrix; }
-		const glm::mat4& GetCameraMatrix() { return m_CameraMatrix; }
+		virtual const glm::mat4& GetViewMatrix() override { return m_ViewMatrix; }
+		virtual const glm::mat4& GetProjectionMatrix() override { return m_ProjectionMatrix; }
+		virtual const glm::mat4& GetCameraMatrix() override { return m_CameraMatrix; }
 
 		// Updates the camera matrix to the Vertex Shader
 		void updateMatrix(float FOVdeg, float nearPlane, float farPlane);

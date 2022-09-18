@@ -57,7 +57,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\GalaxyDraw\Camera.h">
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h">
@@ -1437,9 +1437,10 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp">
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Camera.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\GalaxyDraw\Camera.cpp">
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1535,5 +1536,6 @@
     <ClCompile Include="Source\solpch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Camera.cpp" />
   </ItemGroup>
 </Project>
