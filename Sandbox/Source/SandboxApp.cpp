@@ -46,6 +46,10 @@ public:
 
 		m_Texture = GD_Texture2D::Create("assets/textures/think.png");
 		
+		m_WhiteTexture = GD_Texture2D::Create(1, 1);
+		uint32_t whiteColor= 0Xffffffff;
+		m_WhiteTexture->SetData(&whiteColor,sizeof(uint32_t));
+
 		shader->Bind();
 		shader->setInt("u_Texture", 0);
 		
@@ -112,6 +116,7 @@ private:
 	Sol::s_ptr<GD_Shader> m_Shader;
 	Sol::s_ptr<GD_VAO> m_VertexArray;
 	Sol::s_ptr<GD_Texture2D> m_Texture;
+	Sol::s_ptr<GD_Texture2D> m_WhiteTexture;
 
 	glm::vec3 m_TrianglePos = glm::vec3(0.f);
 
