@@ -1438,6 +1438,7 @@
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Camera.h" />
+    <ClInclude Include="Source\Sol\Core\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">

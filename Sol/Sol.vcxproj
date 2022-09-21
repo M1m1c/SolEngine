@@ -190,6 +190,7 @@
     <ClInclude Include="Source\Sol\Core\LayerStack.h" />
     <ClInclude Include="Source\Sol\Core\Log.h" />
     <ClInclude Include="Source\Sol\Core\MouseButtonCodes.h" />
+    <ClInclude Include="Source\Sol\Core\Timer.h" />
     <ClInclude Include="Source\Sol\Core\TimeStep.h" />
     <ClInclude Include="Source\Sol\Core\Window.h" />
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h" />
