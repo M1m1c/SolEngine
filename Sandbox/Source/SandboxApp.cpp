@@ -4,14 +4,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#define PROFILE_SCOPE(name) Sol::Timer timer##__LINE__(name, [&](ProfileResult profileResult){m_ProfileResults.push_back(profileResult);})
-
-struct ProfileResult
-{
-	const char* Name;
-	float Time;
-};
-
 class ExampleLayer : public Sol::Layer
 {
 public:
@@ -68,7 +60,7 @@ public:
 
 	void OnUpdate(Sol::TimeStep deltaTime) override
 	{
-
+		SOL_PROFILE_FUNCTION();
 
 		//UPDATE STEP
 		m_CameraController.OnUpdate(deltaTime);
@@ -97,7 +89,7 @@ public:
 		}*/
 
 		{
-			PROFILE_SCOPE("RenderDraw");
+			SOL_PROFILE_SCOPE("RenderDraw");
 			glm::vec3 pos(0.f, 0.f, 0.f);
 			glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
 
@@ -115,16 +107,6 @@ public:
 	{
 		ImGui::Begin("Settings");
 		ImGui::ColorEdit3("Triangle Color", glm::value_ptr(m_TriangleColor));
-
-		for (auto& result : m_ProfileResults)
-		{
-			char label[50];
-			strcpy(label, "%.3fms  ");
-			strcat(label, result.Name);
-			ImGui::Text(label, result.Time);
-		}
-		m_ProfileResults.clear();
-
 		ImGui::End();
 	}
 
@@ -141,8 +123,6 @@ private:
 	Sol::s_ptr<GD_VAO> m_VertexArray;
 	Sol::s_ptr<GD_Texture2D> m_Texture;
 	Sol::s_ptr<GD_Texture2D> m_WhiteTexture;
-
-	std::vector<ProfileResult> m_ProfileResults;
 
 	glm::vec3 m_TrianglePos = glm::vec3(0.f);
 

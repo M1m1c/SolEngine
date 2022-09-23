@@ -4,6 +4,14 @@
 
 namespace Sol 
 {
+#define TIMER_PROFILE_SCOPE(name) Sol::Timer timer##__LINE__(name, [&](ProfileResult profileResult){m_ProfileResults.push_back(profileResult);})
+
+	struct ProfileResult
+	{
+		const char* Name;
+		float Time;
+	};
+
 	template<typename Fn>
 	class Timer
 	{
