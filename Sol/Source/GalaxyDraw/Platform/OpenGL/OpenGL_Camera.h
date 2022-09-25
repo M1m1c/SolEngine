@@ -32,8 +32,6 @@ namespace GalaxyDraw {
 
 		void MatrixUniform(Shader& shader, const char* uniform);
 
-		void Inputs(GLFWwindow* window);
-
 	private:
 
 		void RecalculateViewMatrix();
