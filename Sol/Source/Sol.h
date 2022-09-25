@@ -12,7 +12,6 @@
 
 #include "Sol/Core/Layer.h"
 #include "Sol/Core/Log.h"
-#include "Sol/Core/Timer.h"
 #include "Sol/ImGui/ImGuiLayer.h"
 
 #include <GalaxyDraw/GalaxyDraw.h>

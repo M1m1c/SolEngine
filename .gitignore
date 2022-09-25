@@ -33,3 +33,6 @@
 *.vs
 **/binaries
 **/intermediate
+Sandbox/SolProfile-Startup.json
+Sandbox/SolProfile-Shutdown.json
+Sandbox/SolProfile-Runtime.json
