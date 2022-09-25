@@ -30,6 +30,7 @@ namespace Sol
 		//bool m_EnableRotation;
 
 		glm::vec3 m_CameraPosition = glm::vec3(0.f);
+		glm::vec3 m_CameraRotation= glm::vec3(0.f);
 		float m_CameraSpeed = 1.f;
 
 	};

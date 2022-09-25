@@ -141,8 +141,19 @@ namespace GalaxyDraw {
 
 	void OpenGL_Camera::SetRotation(const glm::vec3& newRotation)
 	{
-		//TODO currently cares about one axis, should be able to set all axies of rotation
-		m_Rotation = glm::rotate(m_Rotation, glm::radians(-newRotation.r), m_UpDir);
+		//m_rotation is forward direction
+		//m_UpDir is up direction
+		//the cross of these is the right direction
+
+		//Order of rotations is 
+		//1. Z = roll of camera
+		//2. X = yaw of camera
+		//3. y = pitch of camera
+
+		m_UpDir = glm::rotate(worldUp, glm::radians(-newRotation.z), worldForward);
+		m_Rotation = glm::rotate(glm::vec3(0.0f, 0.0f, -1.0f), glm::radians(-newRotation.x), m_UpDir);
+		auto right = glm::normalize(glm::cross(m_Rotation, m_UpDir));
+		m_Rotation = glm::rotate(m_Rotation, glm::radians(-newRotation.y), right);
 		RecalculateViewMatrix();
 	}
 }
