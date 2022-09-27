@@ -24,7 +24,7 @@ namespace GalaxyDraw
 
 		virtual void SetClearColor(const glm::vec4& color) = 0;
 
-		virtual void DrawIndexed(const std::shared_ptr<VertexArray> va) = 0;
+		virtual void DrawIndexed(const std::shared_ptr<VertexArray> va, uint32_t indexCount = 0) = 0;
 		/*virtual void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const =0;
 		virtual void Draw(const Model& model, const Shader& shader) const=0;*/
 		virtual void Clear() const=0;

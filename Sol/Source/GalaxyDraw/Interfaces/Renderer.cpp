@@ -25,6 +25,7 @@ namespace GalaxyDraw
 
 	void Renderer::EndScene()
 	{
+		//Flush();
 	}
 
 	void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& va, const glm::mat4& transform)
