@@ -1440,6 +1440,9 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Camera.h" />
     <ClInclude Include="Source\Sol\Debug\Timer.h" />
     <ClInclude Include="Source\Sol\Debug\Instrumentor.h" />
+    <ClInclude Include="Source\Sol\ECS\IComponent.h" />
+    <ClInclude Include="Source\Sol\ECS\Entity.h" />
+    <ClInclude Include="Source\Sol\ECS\ECSMaster.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">
