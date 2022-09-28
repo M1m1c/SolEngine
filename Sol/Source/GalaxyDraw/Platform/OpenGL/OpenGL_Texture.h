@@ -36,6 +36,12 @@ namespace GalaxyDraw
 		void Unbind() const;
 		// Deletes a texture
 		void Delete();
+
+
+		virtual bool operator==(const Texture2D& other) const override 
+		{ 
+			return m_RendererID == ((OpenGL_Texture2D&)other).m_RendererID;
+		}
 	private:
 		std::string m_Path;
 		uint32_t m_Width;

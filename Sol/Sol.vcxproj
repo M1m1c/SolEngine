@@ -194,6 +194,9 @@
     <ClInclude Include="Source\Sol\Debug\Timer.h" />
     <ClInclude Include="Source\Sol\Core\TimeStep.h" />
     <ClInclude Include="Source\Sol\Core\Window.h" />
+    <ClInclude Include="Source\Sol\ECS\Entity.h" />
+    <ClInclude Include="Source\Sol\ECS\ECSMaster.h" />
+    <ClInclude Include="Source\Sol\ECS\IComponent.h" />
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h" />
     <ClInclude Include="Source\Sol\Events\Event.h" />
     <ClInclude Include="Source\Sol\Events\KeyEvent.h" />

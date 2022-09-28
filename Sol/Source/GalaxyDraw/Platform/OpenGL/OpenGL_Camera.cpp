@@ -50,80 +50,6 @@ namespace GalaxyDraw {
 		GLCall(glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), uniform), 1, GL_FALSE, glm::value_ptr(m_CameraMatrix)));
 	}
 
-	//TODO move all input to camera controller class
-	void OpenGL_Camera::Inputs(GLFWwindow* window)
-	{
-		// Handles key inputs
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		{
-			m_Position += speed * m_Rotation;
-		}
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		{
-			m_Position += speed * -glm::normalize(glm::cross(m_Rotation, m_UpDir));
-		}
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		{
-			m_Position += speed * -m_Rotation;
-		}
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		{
-			m_Position += speed * glm::normalize(glm::cross(m_Rotation, m_UpDir));
-		}
-		if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-		{
-			m_Position += speed * m_UpDir;
-		}
-		if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-		{
-			m_Position += speed * -m_UpDir;
-		}
-		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-		{
-			speed = 0.2f;
-		}
-		else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
-		{
-			speed = 0.07f;
-		}
-
-		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
-		{
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-
-			if (firstClick)
-			{
-				glfwSetCursorPos(window, (width / 2), (height / 2));
-				firstClick = false;
-			}
-
-			double mouseX;
-			double mouseY;
-			glfwGetCursorPos(window, &mouseX, &mouseY);
-
-			float rotX = sensitivity * (float)(mouseY - (height / 2)) / height;
-			float rotY = sensitivity * (float)(mouseX - (width / 2)) / width;
-
-			glm::vec3 newOrientation = glm::rotate(m_Rotation, glm::radians(-rotX), glm::normalize(glm::cross(m_Rotation, m_UpDir)));
-
-			if (abs(glm::angle(newOrientation, m_UpDir) - glm::radians(90.0f)) <= glm::radians(85.0f))
-			{
-				m_Rotation = newOrientation;
-			}
-
-			m_Rotation = glm::rotate(m_Rotation, glm::radians(-rotY), m_UpDir);
-
-			glfwSetCursorPos(window, (width / 2), (height / 2));
-		}
-		else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE)
-		{
-			// Unhides cursor since camera is not looking around anymore
-			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-			// Makes sure the next time the camera looks around it doesn't jump
-			firstClick = true;
-		}
-
-	}
 
 	void OpenGL_Camera::RecalculateViewMatrix()
 	{
@@ -132,6 +58,7 @@ namespace GalaxyDraw {
 		/*glm::translate(glm::mat4(1.0f), m_Position) *
 			glm::rotate(glm::mat4(1.0f), 1.0f, m_Rotation);*/
 	}
+
 
 	void OpenGL_Camera::SetPosition(const glm::vec3& newPosition)
 	{

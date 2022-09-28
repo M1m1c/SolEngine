@@ -119,13 +119,16 @@ namespace GalaxyDraw
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
+		virtual void SetData(const void* data,uint32_t size) = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 		virtual const BufferLayout& GetLayout() const = 0;
 
-		//TODO turn into shared_ptr
+
+		static std::shared_ptr <VertexBuffer> Create(uint32_t size);
 		static std::shared_ptr <VertexBuffer> Create(float* verts, uint32_t size);
 	};
 
+	//currently only supports 32 bit index buffers
 	class IndexBuffer
 	{
 	public:
