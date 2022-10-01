@@ -3,11 +3,11 @@
 
 namespace Sol 
 {
-	static class ECSMaster
+	static class ECS_Admin
 	{
 	public:
-		ECSMaster();
-		~ECSMaster();
+		ECS_Admin();
+		~ECS_Admin();
 
 		//TODO this needs to keep track of all enteties and all components,
 		// or have handeler classes that it can refrence that does.

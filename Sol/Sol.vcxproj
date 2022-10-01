@@ -195,10 +195,12 @@
     <ClInclude Include="Source\Sol\Core\TimeStep.h" />
     <ClInclude Include="Source\Sol\Core\Window.h" />
     <ClInclude Include="Source\Sol\ECS\ComponentManager.h" />
+    <ClInclude Include="Source\Sol\ECS\ECS_Core.h" />
     <ClInclude Include="Source\Sol\ECS\Entity.h" />
-    <ClInclude Include="Source\Sol\ECS\ECSMaster.h" />
+    <ClInclude Include="Source\Sol\ECS\ECS_Admin.h" />
     <ClInclude Include="Source\Sol\ECS\EntityManager.h" />
     <ClInclude Include="Source\Sol\ECS\IComponent.h" />
+    <ClInclude Include="Source\Sol\ECS\ISystem.h" />
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h" />
     <ClInclude Include="Source\Sol\Events\Event.h" />
     <ClInclude Include="Source\Sol\Events\KeyEvent.h" />

@@ -1442,9 +1442,11 @@
     <ClInclude Include="Source\Sol\Debug\Instrumentor.h" />
     <ClInclude Include="Source\Sol\ECS\IComponent.h" />
     <ClInclude Include="Source\Sol\ECS\Entity.h" />
-    <ClInclude Include="Source\Sol\ECS\ECSMaster.h" />
+    <ClInclude Include="Source\Sol\ECS\ECS_Admin.h" />
     <ClInclude Include="Source\Sol\ECS\EntityManager.h" />
     <ClInclude Include="Source\Sol\ECS\ComponentManager.h" />
+    <ClInclude Include="Source\Sol\ECS\ISystem.h" />
+    <ClInclude Include="Source\Sol\ECS\ECS_Core.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">
