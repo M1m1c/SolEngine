@@ -3,15 +3,15 @@
 namespace Sol 
 {
 
-	class IComponentContainer
+	class IComponentPool
 	{
 	public:
-		virtual ~IComponentContainer() = default;
+		virtual ~IComponentPool() = default;
 		virtual void EntityDestroyed(Entity entity) = 0;
 	};
 
 	template<typename T>
-	class ComponentContainer : IComponentContainer
+	class ComponentPool : IComponentPool
 	{
 	public:
 		void InsertData(Entity entity, T component);

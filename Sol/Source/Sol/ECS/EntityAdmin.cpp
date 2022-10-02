@@ -3,8 +3,12 @@
 
 namespace Sol 
 {
-	EntityAdmin::EntityAdmin()
+	EntityAdmin::EntityAdmin() : 
+		m_ActiveEntityCount(0)
 	{
+		//Initalizes the size of the max possible component signatures to be based on the max number of entities allowed
+		//m_CompSignatures.reserve(MAX_ENTITIES);
+
 		// Initialize the queue with all possible entity IDs
 		for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
 		{
@@ -14,6 +18,8 @@ namespace Sol
 
 	EntityAdmin::~EntityAdmin()
 	{
+		//TODO make sure this frees up the memory m_CompSignatures uses
+		//m_CompSignatures.clear();
 	}
 
 	const Entity& EntityAdmin::CreateEntity()

@@ -3,7 +3,7 @@
 
 namespace Sol 
 {
-	static class ECS_Admin
+	class ECS_Admin
 	{
 	public:
 		ECS_Admin();

@@ -1,11 +1,11 @@
 #include "solpch.h"
-#include "ComponentContainer.h"
+#include "ComponentPool.h"
 
 namespace Sol 
 {
 
 	template<typename T>
-	inline void ComponentContainer<T>::InsertData(Entity entity, T component)
+	inline void ComponentPool<T>::InsertData(Entity entity, T component)
 	{
 		assert(m_EntityToIndexMap.find(entity) == m_EntityToIndexMap.end() && "Component added to same entity more than once.");
 
@@ -18,7 +18,7 @@ namespace Sol
 	}
 
 	template<typename T>
-	void ComponentContainer<T>::RemoveData(Entity entity)
+	void ComponentPool<T>::RemoveData(Entity entity)
 	{
 		assert(m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end() && "Removing non-existent component.");
 
@@ -39,7 +39,7 @@ namespace Sol
 	}
 
 	template<typename T>
-	T& ComponentContainer<T>::GetData(Entity entity)
+	T& ComponentPool<T>::GetData(Entity entity)
 	{
 			assert(m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end() && "Retrieving non-existent component.");
 
@@ -48,7 +48,7 @@ namespace Sol
 	}
 
 	template<typename T>
-	void ComponentContainer<T>::EntityDestroyed(Entity entity)
+	void ComponentPool<T>::EntityDestroyed(Entity entity)
 	{
 		if (m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end())
 		{

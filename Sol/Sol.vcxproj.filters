@@ -1443,10 +1443,12 @@
     <ClInclude Include="Source\Sol\ECS\IComponent.h" />
     <ClInclude Include="Source\Sol\ECS\Entity.h" />
     <ClInclude Include="Source\Sol\ECS\ECS_Admin.h" />
-    <ClInclude Include="Source\Sol\ECS\EntityManager.h" />
-    <ClInclude Include="Source\Sol\ECS\ComponentManager.h" />
+    <ClInclude Include="Source\Sol\ECS\EntityAdmin.h" />
+    <ClInclude Include="Source\Sol\ECS\ComponentAdmin.h" />
     <ClInclude Include="Source\Sol\ECS\ISystem.h" />
     <ClInclude Include="Source\Sol\ECS\ECS_Core.h" />
+    <ClInclude Include="Source\Sol\ECS\ComponentPool.h" />
+    <ClInclude Include="Source\Sol\ECS\IAllocator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">
@@ -1546,5 +1548,8 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Camera.cpp" />
+    <ClCompile Include="Source\Sol\ECS\EntityAdmin.cpp" />
+    <ClCompile Include="Source\Sol\ECS\ComponentPool.cpp" />
+    <ClCompile Include="Source\Sol\ECS\ComponentAdmin.cpp" />
   </ItemGroup>
 </Project>
