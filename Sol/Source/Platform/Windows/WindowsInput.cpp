@@ -1,6 +1,6 @@
 #include "solpch.h"
 #include "WindowsInput.h"
-#include "Sol/Application.h"
+#include "Sol/Core/Application.h"
 
 #include <GLFW/glfw3.h>
 

@@ -1,11 +1,10 @@
 #include "solpch.h"
 #include "WindowsWindow.h"
-#include "Sol/Log.h"
+#include "Sol/Core/Log.h"
 
 #include "Sol/Events/ApplicationEvent.h"
 #include "Sol/Events/KeyEvent.h"
 #include "Sol/Events/MouseEvent.h"
-#include "Platform/OpenGL/OpenGLContext.h"
 
 
 
@@ -59,7 +58,7 @@ namespace Sol
 			nullptr,
 			nullptr);
 
-		m_Context = new OpenGLContext(m_Window);
+		m_Context = GD_RenderingContext::Create(m_Window);
 		m_Context->Init();
 
 		

@@ -1,14 +1,14 @@
 #pragma once
-#include "Sol/Renderer/RenderingContext.h"
+#include "GalaxyDraw/Interfaces/RenderingContext.h"
 
 struct GLFWwindow;
 
-namespace Sol 
+namespace GalaxyDraw
 {
-	class OpenGLContext : public RenderingContext
+	class OpenGL_Context : public RenderingContext
 	{
 	public:
-		OpenGLContext(GLFWwindow* windowHandle);
+		OpenGL_Context(GLFWwindow* windowHandle);
 
 		virtual void Init() override;
 		virtual void SwapBuffers() override;

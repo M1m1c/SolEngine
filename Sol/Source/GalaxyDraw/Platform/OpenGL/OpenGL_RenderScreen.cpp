@@ -35,9 +35,15 @@ namespace GalaxyDraw
 		}
 	}
 
-	void OpenGL_RenderScreen::DrawIndexed(const std::shared_ptr<VertexArray> va)
+	void OpenGL_RenderScreen::DrawIndexed(const std::shared_ptr<VertexArray> va, uint32_t indexCount)
 	{
-		glDrawElements(GL_TRIANGLES, va->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		uint32_t count = indexCount == 0 ? va->GetIndexBuffer()->GetCount() : indexCount;
+		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
+	}
+
+	void OpenGL_RenderScreen::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
+	{
+		glViewport(x, y, width, height);
 	}
 
 	void OpenGL_RenderScreen::SetClearColor(const glm::vec4& color)

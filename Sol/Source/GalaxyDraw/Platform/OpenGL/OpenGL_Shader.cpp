@@ -6,11 +6,54 @@
 
 namespace GalaxyDraw 
 {
-
-	OpenGL_Shader::OpenGL_Shader(const char* vertexFile, const char* fragmentFile)
+	//Constructs a shader with a automatically generated name based on vertex file name
+	OpenGL_Shader::OpenGL_Shader(const std::string& vertexFile, const std::string& fragmentFile)
 	{
-		std::string vertexCode = GalaxyMacros::get_file_contents(vertexFile);
-		std::string fragmentCode = GalaxyMacros::get_file_contents(fragmentFile);
+		auto lastSlash = vertexFile.find_last_of("/\\");
+		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+		auto lastDot = vertexFile.rfind('.');
+		auto count = lastDot == std::string::npos ? vertexFile.size() - lastSlash : lastDot - lastSlash;
+		m_Name = vertexFile.substr(lastSlash, count);
+		Compile(vertexFile, fragmentFile);
+	}
+
+	//constructs a shader with a specified name
+	OpenGL_Shader::OpenGL_Shader(const std::string& nameToSet, const std::string& vertexFile, const std::string& fragmentFile)
+	{
+		m_Name = nameToSet;
+		Compile(vertexFile, fragmentFile);
+	}
+
+	OpenGL_Shader::~OpenGL_Shader()
+	{
+		GLCall(glDeleteProgram(m_RendererID));
+	}
+
+	const std::string& OpenGL_Shader::GetName() const
+	{
+		return m_Name;
+	}
+
+	const uint32_t OpenGL_Shader::GetID() const
+	{
+		return m_RendererID;
+	}
+
+
+	void OpenGL_Shader::Bind() const
+	{
+		GLCall(glUseProgram(m_RendererID));
+	}
+
+	void OpenGL_Shader::Delete() const
+	{
+		GLCall(glDeleteProgram(m_RendererID));
+	}
+
+	void OpenGL_Shader::Compile(const std::string& vertexFile, const std::string& fragmentFile)
+	{
+		std::string vertexCode = GalaxyMacros::get_file_contents(vertexFile.c_str());
+		std::string fragmentCode = GalaxyMacros::get_file_contents(fragmentFile.c_str());
 
 		const char* vertexSource = vertexCode.c_str();
 		const char* fragmentSource = fragmentCode.c_str();
@@ -33,27 +76,6 @@ namespace GalaxyDraw
 
 		GLCall(glDeleteShader(vertexShader));
 		GLCall(glDeleteShader(fragmentShader));
-	}
-
-	OpenGL_Shader::~OpenGL_Shader()
-	{
-		GLCall(glDeleteProgram(m_RendererID));
-	}
-
-	const uint32_t OpenGL_Shader::GetID() const
-	{
-		return m_RendererID;
-	}
-
-
-	void OpenGL_Shader::Bind() const
-	{
-		GLCall(glUseProgram(m_RendererID));
-	}
-
-	void OpenGL_Shader::Delete() const
-	{
-		GLCall(glDeleteProgram(m_RendererID));
 	}
 
 	// Checks if the different Shaders have compiled properly

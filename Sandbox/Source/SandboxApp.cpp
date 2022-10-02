@@ -7,7 +7,7 @@
 class ExampleLayer : public Sol::Layer
 {
 public:
-	ExampleLayer() : Layer("Example"), m_Camera(10, 10, glm::vec3(0.f))
+	ExampleLayer() : Layer("Example"), m_CameraController(10, 10, glm::vec2(1.6f, 0.9f), glm::vec3(0.f))
 	{
 		m_VertexArray = GD_VAO::Create();
 
@@ -37,60 +37,43 @@ public:
 		vertexBuffer->SetLayout(layout);
 		m_VertexArray->AddVertexBuffer(vertexBuffer);
 
-		uint32_t indices[6] = { 0,1,2,2,3,0};
+		uint32_t indices[6] = { 0,1,2,2,3,0 };
 		auto indexBuffer = GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		m_Shader = GD_Shader::Create(
-			"Square.vert",
-			"Square.frag");
+		auto shader = m_ShaderLib.Load("Square", "Square.vert", "Square.frag");
 
 		m_Texture = GD_Texture2D::Create("assets/textures/think.png");
-		
-		m_Shader->Bind();
-		m_Shader->setInt("u_Texture", 0);
-		
+
+		m_WhiteTexture = GD_Texture2D::Create(1, 1);
+		uint32_t whiteColor = 0Xffffffff;
+		m_WhiteTexture->SetData(&whiteColor, sizeof(uint32_t));
+
+		shader->Bind();
+		shader->setInt("u_Texture", 0);
+
 	}
 
 	void OnFixedUpdate(Sol::TimeStep fixedStep, const float fixedTime) override
 	{
-
 	}
 
 	void OnUpdate(Sol::TimeStep deltaTime) override
 	{
+		SOL_PROFILE_FUNCTION();
 
-		if (Sol::Input::IsKeyPressed(SOL_KEY_D))
-		{
-			m_CameraPosition.x += m_CameraSpeed * deltaTime;
-		}
+		//UPDATE STEP
+		m_CameraController.OnUpdate(deltaTime);
 
-		if (Sol::Input::IsKeyPressed(SOL_KEY_A))
-		{
-			m_CameraPosition.x += -m_CameraSpeed * deltaTime;
-		}
+		//Sol::Timer timer("ExampleLayer::SandboxApp::OnUpdate");
 
-		if (Sol::Input::IsKeyPressed(SOL_KEY_W))
-		{
-			m_CameraPosition.y += m_CameraSpeed * deltaTime;
-		}
-
-		if (Sol::Input::IsKeyPressed(SOL_KEY_S))
-		{
-			m_CameraPosition.y += -m_CameraSpeed * deltaTime;
-		}
-
-		//SOL_INFO("ExampleLayer::Update");
+		//RENDER STEP
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
 
-		m_Camera.SetPosition(m_CameraPosition);
-
-		m_Camera.SetRotation({ 0.5f,0.0f,0.f });
-
 		static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-		GD_Renderer::BeginScene(m_Camera);
+		GD_Renderer::BeginScene(m_CameraController.GetCamera());
 
 		//m_Shader->setVec3("u_Color", m_TriangleColor);
 
@@ -104,11 +87,19 @@ public:
 				GD_Renderer::Submit(m_Shader, m_VertexArray, transform);
 			}
 		}*/
-		glm::vec3 pos(0.f,0.f,0.f);
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
-		GD_Renderer::Submit(m_Shader, m_VertexArray, transform);
 
-		m_Texture->Bind();
+		{
+			SOL_PROFILE_SCOPE("RenderDraw");
+			glm::vec3 pos(0.f, 0.f, 0.f);
+			glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
+
+			auto shader = m_ShaderLib.Get("Square");
+
+			GD_Renderer::Submit(shader, m_VertexArray, transform);
+
+			m_Texture->Bind();
+		}
+
 		GD_Renderer::EndScene();
 	}
 
@@ -119,21 +110,25 @@ public:
 		ImGui::End();
 	}
 
-	virtual void OnEvent(Sol::Event& event) override
+	virtual void OnEvent(Sol::Event& e) override
 	{
 		//SOL_TRACE("{0}", event);
+		m_CameraController.OnEvent(e);
 	}
 
 private:
+
+	GD_ShaderLibrary m_ShaderLib;
 	Sol::s_ptr<GD_Shader> m_Shader;
 	Sol::s_ptr<GD_VAO> m_VertexArray;
 	Sol::s_ptr<GD_Texture2D> m_Texture;
+	Sol::s_ptr<GD_Texture2D> m_WhiteTexture;
 
 	glm::vec3 m_TrianglePos = glm::vec3(0.f);
 
-	GD_Camera m_Camera;
-	glm::vec3 m_CameraPosition = glm::vec3(0.f);
-	float m_CameraSpeed = 1.f;
+	Sol::CameraController m_CameraController;
+	//glm::vec3 m_CameraPosition = glm::vec3(0.f);
+	//float m_CameraSpeed = 1.f;
 
 	glm::vec3 m_TriangleColor = { 0.f, 0.8f, 0.8f };
 };
