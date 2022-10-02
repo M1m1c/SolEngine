@@ -5,7 +5,7 @@ namespace Sol
 {
 
 	template<typename T>
-	inline void ComponentPool<T>::InsertData(Entity entity, T component)
+	inline void ComponentPool<T>::InsertData(Entity entity, IComponent<T> component)
 	{
 		assert(m_EntityToIndexMap.find(entity) == m_EntityToIndexMap.end() && "Component added to same entity more than once.");
 
@@ -39,9 +39,9 @@ namespace Sol
 	}
 
 	template<typename T>
-	T& ComponentPool<T>::GetData(Entity entity)
+	IComponent<T>& ComponentPool<T>::GetData(Entity entity)
 	{
-			assert(m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end() && "Retrieving non-existent component.");
+		assert(m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end() && "Retrieving non-existent component.");
 
 		// Return a reference to the entity's component
 		return m_ComponentArray[mEntityToIndexMap[entity]];
