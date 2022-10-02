@@ -5,12 +5,12 @@ namespace Sol
 {
 
 	template<typename T>
-	inline void ComponentPool<T>::InsertData(Entity entity, IComponent<T> component)
+	inline void ComponentPool<T>::InsertData(Entity entity, T component)
 	{
 		assert(m_EntityToIndexMap.find(entity) == m_EntityToIndexMap.end() && "Component added to same entity more than once.");
 
 		// Put new entry at end and update the maps
-		size_t newIndex = mSize;
+		size_t newIndex = m_Size;
 		m_EntityToIndexMap[entity] = newIndex;
 		m_IndexToEntityMap[newIndex] = entity;
 		m_ComponentArray[newIndex] = component;
@@ -39,12 +39,12 @@ namespace Sol
 	}
 
 	template<typename T>
-	IComponent<T>& ComponentPool<T>::GetData(Entity entity)
+	T& ComponentPool<T>::GetData(Entity entity)
 	{
 		assert(m_EntityToIndexMap.find(entity) != m_EntityToIndexMap.end() && "Retrieving non-existent component.");
 
 		// Return a reference to the entity's component
-		return m_ComponentArray[mEntityToIndexMap[entity]];
+		return m_ComponentArray[m_EntityToIndexMap[entity]];
 	}
 
 	template<typename T>

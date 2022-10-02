@@ -15,9 +15,9 @@ namespace Sol
 	class ComponentPool : IComponentPool
 	{
 	public:
-		void InsertData(Entity entity, IComponent<T> component);
+		void InsertData(Entity entity, T component);
 		void RemoveData(Entity entity);
-		IComponent<T>& GetData(Entity entity);
+		T& GetData(Entity entity);
 		virtual void EntityDestroyed(Entity entity) override;
 
 	private:
@@ -25,7 +25,7 @@ namespace Sol
 		// set to a specified maximum amount, matching the maximum number
 		// of entities allowed to exist simultaneously, so that each entity
 		// has a unique spot.
-		std::array<IComponent<T>, MAX_ENTITIES> m_ComponentArray;
+		std::array<T, MAX_ENTITIES> m_ComponentArray;
 
 		// Map from an entity ID to an array index.
 		std::unordered_map<Entity, size_t> m_EntityToIndexMap;
