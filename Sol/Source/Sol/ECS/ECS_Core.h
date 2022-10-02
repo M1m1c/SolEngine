@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <bitset>
+#include "Sol/Core/CrammedMap.h"
 namespace Sol 
 {
 	typedef std::uint32_t Entity;
@@ -19,6 +20,4 @@ namespace Sol
 	//This is the set max number of component types that we allow in the engine.
 	static const std::uint8_t MAX_COMPONENTS = 32;
 	typedef std::bitset<MAX_COMPONENTS> CompSignature;
-
-	
 }

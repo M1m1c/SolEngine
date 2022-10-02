@@ -1449,7 +1449,7 @@
     <ClInclude Include="Source\Sol\ECS\ECS_Core.h" />
     <ClInclude Include="Source\Sol\ECS\ComponentPool.h" />
     <ClInclude Include="Source\Sol\ECS\IAllocator.h" />
-    <ClInclude Include="Source\Sol\ECS\CrammedMap.h" />
+    <ClInclude Include="Source\Sol\Core\CrammedMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">

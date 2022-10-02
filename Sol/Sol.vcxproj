@@ -182,7 +182,7 @@
     <ClInclude Include="Source\Sol\CameraController.h" />
     <ClInclude Include="Source\Sol\Core\Application.h" />
     <ClInclude Include="Source\Sol\Core\Core.h" />
-    <ClInclude Include="Source\Sol\ECS\CrammedMap.h" />
+    <ClInclude Include="Source\Sol\Core\CrammedMap.h" />
     <ClInclude Include="Source\Sol\Core\EntryPoint.h" />
     <ClInclude Include="Source\Sol\Core\GamepadKeyCodes.h" />
     <ClInclude Include="Source\Sol\Core\Input.h" />

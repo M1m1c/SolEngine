@@ -1,6 +1,6 @@
 #pragma once
 #include <cstdint>
-#include <array>
+#include <vector>
 #include <unordered_map>
 namespace Sol 
 {
@@ -24,7 +24,7 @@ namespace Sol
 	public:
 		CrammedMap() :
 			m_Capacity(TCapacity),
-			m_Array(TValue, capacity)
+			m_Container(TValue, capacity)
 		{
 
 		}
@@ -34,7 +34,7 @@ namespace Sol
 		size_t m_Size;
 		size_t m_Capacity;
 
-		std::array<TValue, TCapacity> m_Array;
+		std::vector<TValue, TCapacity> m_Container;
 
 		std::unordered_map<Key<TKey>, size_t> m_KeyToIndexMap;
 		std::unordered_map<size_t, Key<TKey>> m_IndexToKeyMap;
