@@ -3,6 +3,7 @@
 #include "IComponent.h"
 namespace Sol 
 {
+	//TODO turn this into a memmorypool
 
 	class IComponentPool
 	{
@@ -11,7 +12,7 @@ namespace Sol
 		virtual void EntityDestroyed(Entity entity) = 0;
 	};
 
-	template<typename T>
+	template<class T>
 	class ComponentPool : IComponentPool
 	{
 	public:

@@ -1,7 +1,6 @@
 #pragma once
 #include <cstdint>
 #include <bitset>
-#include "Sol/Core/CrammedMap.h"
 namespace Sol 
 {
 	typedef std::uint32_t Entity;

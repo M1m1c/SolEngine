@@ -5,7 +5,8 @@ namespace Sol
 	class IComponent
 	{
 	public:
-		virtual IComponent* Create() = 0;// this should take in a parameter that is dependent on what component it is
+		// this should take in a parameter that is dependent on what component it is
+		virtual void Create() = 0;
 		virtual ~IComponent() = default;
 		virtual const CompType& GetType() const = 0;
 		//virtual void EntityDestroyed(Entity entity) = 0;
