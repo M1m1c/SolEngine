@@ -22,13 +22,13 @@ namespace Sol
 	
 
 	//template<Entity TKey, IComponent& TValue, size_t TCapacity = 0>
-	template<class TValue, size_t TCapacity = 0>
+	template<class TValue>
 	class CrammedCompMap
 	{
 	public:
 
-		CrammedCompMap() :
-			m_Capacity(TCapacity),
+		CrammedCompMap(size_t capacity = 0) :
+			m_Capacity(capacity),
 			m_Container(TValue, capacity)
 		{
 
@@ -37,18 +37,19 @@ namespace Sol
 
 		int& operator[](int index) { return m_Container[index]; }
 
-		const size_t GetSize() { return m_Size; }
-		const size_t GetCapacity() { return m_Capacity; }
-		const TValue& GetWithKey(Entity key) { return m_Container[m_KeyToIndexMap[Key<key>]]; }
-		const void Add(Entity key,TValue element)
+		inline const size_t GetSize() { return m_Size; }
+		inline const size_t GetCapacity() { return m_Capacity; }
+		inline const TValue& GetWithKey(Entity key) { return m_Container[m_KeyToIndexMap[Key<key>]]; }
+		inline void Add(Entity key, TValue element)
 		{
 			assert((m_Size + 1) > m_Capacity && "Failed adding element! Exceeding capacity of container.");
 			m_Container[m_Size] = element;
-			m_KeyToIndexMap[Key<key>] = m_Size;
-			m_IndexToKeyMap[m_Size] = Key<key>;
+			m_KeyToIndexMap[key] = m_Size;
+			m_IndexToKeyMap[m_Size] = key;
 			m_NewSize = m_Size + 1;
 		}
-		const void Remove(Entity key)
+	
+		inline void Remove(Entity key)
 		{
 			//TODO assert that we can find element with key
 			auto& last = m_Container[m_Size - 1];
@@ -59,7 +60,7 @@ namespace Sol
 
 		//const void Remove(size_t index){}
 
-		const void Refresh() 
+		inline void Refresh() 
 		{
 			m_Size = m_NewSize;
 		}
@@ -69,7 +70,7 @@ namespace Sol
 		size_t m_NewSize = 0;
 		size_t m_Capacity = 0;
 
-		std::vector<TValue, TCapacity> m_Container;
+		std::vector<TValue> m_Container;
 
 		std::unordered_map<Entity, size_t> m_KeyToIndexMap;
 		std::unordered_map<size_t, Entity> m_IndexToKeyMap;

@@ -1552,5 +1552,6 @@
     <ClCompile Include="Source\Sol\ECS\EntityAdmin.cpp" />
     <ClCompile Include="Source\Sol\ECS\ComponentPool.cpp" />
     <ClCompile Include="Source\Sol\ECS\ComponentAdmin.cpp" />
+    <ClCompile Include="Source\Sol\ECS\CrammedCompMap.cpp" />
   </ItemGroup>
 </Project>
