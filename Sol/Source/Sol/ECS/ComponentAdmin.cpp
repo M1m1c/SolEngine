@@ -60,12 +60,12 @@ namespace Sol
 		{
 			auto const& component = pair.second;
 
-			component->EntityDestroyed(entity);
+			component->DeleteKey(entity);
 		}
 	}
 
 	template<typename T>
-	std::shared_ptr<ComponentPool<T>> ComponentAdmin::GetComponentArray()
+	std::shared_ptr<CrammedVecMap<T>> ComponentAdmin::GetComponentArray()
 	{
 		const char* typeName = typeid(T).name();
 

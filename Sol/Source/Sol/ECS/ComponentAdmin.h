@@ -1,7 +1,7 @@
 #pragma once
 #include "ECS_Core.h"
 #include "IComponent.h"
-#include "ComponentPool.h"
+#include "Sol/Core/CrammedVecMap.h"
 #include <memory>
 #include <unordered_map>
 
@@ -36,13 +36,13 @@ namespace Sol {
 		std::unordered_map<const char*, CompType> m_ComponentTypes;
 
 		// Map from type string pointer to a component array
-		std::unordered_map<const char*, s_ptr<IComponentPool>> m_ComponentArrays;
+		std::unordered_map<const char*, s_ptr<ICrammedVecMap>> m_ComponentArrays;
 
 		// The component type to be assigned to the next registered component - starting at 0
 		CompType m_NextComponentType;
 
 		// Convenience function to get the statically casted pointer to the ComponentArray of type T.
 		template<typename T>
-		std::shared_ptr<ComponentPool<T>> GetComponentArray();	
+		s_ptr<CrammedVecMap<T>> GetComponentArray();
 	};
 }
