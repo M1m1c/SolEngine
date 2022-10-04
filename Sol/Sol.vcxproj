@@ -182,7 +182,7 @@
     <ClInclude Include="Source\Sol\CameraController.h" />
     <ClInclude Include="Source\Sol\Core\Application.h" />
     <ClInclude Include="Source\Sol\Core\Core.h" />
-    <ClInclude Include="Source\Sol\ECS\CrammedCompMap.h" />
+    <ClInclude Include="Source\Sol\Core\CrammedVecMap.h" />
     <ClInclude Include="Source\Sol\Core\EntryPoint.h" />
     <ClInclude Include="Source\Sol\Core\GamepadKeyCodes.h" />
     <ClInclude Include="Source\Sol\Core\Input.h" />
@@ -202,7 +202,6 @@
     <ClInclude Include="Source\Sol\ECS\EntityAdmin.h" />
     <ClInclude Include="Source\Sol\ECS\IAllocator.h" />
     <ClInclude Include="Source\Sol\ECS\IComponent.h" />
-    <ClInclude Include="Source\Sol\ECS\ComponentPool.h" />
     <ClInclude Include="Source\Sol\ECS\ISystem.h" />
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h" />
     <ClInclude Include="Source\Sol\Events\Event.h" />
@@ -658,8 +657,7 @@
     <ClCompile Include="Source\Sol\Core\LayerStack.cpp" />
     <ClCompile Include="Source\Sol\Core\Log.cpp" />
     <ClCompile Include="Source\Sol\ECS\ComponentAdmin.cpp" />
-    <ClCompile Include="Source\Sol\ECS\ComponentPool.cpp" />
-    <ClCompile Include="Source\Sol\ECS\CrammedCompMap.cpp" />
+    <ClCompile Include="Source\Sol\Core\CrammedVecMap.cpp" />
     <ClCompile Include="Source\Sol\ECS\EntityAdmin.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp" />
