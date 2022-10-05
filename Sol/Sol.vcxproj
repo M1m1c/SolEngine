@@ -203,6 +203,7 @@
     <ClInclude Include="Source\Sol\ECS\IAllocator.h" />
     <ClInclude Include="Source\Sol\ECS\IComponent.h" />
     <ClInclude Include="Source\Sol\ECS\ISystem.h" />
+    <ClInclude Include="Source\Sol\ECS\SystemAdmin.h" />
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h" />
     <ClInclude Include="Source\Sol\Events\Event.h" />
     <ClInclude Include="Source\Sol\Events\KeyEvent.h" />
@@ -659,6 +660,7 @@
     <ClCompile Include="Source\Sol\ECS\ComponentAdmin.cpp" />
     <ClCompile Include="Source\Sol\Core\CrammedVecMap.cpp" />
     <ClCompile Include="Source\Sol\ECS\EntityAdmin.cpp" />
+    <ClCompile Include="Source\Sol\ECS\SystemAdmin.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="Source\solpch.cpp">
