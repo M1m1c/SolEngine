@@ -25,13 +25,17 @@ namespace Sol
 		}
 		~CrammedVecMap(){}
 
-		TValue& operator[](size_t index) { return m_Collection[index]; }
+		TValue& operator[](size_t index) 
+		{ 
+			assert(index < m_Size && "Index out of bounds!");
+			return m_Collection[index]; 
+		}
 
 		inline const size_t GetSize() { return m_Size; }
 		inline const size_t GetCapacity() { return m_Capacity; }
 
 		//Gets element with provided key
-		inline const TValue& GetWithKey(uint32_t key) 
+		inline const TValue& Get(uint32_t key) 
 		{
 			assert(m_KeyToIndexMap.find(key) != m_KeyToIndexMap.end() && "Failed Retriving element! Non-existent element.");
 			return m_Collection[m_KeyToIndexMap[Key<key>]]; 

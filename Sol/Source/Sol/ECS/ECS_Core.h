@@ -8,12 +8,6 @@ namespace Sol
 
 	//255 ís the absolute maximum number of component types we can have using a uint8_t
 	typedef std::uint8_t CompType;
-	enum class ECompType : CompType
-	{
-		None = 0,
-		Transform = 1,
-		Mesh = 2,
-	};
 
 	//TODO how do we make this value dynamic so that we can add more than a set number of components types
 	//This is the set max number of component types that we allow in the engine.

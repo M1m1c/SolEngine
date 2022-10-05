@@ -23,7 +23,6 @@ namespace Sol
 
 		//Keeps track of what components the active entities have.
 		std::array<CompSignature, MAX_ENTITIES> m_CompSignatures;
-		//std::unordered_map<Entity, CompSignature> m_CompSignatures;
 
 		uint32_t m_ActiveEntityCount;
 	};

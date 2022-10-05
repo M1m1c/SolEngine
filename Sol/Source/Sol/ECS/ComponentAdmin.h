@@ -12,6 +12,7 @@ namespace Sol {
 		ComponentAdmin();
 		~ComponentAdmin();
 
+		//Registers component T to the component type map and assigns it an int ID so it can be recognised as a usable type
 		template<typename T>
 		inline void RegisterComponent();	
 
@@ -27,22 +28,22 @@ namespace Sol {
 		template<typename T>
 		inline T& GetComponent(Entity entity);
 
+		// Notify each component collection that an entity has been destroyed.
+		// If the collection has a component for that entity, it will remove it.
 		inline void EntityDestroyed(Entity entity);
 
-		// TODO should create a component of type and place it in map with id as key
-		//static  std::shared_ptr<IComponent> CreateComponent(const std::uint32_t& entityID, const std::uint32_t& compType);
 	private:
 		// Map from type string pointer to a component type
 		std::unordered_map<const char*, CompType> m_ComponentTypes;
 
 		// Map from type string pointer to a component array
-		std::unordered_map<const char*, s_ptr<ICrammedVecMap>> m_ComponentArrays;
+		std::unordered_map<const char*, s_ptr<ICrammedVecMap>> m_ComponentCollections;
 
 		// The component type to be assigned to the next registered component - starting at 0
 		CompType m_NextComponentType;
 
 		// Convenience function to get the statically casted pointer to the ComponentArray of type T.
 		template<typename T>
-		s_ptr<CrammedVecMap<T>> GetComponentArray();
+		s_ptr<CrammedVecMap<T>> GetComponentCollection();
 	};
 }

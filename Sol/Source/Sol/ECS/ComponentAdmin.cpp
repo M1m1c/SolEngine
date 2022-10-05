@@ -7,16 +7,9 @@ namespace Sol
 	void ComponentAdmin::RegisterComponent()
 	{
 		const char* typeName = typeid(T).name();
-
-		assert(m_ComponentTypes.find(typeName) == m_ComponentTypes.end() && "Registering component type more than once.");
-
-		// Add this component type to the component type map
+		assert(m_ComponentTypes.find(typeName) == m_ComponentTypes.end() && "Attempting to register component type more than once.");
 		m_ComponentTypes.insert({ typeName, m_NextComponentType });
-
-		// Create a ComponentArray pointer and add it to the component arrays map
-		m_ComponentArrays.insert({ typeName, std::make_shared<ComponentArray<T>>() });
-
-		// Increment the value so that the next component registered will be different
+		m_ComponentMapss.insert({ typeName, std::make_shared<ComponentArray<T>>() });
 		++m_NextComponentType;
 	}
 
@@ -24,39 +17,31 @@ namespace Sol
 	CompType ComponentAdmin::GetComponentType()
 	{
 		const char* typeName = typeid(T).name();
-
 		assert(m_ComponentTypes.find(typeName) != m_ComponentTypes.end() && "Component not registered before use.");
-
-		// Return this component's type - used for creating signatures
 		return m_ComponentTypes[typeName];
 	}
 
 	template<typename T>
 	void ComponentAdmin::AddComponent(Entity entity, T component)
 	{
-		// Add a component to the array for an entity
-		GetComponentArray<T>()->InsertData(entity, component);
+		GetComponentCollection<T>()->Add(entity, component);
 	}
 
 	template<typename T>
 	void ComponentAdmin::RemoveComponent(Entity entity)
 	{
-		// Remove a component from the array for an entity
-		GetComponentArray<T>()->RemoveData(entity);
+		GetComponentCollection<T>()->Remove(entity);
 	}
 
 	template<typename T>
 	T& ComponentAdmin::GetComponent(Entity entity)
 	{
-		// Get a reference to a component from the array for an entity
-		return GetComponentArray<T>()->GetData(entity);
+		return GetComponentCollection<T>()->Get(entity);
 	}
 
 	void ComponentAdmin::EntityDestroyed(Entity entity)
 	{
-		// Notify each component array that an entity has been destroyed
-		// If it has a component for that entity, it will remove it
-		for (auto const& pair : m_ComponentArrays)
+		for (auto const& pair : m_ComponentCollections)
 		{
 			auto const& component = pair.second;
 
@@ -65,12 +50,10 @@ namespace Sol
 	}
 
 	template<typename T>
-	std::shared_ptr<CrammedVecMap<T>> ComponentAdmin::GetComponentArray()
+	s_ptr<CrammedVecMap<T>> ComponentAdmin::GetComponentCollection()
 	{
 		const char* typeName = typeid(T).name();
-
 		assert(m_ComponentTypes.find(typeName) != m_ComponentTypes.end() && "Component not registered before use.");
-
-		return std::static_pointer_cast<ComponentArray<T>>(m_ComponentArrays[typeName]);
+		return std::static_pointer_cast<CrammedVecMap<T>>(m_ComponentCollections[typeName]);
 	}
 }
