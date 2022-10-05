@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include <array>
 #include <unordered_map>
 namespace Sol 
 {
@@ -18,10 +19,9 @@ namespace Sol
 	public:
 
 		CrammedVecMap(size_t capacity = 0) :
-			m_Capacity(capacity),
-			m_Collection(TValue, capacity)
+			m_Capacity(capacity)
 		{
-
+			m_Collection.reserve(capacity);
 		}
 		~CrammedVecMap(){}
 
@@ -80,7 +80,7 @@ namespace Sol
 		//Used to remove key and elements related to key from collection
 		virtual inline void DeleteKey(uint32_t key) override
 		{
-			if (m_KeyToIndexMap.find(entity) != m_KeyToIndexMap.end())
+			if (m_KeyToIndexMap.find(key) != m_KeyToIndexMap.end())
 			{
 				Remove(key);
 			}

@@ -7,7 +7,7 @@ namespace Sol
 	void ComponentAdmin::RegisterComponent()
 	{
 		const char* typeName = typeid(T).name();
-		assert(m_ComponentTypes.find(typeName) == m_ComponentTypes.end() && "Attempting to register component type more than once.");
+		assert(m_ComponentTypes.find(typeName) == m_ComponentTypes.end() && "Attempted to register component type more than once.");
 		m_ComponentTypes.insert({ typeName, m_NextComponentType });
 		m_ComponentMapss.insert({ typeName, std::make_shared<ComponentArray<T>>() });
 		++m_NextComponentType;
@@ -22,24 +22,24 @@ namespace Sol
 	}
 
 	template<typename T>
-	void ComponentAdmin::AddComponent(Entity entity, T component)
+	void ComponentAdmin::AddComponent(EntityID entity, T component)
 	{
 		GetComponentCollection<T>()->Add(entity, component);
 	}
 
 	template<typename T>
-	void ComponentAdmin::RemoveComponent(Entity entity)
+	void ComponentAdmin::RemoveComponent(EntityID entity)
 	{
 		GetComponentCollection<T>()->Remove(entity);
 	}
 
 	template<typename T>
-	T& ComponentAdmin::GetComponent(Entity entity)
+	T& ComponentAdmin::GetComponent(EntityID entity)
 	{
 		return GetComponentCollection<T>()->Get(entity);
 	}
 
-	void ComponentAdmin::EntityDestroyed(Entity entity)
+	void ComponentAdmin::EntityDestroyed(EntityID entity)
 	{
 		for (auto const& pair : m_ComponentCollections)
 		{

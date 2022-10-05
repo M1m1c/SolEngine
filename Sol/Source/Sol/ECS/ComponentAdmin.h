@@ -20,17 +20,17 @@ namespace Sol {
 		inline CompType GetComponentType();	
 
 		template<typename T>
-		inline void AddComponent(Entity entity, T component);
+		inline void AddComponent(EntityID entity, T component);
 		
 		template<typename T>
-		inline void RemoveComponent(Entity entity);
+		inline void RemoveComponent(EntityID entity);
 
 		template<typename T>
-		inline T& GetComponent(Entity entity);
+		inline T& GetComponent(EntityID entity);
 
 		// Notify each component collection that an entity has been destroyed.
 		// If the collection has a component for that entity, it will remove it.
-		inline void EntityDestroyed(Entity entity);
+		inline void EntityDestroyed(EntityID entity);
 
 	private:
 		// Map from type string pointer to a component type

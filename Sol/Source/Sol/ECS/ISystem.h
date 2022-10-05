@@ -12,9 +12,9 @@ namespace Sol
 		virtual void OnStartSystem() = 0;
 		virtual void OnUpdateSystem() = 0;
 
-		virtual const std::set<Entity>& GetEntitiesSet() const = 0;
-		virtual void AddEntitity(const Entity entity) const = 0;
-		virtual void RemoveEntitity(const Entity entity) const = 0;
+		virtual const std::set<EntityID>& GetEntitiesSet() const = 0;
+		virtual void AddEntitity(const EntityID entity) const = 0;
+		virtual void RemoveEntitity(const EntityID entity) const = 0;
 
 	};
 
