@@ -15,6 +15,7 @@ namespace Sol
 		return m_EntityAdmin->CreateEntity();
 	}
 
+	//TODO make sure that this disables systems so it does not continue to update before it is removed
 	void ECS_Admin::DestroyEntity(EntityID entity)
 	{
 		m_EntityAdmin->DestroyEntity(entity);
