@@ -661,6 +661,7 @@
     <ClCompile Include="Source\Sol\Core\CrammedVecMap.cpp" />
     <ClCompile Include="Source\Sol\ECS\EntityAdmin.cpp" />
     <ClCompile Include="Source\Sol\ECS\SystemAdmin.cpp" />
+    <ClCompile Include="Source\Sol\ECS\ECS_Admin.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="Source\solpch.cpp">

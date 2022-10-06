@@ -1553,5 +1553,6 @@
     <ClCompile Include="Source\Sol\ECS\ComponentAdmin.cpp" />
     <ClCompile Include="Source\Sol\Core\CrammedVecMap.cpp" />
     <ClCompile Include="Source\Sol\ECS\SystemAdmin.cpp" />
+    <ClCompile Include="Source\Sol\ECS\ECS_Admin.cpp" />
   </ItemGroup>
 </Project>
