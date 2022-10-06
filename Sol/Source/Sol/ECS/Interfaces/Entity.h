@@ -1,5 +1,5 @@
 #pragma once
-#include "ECS_Core.h"
+#include "Sol/ECS/ECS_Core.h"
 #include <cstdint>
 
 

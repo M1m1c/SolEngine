@@ -1,6 +1,6 @@
 #pragma once
-#include "ECS_Core.h"
-#include "IComponent.h"
+#include "Sol/ECS/ECS_Core.h"
+#include "Sol/ECS/Interfaces/IComponent.h"
 #include "Sol/Core/CrammedVecMap.h"
 #include <memory>
 #include <unordered_map>

@@ -1440,16 +1440,16 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Camera.h" />
     <ClInclude Include="Source\Sol\Debug\Timer.h" />
     <ClInclude Include="Source\Sol\Debug\Instrumentor.h" />
-    <ClInclude Include="Source\Sol\ECS\IComponent.h" />
-    <ClInclude Include="Source\Sol\ECS\Entity.h" />
+    <ClInclude Include="Source\Sol\ECS\Interfaces\IComponent.h" />
+    <ClInclude Include="Source\Sol\ECS\Interfaces\Entity.h" />
     <ClInclude Include="Source\Sol\ECS\ECS_Admin.h" />
-    <ClInclude Include="Source\Sol\ECS\EntityAdmin.h" />
-    <ClInclude Include="Source\Sol\ECS\ComponentAdmin.h" />
-    <ClInclude Include="Source\Sol\ECS\ISystem.h" />
+    <ClInclude Include="Source\Sol\ECS\Admins\EntityAdmin.h" />
+    <ClInclude Include="Source\Sol\ECS\Admins\ComponentAdmin.h" />
+    <ClInclude Include="Source\Sol\ECS\Interfaces\ISystem.h" />
     <ClInclude Include="Source\Sol\ECS\ECS_Core.h" />
-    <ClInclude Include="Source\Sol\ECS\IAllocator.h" />
+    <ClInclude Include="Source\Sol\ECS\Interfaces\IAllocator.h" />
     <ClInclude Include="Source\Sol\Core\CrammedVecMap.h" />
-    <ClInclude Include="Source\Sol\ECS\SystemAdmin.h" />
+    <ClInclude Include="Source\Sol\ECS\Admins\SystemAdmin.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">
@@ -1549,10 +1549,10 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Camera.cpp" />
-    <ClCompile Include="Source\Sol\ECS\EntityAdmin.cpp" />
-    <ClCompile Include="Source\Sol\ECS\ComponentAdmin.cpp" />
+    <ClCompile Include="Source\Sol\ECS\Admins\EntityAdmin.cpp" />
+    <ClCompile Include="Source\Sol\ECS\Admins\ComponentAdmin.cpp" />
     <ClCompile Include="Source\Sol\Core\CrammedVecMap.cpp" />
-    <ClCompile Include="Source\Sol\ECS\SystemAdmin.cpp" />
+    <ClCompile Include="Source\Sol\ECS\Admins\SystemAdmin.cpp" />
     <ClCompile Include="Source\Sol\ECS\ECS_Admin.cpp" />
   </ItemGroup>
 </Project>

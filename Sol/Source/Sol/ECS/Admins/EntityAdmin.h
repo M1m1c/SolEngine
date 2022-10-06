@@ -1,6 +1,6 @@
 #pragma once
-#include "ECS_Core.h"
-#include "Entity.h"
+#include "Sol/ECS/ECS_Core.h"
+#include "Sol/ECS/Interfaces/Entity.h"
 #include "Sol/Core/CrammedVecMap.h"
 #include <queue>
 namespace Sol 

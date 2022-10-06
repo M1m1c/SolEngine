@@ -1,8 +1,8 @@
 #pragma once
 #include "Sol/Core/Core.h"
-#include "EntityAdmin.h"
-#include "ComponentAdmin.h"
-#include "SystemAdmin.h"
+#include "Sol/ECS/Admins/EntityAdmin.h"
+#include "Sol/ECS/Admins/ComponentAdmin.h"
+#include "Sol/ECS/Admins/SystemAdmin.h"
 
 namespace Sol 
 {

@@ -1,6 +1,6 @@
 #pragma once
-#include "ECS_Core.h"
-#include "ISystem.h"
+#include "Sol/ECS/ECS_Core.h"
+#include "Sol/ECS/Interfaces/ISystem.h"
 
 namespace Sol 
 {
