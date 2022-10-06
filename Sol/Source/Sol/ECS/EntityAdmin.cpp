@@ -33,10 +33,17 @@ namespace Sol
 		return id;
 	}
 
-	void EntityAdmin::DestroyEntity(const EntityID& entity)
+	inline void EntityAdmin::DestroyEntity(const EntityID& entity)
+	{
+		assert(entity < MAX_ENTITIES && "Invalid Entity! Entity out of range.");
+		m_EntityCollection.Get(entity).Destroy();
+	}
+
+	void EntityAdmin::EntityDestroyed(const EntityID& entity)
 	{
 		assert(entity < MAX_ENTITIES && "Invalid Entity! Entity out of range.");
 		m_CompSignatures[entity].reset();
+		m_EntityCollection.Remove(entity);
 		m_AvailableEntityIDs.push(entity);
 		m_ActiveEntityCount--;
 	}

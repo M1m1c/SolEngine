@@ -13,6 +13,7 @@ namespace Sol
 
 		inline const Entity& CreateEntity();
 		inline void DestroyEntity(const EntityID& entity);
+		inline void EntityDestroyed(const EntityID& entity);
 
 		//Sets what components an active entity has.
 		inline void SetCompSignature(const EntityID& entity, const CompSignature& signature);
