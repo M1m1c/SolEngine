@@ -35,10 +35,10 @@ namespace Sol
 		inline const size_t GetCapacity() { return m_Capacity; }
 
 		//Gets element with provided key
-		inline const TValue& Get(uint32_t key) 
+		inline TValue& Get(uint32_t key) 
 		{
 			assert(m_KeyToIndexMap.find(key) != m_KeyToIndexMap.end() && "Failed Retriving element! Non-existent element.");
-			return m_Collection[m_KeyToIndexMap[Key<key>]]; 
+			return m_Collection[m_KeyToIndexMap[key]]; 
 		}
 
 		//Adds new element with key to collection.
