@@ -10,7 +10,7 @@ namespace Sol
 		m_SystemAdmin = std::make_unique<SystemAdmin>();
 	}
 
-	Entity ECS_Admin::CreateEntity()
+	Entity& ECS_Admin::CreateEntity()
 	{
 		return m_EntityAdmin->CreateEntity();
 	}
