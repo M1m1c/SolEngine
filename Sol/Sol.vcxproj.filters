@@ -1450,6 +1450,9 @@
     <ClInclude Include="Source\Sol\ECS\Interfaces\IAllocator.h" />
     <ClInclude Include="Source\Sol\Core\CrammedVecMap.h" />
     <ClInclude Include="Source\Sol\ECS\Admins\SystemAdmin.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\ParticleSystem.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.h" />
+    <ClInclude Include="Source\Sol\Core\Random.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">
@@ -1554,5 +1557,8 @@
     <ClCompile Include="Source\Sol\Core\CrammedVecMap.cpp" />
     <ClCompile Include="Source\Sol\ECS\Admins\SystemAdmin.cpp" />
     <ClCompile Include="Source\Sol\ECS\ECS_Admin.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\ParticleSystem.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.cpp" />
+    <ClCompile Include="Source\Sol\Core\Random.cpp" />
   </ItemGroup>
 </Project>

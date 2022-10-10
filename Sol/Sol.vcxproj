@@ -171,6 +171,7 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Shader.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.h" />
@@ -191,6 +192,8 @@
     <ClInclude Include="Source\Sol\Core\LayerStack.h" />
     <ClInclude Include="Source\Sol\Core\Log.h" />
     <ClInclude Include="Source\Sol\Core\MouseButtonCodes.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\ParticleSystem.h" />
+    <ClInclude Include="Source\Sol\Core\Random.h" />
     <ClInclude Include="Source\Sol\Debug\Instrumentor.h" />
     <ClInclude Include="Source\Sol\Debug\Timer.h" />
     <ClInclude Include="Source\Sol\Core\TimeStep.h" />
@@ -628,6 +631,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Camera.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\ParticleSystem.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.cpp" />
@@ -644,6 +648,7 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Shader.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.cpp" />
@@ -657,6 +662,7 @@
     <ClCompile Include="Source\Sol\Core\Layer.cpp" />
     <ClCompile Include="Source\Sol\Core\LayerStack.cpp" />
     <ClCompile Include="Source\Sol\Core\Log.cpp" />
+    <ClCompile Include="Source\Sol\Core\Random.cpp" />
     <ClCompile Include="Source\Sol\ECS\Admins\ComponentAdmin.cpp" />
     <ClCompile Include="Source\Sol\Core\CrammedVecMap.cpp" />
     <ClCompile Include="Source\Sol\ECS\Admins\EntityAdmin.cpp" />
