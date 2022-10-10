@@ -26,7 +26,7 @@ namespace Sol
 		
 
 		//ENTITY________________________________________________________________
-		Entity& CreateEntity();
+		const Entity& CreateEntity();
 		
 		//Sets entity to be removed during the next destruction step
 		void DestroyEntity(EntityID entity);
