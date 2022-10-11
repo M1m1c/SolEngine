@@ -1453,6 +1453,8 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\ParticleSystem.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.h" />
     <ClInclude Include="Source\Sol\Core\Random.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Framebuffer.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">
@@ -1560,5 +1562,7 @@
     <ClCompile Include="Source\GalaxyDraw\Interfaces\ParticleSystem.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.cpp" />
     <ClCompile Include="Source\Sol\Core\Random.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Framebuffer.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.cpp" />
   </ItemGroup>
 </Project>

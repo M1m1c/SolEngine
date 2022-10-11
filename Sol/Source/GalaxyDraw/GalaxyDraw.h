@@ -7,6 +7,7 @@
 #include "Interfaces/RenderingContext.h"
 #include "Interfaces/Texture.h"
 #include "Interfaces/Camera.h"
+#include "Interfaces/Framebuffer.h"
 
 // This file is meant to be the only file you need to include to use GalaxyDraw.
 // It should mostly contain typedefs and macros for ease of use outside of GalaxyDraw.
@@ -61,4 +62,10 @@ typedef GalaxyDraw::Texture2D GD_Texture2D;
 //Defined in Camera.h
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::Camera GD_Camera;
+/////////////////////////////////////////////////////
+
+//Defined in Framebuffer.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::Framebuffer GD_Framebuffer;
+typedef GalaxyDraw::FramebufferProperties GD_FramebufferProps;
 /////////////////////////////////////////////////////
