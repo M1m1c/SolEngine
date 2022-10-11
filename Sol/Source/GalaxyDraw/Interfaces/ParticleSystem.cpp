@@ -5,7 +5,7 @@
 
 namespace GalaxyDraw 
 {
-    std::shared_ptr<ParticleSystem> GalaxyDraw::ParticleSystem::Create(const std::string& vertexFile, const std::string& fragmentFile)
+    std::shared_ptr<ParticleSystem> GalaxyDraw::ParticleSystem::Create(const std::string& vertexFile, const std::string& fragmentFile, uint32_t maxParticles)
     {
 		switch (Renderer::GetAPI())
 		{
@@ -14,7 +14,7 @@ namespace GalaxyDraw
 			return nullptr;
 
 		case RendererAPI::API::OpenGL:
-				return std::make_shared<OpenGL_ParticleSystem>(vertexFile,fragmentFile);
+				return std::make_shared<OpenGL_ParticleSystem>(vertexFile,fragmentFile, maxParticles);
 			break;
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");

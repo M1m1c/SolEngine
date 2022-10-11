@@ -8,6 +8,16 @@
 
 namespace Sol 
 {
+	struct OrthoCameraBounds
+	{
+		float Left, Right;
+		float Bottom, Top;
+
+		float GetWidth() { return Right - Left; }
+		float GetHeight() { return Top - Bottom; }
+	};
+
+
 	class CameraController
 	{
 	public:
@@ -27,6 +37,7 @@ namespace Sol
 		glm::vec2 m_AspectRatio;
 		float m_ZoomLevel = 1.0f;
 		s_ptr<GD_Camera> m_Camera;
+		//OrthoCameraBounds m_Bounds;
 		//bool m_EnableRotation;
 
 		glm::vec3 m_CameraPosition = glm::vec3(0.f);

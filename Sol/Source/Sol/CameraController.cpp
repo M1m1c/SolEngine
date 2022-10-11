@@ -7,6 +7,7 @@ namespace Sol
 {
 	CameraController::CameraController(int width, int height, glm::vec2 aspectRatio, glm::vec3 position) :
 		m_AspectRatio(aspectRatio)
+		//m_Bounds(-m_AspectRatio*m_ZoomLevel, m_AspectRatio * m_ZoomLevel,-m_ZoomLevel,m_ZoomLevel)
 	{
 		m_Camera = GD_Camera::Create(width, height, aspectRatio * m_ZoomLevel, position);
 	}

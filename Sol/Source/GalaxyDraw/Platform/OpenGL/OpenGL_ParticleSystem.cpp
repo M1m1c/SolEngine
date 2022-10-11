@@ -11,9 +11,10 @@
 
 namespace GalaxyDraw 
 {
-	OpenGL_ParticleSystem::OpenGL_ParticleSystem(const std::string& vertexFile, const std::string& fragmentFile)
+	OpenGL_ParticleSystem::OpenGL_ParticleSystem(const std::string& vertexFile, const std::string& fragmentFile, uint32_t maxParticles) :
+		m_PoolIndex(maxParticles)
 	{
-		m_ParticlePool.resize(1000);
+		m_ParticlePool.resize(maxParticles);
 		m_VertexCode = GalaxyMacros::get_file_contents(vertexFile.c_str());
 		m_FragmentCode = GalaxyMacros::get_file_contents(fragmentFile.c_str());
 	}

@@ -7,7 +7,7 @@ namespace GalaxyDraw
 	class OpenGL_ParticleSystem : public ParticleSystem
 	{
 	public:
-		OpenGL_ParticleSystem(const std::string& vertexFile, const std::string& fragmentFile);
+		OpenGL_ParticleSystem(const std::string& vertexFile, const std::string& fragmentFile, uint32_t maxParticles);
 
 
 		virtual ~OpenGL_ParticleSystem() override;

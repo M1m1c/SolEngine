@@ -38,7 +38,7 @@ namespace GalaxyDraw
 	{
 	public:
 		//ParticleSystem();
-		static std::shared_ptr<ParticleSystem> Create(const std::string& vertexFile, const std::string& fragmentFile);
+		static std::shared_ptr<ParticleSystem> Create(const std::string& vertexFile, const std::string& fragmentFile, uint32_t maxParticles = 1000);
 
 		virtual ~ParticleSystem() = default;
 

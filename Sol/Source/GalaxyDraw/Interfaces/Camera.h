@@ -2,7 +2,8 @@
 
 #include <glm/glm.hpp>
 
-namespace GalaxyDraw {
+namespace GalaxyDraw 
+{
 	class Camera
 	{
 	public:
