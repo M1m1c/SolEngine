@@ -1,4 +1,5 @@
 #include "Sol.h"
+#include "Sol/Core/EntryPoint.h"
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>

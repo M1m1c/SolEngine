@@ -164,3 +164,56 @@ project "Sandbox"
 		defines "SOL_DIST"
 		optimize "on"
 		buildoptions "/MD"
+
+project "Sol-Editor"
+	location "Sol-Editor"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("binaries/" .. outputdir .. "/%{prj.name}/")
+	objdir ("intermediate/" .. outputdir .. "/%{prj.name}/")
+
+	files
+	{
+		"%{prj.name}/Source/**.h",
+		"%{prj.name}/Source/**.cpp"
+	}
+
+	includedirs
+	{
+		"Sol/thirdparty/spdlog/include;",
+		"%{IncludeDir.ImGui}",
+		"Sol/Source",
+		"%{IncludeDir.glm}"
+	}
+
+	links
+	{
+		"Sol",
+		"ImGui"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+		defines
+		{
+			"SOL_PLATFORM_WINDOWS"
+		}
+
+	filter "configurations:Debug"
+		defines "SOL_DEBUG"
+		symbols "on"
+		buildoptions "/MDd"
+
+	filter "configurations:Release"
+		defines "SOL_RELEASE"
+		optimize "on"
+		buildoptions "/MD"
+
+	filter "configurations:Dist"
+		defines "SOL_DIST"
+		optimize "on"
+		buildoptions "/MD"
