@@ -20,17 +20,15 @@ namespace Sol
 		//m_CompSignatures.clear();
 	}
 
+	//TODO  make sure that this actually creates an entity that persists past this function
 	const Entity& EntityAdmin::CreateEntity()
 	{
 		assert(m_ActiveEntityCount < MAX_ENTITIES && "Could not create new entity, too many entities in existence.");
 		EntityID id = m_AvailableEntityIDs.front();
 		m_AvailableEntityIDs.pop();
-
 		m_EntityCollection.Add(id, Entity(id));
-
 		m_ActiveEntityCount++;
-
-		return id;
+		return m_EntityCollection.Get(id);
 	}
 
 	inline void EntityAdmin::DestroyEntity(const EntityID& entity)

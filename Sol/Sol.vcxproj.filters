@@ -28,6 +28,18 @@
     <Filter Include="Source\Sol\Core">
       <UniqueIdentifier>{2B7012D4-97FB-7F98-A00C-038D0C17DC98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Sol\Debug">
+      <UniqueIdentifier>{A9D06C56-95C9-8BA8-BEFB-702DAA536BB4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Sol\ECS">
+      <UniqueIdentifier>{BD910054-A95F-F459-92F3-64807E60D0BE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Sol\ECS\Admins">
+      <UniqueIdentifier>{68380D4B-D4A4-C845-9D98-60A309C4EAAD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Sol\ECS\Interfaces">
+      <UniqueIdentifier>{F045F8FD-5C08-2C88-A5B8-BA1411BA0466}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Sol\Events">
       <UniqueIdentifier>{77389127-E34E-8FBD-2CC6-1ADF981B6045}</UniqueIdentifier>
     </Filter>
@@ -57,9 +69,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.h">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
@@ -69,7 +78,16 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Camera.h">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Framebuffer.h">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.h">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\ParticleSystem.h">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Interfaces\RenderCommand.h">
@@ -105,10 +123,19 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.h">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.h">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.h">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.h">
@@ -144,6 +171,9 @@
     <ClInclude Include="Source\Sol\Core\Core.h">
       <Filter>Source\Sol\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sol\Core\CrammedVecMap.h">
+      <Filter>Source\Sol\Core</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Sol\Core\EntryPoint.h">
       <Filter>Source\Sol\Core</Filter>
     </ClInclude>
@@ -168,11 +198,47 @@
     <ClInclude Include="Source\Sol\Core\MouseButtonCodes.h">
       <Filter>Source\Sol\Core</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sol\Core\Random.h">
+      <Filter>Source\Sol\Core</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Sol\Core\TimeStep.h">
       <Filter>Source\Sol\Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\Core\Window.h">
       <Filter>Source\Sol\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Debug\Instrumentor.h">
+      <Filter>Source\Sol\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Debug\Timer.h">
+      <Filter>Source\Sol\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\ECS\Admins\ComponentAdmin.h">
+      <Filter>Source\Sol\ECS\Admins</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\ECS\Admins\EntityAdmin.h">
+      <Filter>Source\Sol\ECS\Admins</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\ECS\Admins\SystemAdmin.h">
+      <Filter>Source\Sol\ECS\Admins</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\ECS\ECS_Admin.h">
+      <Filter>Source\Sol\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\ECS\ECS_Core.h">
+      <Filter>Source\Sol\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\ECS\Interfaces\Entity.h">
+      <Filter>Source\Sol\ECS\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\ECS\Interfaces\IAllocator.h">
+      <Filter>Source\Sol\ECS\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\ECS\Interfaces\IComponent.h">
+      <Filter>Source\Sol\ECS\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\ECS\Interfaces\ISystem.h">
+      <Filter>Source\Sol\ECS\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h">
       <Filter>Source\Sol\Events</Filter>
@@ -1437,28 +1503,21 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp">
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\Camera.h" />
-    <ClInclude Include="Source\Sol\Debug\Timer.h" />
-    <ClInclude Include="Source\Sol\Debug\Instrumentor.h" />
-    <ClInclude Include="Source\Sol\ECS\Interfaces\IComponent.h" />
-    <ClInclude Include="Source\Sol\ECS\Interfaces\Entity.h" />
-    <ClInclude Include="Source\Sol\ECS\ECS_Admin.h" />
-    <ClInclude Include="Source\Sol\ECS\Admins\EntityAdmin.h" />
-    <ClInclude Include="Source\Sol\ECS\Admins\ComponentAdmin.h" />
-    <ClInclude Include="Source\Sol\ECS\Interfaces\ISystem.h" />
-    <ClInclude Include="Source\Sol\ECS\ECS_Core.h" />
-    <ClInclude Include="Source\Sol\ECS\Interfaces\IAllocator.h" />
-    <ClInclude Include="Source\Sol\Core\CrammedVecMap.h" />
-    <ClInclude Include="Source\Sol\ECS\Admins\SystemAdmin.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Camera.cpp">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Framebuffer.cpp">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.cpp">
+      <Filter>Source\GalaxyDraw\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\ParticleSystem.cpp">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderCommand.cpp">
@@ -1494,10 +1553,19 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.cpp">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.cpp">
+      <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.cpp">
@@ -1530,6 +1598,9 @@
     <ClCompile Include="Source\Sol\Core\Application.cpp">
       <Filter>Source\Sol\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Sol\Core\CrammedVecMap.cpp">
+      <Filter>Source\Sol\Core</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Sol\Core\Layer.cpp">
       <Filter>Source\Sol\Core</Filter>
     </ClCompile>
@@ -1538,6 +1609,21 @@
     </ClCompile>
     <ClCompile Include="Source\Sol\Core\Log.cpp">
       <Filter>Source\Sol\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\Core\Random.cpp">
+      <Filter>Source\Sol\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\ECS\Admins\ComponentAdmin.cpp">
+      <Filter>Source\Sol\ECS\Admins</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\ECS\Admins\EntityAdmin.cpp">
+      <Filter>Source\Sol\ECS\Admins</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\ECS\Admins\SystemAdmin.cpp">
+      <Filter>Source\Sol\ECS\Admins</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\ECS\ECS_Admin.cpp">
+      <Filter>Source\Sol\ECS</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp">
       <Filter>Source\Sol\ImGui</Filter>
@@ -1548,11 +1634,5 @@
     <ClCompile Include="Source\solpch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\Camera.cpp" />
-    <ClCompile Include="Source\Sol\ECS\Admins\EntityAdmin.cpp" />
-    <ClCompile Include="Source\Sol\ECS\Admins\ComponentAdmin.cpp" />
-    <ClCompile Include="Source\Sol\Core\CrammedVecMap.cpp" />
-    <ClCompile Include="Source\Sol\ECS\Admins\SystemAdmin.cpp" />
-    <ClCompile Include="Source\Sol\ECS\ECS_Admin.cpp" />
   </ItemGroup>
 </Project>
