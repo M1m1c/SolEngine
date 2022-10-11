@@ -28,6 +28,8 @@ namespace Sol
 		static inline Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
 
+		void Close();
+
 	private:
 
 		bool OnWindowClose(WindowClosedEvent& e);
