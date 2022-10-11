@@ -169,13 +169,15 @@ public:
 		}
 
 		//All windows and tabs need to be here___________________________________________
+		{
+			ImGui::Begin("ViewPort");
+			//ImGui::ColorEdit3("Triangle Color", glm::value_ptr(m_TriangleColor));
+			uint32_t textureID = m_Framebuffer->GetColorAttachmentsRendererID();
+			ImGui::Image((void*)textureID, ImVec2{ 1280,720 }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
+			ImGui::End();
 
-		ImGui::Begin("ViewPort");
-		//ImGui::ColorEdit3("Triangle Color", glm::value_ptr(m_TriangleColor));
-		uint32_t textureID = m_Framebuffer->GetColorAttachmentsRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ 1280,720 }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
-		ImGui::End();
-
+		}
+		
 		//All windows and tabs need to be here___________________________________________
 		ImGui::End();
 	}
