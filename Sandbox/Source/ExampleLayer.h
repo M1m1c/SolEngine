@@ -7,18 +7,18 @@ class ExampleLayer : public Sol::Layer
 public:
 	ExampleLayer();
 
+
+	virtual void OnAttach() override;
+
+	virtual void OnDetach() override;
+
 	virtual void OnUpdate(Sol::TimeStep deltaTime) override;
 	
 	virtual void OnFixedUpdate(Sol::TimeStep fixedStep, const float fixedTime) override;
 	
-	//TODO move into editor project
 	virtual void OnImGuiRender() override;
 	
-
 	virtual void OnEvent(Sol::Event& e) override;
-	
-
-	virtual void OnAttach() override;
 	
 
 private:
@@ -29,13 +29,8 @@ private:
 	Sol::s_ptr<GD_Texture2D> m_Texture;
 	Sol::s_ptr<GD_Texture2D> m_WhiteTexture;
 
-	Sol::u_ptr<GD_Framebuffer> m_Framebuffer;
+	Sol::CameraController m_CameraController;
 
 	glm::vec3 m_TrianglePos = glm::vec3(0.f);
-
-	Sol::CameraController m_CameraController;
-	//glm::vec3 m_CameraPosition = glm::vec3(0.f);
-	//float m_CameraSpeed = 1.f;
-
 	glm::vec3 m_TriangleColor = { 0.f, 0.8f, 0.8f };
 };
