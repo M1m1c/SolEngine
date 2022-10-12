@@ -36,3 +36,6 @@
 Sandbox/SolProfile-Startup.json
 Sandbox/SolProfile-Shutdown.json
 Sandbox/SolProfile-Runtime.json
+Sol-Editor/SolProfile-Runtime.json
+Sol-Editor/SolProfile-Shutdown.json
+Sol-Editor/SolProfile-Startup.json
