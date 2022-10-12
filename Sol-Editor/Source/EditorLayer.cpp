@@ -3,7 +3,7 @@
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-namespace Sol 
+namespace Sol
 {
 	EditorLayer::EditorLayer() : Layer("Example"), m_CameraController(10, 10, glm::vec2(1.6f, 0.9f), glm::vec3(0.f))
 	{
@@ -164,13 +164,31 @@ namespace Sol
 		}
 
 		//All windows and tabs need to be here___________________________________________
-		{
-			ImGui::Begin("ViewPort");
-			//ImGui::ColorEdit3("Triangle Color", glm::value_ptr(m_TriangleColor));
-			uint32_t textureID = m_Framebuffer->GetColorAttachmentsRendererID();
-			ImGui::Image((void*)textureID, ImVec2{ 1280,720 }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
-			ImGui::End();
 
+		{
+			ImGui::Begin("Test");
+			ImGui::Text("test stats");
+			ImGui::End();
+		}
+
+		{
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
+			ImGui::Begin("ViewPort");
+			
+			ImVec2 size = ImGui::GetContentRegionAvail();
+			if (m_ViewPortSize != *((glm::vec2*)&size))
+			{
+				m_Framebuffer->Resize((uint32_t)size.x, (uint32_t)size.y);
+				m_ViewPortSize = { size.x,size.y };
+
+				m_CameraController.OnResize(size.x, size.y);
+			}
+		
+			uint32_t textureID = m_Framebuffer->GetColorAttachmentsRendererID();
+			ImGui::Image((void*)textureID, ImVec2{ m_ViewPortSize.x, m_ViewPortSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
+
+			ImGui::End();
+			ImGui::PopStyleVar();
 		}
 
 		//All windows and tabs need to be here___________________________________________

@@ -14,10 +14,18 @@ namespace GalaxyDraw
 	OpenGL_Framebuffer::~OpenGL_Framebuffer()
 	{
 		glDeleteBuffers(1, &m_RendererID);
+		glDeleteTextures(1, &m_ColorAttachment);
+		glDeleteTextures(1, &m_DepthAttachment);
 	}
 
 	void OpenGL_Framebuffer::Invalidate()
 	{
+		if (m_RendererID)
+		{
+			glDeleteTextures(1, &m_ColorAttachment);
+			glDeleteTextures(1, &m_DepthAttachment);
+		}
+
 		glCreateFramebuffers(1, &m_RendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 
@@ -63,10 +71,18 @@ namespace GalaxyDraw
 	void OpenGL_Framebuffer::Bind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
+		glViewport(0, 0, m_Properties.Width, m_Properties.Height);
 	}
 
 	void OpenGL_Framebuffer::UnBind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void OpenGL_Framebuffer::Resize(uint32_t width, uint32_t height)
+	{
+		m_Properties.Width = width;
+		m_Properties.Height = height;
+		Invalidate();
 	}
 }

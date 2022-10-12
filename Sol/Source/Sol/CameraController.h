@@ -26,6 +26,8 @@ namespace Sol
 		void OnUpdate(TimeStep deltaTime);
 		void OnEvent(Event& e);
 
+		void OnResize(uint32_t width, uint32_t height);
+
 		GD_Camera& GetCamera() { return *m_Camera; }
 		const GD_Camera& GetCamera() const { return *m_Camera; }
 

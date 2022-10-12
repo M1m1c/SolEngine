@@ -80,6 +80,13 @@ namespace Sol
 		dispatcher.Dispatch<WindowResizeEvent>(SOL_BIND_EVENT_FN(CameraController::OnWindowResized));
 	}
 
+	void  CameraController::OnResize(uint32_t width, uint32_t height)
+	{
+		auto tempRatio = (float)width / (float)height;
+		m_AspectRatio = glm::vec2(tempRatio * m_ZoomLevel, m_ZoomLevel);
+		m_Camera->SetProjection(m_AspectRatio * m_ZoomLevel);
+	}
+
 	//TODO instead of handeling scrolling as events, 
 	// do it in OnUpdate so we can get smoother and shorter zoom steps
 	bool CameraController::OnMouseScrolled(MouseScrolledEvent& e)
@@ -92,9 +99,7 @@ namespace Sol
 
 	bool CameraController::OnWindowResized(WindowResizeEvent& e)
 	{
-		auto tempRatio = (float)e.GetWidth() / (float)e.GetHeight();
-		m_AspectRatio = glm::vec2(tempRatio * m_ZoomLevel, m_ZoomLevel);
-		m_Camera->SetProjection(m_AspectRatio * m_ZoomLevel);
+		OnResize((float)e.GetWidth() , (float)e.GetHeight());
 		return false;
 	}
 

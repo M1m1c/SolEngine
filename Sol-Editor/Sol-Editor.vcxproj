@@ -135,10 +135,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\EditorLayer.h" />
-    <ClInclude Include="Source\SolEditorApp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\EditorLayer.cpp" />
+    <ClCompile Include="Source\SolEditorApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sol\Sol.vcxproj">
