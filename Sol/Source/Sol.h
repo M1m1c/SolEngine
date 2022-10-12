@@ -17,4 +17,4 @@
 #include <GalaxyDraw/GalaxyDraw.h>
 #include "Sol/CameraController.h"
 
-#include "Sol/Core/EntryPoint.h"
+
