@@ -53,9 +53,6 @@ ExampleLayer::ExampleLayer() : Layer("Example"), m_CameraController(10, 10, glm:
 
 void ExampleLayer::OnAttach()
 {
-	GD_FramebufferProps properties;
-	properties.Width = 1280;
-	properties.Height = 720;
 }
 
 void ExampleLayer::OnDetach()

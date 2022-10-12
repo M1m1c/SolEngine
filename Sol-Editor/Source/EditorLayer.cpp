@@ -71,8 +71,6 @@ namespace Sol
 		//UPDATE STEP
 		m_CameraController.OnUpdate(deltaTime);
 
-	
-
 		//RENDER STEP
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
