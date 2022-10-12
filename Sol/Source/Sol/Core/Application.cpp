@@ -12,12 +12,12 @@ namespace Sol
 
 
 
-	Application::Application()
+	Application::Application(const std::string& name)
 	{
 		SOL_CORE_ASSERT(!s_Instance, "Application already exists!")
 			s_Instance = this;
 
-		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window = std::unique_ptr<Window>(Window::Create(WindowProps(name)));
 		m_Window->SetEventCallback(SOL_BIND_EVENT_FN(Application::OnEvent));
 
 		GD_Renderer::Init();

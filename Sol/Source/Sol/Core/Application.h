@@ -17,7 +17,7 @@ namespace Sol
 	class SOL_API Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "Sol App");
 		virtual ~Application();
 		void Run();
 		void OnEvent(Event& e);
