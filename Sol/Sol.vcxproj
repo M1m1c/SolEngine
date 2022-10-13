@@ -152,6 +152,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Sol\Scene\Scene.h" />
     <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h" />
     <ClInclude Include="Source\GalaxyDraw\IBuildable.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h" />
@@ -631,6 +632,7 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Sol\Scene\Scene.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Camera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Framebuffer.cpp" />
