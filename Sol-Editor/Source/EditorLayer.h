@@ -28,6 +28,8 @@ namespace Sol
 		Sol::u_ptr<GD_Framebuffer> m_Framebuffer;
 		Sol::CameraController m_CameraController;
 
+		bool m_ViewPortFocused = false;
+
 		glm::vec2 m_ViewPortSize = {0,0};
 	};
 }
