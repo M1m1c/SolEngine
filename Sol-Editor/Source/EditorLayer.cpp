@@ -69,7 +69,10 @@ namespace Sol
 		SOL_PROFILE_FUNCTION();
 		m_Framebuffer->Bind();
 		//UPDATE STEP
-		m_CameraController.OnUpdate(deltaTime);
+		if (m_ViewPortFocused)
+		{
+			m_CameraController.OnUpdate(deltaTime);
+		}
 
 		//RENDER STEP
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
@@ -174,7 +177,11 @@ namespace Sol
 		{
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 			ImGui::Begin("ViewPort");
-			
+
+			m_ViewPortFocused = ImGui::IsWindowFocused();
+			m_ViewPortHovered = ImGui::IsWindowHovered();
+			Application::Get().GetImGuiLayer()->SetBlockEvents(!m_ViewPortFocused || !m_ViewPortHovered);
+
 			ImVec2 size = ImGui::GetContentRegionAvail();
 			if (m_ViewPortSize != *((glm::vec2*)&size))
 			{
@@ -183,7 +190,7 @@ namespace Sol
 
 				m_CameraController.OnResize(size.x, size.y);
 			}
-		
+
 			uint32_t textureID = m_Framebuffer->GetColorAttachmentsRendererID();
 			ImGui::Image((void*)textureID, ImVec2{ m_ViewPortSize.x, m_ViewPortSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
 

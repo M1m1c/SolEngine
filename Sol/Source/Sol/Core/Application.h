@@ -30,6 +30,8 @@ namespace Sol
 
 		void Close();
 
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
+
 	private:
 
 		bool OnWindowClose(WindowClosedEvent& e);

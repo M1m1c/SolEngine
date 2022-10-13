@@ -8,7 +8,7 @@ namespace Sol
 	class Entity
 	{
 	public:
-		Entity(EntityID id) { m_ID = id; }
+		Entity(EntityID id) : m_ID(id) { }
 		~Entity(){}
 		EntityID GetID() { return m_ID; }
 		bool IsPendingKill() { return m_bPendingKill; }

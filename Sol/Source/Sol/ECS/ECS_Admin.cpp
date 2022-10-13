@@ -3,6 +3,14 @@
 
 namespace Sol
 {
+	ECS_Admin::ECS_Admin()
+	{
+	}
+
+	ECS_Admin::~ECS_Admin()
+	{
+	}
+
 	void ECS_Admin::Init()
 	{
 		m_ComponentAdmin = std::make_unique<ComponentAdmin>();
