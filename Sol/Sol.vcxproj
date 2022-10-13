@@ -180,7 +180,6 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VAO.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VBO.h" />
-    <ClInclude Include="Source\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="Source\Sol.h" />
     <ClInclude Include="Source\Sol\CameraController.h" />

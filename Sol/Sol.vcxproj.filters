@@ -153,9 +153,6 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VBO.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Platform\Windows\WindowsInput.h">
-      <Filter>Source\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Platform\Windows\WindowsWindow.h">
       <Filter>Source\Platform\Windows</Filter>
     </ClInclude>
