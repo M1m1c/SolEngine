@@ -29,6 +29,7 @@ namespace Sol
 		Sol::CameraController m_CameraController;
 
 		bool m_ViewPortFocused = false;
+		bool m_ViewPortHovered = false;
 
 		glm::vec2 m_ViewPortSize = {0,0};
 	};

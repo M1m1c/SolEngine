@@ -57,9 +57,27 @@ namespace Sol
 		ImGui::DestroyContext();
 	}
 
+	void ImGuiLayer::OnUpdate(TimeStep deltaTime)
+	{
+	}
+
+	void ImGuiLayer::OnFixedUpdate(TimeStep fixedStep, const float fixedTime)
+	{
+	}
+
 	void ImGuiLayer::OnImGuiRender()
 	{
 		static bool show = true;
+	}
+
+	void ImGuiLayer::OnEvent(Event& e)
+	{
+		if (m_BlockEvents) 
+		{ 
+			ImGuiIO& io = ImGui::GetIO();
+			e.Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+			e.Handled |= e.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+		}
 	}
 
 	void ImGuiLayer::Begin()

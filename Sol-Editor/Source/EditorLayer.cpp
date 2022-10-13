@@ -179,6 +179,8 @@ namespace Sol
 			ImGui::Begin("ViewPort");
 
 			m_ViewPortFocused = ImGui::IsWindowFocused();
+			m_ViewPortHovered = ImGui::IsWindowHovered();
+			Application::Get().GetImGuiLayer()->SetBlockEvents(!m_ViewPortFocused || !m_ViewPortHovered);
 
 			ImVec2 size = ImGui::GetContentRegionAvail();
 			if (m_ViewPortSize != *((glm::vec2*)&size))
