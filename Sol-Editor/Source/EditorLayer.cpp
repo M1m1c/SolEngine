@@ -183,7 +183,7 @@ namespace Sol
 			Application::Get().GetImGuiLayer()->SetBlockEvents(!m_ViewPortFocused || !m_ViewPortHovered);
 
 			ImVec2 size = ImGui::GetContentRegionAvail();
-			if (m_ViewPortSize != *((glm::vec2*)&size))
+			if (m_ViewPortSize != *((glm::vec2*)&size) && m_ViewPortSize.x > 0 && m_ViewPortSize.y > 0)
 			{
 				m_Framebuffer->Resize((uint32_t)size.x, (uint32_t)size.y);
 				m_ViewPortSize = { size.x,size.y };
