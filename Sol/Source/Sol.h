@@ -9,12 +9,14 @@
 #include "Sol/Core/KeyCodes.h"
 #include "Sol/Core/MouseButtonCodes.h"
 #include "Sol/Core/GamepadKeyCodes.h"
+#include "Sol/CameraController.h"
 
 #include "Sol/Core/Layer.h"
 #include "Sol/Core/Log.h"
 #include "Sol/ImGui/ImGuiLayer.h"
 
+#include "Sol/Scene/Scene.h"
+
 #include <GalaxyDraw/GalaxyDraw.h>
-#include "Sol/CameraController.h"
 
 
