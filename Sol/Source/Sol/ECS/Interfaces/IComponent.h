@@ -6,9 +6,9 @@ namespace Sol
 	{
 	public:
 		// this should take in a parameter that is dependent on what component it is
-		virtual void Create() = 0;
+		//virtual void Create() = 0;
 		virtual ~IComponent() = default;
-		virtual const CompType& GetType() const = 0;
+		//virtual const CompType& GetType() const = 0;
 		//virtual void EntityDestroyed(Entity entity) = 0;
 	};
 }
