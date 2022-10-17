@@ -5,7 +5,7 @@ namespace Sol
 {
 	Scene::Scene()
 	{
-		m_ECSAdmin.Init();
+		//m_ECSAdmin.Init();
 		
 	}
 

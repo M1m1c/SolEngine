@@ -1,5 +1,5 @@
 #pragma once
-#include "Sol/ECS/ECS_Admin.h"
+//#include "Sol/ECS/ECS_Admin.h"
 #include <Sol/Core/TimeStep.h>
 
 namespace Sol 
@@ -15,7 +15,7 @@ namespace Sol
 		//Entity& CreateEntity();
 
 	private:
-		ECS_Admin m_ECSAdmin;
+		//ECS_Admin m_ECSAdmin;
 	};
 
 }
