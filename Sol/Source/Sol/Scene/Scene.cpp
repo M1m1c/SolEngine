@@ -13,4 +13,13 @@ namespace Sol
 	{
 	}
 
+	void Scene::OnUpdate(TimeStep deltaTime)
+	{
+	}
+
+	/*Entity& Scene::CreateEntity()
+	{
+		return m_ECSAdmin.CreateEntity();
+	}*/
+
 }
