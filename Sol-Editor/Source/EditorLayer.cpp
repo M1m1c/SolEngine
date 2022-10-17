@@ -58,6 +58,10 @@ namespace Sol
 		properties.Width = 1280;
 		properties.Height = 720;
 		m_Framebuffer = GD_::Framebuffer::Create(properties);
+
+		//m_ActiveScene = std::make_unique<Scene>();
+
+		//auto& entity = m_ActiveScene->CreateEntity();
 	}
 
 	void EditorLayer::OnDetach()
@@ -73,6 +77,9 @@ namespace Sol
 		{
 			m_CameraController.OnUpdate(deltaTime);
 		}
+
+		//UPDATE SCENE
+		//m_ActiveScene->OnUpdate(deltaTime);
 
 		//RENDER STEP
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
