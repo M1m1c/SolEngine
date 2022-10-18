@@ -1,6 +1,7 @@
 #pragma once
-//#include "Sol/ECS/ECS_Admin.h"
+#include <entt.hpp>
 #include <Sol/Core/TimeStep.h>
+//#include "Sol/ECS/Interfaces/Entity.h"
 
 namespace Sol 
 {
@@ -12,10 +13,14 @@ namespace Sol
 
 		void OnUpdate(TimeStep deltaTime);
 
-		//Entity& CreateEntity();
+		//TEMP
+		entt::registry& Reg() { return m_Registry; }
+
+		entt::entity CreateEntity();
 
 	private:
-		//ECS_Admin m_ECSAdmin;
+
+		entt::registry m_Registry;
 	};
 
 }
