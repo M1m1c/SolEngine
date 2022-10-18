@@ -21,6 +21,9 @@ namespace GalaxyDraw
 			const std::shared_ptr<VertexArray>& va,
 			const glm::mat4& transform = glm::mat4(1.f));
 
+
+		static void DrawQuad(const glm::mat4& transform, const glm::vec4& color);
+
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:
 		struct SceneData
