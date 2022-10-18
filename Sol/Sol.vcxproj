@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -101,7 +101,7 @@
       <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -129,7 +129,7 @@
       <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -152,7 +152,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Sol\Scene\Scene.h" />
     <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h" />
     <ClInclude Include="Source\GalaxyDraw\IBuildable.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h" />
@@ -203,6 +202,7 @@
     <ClInclude Include="Source\Sol\ECS\Admins\ComponentAdmin.h" />
     <ClInclude Include="Source\Sol\ECS\Admins\EntityAdmin.h" />
     <ClInclude Include="Source\Sol\ECS\Admins\SystemAdmin.h" />
+    <ClInclude Include="Source\Sol\ECS\Components\Components.h" />
     <ClInclude Include="Source\Sol\ECS\ECS_Admin.h" />
     <ClInclude Include="Source\Sol\ECS\ECS_Core.h" />
     <ClInclude Include="Source\Sol\ECS\Interfaces\Entity.h" />
@@ -214,7 +214,9 @@
     <ClInclude Include="Source\Sol\Events\KeyEvent.h" />
     <ClInclude Include="Source\Sol\Events\MouseEvent.h" />
     <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="Source\Sol\Scene\Scene.h" />
     <ClInclude Include="Source\solpch.h" />
+    <ClInclude Include="thirdparty\entt\entt.hpp" />
     <ClInclude Include="thirdparty\glm\glm\common.hpp" />
     <ClInclude Include="thirdparty\glm\glm\detail\_features.hpp" />
     <ClInclude Include="thirdparty\glm\glm\detail\_fixes.hpp" />
@@ -632,7 +634,6 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Sol\Scene\Scene.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Camera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Framebuffer.cpp" />
@@ -675,6 +676,7 @@
     <ClCompile Include="Source\Sol\ECS\ECS_Admin.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="Source\Sol\Scene\Scene.cpp" />
     <ClCompile Include="Source\solpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
