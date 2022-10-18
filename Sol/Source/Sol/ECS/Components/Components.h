@@ -19,6 +19,22 @@ namespace Sol
 		operator const glm::mat4& () const { return m_Transform; }
 
 	private:
-		glm::mat4 m_Transform = glm::mat4(1.f);
+		glm::mat4 m_Transform{ 1.f };
+	};
+
+	class SpriteRendererComp : public IComponent
+	{
+	public:
+
+		SpriteRendererComp() = default;
+		SpriteRendererComp(const SpriteRendererComp&) = default;
+		SpriteRendererComp(const glm::vec4& color) : m_Color(color) { }
+		~SpriteRendererComp() = default;
+
+		operator glm::vec4& () { return m_Color; }
+		operator const glm::vec4& () const { return m_Color; }
+
+	private:
+		glm::vec4 m_Color{ 1.f };
 	};
 }
