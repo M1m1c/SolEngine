@@ -27,6 +27,7 @@ namespace Sol
 
 		u_ptr<GD_Framebuffer> m_Framebuffer;
 		u_ptr<Scene> m_ActiveScene;
+		entt::entity m_TempEntity;
 
 		CameraController m_CameraController;
 
