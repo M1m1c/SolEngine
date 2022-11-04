@@ -5,7 +5,9 @@
 #include <glm/gtc/type_ptr.hpp>
 namespace Sol
 {
-	EditorLayer::EditorLayer() : Layer("Example"), m_CameraController(10, 10, glm::vec2(1.6f, 0.9f), glm::vec3(0.f))
+	EditorLayer::EditorLayer() : 
+		Layer("Example"),
+		m_CameraController(10, 10, glm::vec2(1.6f, 0.9f),glm::vec3(0.f))
 	{
 		m_VertexArray = GD_VAO::Create();
 
@@ -58,6 +60,12 @@ namespace Sol
 		properties.Width = 1280;
 		properties.Height = 720;
 		m_Framebuffer = GD_::Framebuffer::Create(properties);
+
+		m_ActiveScene = std::make_unique<Scene>();
+
+		auto square = m_ActiveScene->CreateEntity();
+		square.AddComponent<SpriteRendererComp>(glm::vec4{ 1.f,0.f,0.f,1.f });
+		m_TempEntity = square;
 	}
 
 	void EditorLayer::OnDetach()
@@ -72,10 +80,12 @@ namespace Sol
 		if (m_ViewPortFocused)
 		{
 			m_CameraController.OnUpdate(deltaTime);
-		}
+		}	
+
+		auto color=m_TempEntity.GetComponent<SpriteRendererComp>().Color;
 
 		//RENDER STEP
-		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		GD_RenderCommand::SetClearColor(color);//{ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
 
 		static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
@@ -84,6 +94,11 @@ namespace Sol
 
 		{
 			SOL_PROFILE_SCOPE("RenderDraw");
+
+			//UPDATE SCENE
+			m_ActiveScene->OnUpdate(deltaTime);
+
+
 			glm::vec3 pos(0.f, 0.f, 0.f);
 			glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
 

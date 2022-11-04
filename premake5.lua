@@ -18,6 +18,7 @@ IncludeDir ["ImGui"] = "Sol/thirdparty/imgui"
 IncludeDir ["stb"] = "Sol/thirdparty/stb"
 IncludeDir ["glm"] = "Sol/thirdparty/glm"
 IncludeDir ["assimp"] = "Sol/thirdparty/assimp/include"
+IncludeDir ["entt"] = "Sol/thirdparty/entt"
 
 group "Dependencies"
 	include "Sol/thirdparty/GLFW"
@@ -45,7 +46,8 @@ project "Sol"
 		"%{prj.name}/Source/**.h",
 		"%{prj.name}/Source/**.cpp",
 		"%{prj.name}/thirdparty/glm/glm/**.hpp",
-		"%{prj.name}/thirdparty/glm/glm/**.inl"
+		"%{prj.name}/thirdparty/glm/glm/**.inl",
+		"%{prj.name}/thirdparty/entt/**.hpp",
 	}
 
 	defines
@@ -63,7 +65,8 @@ project "Sol"
 		"%{IncludeDir.assimp}",
 		"%{IncludeDir.assimp}/include",
 		"%{IncludeDir.stb}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 	
 	links
@@ -133,7 +136,8 @@ project "Sandbox"
 		"Sol/thirdparty/spdlog/include;",
 		"%{IncludeDir.ImGui}",
 		"Sol/Source",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links
@@ -186,7 +190,8 @@ project "Sol-Editor"
 		"Sol/thirdparty/spdlog/include;",
 		"%{IncludeDir.ImGui}",
 		"Sol/Source",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links

@@ -31,23 +31,20 @@
     <Filter Include="Source\Sol\Debug">
       <UniqueIdentifier>{A9D06C56-95C9-8BA8-BEFB-702DAA536BB4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Sol\ECS">
-      <UniqueIdentifier>{BD910054-A95F-F459-92F3-64807E60D0BE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Sol\ECS\Admins">
-      <UniqueIdentifier>{68380D4B-D4A4-C845-9D98-60A309C4EAAD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Sol\ECS\Interfaces">
-      <UniqueIdentifier>{F045F8FD-5C08-2C88-A5B8-BA1411BA0466}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Sol\Events">
       <UniqueIdentifier>{77389127-E34E-8FBD-2CC6-1ADF981B6045}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Sol\ImGui">
       <UniqueIdentifier>{5D3BCB56-4934-EAA8-7266-CF2D5EBEC9B4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Sol\Scene">
+      <UniqueIdentifier>{50337B57-3C2C-9AA9-655E-7F2E51B679B5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="thirdparty">
       <UniqueIdentifier>{50A5DA7C-3C5D-1CCA-A564-F525913BB7BA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\entt">
+      <UniqueIdentifier>{9A3C7236-06C8-DFFA-0FD9-62EF7BE33BFB}</UniqueIdentifier>
     </Filter>
     <Filter Include="thirdparty\glm">
       <UniqueIdentifier>{9F576809-8B25-5C0F-74B9-CC3560263874}</UniqueIdentifier>
@@ -210,33 +207,6 @@
     <ClInclude Include="Source\Sol\Debug\Timer.h">
       <Filter>Source\Sol\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Admins\ComponentAdmin.h">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Admins\EntityAdmin.h">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Admins\SystemAdmin.h">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\ECS_Admin.h">
-      <Filter>Source\Sol\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\ECS_Core.h">
-      <Filter>Source\Sol\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Interfaces\Entity.h">
-      <Filter>Source\Sol\ECS\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Interfaces\IAllocator.h">
-      <Filter>Source\Sol\ECS\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Interfaces\IComponent.h">
-      <Filter>Source\Sol\ECS\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Interfaces\ISystem.h">
-      <Filter>Source\Sol\ECS\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h">
       <Filter>Source\Sol\Events</Filter>
     </ClInclude>
@@ -252,8 +222,20 @@
     <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h">
       <Filter>Source\Sol\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sol\Scene\Components.h">
+      <Filter>Source\Sol\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Scene\Entity.h">
+      <Filter>Source\Sol\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Scene\Scene.h">
+      <Filter>Source\Sol\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="Source\solpch.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\entt\entt.hpp">
+      <Filter>thirdparty\entt</Filter>
     </ClInclude>
     <ClInclude Include="thirdparty\glm\glm\common.hpp">
       <Filter>thirdparty\glm\glm</Filter>
@@ -1500,7 +1482,6 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp">
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Scene\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1611,27 +1592,20 @@
     <ClCompile Include="Source\Sol\Core\Random.cpp">
       <Filter>Source\Sol\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sol\ECS\Admins\ComponentAdmin.cpp">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sol\ECS\Admins\EntityAdmin.cpp">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sol\ECS\Admins\SystemAdmin.cpp">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sol\ECS\ECS_Admin.cpp">
-      <Filter>Source\Sol\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp">
       <Filter>Source\Sol\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp">
       <Filter>Source\Sol\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Sol\Scene\Entity.cpp">
+      <Filter>Source\Sol\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\Scene\Scene.cpp">
+      <Filter>Source\Sol\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="Source\solpch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sol\Scene\Scene.cpp" />
   </ItemGroup>
 </Project>

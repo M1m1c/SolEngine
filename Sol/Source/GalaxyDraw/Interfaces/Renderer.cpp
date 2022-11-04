@@ -38,4 +38,9 @@ namespace GalaxyDraw
 		RenderCommand::DrawIndexed(va);
 	}
 
+	void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
+	{
+		//TODO setup function
+	}
+
 }
