@@ -1,6 +1,7 @@
 #include "solpch.h"
 #include "Scene.h"
-#include "Sol/ECS/Components/Components.h"
+#include "Entity.h"
+#include "Sol/Scene/Components.h"
 #include "GalaxyDraw/GalaxyDraw.h"
 
 namespace Sol
@@ -21,13 +22,16 @@ namespace Sol
 		{
 			auto& [transform, sprite] = group.get<TransformComp, SpriteRendererComp>(entity);
 
-			GD_Renderer::DrawQuad(transform,sprite);
+			GD_Renderer::DrawQuad(transform,sprite.Color);
 		}
 	}
 
-	entt::entity Scene::CreateEntity()
+	Entity Scene::CreateEntity(const std::string& name)
 	{
-		return m_Registry.create();
+		auto entity = Entity{ m_Registry.create(), this };
+		entity.AddComponent<TransformComp>();
+		entity.AddComponent<NameComp>(name == "" ? "Entity" : name);
+		return entity;
 	}
 
 }
