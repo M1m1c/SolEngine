@@ -4,8 +4,20 @@
 
 namespace Sol
 {
+	struct NameComp
+	{
+		NameComp() = default;
+		NameComp(const NameComp&) = default;
+		NameComp(const std::string& name) :m_Name(name) {}
+		~NameComp() = default;
 
-	class TransformComp 
+		operator std::string& () { return m_Name; }
+		operator const std::string& () const { return m_Name; }
+	private:
+		std::string m_Name;
+	};
+
+	struct TransformComp
 	{
 	public:
 
@@ -21,19 +33,21 @@ namespace Sol
 		glm::mat4 m_Transform{ 1.f };
 	};
 
-	class SpriteRendererComp 
+	struct SpriteRendererComp
 	{
 	public:
 
 		SpriteRendererComp() = default;
 		SpriteRendererComp(const SpriteRendererComp&) = default;
-		SpriteRendererComp(const glm::vec4& color) : m_Color(color) { }
+		SpriteRendererComp(const glm::vec4& color) : Color(color) { }
 		~SpriteRendererComp() = default;
 
-		operator glm::vec4& () { return m_Color; }
-		operator const glm::vec4& () const { return m_Color; }
+		/*operator glm::vec4& () { return m_Color; }
+		operator const glm::vec4& () const { return m_Color; }*/
+
+		glm::vec4 Color{ 1.f };
 
 	private:
-		glm::vec4 m_Color{ 1.f };
+		
 	};
 }

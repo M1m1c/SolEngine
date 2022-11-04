@@ -31,18 +31,6 @@
     <Filter Include="Source\Sol\Debug">
       <UniqueIdentifier>{A9D06C56-95C9-8BA8-BEFB-702DAA536BB4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Sol\ECS">
-      <UniqueIdentifier>{BD910054-A95F-F459-92F3-64807E60D0BE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Sol\ECS\Admins">
-      <UniqueIdentifier>{68380D4B-D4A4-C845-9D98-60A309C4EAAD}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Sol\ECS\Components">
-      <UniqueIdentifier>{B2C6BC2C-1E89-F0B6-6739-7F43D33AC994}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Sol\ECS\Interfaces">
-      <UniqueIdentifier>{F045F8FD-5C08-2C88-A5B8-BA1411BA0466}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Sol\Events">
       <UniqueIdentifier>{77389127-E34E-8FBD-2CC6-1ADF981B6045}</UniqueIdentifier>
     </Filter>
@@ -219,36 +207,6 @@
     <ClInclude Include="Source\Sol\Debug\Timer.h">
       <Filter>Source\Sol\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Admins\ComponentAdmin.h">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Admins\EntityAdmin.h">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Admins\SystemAdmin.h">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Components\Components.h">
-      <Filter>Source\Sol\ECS\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\ECS_Admin.h">
-      <Filter>Source\Sol\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\ECS_Core.h">
-      <Filter>Source\Sol\ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Interfaces\Entity.h">
-      <Filter>Source\Sol\ECS\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Interfaces\IAllocator.h">
-      <Filter>Source\Sol\ECS\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Interfaces\IComponent.h">
-      <Filter>Source\Sol\ECS\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Sol\ECS\Interfaces\ISystem.h">
-      <Filter>Source\Sol\ECS\Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h">
       <Filter>Source\Sol\Events</Filter>
     </ClInclude>
@@ -263,6 +221,12 @@
     </ClInclude>
     <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h">
       <Filter>Source\Sol\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Scene\Components.h">
+      <Filter>Source\Sol\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Scene\Entity.h">
+      <Filter>Source\Sol\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\Scene\Scene.h">
       <Filter>Source\Sol\Scene</Filter>
@@ -1628,23 +1592,14 @@
     <ClCompile Include="Source\Sol\Core\Random.cpp">
       <Filter>Source\Sol\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Sol\ECS\Admins\ComponentAdmin.cpp">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sol\ECS\Admins\EntityAdmin.cpp">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sol\ECS\Admins\SystemAdmin.cpp">
-      <Filter>Source\Sol\ECS\Admins</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Sol\ECS\ECS_Admin.cpp">
-      <Filter>Source\Sol\ECS</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp">
       <Filter>Source\Sol\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp">
       <Filter>Source\Sol\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\Scene\Entity.cpp">
+      <Filter>Source\Sol\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\Scene\Scene.cpp">
       <Filter>Source\Sol\Scene</Filter>

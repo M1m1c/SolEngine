@@ -1,10 +1,11 @@
 #pragma once
 #include <entt.hpp>
 #include <Sol/Core/TimeStep.h>
-//#include "Sol/ECS/Interfaces/Entity.h"
 
-namespace Sol 
+namespace Sol
 {
+	class Entity;
+
 	class Scene
 	{
 	public:
@@ -13,14 +14,14 @@ namespace Sol
 
 		void OnUpdate(TimeStep deltaTime);
 
-		//TEMP
-		entt::registry& Reg() { return m_Registry; }
-
-		entt::entity CreateEntity();
+		//Creates an entity with a TransformComp and a TagComp in the scene, returns created entity.
+		Entity CreateEntity(const std::string& name = std::string());
 
 	private:
 
 		entt::registry m_Registry;
+
+		friend class Entity;
 	};
 
 }

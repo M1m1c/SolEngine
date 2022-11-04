@@ -16,7 +16,8 @@
 #include "Sol/ImGui/ImGuiLayer.h"
 
 #include "Sol/Scene/Scene.h"
-#include "Sol/ECS/Components/Components.h"
+#include "Sol/Scene/Entity.h"
+#include "Sol/Scene/Components.h"
 
 #include <GalaxyDraw/GalaxyDraw.h>
 

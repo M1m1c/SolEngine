@@ -199,21 +199,13 @@
     <ClInclude Include="Source\Sol\Core\Window.h" />
     <ClInclude Include="Source\Sol\Debug\Instrumentor.h" />
     <ClInclude Include="Source\Sol\Debug\Timer.h" />
-    <ClInclude Include="Source\Sol\ECS\Admins\ComponentAdmin.h" />
-    <ClInclude Include="Source\Sol\ECS\Admins\EntityAdmin.h" />
-    <ClInclude Include="Source\Sol\ECS\Admins\SystemAdmin.h" />
-    <ClInclude Include="Source\Sol\ECS\Components\Components.h" />
-    <ClInclude Include="Source\Sol\ECS\ECS_Admin.h" />
-    <ClInclude Include="Source\Sol\ECS\ECS_Core.h" />
-    <ClInclude Include="Source\Sol\ECS\Interfaces\Entity.h" />
-    <ClInclude Include="Source\Sol\ECS\Interfaces\IAllocator.h" />
-    <ClInclude Include="Source\Sol\ECS\Interfaces\IComponent.h" />
-    <ClInclude Include="Source\Sol\ECS\Interfaces\ISystem.h" />
     <ClInclude Include="Source\Sol\Events\ApplicationEvent.h" />
     <ClInclude Include="Source\Sol\Events\Event.h" />
     <ClInclude Include="Source\Sol\Events\KeyEvent.h" />
     <ClInclude Include="Source\Sol\Events\MouseEvent.h" />
     <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="Source\Sol\Scene\Components.h" />
+    <ClInclude Include="Source\Sol\Scene\Entity.h" />
     <ClInclude Include="Source\Sol\Scene\Scene.h" />
     <ClInclude Include="Source\solpch.h" />
     <ClInclude Include="thirdparty\entt\entt.hpp" />
@@ -670,12 +662,9 @@
     <ClCompile Include="Source\Sol\Core\LayerStack.cpp" />
     <ClCompile Include="Source\Sol\Core\Log.cpp" />
     <ClCompile Include="Source\Sol\Core\Random.cpp" />
-    <ClCompile Include="Source\Sol\ECS\Admins\ComponentAdmin.cpp" />
-    <ClCompile Include="Source\Sol\ECS\Admins\EntityAdmin.cpp" />
-    <ClCompile Include="Source\Sol\ECS\Admins\SystemAdmin.cpp" />
-    <ClCompile Include="Source\Sol\ECS\ECS_Admin.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="Source\Sol\Scene\Entity.cpp" />
     <ClCompile Include="Source\Sol\Scene\Scene.cpp" />
     <ClCompile Include="Source\solpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
