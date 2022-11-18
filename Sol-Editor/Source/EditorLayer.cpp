@@ -5,9 +5,9 @@
 #include <glm/gtc/type_ptr.hpp>
 namespace Sol
 {
-	EditorLayer::EditorLayer() : 
+	EditorLayer::EditorLayer() :
 		Layer("Example"),
-		m_CameraController(10, 10, glm::vec2(1.6f, 0.9f),glm::vec3(0.f))
+		m_CameraController(10, 10, glm::vec2(1.6f, 0.9f), glm::vec3(0.f))
 	{
 		m_VertexArray = GD_VAO::Create();
 
@@ -68,7 +68,7 @@ namespace Sol
 		m_TempEntity = square;
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-		m_CameraEntity.AddComponent<CameraComp>(glm::ortho(-16.f,16.f,-9.f,9.f,-1.f,1.f));
+		m_CameraEntity.AddComponent<CameraComp>(glm::ortho(-16.f, 16.f, -9.f, 9.f, -1.f, 1.f));
 	}
 
 	void EditorLayer::OnDetach()
@@ -79,11 +79,25 @@ namespace Sol
 	{
 		SOL_PROFILE_FUNCTION();
 		m_Framebuffer->Bind();
+
+		//RESIZE
+		{
+			GD_FramebufferProps props = m_Framebuffer->GetProperties();
+			bool viewLargerThanZero = m_ViewPortSize.x > 0.0f && m_ViewPortSize.y > 0.0f;
+			bool propsDontMatch = props.Width != m_ViewPortSize.x || props.Height != m_ViewPortSize.y;
+
+			if (viewLargerThanZero && propsDontMatch) 
+			{
+				m_Framebuffer->Resize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
+				m_CameraController.OnResize(m_ViewPortSize.x, m_ViewPortSize.y);
+			}
+		}
+
 		//UPDATE STEP
 		if (m_ViewPortFocused)
 		{
 			m_CameraController.OnUpdate(deltaTime);
-		}	
+		}
 
 		//auto color=m_TempEntity.GetComponent<SpriteRendererComp>().Color;
 
