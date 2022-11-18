@@ -13,6 +13,7 @@ namespace GalaxyDraw
 
 		static void OnWindowResize(uint32_t width, uint32_t height);
 
+		static void BeginScene(const glm::mat4& projection, const glm::mat4& transform);
 		static void BeginScene(Camera& cam);
 		static void EndScene();
 

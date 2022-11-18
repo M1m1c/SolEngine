@@ -8,7 +8,7 @@ namespace Sol
 {
 	Scene::Scene()
 	{
-		
+
 	}
 
 	Scene::~Scene()
@@ -17,12 +17,39 @@ namespace Sol
 
 	void Scene::OnUpdate(TimeStep deltaTime)
 	{
-		auto group = m_Registry.group<TransformComp>(entt::get<SpriteRendererComp>);
-		for (auto entity : group)
-		{
-			auto& [transform, sprite] = group.get<TransformComp, SpriteRendererComp>(entity);
 
-			GD_Renderer::DrawQuad(transform,sprite.Color);
+		RuntimeCamera* mainCamera = nullptr;
+		glm::mat4* cameraTransform = nullptr;
+		{
+			auto view = m_Registry.view<TransformComp,CameraComp>();
+			for (auto entity : view)
+			{
+				auto& [transform, camera] = view.get<TransformComp, CameraComp>(entity);
+
+				if (camera.IsPirmary) 
+				{
+					mainCamera = &camera.Camera;
+					cameraTransform = &transform.m_Transform;
+					break;
+				}
+			}
+		}
+
+		
+		if(mainCamera)
+		{
+			GD_Renderer::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+
+			auto group = m_Registry.group<TransformComp>(entt::get<SpriteRendererComp>);
+			for (auto entity : group)
+			{
+				auto& [transform, sprite] = group.get<TransformComp, SpriteRendererComp>(entity);
+
+				//TODO Render stuff
+				GD_Renderer::DrawQuad(transform, sprite.Color);
+			}
+
+			GD_Renderer::EndScene();
 		}
 	}
 

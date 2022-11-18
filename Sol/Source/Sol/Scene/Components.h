@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include "RuntimeCamera.h"
 
 namespace Sol
 {
@@ -29,8 +30,8 @@ namespace Sol
 		operator glm::mat4& () { return m_Transform; }
 		operator const glm::mat4& () const { return m_Transform; }
 
-	private:
 		glm::mat4 m_Transform{ 1.f };
+	private:
 	};
 
 	struct SpriteRendererComp
@@ -49,5 +50,16 @@ namespace Sol
 
 	private:
 		
+	};
+
+	struct CameraComp
+	{
+		Sol::RuntimeCamera Camera;
+		bool IsPirmary = true;
+
+		CameraComp() = default;
+		CameraComp(const CameraComp&) = default;
+		CameraComp(const glm::mat4 & projection) : Camera(projection) { }
+		~CameraComp() = default;
 	};
 }

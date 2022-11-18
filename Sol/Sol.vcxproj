@@ -206,6 +206,7 @@
     <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h" />
     <ClInclude Include="Source\Sol\Scene\Components.h" />
     <ClInclude Include="Source\Sol\Scene\Entity.h" />
+    <ClInclude Include="Source\Sol\Scene\RuntimeCamera.h" />
     <ClInclude Include="Source\Sol\Scene\Scene.h" />
     <ClInclude Include="Source\solpch.h" />
     <ClInclude Include="thirdparty\entt\entt.hpp" />

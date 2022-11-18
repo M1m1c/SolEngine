@@ -66,6 +66,9 @@ namespace Sol
 		auto square = m_ActiveScene->CreateEntity();
 		square.AddComponent<SpriteRendererComp>(glm::vec4{ 1.f,0.f,0.f,1.f });
 		m_TempEntity = square;
+
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		m_CameraEntity.AddComponent<CameraComp>(glm::ortho(-16.f,16.f,-9.f,9.f,-1.f,1.f));
 	}
 
 	void EditorLayer::OnDetach()
@@ -82,10 +85,10 @@ namespace Sol
 			m_CameraController.OnUpdate(deltaTime);
 		}	
 
-		auto color=m_TempEntity.GetComponent<SpriteRendererComp>().Color;
+		//auto color=m_TempEntity.GetComponent<SpriteRendererComp>().Color;
 
 		//RENDER STEP
-		GD_RenderCommand::SetClearColor(color);//{ 0.1f, 0.1f, 0.1f, 1 });
+		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
 
 		static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));

@@ -18,6 +18,12 @@ namespace GalaxyDraw
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
+	void Renderer::BeginScene(const glm::mat4& projection,const glm::mat4& transform)
+	{
+		glm::mat4 viewProj = projection * glm::inverse(transform);
+		s_SceneData->CameraMatrix = viewProj;
+	}
+
 	void Renderer::BeginScene(Camera& cam)
 	{
 		s_SceneData->CameraMatrix = cam.GetCameraMatrix();
@@ -41,6 +47,15 @@ namespace GalaxyDraw
 	void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
 	{
 		//TODO setup function
+
+			//glm::vec3 pos(0.f, 0.f, 0.f);
+			//glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
+
+			//auto shader = m_ShaderLib.Get("Square");
+
+			//GD_Renderer::Submit(shader, m_VertexArray, transform);
+
+			//m_Texture->Bind();
 	}
 
 }
