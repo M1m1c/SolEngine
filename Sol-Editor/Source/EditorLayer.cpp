@@ -68,7 +68,7 @@ namespace Sol
 		m_TempEntity = square;
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-		m_CameraEntity.AddComponent<CameraComp>(glm::ortho(-16.f, 16.f, -9.f, 9.f, -1.f, 1.f));
+		m_CameraEntity.AddComponent<CameraComp>();
 	}
 
 	void EditorLayer::OnDetach()
@@ -90,6 +90,7 @@ namespace Sol
 			{
 				m_Framebuffer->Resize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 				m_CameraController.OnResize(m_ViewPortSize.x, m_ViewPortSize.y);
+				m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 			}
 		}
 

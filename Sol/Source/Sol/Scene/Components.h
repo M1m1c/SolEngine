@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "RuntimeCamera.h"
+#include "GalaxyDraw/GalaxyDraw.h"
 
 namespace Sol
 {
@@ -54,12 +54,13 @@ namespace Sol
 
 	struct CameraComp
 	{
-		Sol::RuntimeCamera Camera;
+		GD_SceneCamera Camera;
 		bool IsPirmary = true;
+		bool IsFixedAspectRatio = false;
 
 		CameraComp() = default;
 		CameraComp(const CameraComp&) = default;
-		CameraComp(const glm::mat4 & projection) : Camera(projection) { }
+		//CameraComp(const glm::mat4 & projection) : Camera(projection) { }
 		~CameraComp() = default;
 	};
 }

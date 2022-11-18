@@ -18,7 +18,7 @@ namespace Sol
 	void Scene::OnUpdate(TimeStep deltaTime)
 	{
 
-		RuntimeCamera* mainCamera = nullptr;
+		GD_RendererCamera* mainCamera = nullptr;
 		glm::mat4* cameraTransform = nullptr;
 		{
 			auto view = m_Registry.view<TransformComp,CameraComp>();
@@ -50,6 +50,24 @@ namespace Sol
 			}
 
 			GD_Renderer::EndScene();
+		}
+	}
+
+	void Scene::OnViewportResize(uint32_t width, uint32_t height)
+	{
+		m_ViewportWidth = width;
+		m_ViewportHeight = height;
+
+		auto view = m_Registry.view<CameraComp>();
+		for (auto entity : view) 
+		{
+			auto& camComp = view.get<CameraComp>(entity);
+
+			if (!camComp.IsFixedAspectRatio)
+			{
+				camComp.Camera.SetViewportSize(width, height);
+			}
+
 		}
 	}
 

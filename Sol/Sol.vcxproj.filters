@@ -1482,7 +1482,8 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp">
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Scene\RuntimeCamera.h" />
+    <ClInclude Include="Source\GalaxyDraw\RendererCamera.h" />
+    <ClInclude Include="Source\GalaxyDraw\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1608,5 +1609,6 @@
     <ClCompile Include="Source\solpch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GalaxyDraw\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

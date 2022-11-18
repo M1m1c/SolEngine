@@ -180,6 +180,7 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VAO.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VBO.h" />
+    <ClInclude Include="Source\GalaxyDraw\SceneCamera.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="Source\Sol.h" />
     <ClInclude Include="Source\Sol\CameraController.h" />
@@ -206,7 +207,7 @@
     <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h" />
     <ClInclude Include="Source\Sol\Scene\Components.h" />
     <ClInclude Include="Source\Sol\Scene\Entity.h" />
-    <ClInclude Include="Source\Sol\Scene\RuntimeCamera.h" />
+    <ClInclude Include="Source\GalaxyDraw\RendererCamera.h" />
     <ClInclude Include="Source\Sol\Scene\Scene.h" />
     <ClInclude Include="Source\solpch.h" />
     <ClInclude Include="thirdparty\entt\entt.hpp" />
@@ -653,6 +654,7 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VAO.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VBO.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\SceneCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\stb.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp" />
