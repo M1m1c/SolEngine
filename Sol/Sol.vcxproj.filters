@@ -1482,7 +1482,7 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp">
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\RendererCamera.h" />
+    <ClInclude Include="Source\GalaxyDraw\Camera.h" />
     <ClInclude Include="Source\GalaxyDraw\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>

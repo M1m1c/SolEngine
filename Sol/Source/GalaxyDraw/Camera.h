@@ -2,12 +2,12 @@
 #include <glm/glm.hpp>
 
 namespace GalaxyDraw {
-	class RendererCamera
+	class Camera
 	{
 	public:
-		RendererCamera() = default;
-		RendererCamera(glm::mat4 projection) :m_Projection(projection) {};
-		virtual ~RendererCamera() = default;
+		Camera() = default;
+		Camera(glm::mat4 projection) :m_Projection(projection) {};
+		virtual ~Camera() = default;
 
 		const glm::mat4& GetProjection() { return m_Projection; }
 

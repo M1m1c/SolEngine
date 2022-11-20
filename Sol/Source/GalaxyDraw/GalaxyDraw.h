@@ -8,7 +8,7 @@
 #include "Interfaces/Texture.h"
 #include "Interfaces/OrthoCamera.h"
 #include "Interfaces/Framebuffer.h"
-#include "RendererCamera.h"
+#include "Camera.h"
 #include "SceneCamera.h"
 
 // This file is meant to be the only file you need to include to use GalaxyDraw.
@@ -68,7 +68,7 @@ typedef GalaxyDraw::OrthoCamera GD_OrthoCamera;
 
 //Defined in RendererCamera.h
 /////////////////////////////////////////////////////
-typedef GalaxyDraw::RendererCamera GD_RendererCamera;
+typedef GalaxyDraw::Camera GD_Camera;
 /////////////////////////////////////////////////////
 
 //Defined in SceneCamera.h

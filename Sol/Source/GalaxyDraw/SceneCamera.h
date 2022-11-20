@@ -1,11 +1,11 @@
 #pragma once
 
-#include "RendererCamera.h"
+#include "Camera.h"
 
 namespace GalaxyDraw 
 {
 
-	class SceneCamera : public RendererCamera
+	class SceneCamera : public Camera
 	{
 	public:
 		SceneCamera();

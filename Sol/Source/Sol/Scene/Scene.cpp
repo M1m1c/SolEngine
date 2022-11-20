@@ -18,7 +18,7 @@ namespace Sol
 	void Scene::OnUpdate(TimeStep deltaTime)
 	{
 
-		GD_RendererCamera* mainCamera = nullptr;
+		GD_Camera* mainCamera = nullptr;
 		glm::mat4* cameraTransform = nullptr;
 		{
 			auto view = m_Registry.view<TransformComp,CameraComp>();
@@ -35,7 +35,7 @@ namespace Sol
 			}
 		}
 
-		
+	
 		if(mainCamera)
 		{
 			GD_Renderer::BeginScene(mainCamera->GetProjection(), *cameraTransform);
