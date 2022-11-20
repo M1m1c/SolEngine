@@ -24,7 +24,7 @@ namespace GalaxyDraw
 		s_SceneData->CameraMatrix = viewProj;
 	}
 
-	void Renderer::BeginScene(Camera& cam)
+	void Renderer::BeginScene(OrthoCamera& cam)
 	{
 		s_SceneData->CameraMatrix = cam.GetCameraMatrix();
 	}

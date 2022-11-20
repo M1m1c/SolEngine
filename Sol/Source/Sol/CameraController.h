@@ -28,8 +28,8 @@ namespace Sol
 
 		void OnResize(uint32_t width, uint32_t height);
 
-		GD_Camera& GetCamera() { return *m_Camera; }
-		const GD_Camera& GetCamera() const { return *m_Camera; }
+		GD_OrthoCamera& GetCamera() { return *m_Camera; }
+		const GD_OrthoCamera& GetCamera() const { return *m_Camera; }
 
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
@@ -38,7 +38,7 @@ namespace Sol
 
 		glm::vec2 m_AspectRatio;
 		float m_ZoomLevel = 1.0f;
-		s_ptr<GD_Camera> m_Camera;
+		s_ptr<GD_OrthoCamera> m_Camera;
 		//OrthoCameraBounds m_Bounds;
 		//bool m_EnableRotation;
 

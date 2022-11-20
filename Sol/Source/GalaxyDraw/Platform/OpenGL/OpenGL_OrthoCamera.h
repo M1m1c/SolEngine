@@ -1,7 +1,7 @@
 #ifndef CAMERA_CLASS_H
 #define CAMERA_CLASS_H
 
-#include "GalaxyDraw/Interfaces/Camera.h"
+#include "GalaxyDraw/Interfaces/OrthoCamera.h"
 
 struct GLFWwindow;
 
@@ -9,10 +9,10 @@ namespace GalaxyDraw {
 	class Shader;
 
 	//TODO turn this into an interface and make OpenGL_Camera the implementation
-	class OpenGL_Camera : public Camera
+	class OpenGL_OrthoCamera : public OrthoCamera
 	{
 	public:
-		OpenGL_Camera(int width, int height, glm::vec2 aspectRatio, glm::vec3 position);
+		OpenGL_OrthoCamera(int width, int height, glm::vec2 aspectRatio, glm::vec3 position);
 		virtual void SetProjection( glm::vec2 aspectRatio) override;
 
 		virtual const glm::vec3& GetPosition() override { return m_Position; }

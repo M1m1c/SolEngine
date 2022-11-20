@@ -75,7 +75,7 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\Camera.h">
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\OrthoCamera.h">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Framebuffer.h">
@@ -120,7 +120,7 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.h">
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.h">
@@ -1489,7 +1489,7 @@
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\Camera.cpp">
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\OrthoCamera.cpp">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Framebuffer.cpp">
@@ -1534,7 +1534,7 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Camera.cpp">
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp">

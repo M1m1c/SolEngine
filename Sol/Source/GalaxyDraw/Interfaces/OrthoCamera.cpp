@@ -1,12 +1,12 @@
 #include "solpch.h"
-#include "Camera.h"
+#include "OrthoCamera.h"
 
 #include "Renderer.h"
-#include "GalaxyDraw/Platform/OpenGL/OpenGL_Camera.h"
+#include "GalaxyDraw/Platform/OpenGL/OpenGL_OrthoCamera.h"
 
 namespace GalaxyDraw 
 {
-	std::shared_ptr<Camera> Camera::Create(int width, int height, glm::vec2 aspectRatio, glm::vec3 position)
+	std::shared_ptr<OrthoCamera> OrthoCamera::Create(int width, int height, glm::vec2 aspectRatio, glm::vec3 position)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -15,7 +15,7 @@ namespace GalaxyDraw
 			return nullptr;
 
 		case RendererAPI::API::OpenGL:			
-				return std::make_shared<OpenGL_Camera>(width,height,aspectRatio,position);
+				return std::make_shared<OpenGL_OrthoCamera>(width,height,aspectRatio,position);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;

@@ -4,10 +4,10 @@
 
 namespace GalaxyDraw 
 {
-	class Camera
+	class OrthoCamera
 	{
 	public:
-		static std::shared_ptr<Camera> Create(int width, int height, glm::vec2 aspectRatio, glm::vec3 position);
+		static std::shared_ptr<OrthoCamera> Create(int width, int height, glm::vec2 aspectRatio, glm::vec3 position);
 
 
 		virtual void SetProjection(glm::vec2 aspectRatio) = 0;

@@ -40,7 +40,7 @@ namespace GalaxyDraw
 			//particle.Rotation += 0.01f * deltaTime;
 		}
 	}
-	void OpenGL_ParticleSystem::OnRender(Camera& camera)
+	void OpenGL_ParticleSystem::OnRender(OrthoCamera& camera)
 	{
 		if (!m_QuadVA)
 		{

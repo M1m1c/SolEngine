@@ -2,7 +2,7 @@
 #include "Sol/Core/Core.h"
 #include "glm/glm.hpp"
 #include <Sol/Core/TimeStep.h>
-#include "Camera.h"
+#include "OrthoCamera.h"
 #include "Shader.h"
 
 namespace GalaxyDraw
@@ -43,7 +43,7 @@ namespace GalaxyDraw
 		virtual ~ParticleSystem() = default;
 
 		virtual void OnUpdate(Sol::TimeStep deltaTime) = 0;
-		virtual void OnRender(Camera& camera) = 0;
+		virtual void OnRender(OrthoCamera& camera) = 0;
 		virtual void Emit(const ParticleProperties& properties) = 0;
 	private:
 

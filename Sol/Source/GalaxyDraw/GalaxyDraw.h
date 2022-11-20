@@ -6,7 +6,7 @@
 #include "Interfaces/RenderCommand.h"
 #include "Interfaces/RenderingContext.h"
 #include "Interfaces/Texture.h"
-#include "Interfaces/Camera.h"
+#include "Interfaces/OrthoCamera.h"
 #include "Interfaces/Framebuffer.h"
 #include "RendererCamera.h"
 #include "SceneCamera.h"
@@ -61,9 +61,9 @@ typedef GalaxyDraw::Texture GD_Texture;
 typedef GalaxyDraw::Texture2D GD_Texture2D;
 /////////////////////////////////////////////////////
 
-//Defined in Camera.h
+//Defined in OrthoCamera.h
 /////////////////////////////////////////////////////
-typedef GalaxyDraw::Camera GD_Camera;
+typedef GalaxyDraw::OrthoCamera GD_OrthoCamera;
 /////////////////////////////////////////////////////
 
 //Defined in RendererCamera.h

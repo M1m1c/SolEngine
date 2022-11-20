@@ -1,5 +1,5 @@
 #include "solpch.h"
-#include "OpenGL_Camera.h"
+#include "OpenGL_OrthoCamera.h"
 
 #include "GLMacros.h"
 #include "GalaxyDraw/Interfaces/Shader.h"
@@ -13,10 +13,10 @@
 
 namespace GalaxyDraw {
 	
-	OpenGL_Camera::OpenGL_Camera(int width, int height,glm::vec2 aspectRatio, glm::vec3 position)
+	OpenGL_OrthoCamera::OpenGL_OrthoCamera(int width, int height,glm::vec2 aspectRatio, glm::vec3 position)
 	{
-		OpenGL_Camera::width = width;
-		OpenGL_Camera::height = height;
+		OpenGL_OrthoCamera::width = width;
+		OpenGL_OrthoCamera::height = height;
 		m_Position = position;
 		//16:9 aspect ratio
 		m_ProjectionMatrix = glm::ortho(-aspectRatio.x, aspectRatio.x, -aspectRatio.y, aspectRatio.y);
@@ -24,13 +24,13 @@ namespace GalaxyDraw {
 		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	void OpenGL_Camera::SetProjection(glm::vec2 aspectRatio)
+	void OpenGL_OrthoCamera::SetProjection(glm::vec2 aspectRatio)
 	{
 		m_ProjectionMatrix = glm::ortho(-aspectRatio.x, aspectRatio.x, -aspectRatio.y, aspectRatio.y);
 		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	void OpenGL_Camera::updateMatrix(float FOVdeg, float nearPlane, float farPlane)
+	void OpenGL_OrthoCamera::updateMatrix(float FOVdeg, float nearPlane, float farPlane)
 	{
 		// Makes camera look in the right direction from the right position
 		m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Rotation, m_UpDir);
@@ -44,14 +44,14 @@ namespace GalaxyDraw {
 		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	void OpenGL_Camera::MatrixUniform(GalaxyDraw::Shader& shader, const char* uniform)
+	void OpenGL_OrthoCamera::MatrixUniform(GalaxyDraw::Shader& shader, const char* uniform)
 	{
 		// Exports camera matrix
 		GLCall(glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), uniform), 1, GL_FALSE, glm::value_ptr(m_CameraMatrix)));
 	}
 
 
-	void OpenGL_Camera::RecalculateViewMatrix()
+	void OpenGL_OrthoCamera::RecalculateViewMatrix()
 	{
 		m_ViewMatrix = m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Rotation, m_UpDir);
 		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
@@ -60,13 +60,13 @@ namespace GalaxyDraw {
 	}
 
 
-	void OpenGL_Camera::SetPosition(const glm::vec3& newPosition)
+	void OpenGL_OrthoCamera::SetPosition(const glm::vec3& newPosition)
 	{
 		m_Position = newPosition;
 		RecalculateViewMatrix();
 	}
 
-	void OpenGL_Camera::SetRotation(const glm::vec3& newRotation)
+	void OpenGL_OrthoCamera::SetRotation(const glm::vec3& newRotation)
 	{
 		//m_rotation is forward direction
 		//m_UpDir is up direction

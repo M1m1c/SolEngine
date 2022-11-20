@@ -54,7 +54,7 @@ namespace Sol
 
 	struct CameraComp
 	{
-		GD_SceneCamera Camera;
+		GD_SceneCamera OrthoCamera;
 		bool IsPirmary = true;
 		bool IsFixedAspectRatio = false;
 
