@@ -44,6 +44,7 @@ namespace GalaxyDraw
 		RenderCommand::DrawIndexed(va);
 	}
 
+	//TODO change to draw cube
 	void Renderer::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
 	{
 		//TODO setup function
