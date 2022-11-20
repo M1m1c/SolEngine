@@ -38,18 +38,20 @@ namespace Sol
 	
 		if(mainCamera)
 		{
-			GD_Renderer::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+			//TODO begining a scene here with this camera is unable to see teh smiley, investigate why
+			
+			//GD_Renderer::BeginScene(mainCamera->GetProjection(), *cameraTransform);
 
-			auto group = m_Registry.group<TransformComp>(entt::get<SpriteRendererComp>);
-			for (auto entity : group)
-			{
-				auto& [transform, sprite] = group.get<TransformComp, SpriteRendererComp>(entity);
+			//auto group = m_Registry.group<TransformComp>(entt::get<SpriteRendererComp>);
+			//for (auto entity : group)
+			//{
+			//	auto& [transform, sprite] = group.get<TransformComp, SpriteRendererComp>(entity);
 
-				//TODO Render stuff
-				GD_Renderer::DrawQuad(transform, sprite.Color);
-			}
+			//	//TODO Render stuff
+			//	GD_Renderer::DrawQuad(transform, sprite.Color);
+			//}
 
-			GD_Renderer::EndScene();
+			//GD_Renderer::EndScene();
 		}
 	}
 
