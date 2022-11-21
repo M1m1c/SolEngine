@@ -26,6 +26,6 @@ namespace GalaxyDraw
 		float m_OrthoNear = -1.f;
 		float m_OrthoFar = 1.f;
 
-		float m_AspectRatio = 0;
+		float m_AspectRatio = 1.0f;
 	};
 }
