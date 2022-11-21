@@ -79,23 +79,25 @@ namespace Sol
 
 			GD_Renderer::BeginScene(mainCamera->GetProjection(), *cameraTransform);
 
-			//auto group = m_Registry.group<TransformComp>(entt::get<SpriteRendererComp>);
-			//for (auto entity : group)
-			//{
-			//	auto& [transform, sprite] = group.get<TransformComp, SpriteRendererComp>(entity);
+			auto group = m_Registry.group<TransformComp>(entt::get<SpriteRendererComp>);
+			for (auto entity : group)
+			{
+				auto& [transform, sprite] = group.get<TransformComp, SpriteRendererComp>(entity);
 
-			//	//TODO Render stuff
-			//	GD_Renderer::DrawQuad(transform, sprite.Color);
-			//}
+				//TODO Render stuff
+				/*glm::vec3 pos(0.f, 0.f, 0.f);
+				glm::mat4 transform2 = glm::translate(glm::mat4(1.0f), pos);*/
 
-			glm::vec3 pos(0.f, 0.f, 0.f);
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
+				GD_Renderer::DrawQuad(transform, sprite.Color);
+			}
 
-			auto shader = m_ShaderLib.Get("Square");
+			
+
+			/*auto shader = m_ShaderLib.Get("Square");
 
 			GD_Renderer::Submit(shader, m_VertexArray, transform);
 
-			m_Texture->Bind();
+			m_Texture->Bind();*/
 
 			GD_Renderer::EndScene();
 		}
