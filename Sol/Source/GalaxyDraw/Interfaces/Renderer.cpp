@@ -49,6 +49,11 @@ namespace GalaxyDraw
 		}
 
 		std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, s_2DData.MaxIndices);
+
+		//TODO for some reason teh indecies odn't match here figure out why
+	/*	uint32_t indices[6] = { 0,1,2,2,3,0 };
+		auto indexBuffer = IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));*/
+
 		s_2DData.QuadVertexArray->SetIndexBuffer(quadIB);
 		delete[] quadIndices;
 

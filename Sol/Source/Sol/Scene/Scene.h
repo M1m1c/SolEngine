@@ -1,6 +1,7 @@
 #pragma once
 #include <entt.hpp>
 #include <Sol/Core/TimeStep.h>
+#include "GalaxyDraw/GalaxyDraw.h"
 
 namespace Sol
 {
@@ -27,6 +28,11 @@ namespace Sol
 		uint32_t m_ViewportHeight = 0;
 
 		friend class Entity;
+
+		GD_ShaderLibrary m_ShaderLib;
+		s_ptr<GD_Shader> m_Shader;
+		s_ptr<GD_VAO> m_VertexArray;
+		s_ptr<GD_Texture2D> m_Texture;
 	};
 
 }
