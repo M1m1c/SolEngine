@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include "GalaxyDraw/GalaxyDraw.h"
+#include <glm/gtx/quaternion.hpp>
 
 namespace Sol
 {
@@ -24,14 +25,31 @@ namespace Sol
 
 		TransformComp() = default;
 		TransformComp(const TransformComp&) = default;
-		TransformComp(const glm::mat4& transform) : m_Transform(transform) { }
+		TransformComp(const glm::vec3& position) : Position(position) { }
 		~TransformComp() = default;
 
-		operator glm::mat4& () { return m_Transform; }
-		operator const glm::mat4& () const { return m_Transform; }
+		glm::mat4 GetTransform() const
+		{
+			glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
 
-		glm::mat4 m_Transform{ 1.f };
-	private:
+			return glm::translate(glm::mat4(1.0f), Position)
+				* rotation
+				* glm::scale(glm::mat4(1.0f), Scale);
+		}
+
+		operator glm::mat4& () {
+			return GetTransform();
+		}
+
+		operator const glm::mat4& () const {
+			return GetTransform();
+		}
+
+
+		glm::vec3 Position = { 0.0f, 0.0f, 0.0f };
+		glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
+		glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
+
 	};
 
 	struct SpriteRendererComp
