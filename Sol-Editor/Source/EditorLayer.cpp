@@ -9,48 +9,6 @@ namespace Sol
 		Layer("Example"),
 		m_CameraController(10, 10, glm::vec2(1.6f, 0.9f), glm::vec3(0.f))
 	{
-		m_VertexArray = GD_VAO::Create();
-
-		float vertices[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f
-		};
-
-		float squareVertices[5 * 4] = {
-			-0.5f, -0.5f, 0.0f, 0.f, 0.f,
-			0.5f, -0.5f, 0.0f, 1.f, 0.f,
-			0.5f, 0.5f, 0.0f, 1.f, 1.f,
-			-0.5f, 0.5f, 0.0f, 0.f, 1.f,
-		};
-
-		auto vertexBuffer = GD_VBO::Create(squareVertices, sizeof(squareVertices));
-
-		GD_BufferLayout layout =
-		{
-			{GD_ShaderDataType::Float3, "a_Position"},
-			{GD_ShaderDataType::Float2, "a_TexCoord"},
-			/*	{GD_ShaderDataType::Float3, "a_Normal"},
-				{GD_ShaderDataType::Float4, "a_Color"},*/
-		};
-
-		vertexBuffer->SetLayout(layout);
-		m_VertexArray->AddVertexBuffer(vertexBuffer);
-
-		uint32_t indices[6] = { 0,1,2,2,3,0 };
-		auto indexBuffer = GD_EBO::Create(indices, sizeof(indices) / sizeof(uint32_t));
-		m_VertexArray->SetIndexBuffer(indexBuffer);
-
-		auto shader = m_ShaderLib.Load("Square", "Square.vert", "Square.frag");
-
-		m_Texture = GD_Texture2D::Create("assets/textures/think.png");
-
-		m_WhiteTexture = GD_Texture2D::Create(1, 1);
-		uint32_t whiteColor = 0Xffffffff;
-		m_WhiteTexture->SetData(&whiteColor, sizeof(uint32_t));
-
-		shader->Bind();
-		shader->setInt("u_Texture", 0);
 
 	}
 
@@ -59,7 +17,7 @@ namespace Sol
 		GD_FramebufferProps properties;
 		properties.Width = 1280;
 		properties.Height = 720;
-		m_Framebuffer = GD_::Framebuffer::Create(properties);
+		m_Framebuffer = GD_Framebuffer::Create(properties);
 
 		m_ActiveScene = std::make_unique<Scene>();
 
@@ -78,10 +36,13 @@ namespace Sol
 	void EditorLayer::OnUpdate(TimeStep deltaTime)
 	{
 		SOL_PROFILE_FUNCTION();
-		m_Framebuffer->Bind();
+		
 
 		//RESIZE
 		{
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
+
+
 			GD_FramebufferProps props = m_Framebuffer->GetProperties();
 			bool viewLargerThanZero = m_ViewPortSize.x > 0.0f && m_ViewPortSize.y > 0.0f;
 			bool propsDontMatch = props.Width != m_ViewPortSize.x || props.Height != m_ViewPortSize.y;
@@ -90,46 +51,23 @@ namespace Sol
 			{
 				m_Framebuffer->Resize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 				m_CameraController.OnResize(m_ViewPortSize.x, m_ViewPortSize.y);
-				m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 			}
 		}
 
-		//UPDATE STEP
+		//TODO tie camera controller to new entity with camera comp
 		if (m_ViewPortFocused)
 		{
 			m_CameraController.OnUpdate(deltaTime);
 		}
 
-		//auto color=m_TempEntity.GetComponent<SpriteRendererComp>().Color;
+		m_Framebuffer->Bind();
 
 		//RENDER STEP
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
 
-		static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-
-
-		//TODO remove beign and end scene calls here, they should only be called in scene OnUpdate
-		GD_Renderer::BeginScene(m_CameraController.GetCamera());
-
-		{
-			SOL_PROFILE_SCOPE("RenderDraw");
-
-			//UPDATE SCENE
-			m_ActiveScene->OnUpdate(deltaTime);
-
-
-			glm::vec3 pos(0.f, 0.f, 0.f);
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
-
-			auto shader = m_ShaderLib.Get("Square");
-
-			GD_Renderer::Submit(shader, m_VertexArray, transform);
-
-			m_Texture->Bind();
-		}
-
-		GD_Renderer::EndScene();
+		m_ActiveScene->OnUpdate(deltaTime);
+	
 		m_Framebuffer->UnBind();
 	}
 

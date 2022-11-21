@@ -19,11 +19,6 @@ namespace Sol
 		virtual void OnImGuiRender() override;
 		virtual void OnEvent(Event& e) override;
 	private:
-		GD_ShaderLibrary m_ShaderLib;
-		s_ptr<GD_Shader> m_Shader;
-		s_ptr<GD_VAO> m_VertexArray;
-		s_ptr<GD_Texture2D> m_Texture;
-		s_ptr<GD_Texture2D> m_WhiteTexture;
 
 		u_ptr<GD_Framebuffer> m_Framebuffer;
 		u_ptr<Scene> m_ActiveScene;
