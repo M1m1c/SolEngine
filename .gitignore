@@ -42,7 +42,7 @@ Sol-Editor/SolProfile-Startup.json
 Sol-Editor/assets/textures/think.png
 Sol/thirdparty/assimp/bin-int/Debug-windows-x86_64/assimp/assimp.tlog/assimp.write.1u.tlog
 *.tlog
-Sol/thirdparty/GLFW
-Sol/thirdparty/glm
-Sol/thirdparty/imgui
-Sol/thirdparty/stb
+Sol/thirdparty/GLFW/
+Sol/thirdparty/glm/
+Sol/thirdparty/imgui/
+Sol/thirdparty/stb/
