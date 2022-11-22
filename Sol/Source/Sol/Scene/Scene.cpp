@@ -55,7 +55,7 @@ namespace Sol
 				if (camera.IsPirmary)
 				{
 					mainCamera = &camera.OrthoCamera;
-					cameraTransform = &transform.GetTransform();
+					cameraTransform = &transform.GetTransformMatrix();
 					break;
 				}
 			}
