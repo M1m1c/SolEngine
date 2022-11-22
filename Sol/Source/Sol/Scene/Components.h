@@ -1,8 +1,10 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "GalaxyDraw/GalaxyDraw.h"
 #include <glm/gtx/quaternion.hpp>
+#include "GalaxyDraw/GalaxyMacros.h"
+#include "GalaxyDraw/SceneCamera.h"
+#include <GalaxyDraw/Interfaces/Texture.h>
 
 namespace Sol
 {
@@ -56,15 +58,14 @@ namespace Sol
 	{
 	public:
 
+		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
+		s_ptr<GD_::Texture2D> Texture;
+		float TilingFactor = 1.0f;
+
 		SpriteRendererComp() = default;
 		SpriteRendererComp(const SpriteRendererComp&) = default;
-		SpriteRendererComp(const glm::vec4& color) : Color(color) { }
-		~SpriteRendererComp() = default;
-
-		/*operator glm::vec4& () { return m_Color; }
-		operator const glm::vec4& () const { return m_Color; }*/
-
-		glm::vec4 Color{ 1.f };
+		SpriteRendererComp(const glm::vec4 & color)
+			: Color(color) {}
 
 	private:
 		
@@ -72,7 +73,7 @@ namespace Sol
 
 	struct CameraComp
 	{
-		GD_SceneCamera OrthoCamera;
+		GalaxyDraw::SceneCamera OrthoCamera;
 		bool IsPirmary = true;
 		bool IsFixedAspectRatio = false;
 

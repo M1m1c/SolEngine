@@ -21,13 +21,13 @@ namespace GalaxyDraw {
 		//16:9 aspect ratio
 		m_ProjectionMatrix = glm::ortho(-aspectRatio.x, aspectRatio.x, -aspectRatio.y, aspectRatio.y);
 		//m_ProjectionMatrix = glm::ortho(-1.6f, 1.6f, -.9f, .9f);
-		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
 	void OpenGL_OrthoCamera::SetProjection(glm::vec2 aspectRatio)
 	{
 		m_ProjectionMatrix = glm::ortho(-aspectRatio.x, aspectRatio.x, -aspectRatio.y, aspectRatio.y);
-		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
 	void OpenGL_OrthoCamera::updateMatrix(float FOVdeg, float nearPlane, float farPlane)
@@ -41,20 +41,20 @@ namespace GalaxyDraw {
 		glm::mat4 ortho = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
 
 		// Sets new camera matrix
-		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
 	void OpenGL_OrthoCamera::MatrixUniform(GalaxyDraw::Shader& shader, const char* uniform)
 	{
 		// Exports camera matrix
-		GLCall(glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), uniform), 1, GL_FALSE, glm::value_ptr(m_CameraMatrix)));
+		GLCall(glUniformMatrix4fv(glGetUniformLocation(shader.GetID(), uniform), 1, GL_FALSE, glm::value_ptr(m_ViewProjectionMatrix)));
 	}
 
 
 	void OpenGL_OrthoCamera::RecalculateViewMatrix()
 	{
 		m_ViewMatrix = m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Rotation, m_UpDir);
-		m_CameraMatrix = m_ProjectionMatrix * m_ViewMatrix;
+		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 		/*glm::translate(glm::mat4(1.0f), m_Position) *
 			glm::rotate(glm::mat4(1.0f), 1.0f, m_Rotation);*/
 	}

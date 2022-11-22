@@ -77,7 +77,7 @@ namespace GalaxyDraw
 		}
 
 		glUseProgram(m_ParticleShader->GetID());
-		glUniformMatrix4fv(m_ParticleShaderViewProj, 1, GL_FALSE, glm::value_ptr(camera.GetCameraMatrix()));
+		glUniformMatrix4fv(m_ParticleShaderViewProj, 1, GL_FALSE, glm::value_ptr(camera.GetViewProjectionMatrix()));
 
 		for (auto& particle : m_ParticlePool)
 		{

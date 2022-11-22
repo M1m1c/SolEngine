@@ -66,8 +66,13 @@ namespace Sol
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
 
+		//GD_Renderer2D::BeginScene(m_CameraController.GetCamera());
+
 		m_ActiveScene->OnUpdate(deltaTime);
 	
+
+		//GD_Renderer2D::EndScene();
+
 		m_Framebuffer->UnBind();
 	}
 

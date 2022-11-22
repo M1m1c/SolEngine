@@ -1484,6 +1484,10 @@
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Camera.h" />
     <ClInclude Include="Source\GalaxyDraw\SceneCamera.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer2D.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\UniformBuffer.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.h" />
+    <ClInclude Include="Source\GalaxyDraw\GalaxyMacros.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1610,5 +1614,8 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\SceneCamera.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer2D.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\UniformBuffer.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.cpp" />
   </ItemGroup>
 </Project>

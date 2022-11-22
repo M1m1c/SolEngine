@@ -37,7 +37,8 @@ namespace GalaxyDraw
 
 	void OpenGL_RenderScreen::DrawIndexed(const std::shared_ptr<VertexArray> va, uint32_t indexCount)
 	{
-		uint32_t count = indexCount == 0 ? va->GetIndexBuffer()->GetCount() : indexCount;
+		va->Bind();
+		uint32_t count = indexCount ? indexCount : va->GetIndexBuffer()->GetCount();
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 	}
 
