@@ -47,7 +47,7 @@ ExampleLayer::ExampleLayer() : Layer("Example"), m_CameraController(10, 10, glm:
 	m_WhiteTexture->SetData(&whiteColor, sizeof(uint32_t));
 
 	shader->Bind();
-	shader->setInt("u_Texture", 0);
+	shader->SetInt("u_Texture", 0);
 
 }
 
