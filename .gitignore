@@ -42,3 +42,8 @@ Sol-Editor/SolProfile-Startup.json
 Sol-Editor/assets/textures/think.png
 *.tlog
 *.write.1u.tlog
+*.log
+*.tlog
+*.log
+*.idb
+*.lib
