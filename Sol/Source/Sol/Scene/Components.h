@@ -30,7 +30,7 @@ namespace Sol
 		TransformComp(const glm::vec3& position) : Position(position) { }
 		~TransformComp() = default;
 
-		glm::mat4 GetTransform() const
+		glm::mat4 GetTransformMatrix() const
 		{
 			glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
 
@@ -38,13 +38,9 @@ namespace Sol
 				* rotation
 				* glm::scale(glm::mat4(1.0f), Scale);
 		}
-
-		operator glm::mat4& () {
-			return GetTransform();
-		}
-
-		operator const glm::mat4& () const {
-			return GetTransform();
+		
+		operator const glm::mat4 () const {
+			return GetTransformMatrix();
 		}
 
 
