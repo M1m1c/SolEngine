@@ -40,7 +40,7 @@ namespace GalaxyDraw
 			//particle.Rotation += 0.01f * deltaTime;
 		}
 	}
-	void OpenGL_ParticleSystem::OnRender(Camera& camera)
+	void OpenGL_ParticleSystem::OnRender(OrthoCamera& camera)
 	{
 		if (!m_QuadVA)
 		{
@@ -77,7 +77,7 @@ namespace GalaxyDraw
 		}
 
 		glUseProgram(m_ParticleShader->GetID());
-		glUniformMatrix4fv(m_ParticleShaderViewProj, 1, GL_FALSE, glm::value_ptr(camera.GetCameraMatrix()));
+		glUniformMatrix4fv(m_ParticleShaderViewProj, 1, GL_FALSE, glm::value_ptr(camera.GetViewProjectionMatrix()));
 
 		for (auto& particle : m_ParticlePool)
 		{

@@ -13,7 +13,7 @@ namespace GalaxyDraw
 		virtual ~OpenGL_ParticleSystem() override;
 
 		virtual void OnUpdate(Sol::TimeStep deltaTime)override;
-		virtual void OnRender(Camera& camera) override;
+		virtual void OnRender(OrthoCamera& camera) override;
 		virtual void Emit(const ParticleProperties& properties) override;
 	private:
 		std::vector<Particle> m_ParticlePool;

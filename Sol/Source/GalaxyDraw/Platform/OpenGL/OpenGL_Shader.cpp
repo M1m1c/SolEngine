@@ -105,64 +105,64 @@ namespace GalaxyDraw
 		}
 	}
 
-	void OpenGL_Shader::setBool(const std::string& name, bool value) const
+	void OpenGL_Shader::SetBool(const std::string& name, bool value) const
 	{
 		GLCall(glUniform1i(GetUniformLocation(name.c_str()), (int)value));
 	}
 
-	void OpenGL_Shader::setInt(const std::string& name, int value) const
+	void OpenGL_Shader::SetInt(const std::string& name, int value) const
 	{
 		GLCall(glUniform1i(GetUniformLocation(name.c_str()), value));
 	}
 
-	void OpenGL_Shader::setFloat(const std::string& name, float value) const
+	void OpenGL_Shader::SetFloat(const std::string& name, float value) const
 	{
 		GLCall(glUniform1f(GetUniformLocation(name.c_str()), value));
 	}
 
-	void OpenGL_Shader::setVec2(const std::string& name, const glm::vec2& value) const
+	void OpenGL_Shader::SetVec2(const std::string& name, const glm::vec2& value) const
 	{
 		GLCall(glUniform2fv(GetUniformLocation(name.c_str()), 1, &value[0]));
 	}
 
-	void OpenGL_Shader::setVec2(const std::string& name, float x, float y) const
+	void OpenGL_Shader::SetVec2(const std::string& name, float x, float y) const
 	{
 		GLCall(glUniform2f(GetUniformLocation(name.c_str()), x, y));
 	}
 
-	void OpenGL_Shader::setVec3(const std::string& name, const glm::vec3& value) const
+	void OpenGL_Shader::SetVec3(const std::string& name, const glm::vec3& value) const
 	{
 		//TODO for some reson this GLCALL triggerd a break point when everything was right, look into why
 		//GLCall(glUniform3fv(GetUniformLocation(name.c_str()), 1, &value[0]));
 		glUniform3fv(GetUniformLocation(name.c_str()), 1, &value[0]);
 	}
 
-	void OpenGL_Shader::setVec3(const std::string& name, float x, float y, float z) const
+	void OpenGL_Shader::SetVec3(const std::string& name, float x, float y, float z) const
 	{
 		GLCall(glUniform3f(GetUniformLocation(name.c_str()), x, y, z));
 	}
 
-	void OpenGL_Shader::setVec4(const std::string& name, const glm::vec4& value) const
+	void OpenGL_Shader::SetVec4(const std::string& name, const glm::vec4& value) const
 	{
 		GLCall(glUniform4fv(GetUniformLocation(name.c_str()), 1, &value[0]));
 	}
 
-	void OpenGL_Shader::setVec4(const std::string& name, float x, float y, float z, float w) const
+	void OpenGL_Shader::SetVec4(const std::string& name, float x, float y, float z, float w) const
 	{
 		GLCall(glUniform4f(GetUniformLocation(name.c_str()), x, y, z, w));
 	}
 
-	void OpenGL_Shader::setMat2(const std::string& name, const glm::mat2& mat) const
+	void OpenGL_Shader::SetMat2(const std::string& name, const glm::mat2& mat) const
 	{
 		GLCall(glUniformMatrix2fv(GetUniformLocation(name.c_str()), 1, GL_FALSE, &mat[0][0]));
 	}
 
-	void OpenGL_Shader::setMat3(const std::string& name, const glm::mat3& mat) const
+	void OpenGL_Shader::SetMat3(const std::string& name, const glm::mat3& mat) const
 	{
 		GLCall(glUniformMatrix3fv(GetUniformLocation(name.c_str()), 1, GL_FALSE, &mat[0][0]));
 	}
 
-	void OpenGL_Shader::setMat4(const std::string& name, const glm::mat4& mat) const
+	void OpenGL_Shader::SetMat4(const std::string& name, const glm::mat4& mat) const
 	{
 		GLCall(glUniformMatrix4fv(GetUniformLocation(name.c_str()), 1, GL_FALSE, &mat[0][0]));
 	}

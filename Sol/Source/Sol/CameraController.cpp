@@ -9,7 +9,7 @@ namespace Sol
 		m_AspectRatio(aspectRatio)
 		//m_Bounds(-m_AspectRatio*m_ZoomLevel, m_AspectRatio * m_ZoomLevel,-m_ZoomLevel,m_ZoomLevel)
 	{
-		m_Camera = GD_Camera::Create(width, height, aspectRatio * m_ZoomLevel, position);
+		m_Camera = GD_OrthoCamera::Create(width, height, aspectRatio * m_ZoomLevel, position);
 	}
 
 	//TODO add controls for rotating Camera

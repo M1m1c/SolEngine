@@ -1,6 +1,10 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include "GalaxyDraw/GalaxyMacros.h"
+#include "GalaxyDraw/SceneCamera.h"
+#include <GalaxyDraw/Interfaces/Texture.h>
 
 namespace Sol
 {
@@ -23,31 +27,55 @@ namespace Sol
 
 		TransformComp() = default;
 		TransformComp(const TransformComp&) = default;
-		TransformComp(const glm::mat4& transform) : m_Transform(transform) { }
+		TransformComp(const glm::vec3& position) : Position(position) { }
 		~TransformComp() = default;
 
-		operator glm::mat4& () { return m_Transform; }
-		operator const glm::mat4& () const { return m_Transform; }
+		glm::mat4 GetTransformMatrix() const
+		{
+			glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
 
-	private:
-		glm::mat4 m_Transform{ 1.f };
+			return glm::translate(glm::mat4(1.0f), Position)
+				* rotation
+				* glm::scale(glm::mat4(1.0f), Scale);
+		}
+		
+		operator const glm::mat4 () const {
+			return GetTransformMatrix();
+		}
+
+
+		glm::vec3 Position = { 0.0f, 0.0f, 0.0f };
+		glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
+		glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
+
 	};
 
 	struct SpriteRendererComp
 	{
 	public:
 
+		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
+		s_ptr<GD_::Texture2D> Texture;
+		float TilingFactor = 1.0f;
+
 		SpriteRendererComp() = default;
 		SpriteRendererComp(const SpriteRendererComp&) = default;
-		SpriteRendererComp(const glm::vec4& color) : Color(color) { }
-		~SpriteRendererComp() = default;
-
-		/*operator glm::vec4& () { return m_Color; }
-		operator const glm::vec4& () const { return m_Color; }*/
-
-		glm::vec4 Color{ 1.f };
+		SpriteRendererComp(const glm::vec4 & color)
+			: Color(color) {}
 
 	private:
 		
+	};
+
+	struct CameraComp
+	{
+		GalaxyDraw::SceneCamera OrthoCamera;
+		bool IsPirmary = true;
+		bool IsFixedAspectRatio = false;
+
+		CameraComp() = default;
+		CameraComp(const CameraComp&) = default;
+		//CameraComp(const glm::mat4 & projection) : Camera(projection) { }
+		~CameraComp() = default;
 	};
 }

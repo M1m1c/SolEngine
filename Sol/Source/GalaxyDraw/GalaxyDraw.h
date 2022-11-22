@@ -1,19 +1,21 @@
 #pragma once
+#include "GalaxyMacros.h"
 #include "Interfaces/Shader.h"
 #include "Interfaces/Buffer.h"
 #include "Interfaces/VertexArray.h"
 #include "Interfaces/Renderer.h"
+#include "Interfaces/Renderer2D.h"
 #include "Interfaces/RenderCommand.h"
 #include "Interfaces/RenderingContext.h"
 #include "Interfaces/Texture.h"
-#include "Interfaces/Camera.h"
+#include "Interfaces/OrthoCamera.h"
 #include "Interfaces/Framebuffer.h"
+#include "Camera.h"
+#include "SceneCamera.h"
 
 // This file is meant to be the only file you need to include to use GalaxyDraw.
 // It should mostly contain typedefs and macros for ease of use outside of GalaxyDraw.
 /////////////////////////////////////////////////////
-
-#define GD_ GalaxyDraw
 
 //Defined in Shader.h
 /////////////////////////////////////////////////////
@@ -41,6 +43,10 @@ typedef GalaxyDraw::VertexArray GD_VAO;
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::Renderer GD_Renderer;
 /////////////////////////////////////////////////////
+//Defined in Renderer2D.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::Renderer2D GD_Renderer2D;
+/////////////////////////////////////////////////////
 
 
 //Defined in RenderCommand.h
@@ -59,9 +65,19 @@ typedef GalaxyDraw::Texture GD_Texture;
 typedef GalaxyDraw::Texture2D GD_Texture2D;
 /////////////////////////////////////////////////////
 
-//Defined in Camera.h
+//Defined in OrthoCamera.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::OrthoCamera GD_OrthoCamera;
+/////////////////////////////////////////////////////
+
+//Defined in RendererCamera.h
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::Camera GD_Camera;
+/////////////////////////////////////////////////////
+
+//Defined in SceneCamera.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::SceneCamera GD_SceneCamera;
 /////////////////////////////////////////////////////
 
 //Defined in Framebuffer.h
