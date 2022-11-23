@@ -19,13 +19,12 @@ namespace Sol
 		virtual void OnImGuiRender() override;
 		virtual void OnEvent(Event& e) override;
 	private:
-
 		u_ptr<GD_Framebuffer> m_Framebuffer;
 		u_ptr<Scene> m_ActiveScene;
 		Entity m_TempEntity;
 		Entity m_CameraEntity;
 
-		CameraController m_CameraController;
+		u_ptr<CameraController> m_CameraController;
 
 
 		bool m_ViewPortFocused = false;

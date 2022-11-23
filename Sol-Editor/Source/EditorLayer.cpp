@@ -6,9 +6,9 @@
 namespace Sol
 {
 	EditorLayer::EditorLayer() :
-		Layer("Example"),
-		m_CameraController(10, 10, glm::vec2(1.6f, 0.9f), glm::vec3(0.f))
+		Layer("Example")
 	{
+		
 
 	}
 
@@ -26,7 +26,9 @@ namespace Sol
 		m_TempEntity = square;
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-		m_CameraEntity.AddComponent<CameraComp>();
+		auto& camTransform = m_CameraEntity.GetComponent<TransformComp>();
+		auto& sceneCam = m_CameraEntity.AddComponent<CameraComp>();
+		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
 	}
 
 	void EditorLayer::OnDetach()
@@ -50,14 +52,13 @@ namespace Sol
 			if (viewLargerThanZero && propsDontMatch) 
 			{
 				m_Framebuffer->Resize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
-				m_CameraController.OnResize(m_ViewPortSize.x, m_ViewPortSize.y);
 			}
 		}
 
 		//TODO tie camera controller to new entity with camera comp
 		if (m_ViewPortFocused)
 		{
-			m_CameraController.OnUpdate(deltaTime);
+			m_CameraController->OnUpdate(deltaTime);
 		}
 
 		m_Framebuffer->Bind();
@@ -165,8 +166,6 @@ namespace Sol
 			{
 				m_Framebuffer->Resize((uint32_t)size.x, (uint32_t)size.y);
 				m_ViewPortSize = { size.x,size.y };
-
-				m_CameraController.OnResize(size.x, size.y);
 			}
 
 			uint32_t textureID = m_Framebuffer->GetColorAttachmentsRendererID();
@@ -183,7 +182,7 @@ namespace Sol
 	void EditorLayer::OnEvent(Event& e)
 	{
 		//SOL_TRACE("{0}", event);
-		m_CameraController.OnEvent(e);
+		m_CameraController->OnEvent(e);
 	}
 
 }
