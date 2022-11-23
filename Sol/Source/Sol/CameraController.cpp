@@ -5,11 +5,11 @@
 
 namespace Sol
 {
-	CameraController::CameraController(int width, int height, glm::vec2 aspectRatio, glm::vec3 position) :
-		m_AspectRatio(aspectRatio)
-		//m_Bounds(-m_AspectRatio*m_ZoomLevel, m_AspectRatio * m_ZoomLevel,-m_ZoomLevel,m_ZoomLevel)
+
+	CameraController::CameraController(TransformComp& camTransform, CameraComp& sceneCamera):
+		m_CameraTransform(camTransform),
+		m_SceneCamera(sceneCamera)
 	{
-		m_Camera = GD_OrthoCamera::Create(width, height, aspectRatio * m_ZoomLevel, position);
 	}
 
 	//TODO add controls for rotating Camera
@@ -20,57 +20,50 @@ namespace Sol
 	{
 		if (Input::IsKeyPressed(SOL_KEY_D))
 		{
-			m_CameraPosition.x += m_CameraSpeed * deltaTime;
+			
+			m_CameraTransform.Position.x += m_CameraSpeed * deltaTime;
 		}
 		else if (Input::IsKeyPressed(SOL_KEY_A))
 		{
-			m_CameraPosition.x += -m_CameraSpeed * deltaTime;
+			m_CameraTransform.Position.x += -m_CameraSpeed * deltaTime;
 		}
 
 		if (Input::IsKeyPressed(SOL_KEY_W))
 		{
-			m_CameraPosition.y += m_CameraSpeed * deltaTime;
+			m_CameraTransform.Position.y += m_CameraSpeed * deltaTime;
 		}
 		else if (Input::IsKeyPressed(SOL_KEY_S))
 		{
-			m_CameraPosition.y += -m_CameraSpeed * deltaTime;
+			m_CameraTransform.Position.y += -m_CameraSpeed * deltaTime;
 		}
 
 		if (Input::IsKeyPressed(SOL_KEY_E))
 		{
-			m_CameraRotation.x += m_CameraSpeed*50.f * deltaTime;
+			
+			m_CameraTransform.Rotation.x += m_CameraSpeed * deltaTime;
 		}
 		else if (Input::IsKeyPressed(SOL_KEY_Q))
 		{
-			m_CameraRotation.x += -m_CameraSpeed * 50.f * deltaTime;
+			m_CameraTransform.Rotation.x += -m_CameraSpeed * deltaTime;
 		}
 
 		if (Input::IsKeyPressed(SOL_KEY_R))
 		{
-			m_CameraRotation.y += m_CameraSpeed * 50.f * deltaTime;
+			m_CameraTransform.Rotation.y += m_CameraSpeed * deltaTime;
 		}
 		else if (Input::IsKeyPressed(SOL_KEY_F))
 		{
-			m_CameraRotation.y += -m_CameraSpeed * 50.f * deltaTime;
+			m_CameraTransform.Rotation.y += -m_CameraSpeed  * deltaTime;
 		}
 
 		if (Input::IsKeyPressed(SOL_KEY_T))
 		{
-			m_CameraRotation.z += m_CameraSpeed * 50.f * deltaTime;
+			m_CameraTransform.Rotation.z += m_CameraSpeed  * deltaTime;
 		}
 		else if (Input::IsKeyPressed(SOL_KEY_G))
 		{
-			m_CameraRotation.z += -m_CameraSpeed * 50.f * deltaTime;
+			m_CameraTransform.Rotation.z += -m_CameraSpeed * deltaTime;
 		}
-
-		m_Camera->SetPosition(m_CameraPosition);
-		m_Camera->SetRotation(m_CameraRotation);
-		//m_Camera.SetRotation({ 0.5f,0.0f,0.f });
-		/*if (m_EnableRotation) 
-		{
-
-		}*/
-
 	}
 
 	void CameraController::OnEvent(Event& e)
@@ -80,26 +73,19 @@ namespace Sol
 		dispatcher.Dispatch<WindowResizeEvent>(SOL_BIND_EVENT_FN(CameraController::OnWindowResized));
 	}
 
-	void  CameraController::OnResize(uint32_t width, uint32_t height)
-	{
-		auto tempRatio = (float)width / (float)height;
-		m_AspectRatio = glm::vec2(tempRatio * m_ZoomLevel, m_ZoomLevel);
-		m_Camera->SetProjection(m_AspectRatio * m_ZoomLevel);
-	}
-
 	//TODO instead of handeling scrolling as events, 
 	// do it in OnUpdate so we can get smoother and shorter zoom steps
 	bool CameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		
-		m_ZoomLevel = glm::max(m_ZoomLevel- e.GetYOffset(),0.1f);
+	/*	m_ZoomLevel = glm::max(m_ZoomLevel- e.GetYOffset(),0.1f);
 		m_Camera->SetProjection(m_AspectRatio * m_ZoomLevel);
+		*/
 		return false;
 	}
 
 	bool CameraController::OnWindowResized(WindowResizeEvent& e)
 	{
-		OnResize((float)e.GetWidth() , (float)e.GetHeight());
 		return false;
 	}
 
