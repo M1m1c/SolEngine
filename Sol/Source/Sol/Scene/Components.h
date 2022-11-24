@@ -90,6 +90,11 @@ namespace Sol
 		ModelComp(const ModelComp&) = default;
 		ModelComp(const std::string& modelPath) : ModelPath(modelPath) {}
 
+		//TODO when we create a model, it should it using the path provided and setup all values in m_Model,
+		// later in the scene when we are updating we should get all modelComps that are set to be visible
+		// and draw them using a static fucniton in Renderer DrawModel().
+		// look at ModelOld and MeshOld for reference of how it used to be done.
+
 	private:
 		s_ptr<GalaxyDraw::Model> m_Model;
 	};
