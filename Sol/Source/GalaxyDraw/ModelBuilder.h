@@ -2,10 +2,10 @@
 #define MODEL_BUILDER_H
 
 #include "IBuildable.h"
-#include "Model.h"
+#include "ModelOld.h"
 namespace GalaxyDraw 
 {
-	class ModelBuilder : public IBuildable<Model>
+	class ModelBuilder : public IBuildable<ModelOld>
 	{
 	public:
 		BUILDABLE_PROPERTY(ModelBuilder, std::string, path)
@@ -13,7 +13,7 @@ namespace GalaxyDraw
 			ModelBuilder();
 		~ModelBuilder();
 
-		Model Build();
+		ModelOld Build();
 	};
 }
 #endif

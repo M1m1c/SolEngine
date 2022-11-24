@@ -5,7 +5,7 @@
 #include "OpenGL_VAO.h"
 #include "OpenGL_EBO.h"
 #include "GalaxyDraw/Interfaces/Shader.h"
-#include "GalaxyDraw/Model.h"
+#include "GalaxyDraw/ModelOld.h"
 
 namespace GalaxyDraw
 {
@@ -24,7 +24,7 @@ namespace GalaxyDraw
 		glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
-	void OpenGL_RenderScreen::Draw(const Model& model, const Shader& shader) const
+	void OpenGL_RenderScreen::Draw(const ModelOld& model, const Shader& shader) const
 	{
 		for (size_t i = 0; i < model.meshes.size(); i++)
 		{

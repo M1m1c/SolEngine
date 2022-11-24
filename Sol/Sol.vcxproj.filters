@@ -111,7 +111,7 @@
     <ClInclude Include="Source\GalaxyDraw\MeshOld.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Model.h">
+    <ClInclude Include="Source\GalaxyDraw\ModelOld.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h">
@@ -1532,7 +1532,7 @@
     <ClCompile Include="Source\GalaxyDraw\MeshOld.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Model.cpp">
+    <ClCompile Include="Source\GalaxyDraw\ModelOld.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp">

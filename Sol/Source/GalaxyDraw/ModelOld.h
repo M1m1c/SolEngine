@@ -12,7 +12,7 @@ enum aiTextureType;
 namespace GalaxyDraw {
 	unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);
 
-	class Model
+	class ModelOld
 	{
 	public:
 		std::vector<MeshTexture> textures_loaded;
@@ -20,7 +20,7 @@ namespace GalaxyDraw {
 		std::string directory;
 		bool gammaCorrection;
 
-		Model(std::string const& path, bool gamma = false);
+		ModelOld(std::string const& path, bool gamma = false);
 		void Draw(Shader& shader);
 
 	private:

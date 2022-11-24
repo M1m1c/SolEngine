@@ -13,8 +13,8 @@ namespace GalaxyDraw {
 
 	}
 
-	Model ModelBuilder::Build()
+	ModelOld ModelBuilder::Build()
 	{
-		return Model(path);
+		return ModelOld(path);
 	}
 }
