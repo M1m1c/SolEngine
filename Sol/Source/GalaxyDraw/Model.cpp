@@ -52,15 +52,15 @@ void Model::processNode(aiNode* node, const aiScene* scene)
 	}
 }
 
-Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
+MeshOld Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
-	std::vector<Vertex> vertices;
+	std::vector<VertexOld> vertices;
 	std::vector<unsigned int> indices;
 	std::vector<MeshTexture> textures;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
-		Vertex vertex;
+		VertexOld vertex;
 
 		glm::vec3 vector;
 		vector.x = mesh->mVertices[i].x;
@@ -112,7 +112,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
-	return Mesh(vertices, indices, textures);
+	return MeshOld(vertices, indices, textures);
 }
 
 

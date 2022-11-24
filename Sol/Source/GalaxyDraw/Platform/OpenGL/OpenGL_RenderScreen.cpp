@@ -28,7 +28,7 @@ namespace GalaxyDraw
 	{
 		for (size_t i = 0; i < model.meshes.size(); i++)
 		{
-			Mesh mesh = model.meshes[i];
+			MeshOld mesh = model.meshes[i];
 			OpenGL_VAO vao(mesh.VAO);
 			OpenGL_EBO ebo(&(mesh.indices[0]), model.meshes[i].indices.size());
 			this->Draw(vao, ebo, shader);
