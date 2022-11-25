@@ -28,6 +28,8 @@ namespace GalaxyDraw
 		Vertex* MeshVertexBufferBase = nullptr;
 		Vertex* MeshVertexBufferPtr = nullptr;
 
+		Renderer3D::Statistics Stats;
+
 		struct CameraData
 		{
 			glm::mat4 ViewProjection;
@@ -40,6 +42,12 @@ namespace GalaxyDraw
 
 	void GalaxyDraw::Renderer3D::Init()
 	{
+
+		//TODO finish implementing, look at Renderer2D for reference
+
+		s_Data.MissingTexture = Texture2D::Create(1, 1);
+		uint32_t missingTextureData = 0xff00ff;
+		s_Data.MissingTexture->SetData(&missingTextureData, sizeof(uint32_t));
 	}
 
 	void GalaxyDraw::Renderer3D::Shutdown()
@@ -60,6 +68,30 @@ namespace GalaxyDraw
 
 	void GalaxyDraw::Renderer3D::Flush()
 	{
+		if (s_Data.MeshIndexCount)
+		{
+			uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.MeshVertexBufferPtr - (uint8_t*)s_Data.MeshVertexBufferBase);
+			s_Data.MeshVertexBuffer->SetData(s_Data.MeshVertexBufferBase, dataSize);
+
+			//// Bind textures
+			//for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
+			//	s_Data.TextureSlots[i]->Bind(i);
+
+			s_Data.MeshShader->Bind();
+			RenderCommand::DrawIndexed(s_Data.MeshVertexArray, s_Data.MeshIndexCount);
+			s_Data.Stats.DrawCalls++;
+		}
+
+	}
+
+	void Renderer3D::ResetStats()
+	{
+		memset(&s_Data.Stats, 0, sizeof(Statistics));
+	}
+
+	Renderer3D::Statistics Renderer3D::GetStats()
+	{
+		return s_Data.Stats;
 	}
 
 }
