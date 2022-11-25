@@ -12,7 +12,8 @@ namespace GalaxyDraw
 		virtual ~Model() = default;	
 		virtual void SetData(const std::string& path) = 0;
 		virtual bool operator==(const Model& other) const = 0;
-		virtual std::vector<Mesh> GetMeshes() const = 0;
+		virtual uint32_t GetRendererID() const = 0;
+		virtual std::vector<Mesh>& GetMeshes() = 0;
 		//virtual std::vector<MeshTexture> GetLoadedMaterials() const = 0;
 	};
 
