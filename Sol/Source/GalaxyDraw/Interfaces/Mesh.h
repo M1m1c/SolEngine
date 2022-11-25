@@ -3,9 +3,8 @@
 #include <vector>
 #include "Texture.h"
 
-namespace GalaxyDraw {
-
-	class Shader;
+namespace GalaxyDraw 
+{
 
 	struct Vertex {
 		glm::vec3 Position;
