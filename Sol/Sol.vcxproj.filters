@@ -1491,6 +1491,7 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Model.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Mesh.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1622,5 +1623,6 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer3D.cpp" />
   </ItemGroup>
 </Project>
