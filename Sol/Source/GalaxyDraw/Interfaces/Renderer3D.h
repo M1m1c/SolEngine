@@ -20,6 +20,8 @@ namespace GalaxyDraw {
 		static void EndScene();
 		static void Flush();
 
+		static void LoadMesh(const Mesh& mesh, const uint32_t& id);
+
 		struct Statistics
 		{
 			uint32_t DrawCalls = 0;

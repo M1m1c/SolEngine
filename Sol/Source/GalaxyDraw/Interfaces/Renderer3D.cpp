@@ -12,21 +12,27 @@
 namespace GalaxyDraw 
 {
 
+	//TODO make sure that only one of these exist per unique mesh, if more meshes of the same are loaded add their data to the buffers
+	struct MeshRenderData 
+	{
+		std::string Name;
+		std::shared_ptr<VertexArray> VertexArray;
+		std::shared_ptr<VertexBuffer> VertexBuffer;
+		std::shared_ptr<Shader> Shader;
+
+		uint32_t IndexCount = 0;
+		uint32_t IndexOffset = 0;
+		Vertex* VertexBufferBase = nullptr;
+		Vertex* VertexBufferPtr = nullptr;
+	};
+
 	struct Renderer3DData
 	{
 		static const uint32_t MaxMeshes = 20000;
-		static const uint32_t MaxVertices = MaxMeshes * 4;
-		static const uint32_t MaxIndices = MaxMeshes * 6;
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
-		std::shared_ptr<VertexArray> MeshVertexArray;
-		std::shared_ptr<VertexBuffer> MeshVertexBuffer;
-		std::shared_ptr<Shader> MeshShader;
+		std::vector<MeshRenderData> MeshDataCollection;
 		std::shared_ptr<Texture2D> MissingTexture;
-
-		uint32_t MeshIndexCount = 0;
-		Vertex* MeshVertexBufferBase = nullptr;
-		Vertex* MeshVertexBufferPtr = nullptr;
 
 		Renderer3D::Statistics Stats;
 
@@ -42,8 +48,7 @@ namespace GalaxyDraw
 
 	void GalaxyDraw::Renderer3D::Init()
 	{
-
-		//TODO finish implementing, look at Renderer2D for reference
+		SOL_PROFILE_FUNCTION();
 
 		s_Data.MissingTexture = Texture2D::Create(1, 1);
 		uint32_t missingTextureData = 0xff00ff;
@@ -68,20 +73,53 @@ namespace GalaxyDraw
 
 	void GalaxyDraw::Renderer3D::Flush()
 	{
-		if (s_Data.MeshIndexCount)
+		for (size_t i = 0; i < s_Data.MeshDataCollection.size(); i++)
 		{
-			uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.MeshVertexBufferPtr - (uint8_t*)s_Data.MeshVertexBufferBase);
-			s_Data.MeshVertexBuffer->SetData(s_Data.MeshVertexBufferBase, dataSize);
+			auto& meshData = s_Data.MeshDataCollection[i];
+			if (meshData.IndexCount)
+			{
+				uint32_t dataSize = (uint32_t)((uint8_t*)meshData.VertexBufferPtr - (uint8_t*)meshData.VertexBufferBase);
+				meshData.VertexBuffer->SetData(meshData.VertexBufferBase, dataSize);
 
-			//// Bind textures
-			//for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
-			//	s_Data.TextureSlots[i]->Bind(i);
+				//// Bind textures
+				//for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
+				//	s_Data.TextureSlots[i]->Bind(i);
 
-			s_Data.MeshShader->Bind();
-			RenderCommand::DrawIndexed(s_Data.MeshVertexArray, s_Data.MeshIndexCount);
-			s_Data.Stats.DrawCalls++;
+				meshData.Shader->Bind();
+				RenderCommand::DrawIndexed(meshData.VertexArray, meshData.IndexCount);
+				s_Data.Stats.DrawCalls++;
+			}
 		}
+	}
 
+	//TODO we still need to impor the mesh from assimp and popultate the mesh with data
+	void Renderer3D::LoadMesh(const Mesh& mesh, const uint32_t& id)
+	{
+		uint32_t maxVerts = s_Data.MaxMeshes * mesh.Vertices.size();
+		uint32_t maxIndices = s_Data.MaxMeshes * mesh.Indices.size();
+
+		MeshRenderData meshData;
+		meshData.IndexOffset = mesh.Indices.size();
+		meshData.VertexArray = VertexArray::Create();
+		meshData.VertexBuffer= VertexBuffer::Create(maxVerts * sizeof(Vertex));
+
+		meshData.VertexBuffer->SetLayout({
+			{ ShaderDataType::Float3, "a_Position"     },
+			{ ShaderDataType::Float4, "a_Color"        },
+			{ ShaderDataType::Float2, "a_TexCoord"     },
+			{ ShaderDataType::Float,  "a_TexIndex"     },
+			{ ShaderDataType::Float,  "a_TilingFactor" },
+			{ ShaderDataType::Int,    "a_EntityID"     }
+			});
+		meshData.VertexArray->AddVertexBuffer(meshData.VertexBuffer);
+
+		meshData.VertexBufferBase = new Vertex[maxVerts];
+		std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(mesh.Indices.data(), maxIndices);
+		meshData.VertexArray->SetIndexBuffer(quadIB);
+
+		meshData.Shader = Shader::Create("quad.vert", "quad.frag", "Quad2");//TODO replace this with something we set in the material
+
+		s_Data.MeshDataCollection.push_back(meshData);
 	}
 
 	void Renderer3D::ResetStats()
