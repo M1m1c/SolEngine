@@ -57,18 +57,51 @@ namespace GalaxyDraw
 
 	void GalaxyDraw::Renderer3D::Shutdown()
 	{
+		SOL_PROFILE_FUNCTION();
+		for (size_t i = 0; i < s_Data.MeshDataCollection.size(); i++)
+		{
+			delete[] s_Data.MeshDataCollection[i].VertexBufferBase;
+		}
+		
 	}
 
 	void GalaxyDraw::Renderer3D::BeginScene(const glm::mat4& projection, const glm::mat4& transform)
 	{
+		SOL_PROFILE_FUNCTION();
+
+		s_Data.CameraBuffer.ViewProjection = projection * glm::inverse(transform);
+		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer3DData::CameraData));
+
+		StartBatch();
 	}
 
 	void GalaxyDraw::Renderer3D::BeginScene(const OrthoCamera& camera)
 	{
+		SOL_PROFILE_FUNCTION();
+
+		s_Data.CameraBuffer.ViewProjection = camera.GetViewProjectionMatrix();
+		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer3DData::CameraData));
+
+		StartBatch();
 	}
 
 	void GalaxyDraw::Renderer3D::EndScene()
 	{
+		SOL_PROFILE_FUNCTION();
+
+		Flush();
+	}
+
+	void Renderer3D::StartBatch()
+	{
+		for (size_t i = 0; i < s_Data.MeshDataCollection.size(); i++)
+		{
+			auto& meshData = s_Data.MeshDataCollection[i];
+
+			meshData.IndexCount = 0;
+			meshData.VertexBufferPtr = meshData.VertexBufferBase;
+			//s_Data.TextureSlotIndex = 1;
+		}
 	}
 
 	void GalaxyDraw::Renderer3D::Flush()
@@ -90,6 +123,12 @@ namespace GalaxyDraw
 				s_Data.Stats.DrawCalls++;
 			}
 		}
+	}
+
+	void Renderer3D::NextBatch()
+	{
+		Flush();
+		StartBatch();
 	}
 
 	//When we create a model on a modelComp using Model::Create() this also gets called.
@@ -131,6 +170,14 @@ namespace GalaxyDraw
 		meshData.Shader = Shader::Create("quad.vert", "quad.frag", "Quad2");//TODO replace this with something we set in the material
 
 		s_Data.MeshDataCollection.push_back(meshData);
+	}
+
+	void Renderer3D::DrawModel(std::shared_ptr<Model> model)
+	{
+	}
+
+	void Renderer3D::DrawMesh(const Mesh& mesh)
+	{
 	}
 
 	void Renderer3D::ResetStats()

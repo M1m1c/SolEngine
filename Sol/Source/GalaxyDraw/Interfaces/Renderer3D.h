@@ -18,10 +18,13 @@ namespace GalaxyDraw {
 		//static void BeginScene(const EditorCamera& camera);
 		static void BeginScene(const OrthoCamera& camera); // TODO: Remove
 		static void EndScene();
-		static void Flush();
+
 
 		static void LoadModel(std::shared_ptr<Model> model);
 		static void LoadMesh(const Mesh& mesh);
+
+		static void DrawModel(std::shared_ptr<Model> model);
+		static void DrawMesh(const Mesh& mesh);
 
 		struct Statistics
 		{
@@ -33,5 +36,9 @@ namespace GalaxyDraw {
 		};
 		static void ResetStats();
 		static Statistics GetStats();
+	private:
+		static void StartBatch();
+		static void Flush();
+		static void NextBatch();
 	};
 }
