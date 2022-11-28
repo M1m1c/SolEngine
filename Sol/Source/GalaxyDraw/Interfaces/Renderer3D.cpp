@@ -13,6 +13,7 @@ namespace GalaxyDraw
 {
 
 	//TODO make sure that only one of these exist per unique mesh, if more meshes of the same are loaded add their data to the buffers
+	// might want to store a map of string to id, pass in the name of the mesh file and get the mes render data name.
 	struct MeshRenderData 
 	{
 		std::string Name;
@@ -134,6 +135,7 @@ namespace GalaxyDraw
 	//When we create a model on a modelComp using Model::Create() this also gets called.
 	void Renderer3D::LoadModel(std::shared_ptr<Model> model)
 	{
+		SOL_PROFILE_FUNCTION();
 		auto& meshes = model->GetMeshes();
 
 		for (size_t i = 0; i < meshes.size(); i++)
@@ -145,6 +147,7 @@ namespace GalaxyDraw
 	//TODO Need to set the name/id so we don't create duplicate MeshDataCollecitons.
 	void Renderer3D::LoadMesh(const Mesh& mesh)
 	{
+		SOL_PROFILE_FUNCTION();
 		uint32_t maxVerts = s_Data.MaxMeshes * mesh.Vertices.size();
 		uint32_t maxIndices = s_Data.MaxMeshes * mesh.Indices.size();
 
@@ -172,12 +175,42 @@ namespace GalaxyDraw
 		s_Data.MeshDataCollection.push_back(meshData);
 	}
 
-	void Renderer3D::DrawModel(std::shared_ptr<Model> model)
+	void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform, int entityID)
 	{
+		SOL_PROFILE_FUNCTION();
+		auto& meshes = model->GetMeshes();
+
+		//TODO get the mesh render data corresponding to mesh and pass that along
+
+		for (size_t i = 0; i < meshes.size(); i++)
+		{
+			DrawMesh(meshes[i],transform,entityID);
+		}
 	}
 
-	void Renderer3D::DrawMesh(const Mesh& mesh)
+	void Renderer3D::DrawMesh(const Mesh& mesh, const glm::mat4& transform, int entityID)
 	{
+		SOL_PROFILE_FUNCTION();
+
+		uint32_t vertexCount = mesh.Vertices.size();
+
+		/*if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+			NextBatch();
+
+		for (size_t i = 0; i < quadVertexCount; i++)
+		{
+			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
+			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			s_Data.QuadVertexBufferPtr->EntityID = entityID;
+			s_Data.QuadVertexBufferPtr++;
+		}
+
+		s_Data.QuadIndexCount += 6;
+
+		s_Data.Stats.QuadCount++;*/
 	}
 
 	void Renderer3D::ResetStats()

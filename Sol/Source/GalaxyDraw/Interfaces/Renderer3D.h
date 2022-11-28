@@ -23,8 +23,8 @@ namespace GalaxyDraw {
 		static void LoadModel(std::shared_ptr<Model> model);
 		static void LoadMesh(const Mesh& mesh);
 
-		static void DrawModel(std::shared_ptr<Model> model);
-		static void DrawMesh(const Mesh& mesh);
+		static void DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform, int entityID);
+		static void DrawMesh(const Mesh& mesh, const glm::mat4& transform, int entityID);
 
 		struct Statistics
 		{
