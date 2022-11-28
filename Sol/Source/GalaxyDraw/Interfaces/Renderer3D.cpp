@@ -92,7 +92,7 @@ namespace GalaxyDraw
 		}
 	}
 
-	//When we create a model on a modelComp using Rednderer3D::Create() this also gets called.
+	//When we create a model on a modelComp using Model::Create() this also gets called.
 	void Renderer3D::LoadModel(std::shared_ptr<Model> model)
 	{
 		auto& meshes = model->GetMeshes();
