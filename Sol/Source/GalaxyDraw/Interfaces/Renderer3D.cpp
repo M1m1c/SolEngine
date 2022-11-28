@@ -92,8 +92,19 @@ namespace GalaxyDraw
 		}
 	}
 
-	//TODO we still need to impor the mesh from assimp and popultate the mesh with data
-	void Renderer3D::LoadMesh(const Mesh& mesh, const uint32_t& id)
+	//When we create a model on a modelComp using Rednderer3D::Create() this also gets called.
+	void Renderer3D::LoadModel(std::shared_ptr<Model> model)
+	{
+		auto& meshes = model->GetMeshes();
+
+		for (size_t i = 0; i < meshes.size(); i++)
+		{
+			LoadMesh(meshes[i]);
+		}
+	}
+
+	//TODO Need to set the name/id so we don't create duplicate MeshDataCollecitons.
+	void Renderer3D::LoadMesh(const Mesh& mesh)
 	{
 		uint32_t maxVerts = s_Data.MaxMeshes * mesh.Vertices.size();
 		uint32_t maxIndices = s_Data.MaxMeshes * mesh.Indices.size();

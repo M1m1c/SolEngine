@@ -20,7 +20,8 @@ namespace GalaxyDraw {
 		static void EndScene();
 		static void Flush();
 
-		static void LoadMesh(const Mesh& mesh, const uint32_t& id);
+		static void LoadModel(std::shared_ptr<Model> model);
+		static void LoadMesh(const Mesh& mesh);
 
 		struct Statistics
 		{
