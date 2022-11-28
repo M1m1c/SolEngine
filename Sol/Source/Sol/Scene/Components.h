@@ -82,7 +82,7 @@ namespace Sol
 
 	struct ModelComp 
 	{
-
+		s_ptr<GalaxyDraw::Model> Model;
 		std::string ModelPath;
 		std::string TexturePath;
 
@@ -94,8 +94,5 @@ namespace Sol
 		// later in the scene when we are updating we should get all modelComps that are set to be visible
 		// and draw them using a static function in Renderer DrawModel().
 		// look at ModelOld and MeshOld for reference of how it used to be done.
-
-	private:
-		s_ptr<GalaxyDraw::Model> m_Model;
 	};
 }
