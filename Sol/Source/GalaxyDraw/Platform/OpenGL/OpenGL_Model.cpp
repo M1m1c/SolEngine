@@ -27,7 +27,7 @@ namespace GalaxyDraw
     void OpenGL_Model::LoadModel(const std::string& modelpath)
     {
         Assimp::Importer import;
-        const aiScene* scene = import.ReadFile(modelpath, aiProcess_Triangulate | aiProcess_FlipUVs);
+        const aiScene* scene = import.ReadFile(modelpath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_JoinIdenticalVertices);
 
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
         {
