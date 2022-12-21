@@ -167,8 +167,8 @@ namespace GalaxyDraw
 		meshData.VertexArray->AddVertexBuffer(meshData.VertexBuffer);
 
 		meshData.VertexBufferBase = new Vertex[maxVerts];
-		std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(mesh.Indices.data(), maxIndices);
-		meshData.VertexArray->SetIndexBuffer(quadIB);
+		std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(mesh.Indices.data(), maxIndices);
+		meshData.VertexArray->SetIndexBuffer(indexBuffer);
 
 		meshData.Shader = Shader::Create("quad.vert", "quad.frag", "Quad2");//TODO replace this with something we set in the material
 
@@ -188,6 +188,8 @@ namespace GalaxyDraw
 		}
 	}
 
+	//TODO how do we get the correct  MeshDataCollection index via the mesh we pass in,
+	// we need it to access the correct buffer pointers.
 	void Renderer3D::DrawMesh(const Mesh& mesh, const glm::mat4& transform, int entityID)
 	{
 		SOL_PROFILE_FUNCTION();
