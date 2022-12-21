@@ -32,7 +32,7 @@ namespace GalaxyDraw
 		static const uint32_t MaxMeshes = 20000;
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
-		std::vector<MeshRenderData> MeshDataCollection;
+		std::unordered_map<std::string, MeshRenderData> MeshDataCollection;
 		std::shared_ptr<Texture2D> MissingTexture;
 
 		Renderer3D::Statistics Stats;
@@ -93,6 +93,8 @@ namespace GalaxyDraw
 		Flush();
 	}
 
+	//TODO we have a problem here with the mesh data colleciton, since it needs to be able to be iterated over as well
+	//we should probaably create a new container type where we can access via keys and iterate over it using indices
 	void Renderer3D::StartBatch()
 	{
 		for (size_t i = 0; i < s_Data.MeshDataCollection.size(); i++)
@@ -140,14 +142,16 @@ namespace GalaxyDraw
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
-			LoadMesh(meshes[i]);
+			LoadMesh(meshes[i],model->GetName());
 		}
 	}
 
 	//TODO Need to set the name/id so we don't create duplicate MeshDataCollecitons.
-	void Renderer3D::LoadMesh(const Mesh& mesh)
+	void Renderer3D::LoadMesh(const Mesh& mesh,const std::string& modelName)
 	{
 		SOL_PROFILE_FUNCTION();
+		auto name = mesh.Name + modelName;
+
 		uint32_t maxVerts = s_Data.MaxMeshes * mesh.Vertices.size();
 		uint32_t maxIndices = s_Data.MaxMeshes * mesh.Indices.size();
 
@@ -172,7 +176,8 @@ namespace GalaxyDraw
 
 		meshData.Shader = Shader::Create("quad.vert", "quad.frag", "Quad2");//TODO replace this with something we set in the material
 
-		s_Data.MeshDataCollection.push_back(meshData);
+		s_Data.MeshDataCollection.insert({ name, meshData });
+		//s_Data.MeshDataCollection.push_back(meshData);
 	}
 
 	void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform, int entityID)
@@ -184,15 +189,17 @@ namespace GalaxyDraw
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
-			DrawMesh(meshes[i],transform,entityID);
+			DrawMesh(model->GetName(), meshes[i], transform, entityID);
 		}
 	}
 
-	//TODO how do we get the correct  MeshDataCollection index via the mesh we pass in,
-	// we need it to access the correct buffer pointers.
-	void Renderer3D::DrawMesh(const Mesh& mesh, const glm::mat4& transform, int entityID)
+	void Renderer3D::DrawMesh(const std::string& modelName,const Mesh& mesh, const glm::mat4& transform, int entityID)
 	{
 		SOL_PROFILE_FUNCTION();
+
+		//TODO make sure that this gives us the correct buffers
+		auto name = mesh.Name + modelName;
+		auto& renderData = s_Data.MeshDataCollection[name];
 
 		uint32_t vertexCount = mesh.Vertices.size();
 
