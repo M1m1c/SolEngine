@@ -36,6 +36,8 @@ namespace GalaxyDraw
         }
         m_ModelDirectory = modelpath.substr(0, modelpath.find_last_of('/'));
 
+		m_Name = modelpath.substr(modelpath.find_last_of('/') + 1);
+
         ProcessNode(scene->mRootNode, scene);
     }
 
@@ -113,8 +115,8 @@ namespace GalaxyDraw
 		//	std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		//	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 		//}
-
-		return Mesh(vertices, indices, textures);
+		
+		return Mesh(mesh->mName.C_Str(), vertices, indices, textures);
     }
 
 }

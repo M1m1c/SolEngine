@@ -22,6 +22,8 @@ namespace GalaxyDraw
 
 		virtual std::vector<Mesh>& GetMeshes() override { return m_Meshes; };
 
+		virtual const std::string& GetName() override { return m_Name; }
+
 	private:
 		void LoadModel(const std::string& modelpath);
 		void ProcessNode(aiNode* node, const aiScene* scene);
@@ -29,6 +31,7 @@ namespace GalaxyDraw
 
 		uint32_t m_RendererID;
 		std::string m_ModelDirectory;
+		std::string m_Name;
 
 		std::vector<Mesh> m_Meshes;
 	};
