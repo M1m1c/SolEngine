@@ -199,6 +199,7 @@
     <ClInclude Include="Source\Sol\Core\GamepadKeyCodes.h" />
     <ClInclude Include="Source\Sol\Core\Input.h" />
     <ClInclude Include="Source\Sol\Core\KeyCodes.h" />
+    <ClInclude Include="Source\Sol\Core\KeyedVector.h" />
     <ClInclude Include="Source\Sol\Core\Layer.h" />
     <ClInclude Include="Source\Sol\Core\LayerStack.h" />
     <ClInclude Include="Source\Sol\Core\Log.h" />
