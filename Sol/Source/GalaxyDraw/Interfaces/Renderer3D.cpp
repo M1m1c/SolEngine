@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "UniformBuffer.h"
 #include "RenderCommand.h"
+#include "Sol/Core/KeyedVector.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -32,7 +33,7 @@ namespace GalaxyDraw
 		static const uint32_t MaxMeshes = 20000;
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
-		std::unordered_map<std::string, MeshRenderData> MeshDataCollection;
+		KeyedVector<std::string, MeshRenderData> MeshDataCollection;
 		std::shared_ptr<Texture2D> MissingTexture;
 
 		Renderer3D::Statistics Stats;
@@ -146,7 +147,6 @@ namespace GalaxyDraw
 		}
 	}
 
-	//TODO Need to set the name/id so we don't create duplicate MeshDataCollecitons.
 	void Renderer3D::LoadMesh(const Mesh& mesh,const std::string& modelName)
 	{
 		SOL_PROFILE_FUNCTION();
@@ -176,8 +176,7 @@ namespace GalaxyDraw
 
 		meshData.Shader = Shader::Create("quad.vert", "quad.frag", "Quad2");//TODO replace this with something we set in the material
 
-		s_Data.MeshDataCollection.insert({ name, meshData });
-		//s_Data.MeshDataCollection.push_back(meshData);
+		s_Data.MeshDataCollection.push_back(name, meshData);
 	}
 
 	void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform, int entityID)
