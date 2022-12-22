@@ -24,6 +24,8 @@ namespace GalaxyDraw
 
 		uint32_t IndexCount = 0;
 		uint32_t IndexOffset = 0;
+		uint32_t MaxIndicies = 0;
+		uint32_t MaxVerts = 0;
 		Vertex* VertexBufferBase = nullptr;
 		Vertex* VertexBufferPtr = nullptr;
 	};
@@ -156,6 +158,8 @@ namespace GalaxyDraw
 		uint32_t maxIndices = s_Data.MaxMeshes * mesh.Indices.size();
 
 		MeshRenderData meshData;
+		meshData.MaxIndicies = maxIndices;
+		meshData.MaxVerts = maxVerts;
 		meshData.IndexOffset = mesh.Indices.size();
 		meshData.VertexArray = VertexArray::Create();
 		meshData.VertexBuffer= VertexBuffer::Create(maxVerts * sizeof(Vertex));
@@ -184,8 +188,6 @@ namespace GalaxyDraw
 		SOL_PROFILE_FUNCTION();
 		auto& meshes = model->GetMeshes();
 
-		//TODO get the mesh render data corresponding to mesh and pass that along
-
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
 			DrawMesh(model->GetName(), meshes[i], transform, entityID);
@@ -201,24 +203,28 @@ namespace GalaxyDraw
 		auto& renderData = s_Data.MeshDataCollection[name];
 
 		uint32_t vertexCount = mesh.Vertices.size();
-
-		/*if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+		
+		if (renderData.IndexCount >= renderData.MaxIndicies)
 			NextBatch();
 
-		for (size_t i = 0; i < quadVertexCount; i++)
+		for (size_t i = 0; i < vertexCount; i++)
 		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+			renderData.VertexBufferPtr->Position = transform * glm::vec4(mesh.Vertices[i].Position,0.f);
+			//renderData.VertexBufferPtr->TexCoords
+			//renderData.VertexBufferPtr->Normal
+
+			/*s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
 			s_Data.QuadVertexBufferPtr->Color = color;
 			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-			s_Data.QuadVertexBufferPtr->EntityID = entityID;
-			s_Data.QuadVertexBufferPtr++;
+			s_Data.QuadVertexBufferPtr->EntityID = entityID;*/
+			renderData.VertexBufferPtr++;
 		}
 
-		s_Data.QuadIndexCount += 6;
+		renderData.IndexCount += mesh.Indices.size();
 
-		s_Data.Stats.QuadCount++;*/
+		s_Data.Stats.MeshCount++;
 	}
 
 	void Renderer3D::ResetStats()
