@@ -1,7 +1,7 @@
 #include <map>
 #include <vector>
 
-template <typename T, typename Key>
+template <typename Key, typename T>
 class KeyedVector {
 public:
     // Constructors and assignment operators
@@ -65,13 +65,13 @@ public:
         m_KeyToIndex.clear();
     }
 
-    void push_back(const T& value, const Key& key) {
+    void push_back(const Key& key, const T& value) {
         m_Vector.push_back(value);
         size_t index = m_Vector.size() - 1;
         m_KeyToIndex[key] = index;
     }
 
-    void push_back(T&& value, const Key& key) {
+    void push_back(const Key& key, T&& value) {
         m_Vector.push_back(std::move(value));
         size_t index = m_Vector.size() - 1;
         m_KeyToIndex[key] = index;
