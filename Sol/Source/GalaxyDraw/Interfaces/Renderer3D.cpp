@@ -166,11 +166,8 @@ namespace GalaxyDraw
 
 		meshData.VertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position"     },
-			{ ShaderDataType::Float4, "a_Color"        },
-			{ ShaderDataType::Float2, "a_TexCoord"     },
-			{ ShaderDataType::Float,  "a_TexIndex"     },
-			{ ShaderDataType::Float,  "a_TilingFactor" },
-			{ ShaderDataType::Int,    "a_EntityID"     }
+			{ ShaderDataType::Float3, "a_Normal"     },
+			{ ShaderDataType::Float2, "a_TexCoord"     }
 			});
 		meshData.VertexArray->AddVertexBuffer(meshData.VertexBuffer);
 
@@ -178,7 +175,7 @@ namespace GalaxyDraw
 		std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(mesh.Indices.data(), maxIndices);
 		meshData.VertexArray->SetIndexBuffer(indexBuffer);
 
-		meshData.Shader = Shader::Create("quad.vert", "quad.frag", "Quad2");//TODO replace this with something we set in the material
+		meshData.Shader = Shader::Create("default.vert", "default.frag", "Default");//TODO replace this with something we set in the material
 
 		s_Data.MeshDataCollection.push_back(name, meshData);
 	}
@@ -209,16 +206,10 @@ namespace GalaxyDraw
 
 		for (size_t i = 0; i < vertexCount; i++)
 		{
-			renderData.VertexBufferPtr->Position = transform * glm::vec4(mesh.Vertices[i].Position,0.f);
-			//renderData.VertexBufferPtr->TexCoords
-			//renderData.VertexBufferPtr->Normal
-
-			/*s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
-			s_Data.QuadVertexBufferPtr->TexCoord = textureCoords[i];
-			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
-			s_Data.QuadVertexBufferPtr->EntityID = entityID;*/
+			auto& vert = mesh.Vertices[i];
+			renderData.VertexBufferPtr->Position = transform * glm::vec4(vert.Position,0.f);
+			renderData.VertexBufferPtr->Normal = vert.Normal;
+			renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
 			renderData.VertexBufferPtr++;
 		}
 
