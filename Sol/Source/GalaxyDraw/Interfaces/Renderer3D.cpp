@@ -180,18 +180,18 @@ namespace GalaxyDraw
 		s_Data.MeshDataCollection.push_back(name, meshData);
 	}
 
-	void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform, int entityID)
+	void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform)
 	{
 		SOL_PROFILE_FUNCTION();
 		auto& meshes = model->GetMeshes();
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
-			DrawMesh(model->GetName(), meshes[i], transform, entityID);
+			DrawMesh(model->GetName(), meshes[i], transform);
 		}
 	}
 
-	void Renderer3D::DrawMesh(const std::string& modelName,const Mesh& mesh, const glm::mat4& transform, int entityID)
+	void Renderer3D::DrawMesh(const std::string& modelName,const Mesh& mesh, const glm::mat4& transform)
 	{
 		SOL_PROFILE_FUNCTION();
 
