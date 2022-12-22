@@ -1,7 +1,7 @@
 #version 330 core
 
 // Values to be filled by the VAO
-layout (location = 0) in vec3 aPos;
+layout (location = 0) in vec4 aPos;
 layout (location = 1) in vec3 aNormal;
 layout (location = 2) in vec2 aTex;
 
@@ -17,7 +17,7 @@ uniform mat4 model;
 void main()
 {
 	// setting values into "out" variables
-	FragPos = vec3(model * vec4(aPos, 1.0f));
+	FragPos = vec3(model * aPos);
     Normal = mat3(transpose(inverse(model))) * aNormal;  
 	texCoord = aTex;
 
