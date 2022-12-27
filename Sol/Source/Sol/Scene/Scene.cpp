@@ -48,18 +48,18 @@ namespace Sol
 			}
 			GD_Renderer2D::EndScene();
 
-			GD_Renderer3D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
-			//TODO make sure that the model gets loaded before it is actually used here, and it should only be loaded once
-			auto group = m_Registry.group<TransformComp>(entt::get<ModelComp>);
-			for (auto entity : group)
-			{
-				auto& [transform, model] = group.get<TransformComp, ModelComp>(entity);
+			//GD_Renderer3D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+			////TODO make sure that the model gets loaded before it is actually used here, and it should only be loaded once
+			//auto group = m_Registry.group<TransformComp>(entt::get<ModelComp>);
+			//for (auto entity : group)
+			//{
+			//	auto& [transform, model] = group.get<TransformComp, ModelComp>(entity);
 
-				//GD_Renderer3D::LoadModel(model.Model);
-				GD_Renderer3D::DrawModel(model.Model, transform);
-			}
+			//	//GD_Renderer3D::LoadModel(model.Model);
+			//	GD_Renderer3D::DrawModel(model.Model, transform);
+			//}
 
-			GD_Renderer3D::EndScene();
+			//GD_Renderer3D::EndScene();
 		}
 	}
 
