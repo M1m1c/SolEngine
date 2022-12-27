@@ -57,6 +57,8 @@ namespace GalaxyDraw
 		s_Data.MissingTexture = Texture2D::Create(1, 1);
 		uint32_t missingTextureData = 0xff00ff;
 		s_Data.MissingTexture->SetData(&missingTextureData, sizeof(uint32_t));
+
+		s_Data.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 1);
 	}
 
 	void GalaxyDraw::Renderer3D::Shutdown()
