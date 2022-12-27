@@ -39,28 +39,29 @@ namespace Sol
 		{
 
 			GD_Renderer3D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
-			//TODO for some reason doing .group causes crash here figure out why
-			//auto group3D = m_Registry.group<TransformComp>(entt::get<ModelComp>);
-			//for (auto entity : group3D)
-			//{
-			//	auto& [transform, model] = group3D.get<TransformComp, ModelComp>(entity);
 
-			//	//GD_Renderer3D::LoadModel(model.Model);
-			//	GD_Renderer3D::DrawModel(model.Model, transform);
-			//}
+			auto group3D = m_Registry.group<ModelComp>(entt::get<TransformComp>);
+			for (auto entity : group3D)
+			{
+				auto& [model, transform] = group3D.get< ModelComp, TransformComp>(entity);
+
+				//GD_Renderer3D::LoadModel(model.Model);
+				GD_Renderer3D::DrawModel(model.Model, transform);
+			}
 
 			GD_Renderer3D::EndScene();
 
 
 			GD_Renderer2D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
 
-			auto group = m_Registry.group<TransformComp>(entt::get<SpriteRendererComp>);
-			for (auto entity : group)
+			auto group2D = m_Registry.group<SpriteRendererComp>(entt::get<TransformComp>);
+			for (auto entity : group2D)
 			{
-				auto& [transform, sprite] = group.get<TransformComp, SpriteRendererComp>(entity);
+				auto& [sprite, transform] = group2D.get<SpriteRendererComp, TransformComp>(entity);
 
 				GD_Renderer2D::DrawQuad(transform, sprite.Color);
 			}
+
 			GD_Renderer2D::EndScene();
 		}
 	}
