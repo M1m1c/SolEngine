@@ -1,7 +1,9 @@
 #include "solpch.h"
 #include "Renderer.h"
 #include "Renderer2D.h"
+#include "Renderer3D.h"
 #include "RenderCommand.h"
+#include <GalaxyDraw/Interfaces/UniformBuffer.h>
 
 namespace GalaxyDraw {
 
@@ -13,11 +15,13 @@ namespace GalaxyDraw {
 
 		RenderCommand::Init();
 		Renderer2D::Init();
+		Renderer3D::Init();
 	}
 
 	void Renderer::Shutdown()
 	{
 		Renderer2D::Shutdown();
+		Renderer3D::Shutdown();
 	}
 
 	void Renderer::OnWindowResize(uint32_t width, uint32_t height)

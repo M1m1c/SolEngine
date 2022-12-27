@@ -7,7 +7,7 @@ namespace GalaxyDraw {
 
 	class Shader;
 
-	struct Vertex {
+	struct VertexOld {
 		glm::vec3 Position;
 		glm::vec3 Normal;
 		glm::vec2 TexCoords;
@@ -19,14 +19,14 @@ namespace GalaxyDraw {
 		std::string path;
 	};
 
-	class Mesh {
+	class MeshOld {
 	public:
-		std::vector<Vertex>       vertices;
+		std::vector<VertexOld>       vertices;
 		std::vector<uint32_t> indices;
 		std::vector<MeshTexture>  textures;
 		unsigned int VAO;
 
-		Mesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<MeshTexture > textures);
+		MeshOld(std::vector<VertexOld> vertices, std::vector<uint32_t> indices, std::vector<MeshTexture > textures);
 
 		void Draw(Shader& shader);
 

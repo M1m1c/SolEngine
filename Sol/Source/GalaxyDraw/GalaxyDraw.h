@@ -5,6 +5,7 @@
 #include "Interfaces/VertexArray.h"
 #include "Interfaces/Renderer.h"
 #include "Interfaces/Renderer2D.h"
+#include "Interfaces/Renderer3D.h"
 #include "Interfaces/RenderCommand.h"
 #include "Interfaces/RenderingContext.h"
 #include "Interfaces/Texture.h"
@@ -46,6 +47,10 @@ typedef GalaxyDraw::Renderer GD_Renderer;
 //Defined in Renderer2D.h
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::Renderer2D GD_Renderer2D;
+/////////////////////////////////////////////////////
+//Defined in Renderer3D.h
+/////////////////////////////////////////////////////
+typedef GalaxyDraw::Renderer3D GD_Renderer3D;
 /////////////////////////////////////////////////////
 
 

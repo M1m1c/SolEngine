@@ -1,5 +1,5 @@
 #include "solpch.h"
-#include "Model.h"
+#include "ModelOld.h"
 
 #include "Platform/OpenGL/GLMacros.h"
 #include <glad/glad.h>
@@ -9,12 +9,12 @@
 #include <stb_image.h>
 
 namespace GalaxyDraw{
-Model::Model(std::string const& path, bool gamma) : gammaCorrection(gamma)
+ModelOld::ModelOld(std::string const& path, bool gamma) : gammaCorrection(gamma)
 {
 	loadModel(path);
 }
 
-void Model::Draw(Shader& shader)
+void ModelOld::Draw(Shader& shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
@@ -22,7 +22,7 @@ void Model::Draw(Shader& shader)
 	}
 }
 
-void Model::loadModel(std::string path)
+void ModelOld::loadModel(std::string path)
 {
 	Assimp::Importer import;
 	const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -37,7 +37,7 @@ void Model::loadModel(std::string path)
 	processNode(scene->mRootNode, scene);
 }
 
-void Model::processNode(aiNode* node, const aiScene* scene)
+void ModelOld::processNode(aiNode* node, const aiScene* scene)
 {
 	// process all the node's meshes (if any)
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -52,15 +52,15 @@ void Model::processNode(aiNode* node, const aiScene* scene)
 	}
 }
 
-Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
+MeshOld ModelOld::processMesh(aiMesh* mesh, const aiScene* scene)
 {
-	std::vector<Vertex> vertices;
+	std::vector<VertexOld> vertices;
 	std::vector<unsigned int> indices;
 	std::vector<MeshTexture> textures;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
-		Vertex vertex;
+		VertexOld vertex;
 
 		glm::vec3 vector;
 		vector.x = mesh->mVertices[i].x;
@@ -112,11 +112,11 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
 
-	return Mesh(vertices, indices, textures);
+	return MeshOld(vertices, indices, textures);
 }
 
 
-std::vector<MeshTexture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+std::vector<MeshTexture> ModelOld::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	std::vector<MeshTexture> textures;
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)

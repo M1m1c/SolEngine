@@ -1,5 +1,5 @@
 #include "solpch.h"
-#include "Mesh.h"
+#include "MeshOld.h"
 
 
 #include "Interfaces/Shader.h"
@@ -11,7 +11,7 @@
 
 namespace GalaxyDraw 
 {
-	Mesh::Mesh(std::vector<Vertex> vertices, std::vector<uint32_t> indices, std::vector<MeshTexture> textures)
+	MeshOld::MeshOld(std::vector<VertexOld> vertices, std::vector<uint32_t> indices, std::vector<MeshTexture> textures)
 	{
 		this->vertices = vertices;
 		this->indices = indices;
@@ -22,7 +22,7 @@ namespace GalaxyDraw
 	}
 
 
-	void Mesh::Draw(Shader& shader)
+	void MeshOld::Draw(Shader& shader)
 	{
 		// bind appropriate textures
 		unsigned int diffuseNr = 1;
@@ -60,7 +60,7 @@ namespace GalaxyDraw
 	}
 
 
-	void Mesh::setupMesh()
+	void MeshOld::setupMesh()
 	{
 		// create buffers/arrays
 		GLCall(glGenVertexArrays(1, &VAO));
@@ -73,7 +73,7 @@ namespace GalaxyDraw
 		// A great thing about structs is that their memory layout is sequential for all its items.
 		// The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
 		// again translates to 3/2 floats which translates to a byte array.
-		GLCall(glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW));
+		GLCall(glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(VertexOld), &vertices[0], GL_STATIC_DRAW));
 
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO));
 		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), &indices[0], GL_STATIC_DRAW));
@@ -81,13 +81,13 @@ namespace GalaxyDraw
 		// set the vertex attribute pointers
 		// vertex Positions
 		GLCall(glEnableVertexAttribArray(0));
-		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0));
+		GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexOld), (void*)0));
 		// vertex normals
 		GLCall(glEnableVertexAttribArray(1));
-		GLCall(glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal)));
+		GLCall(glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexOld), (void*)offsetof(VertexOld, Normal)));
 		// vertex texture coords
 		GLCall(glEnableVertexAttribArray(2));
-		GLCall(glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords)));
+		GLCall(glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VertexOld), (void*)offsetof(VertexOld, TexCoords)));
 
 		GLCall(glBindVertexArray(0));
 	}

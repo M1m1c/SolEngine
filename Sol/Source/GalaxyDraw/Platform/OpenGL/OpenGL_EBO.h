@@ -13,6 +13,7 @@ namespace GalaxyDraw
 		const unsigned int count;
 		// Constructor that generates a Elements Buffer Object and links it to indices
 		OpenGL_EBO(uint32_t* indices, unsigned int elementCount);
+		OpenGL_EBO(const uint32_t* indices, unsigned int elementCount);
 
 		// Destructor that hanldes deleting the buffer when this class gets deleted
 		virtual ~OpenGL_EBO();

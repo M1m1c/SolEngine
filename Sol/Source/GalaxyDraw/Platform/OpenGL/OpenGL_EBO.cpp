@@ -15,6 +15,14 @@ namespace GalaxyDraw
 		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indicesArray, GL_STATIC_DRAW));
 	}
 
+	// Constructor that generates a Elements Buffer Object and links it to indices
+	OpenGL_EBO::OpenGL_EBO(const uint32_t* indicesArray, unsigned int elementCount) : count(elementCount)
+	{
+		GLCall(glGenBuffers(1, &ID));
+		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID));
+		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indicesArray, GL_STATIC_DRAW));
+	}
+
 	// Destructor that hanldes deleting the buffer when this class gets deleted
 	OpenGL_EBO::~OpenGL_EBO()
 	{

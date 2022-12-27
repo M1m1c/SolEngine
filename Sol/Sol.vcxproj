@@ -156,6 +156,8 @@
     <ClInclude Include="Source\GalaxyDraw\GalaxyMacros.h" />
     <ClInclude Include="Source\GalaxyDraw\IBuildable.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Mesh.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Model.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\OrthoCamera.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Framebuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.h" />
@@ -163,16 +165,18 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\RenderCommand.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer2D.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer3D.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\RendererAPI.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\RenderingContext.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Shader.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Texture.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\VertexArray.h" />
-    <ClInclude Include="Source\GalaxyDraw\Mesh.h" />
-    <ClInclude Include="Source\GalaxyDraw\Model.h" />
+    <ClInclude Include="Source\GalaxyDraw\MeshOld.h" />
+    <ClInclude Include="Source\GalaxyDraw\ModelOld.h" />
     <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.h" />
@@ -195,6 +199,7 @@
     <ClInclude Include="Source\Sol\Core\GamepadKeyCodes.h" />
     <ClInclude Include="Source\Sol\Core\Input.h" />
     <ClInclude Include="Source\Sol\Core\KeyCodes.h" />
+    <ClInclude Include="Source\Sol\Core\KeyedVector.h" />
     <ClInclude Include="Source\Sol\Core\Layer.h" />
     <ClInclude Include="Source\Sol\Core\LayerStack.h" />
     <ClInclude Include="Source\Sol\Core\Log.h" />
@@ -633,6 +638,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\OrthoCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Framebuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.cpp" />
@@ -640,16 +646,18 @@
     <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderCommand.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer2D.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer3D.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\RendererAPI.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderingContext.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Shader.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Texture.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\UniformBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\VertexArray.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Mesh.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Model.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\MeshOld.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\ModelOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.cpp" />

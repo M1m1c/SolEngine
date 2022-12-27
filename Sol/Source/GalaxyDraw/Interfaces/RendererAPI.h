@@ -4,7 +4,7 @@
 #include "VertexArray.h"
 #include "Buffer.h"
 #include "Shader.h"
-#include "GalaxyDraw/Model.h"
+#include "GalaxyDraw/ModelOld.h"
 
 namespace GalaxyDraw 
 {

@@ -5,6 +5,7 @@
 #include "GalaxyDraw/GalaxyMacros.h"
 #include "GalaxyDraw/SceneCamera.h"
 #include <GalaxyDraw/Interfaces/Texture.h>
+#include <GalaxyDraw/Interfaces/Model.h>
 
 namespace Sol
 {
@@ -55,7 +56,7 @@ namespace Sol
 	public:
 
 		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
-		s_ptr<GD_::Texture2D> Texture;
+		s_ptr<GalaxyDraw::Texture2D> Texture;
 		float TilingFactor = 1.0f;
 
 		SpriteRendererComp() = default;
@@ -77,5 +78,25 @@ namespace Sol
 		CameraComp(const CameraComp&) = default;
 		//CameraComp(const glm::mat4 & projection) : Camera(projection) { }
 		~CameraComp() = default;
+	};
+
+	struct ModelComp 
+	{
+		s_ptr<GalaxyDraw::Model> Model;
+		std::string ModelPath;
+		std::string TexturePath;
+
+		ModelComp() = default;
+		ModelComp(const ModelComp&) = default;
+		//Sets up model based on providde file path
+		ModelComp(const std::string& modelPath) : ModelPath(modelPath)
+		{
+			Model = GalaxyDraw::Model::Create(modelPath);
+		}
+
+		//TODO when we create a model, it should be using the path provided and setup all values in m_Model,
+		// later in the scene when we are updating we should get all modelComps that are set to be visible
+		// and draw them using a static function in Renderer DrawModel().
+		// look at ModelOld and MeshOld for reference of how it used to be done.
 	};
 }

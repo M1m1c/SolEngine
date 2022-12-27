@@ -108,10 +108,10 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\VertexArray.h">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Mesh.h">
+    <ClInclude Include="Source\GalaxyDraw\MeshOld.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Model.h">
+    <ClInclude Include="Source\GalaxyDraw\ModelOld.h">
       <Filter>Source\GalaxyDraw</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h">
@@ -1488,6 +1488,11 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\GalaxyMacros.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Model.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Mesh.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer3D.h" />
+    <ClInclude Include="Source\Sol\Core\KeyedVector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1526,10 +1531,10 @@
     <ClCompile Include="Source\GalaxyDraw\Interfaces\VertexArray.cpp">
       <Filter>Source\GalaxyDraw\Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Mesh.cpp">
+    <ClCompile Include="Source\GalaxyDraw\MeshOld.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Model.cpp">
+    <ClCompile Include="Source\GalaxyDraw\ModelOld.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp">
@@ -1617,5 +1622,8 @@
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer2D.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\UniformBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Model.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer3D.cpp" />
   </ItemGroup>
 </Project>
