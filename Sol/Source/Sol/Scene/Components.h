@@ -88,7 +88,11 @@ namespace Sol
 
 		ModelComp() = default;
 		ModelComp(const ModelComp&) = default;
-		ModelComp(const std::string& modelPath) : ModelPath(modelPath) {}
+		//Sets up model based on providde file path
+		ModelComp(const std::string& modelPath) : ModelPath(modelPath)
+		{
+			Model = GalaxyDraw::Model::Create(modelPath);
+		}
 
 		//TODO when we create a model, it should be using the path provided and setup all values in m_Model,
 		// later in the scene when we are updating we should get all modelComps that are set to be visible
