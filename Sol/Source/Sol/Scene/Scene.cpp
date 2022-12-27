@@ -45,7 +45,6 @@ namespace Sol
 			{
 				auto& [model, transform] = group3D.get< ModelComp, TransformComp>(entity);
 
-				//GD_Renderer3D::LoadModel(model.Model);
 				GD_Renderer3D::DrawModel(model.Model, transform);
 			}
 
