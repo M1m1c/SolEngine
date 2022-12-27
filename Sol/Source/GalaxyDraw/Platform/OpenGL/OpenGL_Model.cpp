@@ -24,7 +24,6 @@ namespace GalaxyDraw
         return m_RendererID == ((OpenGL_Model&)other).m_RendererID;
     }
 
-	//TODO make sure that this stores the model in the model comp
     void OpenGL_Model::LoadModel(const std::string& modelpath)
     {
         Assimp::Importer import;

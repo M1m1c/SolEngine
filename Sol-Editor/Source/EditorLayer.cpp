@@ -23,7 +23,6 @@ namespace Sol
 
 		auto square = m_ActiveScene->CreateEntity();
 		square.AddComponent<SpriteRendererComp>(glm::vec4{ 1.f,0.f,0.f,1.f });
-		//TODO give it a model comp that gets a path to a 3d model as construciton param.
 		m_TempEntity = square;
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
