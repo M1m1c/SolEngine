@@ -186,7 +186,7 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Shader.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.h" />
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VAO.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexArray.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\SceneCamera.h" />
     <ClInclude Include="Source\Platform\Windows\WindowsWindow.h" />
@@ -667,7 +667,7 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Shader.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VAO.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexArray.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\SceneCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\stb.cpp" />

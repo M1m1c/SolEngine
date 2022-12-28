@@ -8,15 +8,15 @@
 namespace GalaxyDraw 
 {
 
-	class OpenGL_VAO : public VertexArray
+	class OpenGL_VertexArray : public VertexArray
 	{
 	public:
 		// ID reference for the Vertex Array Object
 		uint32_t ID;
 		// Constructor that generates a VAO ID
-		OpenGL_VAO();
-		OpenGL_VAO(const unsigned int vaoID);
-		virtual ~OpenGL_VAO();
+		OpenGL_VertexArray();
+		OpenGL_VertexArray(const unsigned int vaoID);
+		virtual ~OpenGL_VertexArray();
 
 		// Links a VBO Attribute such as a position or color to the VAO
 		void LinkAttrib(OpenGL_VertexBuffer& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset);
