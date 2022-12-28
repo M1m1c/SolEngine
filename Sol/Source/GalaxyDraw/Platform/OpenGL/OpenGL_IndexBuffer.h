@@ -5,18 +5,18 @@
 
 namespace GalaxyDraw 
 {
-	class OpenGL_EBO : public IndexBuffer
+	class OpenGL_IndexBuffer : public IndexBuffer
 	{
 	public:
 		// ID reference of Elements Buffer Object
 		uint32_t ID;
 		const unsigned int count;
 		// Constructor that generates a Elements Buffer Object and links it to indices
-		OpenGL_EBO(uint32_t* indices, unsigned int elementCount);
-		OpenGL_EBO(const uint32_t* indices, unsigned int elementCount);
+		OpenGL_IndexBuffer(uint32_t* indices, unsigned int elementCount);
+		OpenGL_IndexBuffer(const uint32_t* indices, unsigned int elementCount);
 
 		// Destructor that hanldes deleting the buffer when this class gets deleted
-		virtual ~OpenGL_EBO();
+		virtual ~OpenGL_IndexBuffer();
 
 		// Binds the EBO
 		virtual void Bind() const override;

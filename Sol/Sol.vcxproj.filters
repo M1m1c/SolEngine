@@ -126,7 +126,7 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.h">
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.h">
@@ -144,10 +144,10 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VAO.h">
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexArray.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VBO.h">
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexBuffer.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Platform\Windows\WindowsWindow.h">
@@ -1549,7 +1549,7 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.cpp">
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.cpp">
@@ -1567,10 +1567,10 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VAO.cpp">
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexArray.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VBO.cpp">
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexBuffer.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\stb.cpp">

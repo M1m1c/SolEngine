@@ -2,8 +2,8 @@
 #include "Buffer.h"
 
 #include "Renderer.h"
-#include "GalaxyDraw/Platform/OpenGL/OpenGL_VBO.h"
-#include "GalaxyDraw/Platform/OpenGL/OpenGL_EBO.h"
+#include "GalaxyDraw/Platform/OpenGL/OpenGL_VertexBuffer.h"
+#include "GalaxyDraw/Platform/OpenGL/OpenGL_IndexBuffer.h"
 #include <Sol/Core/Core.h>
 
 namespace GalaxyDraw
@@ -16,7 +16,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_VBO>(size);
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_VertexBuffer>(size);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
@@ -29,7 +29,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_VBO>(verts, size);
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_VertexBuffer>(verts, size);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
@@ -43,7 +43,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_EBO>(indices, count);
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_IndexBuffer>(indices, count);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
@@ -57,7 +57,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_EBO>(indices, count);
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_IndexBuffer>(indices, count);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;

@@ -4,8 +4,8 @@
 
 namespace GalaxyDraw 
 {
-	class OpenGL_VAO;
-	class OpenGL_EBO;
+	class OpenGL_VertexArray;
+	class OpenGL_IndexBuffer;
 	class Shader;
 	class ModelOld;
 
@@ -15,7 +15,7 @@ namespace GalaxyDraw
 
 		virtual void Init() override;
 
-		void Draw(const OpenGL_VAO& va, const OpenGL_EBO& ib, const Shader& shader) const;
+		void Draw(const OpenGL_VertexArray& va, const OpenGL_IndexBuffer& ib, const Shader& shader) const;
 		void Draw(const ModelOld& model, const Shader& shader) const;
 
 		virtual void DrawIndexed(const std::shared_ptr<VertexArray> va, uint32_t indexCount = 0) override;

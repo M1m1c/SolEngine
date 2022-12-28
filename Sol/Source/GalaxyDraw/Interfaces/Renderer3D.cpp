@@ -58,7 +58,7 @@ namespace GalaxyDraw
 		uint32_t missingTextureData = 0xff00ff;
 		s_Data.MissingTexture->SetData(&missingTextureData, sizeof(uint32_t));
 
-		s_Data.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 1);
+		s_Data.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 	}
 
 	void GalaxyDraw::Renderer3D::Shutdown()
@@ -177,7 +177,10 @@ namespace GalaxyDraw
 		std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(mesh.Indices.data(), maxIndices);
 		meshData.VertexArray->SetIndexBuffer(indexBuffer);
 
-		meshData.Shader = Shader::Create("default.vert", "default.frag", "Default");//TODO replace this with something we set in the material
+		//TODO should use missing texture to color 3d mesh
+		//TODO I think the reason nothing shows up in the view port is becasuse we don't set the model unifrom in teh default shader
+		//TODO make new default shader for use with 3d meshes, base it of of quad shader
+		meshData.Shader = Shader::Create("quad.vert", "quad.frag", "Default");//TODO replace this with something we set in the material
 
 		s_Data.MeshDataCollection.push_back(name, meshData);
 	}

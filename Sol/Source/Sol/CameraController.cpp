@@ -11,7 +11,7 @@ namespace Sol
 		m_SceneCamera(sceneCamera)
 	{
 	}
-
+	//TODO look at your other camera implemantations and rework this to function like those
 	//TODO add controls for rotating Camera
 	//TODO steal some code from my RTS camera made in Unity to improve controlls
 	//TODO change so we move relative to our current rotation instead of set axies.

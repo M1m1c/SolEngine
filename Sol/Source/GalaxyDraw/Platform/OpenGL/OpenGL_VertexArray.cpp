@@ -1,6 +1,6 @@
 #include "solpch.h"
 
-#include "OpenGL_VAO.h"
+#include "OpenGL_VertexArray.h"
 #include "GLMacros.h"
 #include <glad/glad.h>
 
@@ -29,22 +29,22 @@ namespace GalaxyDraw
 	//Temporary location
 
 	// Constructor that generates a VAO ID
-	OpenGL_VAO::OpenGL_VAO()
+	OpenGL_VertexArray::OpenGL_VertexArray()
 	{
 		GLCall(glGenVertexArrays(1, &ID));
 	}
 
-	OpenGL_VAO::OpenGL_VAO(const unsigned int vaoID) : ID(vaoID)
+	OpenGL_VertexArray::OpenGL_VertexArray(const unsigned int vaoID) : ID(vaoID)
 	{
 	}
 
-	OpenGL_VAO::~OpenGL_VAO()
+	OpenGL_VertexArray::~OpenGL_VertexArray()
 	{
 		GLCall(glDeleteVertexArrays(1, &ID));
 	}
 
 	// Links a VBO to the VAO using a certain layout
-	void OpenGL_VAO::LinkAttrib(OpenGL_VBO& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset)
+	void OpenGL_VertexArray::LinkAttrib(OpenGL_VertexBuffer& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset)
 	{
 		VBO.Bind();
 
@@ -58,24 +58,24 @@ namespace GalaxyDraw
 	}
 
 	// Binds the VAO
-	void OpenGL_VAO::Bind() const
+	void OpenGL_VertexArray::Bind() const
 	{
 		GLCall(glBindVertexArray(ID));
 	}
 
 	// Unbinds the VAO
-	void OpenGL_VAO::Unbind() const
+	void OpenGL_VertexArray::Unbind() const
 	{
 		GLCall(glBindVertexArray(0));
 	}
 
 	// Deletes the VAO
-	void OpenGL_VAO::Delete()
+	void OpenGL_VertexArray::Delete()
 	{
 		GLCall(glDeleteVertexArrays(1, &ID));
 	}
 
-	void OpenGL_VAO::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo)
+	void OpenGL_VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo)
 	{
 		SOL_CORE_ASSERT(vbo->GetLayout().GetElements().size(), "VBO has no layout!");
 
@@ -100,7 +100,7 @@ namespace GalaxyDraw
 		m_VertexBuffers.push_back(vbo);
 	}
 
-	void OpenGL_VAO::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ebo) 
+	void OpenGL_VertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ebo) 
 	{
 		glBindVertexArray(ID);
 		ebo->Bind();

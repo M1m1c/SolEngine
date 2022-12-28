@@ -9,15 +9,15 @@
 
 namespace GalaxyDraw
 {
-	class OpenGL_VBO : public VertexBuffer
+	class OpenGL_VertexBuffer : public VertexBuffer
 	{
 	public:
 		// Constructor that generates a Vertex Buffer Object and links it to vertices
-		OpenGL_VBO(GLsizeiptr size);
-		OpenGL_VBO(GLfloat* vertices, GLsizeiptr size);
+		OpenGL_VertexBuffer(GLsizeiptr size);
+		OpenGL_VertexBuffer(GLfloat* vertices, GLsizeiptr size);
 
 		// Destructor that hanldes deleting the buffer when this class gets deleted
-		virtual ~OpenGL_VBO();
+		virtual ~OpenGL_VertexBuffer();
 
 		// Binds the VBO
 		virtual void Bind() const override;

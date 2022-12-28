@@ -1,7 +1,7 @@
 #include "solpch.h"
 #include "VertexArray.h"
 #include "Renderer.h"
-#include "GalaxyDraw/Platform/OpenGL/OpenGL_VAO.h"
+#include "GalaxyDraw/Platform/OpenGL/OpenGL_VertexArray.h"
 
 namespace GalaxyDraw 
 {
@@ -13,7 +13,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_VAO>();
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_VertexArray>();
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
