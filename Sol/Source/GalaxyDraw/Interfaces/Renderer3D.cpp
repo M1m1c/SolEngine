@@ -177,6 +177,7 @@ namespace GalaxyDraw
 		std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(mesh.Indices.data(), maxIndices);
 		meshData.VertexArray->SetIndexBuffer(indexBuffer);
 
+		//TODO should use missing texture to color 3d mesh
 		//TODO I think the reason nothing shows up in the view port is becasuse we don't set the model unifrom in teh default shader
 		//TODO make new default shader for use with 3d meshes, base it of of quad shader
 		meshData.Shader = Shader::Create("quad.vert", "quad.frag", "Default");//TODO replace this with something we set in the material
