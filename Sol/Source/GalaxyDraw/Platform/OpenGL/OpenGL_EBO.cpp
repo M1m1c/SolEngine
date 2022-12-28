@@ -18,7 +18,9 @@ namespace GalaxyDraw
 	// Constructor that generates a Elements Buffer Object and links it to indices
 	OpenGL_EBO::OpenGL_EBO(const uint32_t* indicesArray, unsigned int elementCount) : count(elementCount)
 	{
-		GLCall(glGenBuffers(1, &ID));
+		//TODO for some reason creating more than 1 buffer object names here,
+		// prevents the program from crashing when generating a 3D meshes render data, why could that be?
+		GLCall(glGenBuffers(2, &ID));
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID));
 		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indicesArray, GL_STATIC_DRAW));
 	}
