@@ -94,6 +94,7 @@ project "Sol"
 		postbuildcommands
 		{
 			("{COPY} ../Sol/thirdparty/assimp/lib/*.dll \"../binaries/".. outputdir .."/Sandbox\"")
+			("{COPY} ../Sol/thirdparty/assimp/lib/*.dll \"../binaries/".. outputdir .."/Sol-Editor\"")
 
 		}
 
