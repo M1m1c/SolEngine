@@ -126,7 +126,7 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.h">
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.h">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.h">
@@ -1549,7 +1549,7 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.cpp">
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.cpp">

@@ -3,7 +3,7 @@
 #include "OpenGL_RenderScreen.h"
 #include <glad/glad.h>
 #include "OpenGL_VAO.h"
-#include "OpenGL_EBO.h"
+#include "OpenGL_IndexBuffer.h"
 #include "GalaxyDraw/Interfaces/Shader.h"
 #include "GalaxyDraw/ModelOld.h"
 
@@ -15,7 +15,7 @@ namespace GalaxyDraw
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	void OpenGL_RenderScreen::Draw(const OpenGL_VAO& va, const OpenGL_EBO& ib, const Shader& shader) const
+	void OpenGL_RenderScreen::Draw(const OpenGL_VAO& va, const OpenGL_IndexBuffer& ib, const Shader& shader) const
 	{
 		shader.Bind();
 		va.Bind();
@@ -30,7 +30,7 @@ namespace GalaxyDraw
 		{
 			MeshOld mesh = model.meshes[i];
 			OpenGL_VAO vao(mesh.VAO);
-			OpenGL_EBO ebo(&(mesh.indices[0]), model.meshes[i].indices.size());
+			OpenGL_IndexBuffer ebo(&(mesh.indices[0]), model.meshes[i].indices.size());
 			this->Draw(vao, ebo, shader);
 		}
 	}

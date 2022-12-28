@@ -180,7 +180,7 @@
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.h" />
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.h" />
@@ -660,7 +660,7 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_EBO.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.cpp" />
