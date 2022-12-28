@@ -177,6 +177,7 @@ namespace GalaxyDraw
 		std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(mesh.Indices.data(), maxIndices);
 		meshData.VertexArray->SetIndexBuffer(indexBuffer);
 
+		//TODO I think the reason nothing shows up in the view port is becasuse we don't set the model unifrom in teh default shader
 		meshData.Shader = Shader::Create("default.vert", "default.frag", "Default");//TODO replace this with something we set in the material
 
 		s_Data.MeshDataCollection.push_back(name, meshData);
