@@ -44,7 +44,7 @@ namespace GalaxyDraw
 	}
 
 	// Links a VBO to the VAO using a certain layout
-	void OpenGL_VAO::LinkAttrib(OpenGL_VBO& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset)
+	void OpenGL_VAO::LinkAttrib(OpenGL_VertexBuffer& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset)
 	{
 		VBO.Bind();
 

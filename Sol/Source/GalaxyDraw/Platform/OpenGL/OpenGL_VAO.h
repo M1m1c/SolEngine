@@ -3,7 +3,7 @@
 
 
 #include "GalaxyDraw/Interfaces/VertexArray.h"
-#include "OpenGL_VBO.h"
+#include "OpenGL_VertexBuffer.h"
 
 namespace GalaxyDraw 
 {
@@ -19,7 +19,7 @@ namespace GalaxyDraw
 		virtual ~OpenGL_VAO();
 
 		// Links a VBO Attribute such as a position or color to the VAO
-		void LinkAttrib(OpenGL_VBO& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset);
+		void LinkAttrib(OpenGL_VertexBuffer& VBO, uint32_t layout, uint32_t numComponents, uint32_t type, khronos_ssize_t stride, void* offset);
 		// Binds the VAO
 		virtual void Bind() const override;
 		// Unbinds the VAO
