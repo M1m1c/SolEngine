@@ -32,7 +32,7 @@ namespace GalaxyDraw
 
 	struct Renderer3DData
 	{
-		static const uint32_t MaxMeshes = 20000;
+		static const uint32_t MaxMeshes = 2000;
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
 		KeyedVector<std::string, MeshRenderData> MeshDataCollection;
