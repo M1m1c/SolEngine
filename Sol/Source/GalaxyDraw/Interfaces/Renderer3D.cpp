@@ -169,7 +169,9 @@ namespace GalaxyDraw
 		meshData.VertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position"     },
 			{ ShaderDataType::Float3, "a_Normal"     },
-			{ ShaderDataType::Float2, "a_TexCoord"     }
+			{ ShaderDataType::Float2, "a_TexCoord"     },
+			{ ShaderDataType::Float4, "a_Color"     },
+			{ ShaderDataType::Int, "a_EntityID"     }
 			});
 		meshData.VertexArray->AddVertexBuffer(meshData.VertexBuffer);
 
@@ -180,7 +182,7 @@ namespace GalaxyDraw
 		//TODO should use missing texture to color 3d mesh
 		//TODO I think the reason nothing shows up in the view port is becasuse we don't set the model unifrom in teh default shader
 		//TODO make new default shader for use with 3d meshes, base it of of quad shader
-		meshData.Shader = Shader::Create("quad.vert", "quad.frag", "Default");//TODO replace this with something we set in the material
+		meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
 
 		s_Data.MeshDataCollection.push_back(name, meshData);
 	}
@@ -215,6 +217,8 @@ namespace GalaxyDraw
 			renderData.VertexBufferPtr->Position = transform * glm::vec4(vert.Position,0.f);
 			renderData.VertexBufferPtr->Normal = vert.Normal;
 			renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
+			renderData.VertexBufferPtr->Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
+			renderData.VertexBufferPtr->EntityID = 0;
 			renderData.VertexBufferPtr++;
 		}
 
