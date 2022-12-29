@@ -1626,4 +1626,8 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer3D.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\GalaxyDraw\Shaders\cube.vert" />
+    <None Include="Source\GalaxyDraw\Shaders\cube.frag" />
+  </ItemGroup>
 </Project>
