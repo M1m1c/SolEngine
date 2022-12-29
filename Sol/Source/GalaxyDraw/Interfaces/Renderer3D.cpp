@@ -32,7 +32,7 @@ namespace GalaxyDraw
 
 	struct Renderer3DData
 	{
-		static const uint32_t MaxMeshes = 20000;
+		static const uint32_t MaxMeshes = 2000;
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
 		KeyedVector<std::string, MeshRenderData> MeshDataCollection;
@@ -176,6 +176,7 @@ namespace GalaxyDraw
 		meshData.VertexArray->AddVertexBuffer(meshData.VertexBuffer);
 
 		meshData.VertexBufferBase = new Vertex[maxVerts];
+		//TODO so this might actually be a problem the gpu might need multiple index buffers even if the idicies are the same
 		std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(mesh.Indices.data(), mesh.Indices.size());
 		meshData.VertexArray->SetIndexBuffer(indexBuffer);
 
