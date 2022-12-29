@@ -48,25 +48,25 @@ namespace GalaxyDraw
 		std::shared_ptr<UniformBuffer> CameraUniformBuffer;
 	};
 
-	static Renderer3DData s_Data;
+	static Renderer3DData s_3DData;
 
 	void GalaxyDraw::Renderer3D::Init()
 	{
 		SOL_PROFILE_FUNCTION();
 
-		s_Data.MissingTexture = Texture2D::Create(1, 1);
+		s_3DData.MissingTexture = Texture2D::Create(1, 1);
 		uint32_t missingTextureData = 0xff00ff;
-		s_Data.MissingTexture->SetData(&missingTextureData, sizeof(uint32_t));
+		s_3DData.MissingTexture->SetData(&missingTextureData, sizeof(uint32_t));
 
-		s_Data.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
+		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 	}
 
 	void GalaxyDraw::Renderer3D::Shutdown()
 	{
 		SOL_PROFILE_FUNCTION();
-		for (size_t i = 0; i < s_Data.MeshDataCollection.size(); i++)
+		for (size_t i = 0; i < s_3DData.MeshDataCollection.size(); i++)
 		{
-			delete[] s_Data.MeshDataCollection[i].VertexBufferBase;
+			delete[] s_3DData.MeshDataCollection[i].VertexBufferBase;
 		}
 		
 	}
@@ -75,8 +75,8 @@ namespace GalaxyDraw
 	{
 		SOL_PROFILE_FUNCTION();
 
-		s_Data.CameraBuffer.ViewProjection = projection * glm::inverse(transform);
-		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer3DData::CameraData));
+		s_3DData.CameraBuffer.ViewProjection = projection * glm::inverse(transform);
+		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
 
 		StartBatch();
 	}
@@ -85,8 +85,8 @@ namespace GalaxyDraw
 	{
 		SOL_PROFILE_FUNCTION();
 
-		s_Data.CameraBuffer.ViewProjection = camera.GetViewProjectionMatrix();
-		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer3DData::CameraData));
+		s_3DData.CameraBuffer.ViewProjection = camera.GetViewProjectionMatrix();
+		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
 
 		StartBatch();
 	}
@@ -102,33 +102,33 @@ namespace GalaxyDraw
 	//we should probaably create a new container type where we can access via keys and iterate over it using indices
 	void Renderer3D::StartBatch()
 	{
-		for (size_t i = 0; i < s_Data.MeshDataCollection.size(); i++)
+		for (size_t i = 0; i < s_3DData.MeshDataCollection.size(); i++)
 		{
-			auto& meshData = s_Data.MeshDataCollection[i];
+			auto& meshData = s_3DData.MeshDataCollection[i];
 
 			meshData.IndexCount = 0;
 			meshData.VertexBufferPtr = meshData.VertexBufferBase;
-			//s_Data.TextureSlotIndex = 1;
+			//s_3DData.TextureSlotIndex = 1;
 		}
 	}
 
 	void GalaxyDraw::Renderer3D::Flush()
 	{
-		for (size_t i = 0; i < s_Data.MeshDataCollection.size(); i++)
+		for (size_t i = 0; i < s_3DData.MeshDataCollection.size(); i++)
 		{
-			auto& meshData = s_Data.MeshDataCollection[i];
+			auto& meshData = s_3DData.MeshDataCollection[i];
 			if (meshData.IndexCount)
 			{
 				uint32_t dataSize = (uint32_t)((uint8_t*)meshData.VertexBufferPtr - (uint8_t*)meshData.VertexBufferBase);
 				meshData.VertexBuffer->SetData(meshData.VertexBufferBase, dataSize);
 
 				//// Bind textures
-				//for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
-				//	s_Data.TextureSlots[i]->Bind(i);
+				//for (uint32_t i = 0; i < s_3DData.TextureSlotIndex; i++)
+				//	s_3DData.TextureSlots[i]->Bind(i);
 
 				meshData.Shader->Bind();
 				RenderCommand::DrawIndexed(meshData.VertexArray, meshData.IndexCount);
-				s_Data.Stats.DrawCalls++;
+				s_3DData.Stats.DrawCalls++;
 			}
 		}
 	}
@@ -156,8 +156,8 @@ namespace GalaxyDraw
 		SOL_PROFILE_FUNCTION();
 		auto name = mesh.Name + modelName;
 
-		uint32_t maxVerts = s_Data.MaxMeshes * mesh.Vertices.size();
-		uint32_t maxIndices = s_Data.MaxMeshes * mesh.Indices.size();
+		uint32_t maxVerts = s_3DData.MaxMeshes * mesh.Vertices.size();
+		uint32_t maxIndices = s_3DData.MaxMeshes * mesh.Indices.size();
 
 		MeshRenderData meshData;
 		meshData.MaxIndicies = maxIndices;
@@ -184,7 +184,7 @@ namespace GalaxyDraw
 		//TODO make new default shader for use with 3d meshes, base it of of quad shader
 		meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
 
-		s_Data.MeshDataCollection.push_back(name, meshData);
+		s_3DData.MeshDataCollection.push_back(name, meshData);
 	}
 
 	void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform)
@@ -204,7 +204,7 @@ namespace GalaxyDraw
 
 		//TODO make sure that this gives us the correct buffers
 		auto name = mesh.Name + modelName;
-		auto& renderData = s_Data.MeshDataCollection[name];
+		auto& renderData = s_3DData.MeshDataCollection[name];
 
 		uint32_t vertexCount = mesh.Vertices.size();
 		
@@ -224,17 +224,18 @@ namespace GalaxyDraw
 
 		renderData.IndexCount += mesh.Indices.size();
 
-		s_Data.Stats.MeshCount++;
+		//Mesh count needs to be reset
+		//s_3DData.Stats.MeshCount++;
 	}
 
 	void Renderer3D::ResetStats()
 	{
-		memset(&s_Data.Stats, 0, sizeof(Statistics));
+		memset(&s_3DData.Stats, 0, sizeof(Statistics));
 	}
 
 	Renderer3D::Statistics Renderer3D::GetStats()
 	{
-		return s_Data.Stats;
+		return s_3DData.Stats;
 	}
 
 }
