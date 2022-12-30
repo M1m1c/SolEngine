@@ -1,6 +1,7 @@
 #include "solpch.h"
 #include "Renderer3D.h"
 
+#include "Buffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
 #include "UniformBuffer.h"
@@ -13,6 +14,12 @@
 namespace GalaxyDraw 
 {
 
+	struct InstanceData
+	{
+		glm::vec3 Position;
+		glm::vec4 Color;
+	};
+
 	//TODO make sure that only one of these exist per unique mesh, if more meshes of the same are loaded add their data to the buffers
 	// might want to store a map of string to id, pass in the name of the mesh file and get the mes render data name.
 	struct MeshRenderData 
@@ -21,7 +28,11 @@ namespace GalaxyDraw
 		std::shared_ptr<VertexArray> m_VertexArray;
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
 		std::shared_ptr<Shader> Shader;
+
+		//KeyedVector<uint32_t, InstanceData> Instances;
+		std::vector<InstanceData> Instances;
 
 		uint32_t IndexCount = 0;
 		uint32_t IndexOffset = 0;
@@ -157,6 +168,16 @@ namespace GalaxyDraw
 		SOL_PROFILE_FUNCTION();
 		auto name = mesh.Name + modelName;
 
+		//TODO check if the mesh already has a mesh render data, then add an instance to it and exit.
+		
+
+		if (s_3DData.MeshDataCollections.Exists(name)) 
+		{
+			auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
+			//meshRenderData.Instances.push_back(0,InstanceData())
+			return;
+		}
+
 		uint32_t maxVerts = s_3DData.MaxMeshes * mesh.Vertices.size();
 		uint32_t maxIndices = s_3DData.MaxMeshes * mesh.Indices.size();
 
@@ -181,10 +202,22 @@ namespace GalaxyDraw
 		meshData.m_IndexBuffer = IndexBuffer::Create(mesh.Indices.data(), mesh.Indices.size());
 		meshData.m_VertexArray->SetIndexBuffer(meshData.m_IndexBuffer);
 
+
 		//TODO should use missing texture to color 3d mesh
 		//TODO I think the reason nothing shows up in the view port is becasuse we don't set the model unifrom in teh default shader
 		//TODO make new default shader for use with 3d meshes, base it of of quad shader
 		meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
+
+
+		//std::vector<VertexAttributeSpecs> vertAtribSpecs =
+		//{
+		//	VertexAttributeSpecs(3,offsetof(InstanceData, Position)),
+		//	VertexAttributeSpecs(4,offsetof(InstanceData, Color)),
+		//};
+
+		////TODO make sure to add instance before we do this, also make sure to check if this needs to be redone
+		//auto instanceStride = sizeof(InstanceData);
+		//meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * instanceStride, instanceStride, vertAtribSpecs);
 
 		s_3DData.MeshDataCollections.push_back(name, meshData);
 	}
@@ -212,6 +245,8 @@ namespace GalaxyDraw
 		
 		if (renderData.IndexCount >= renderData.MaxIndicies)
 			NextBatch();
+
+		//renderData.m_InstanceBuffer->SetData(renderData.Instances.data(), renderData.Instances.size() * sizeof(InstanceData));
 
 		for (size_t i = 0; i < vertexCount; i++)
 		{
