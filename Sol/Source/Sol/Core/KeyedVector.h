@@ -1,6 +1,7 @@
 #include <map>
 #include <vector>
 
+//TODO add data() function
 template <typename Key, typename T>
 class KeyedVector {
 public:
@@ -12,8 +13,8 @@ public:
     KeyedVector& operator=(KeyedVector&& other) = default;
 
     // Element access
-    T& operator[](const Key& key) {
-        // Check if the key is already in the map
+    T& Get(const Key& key)
+    {
         auto it = m_KeyToIndex.find(key);
         if (it != m_KeyToIndex.end()) {
             // If the key is already in the map, return the element at the corresponding index
@@ -25,7 +26,7 @@ public:
         }
     }
 
-    const T& operator[](const Key& key) const {
+    const T& Get(const Key& key) const {
         // Const version of the above operator
         auto it = m_KeyToIndex.find(key);
         if (it != m_KeyToIndex.end()) {
@@ -44,6 +45,20 @@ public:
     const T& operator[](size_t index) const {
         // Const version of the above operator
         return m_Vector[index];
+    }
+
+
+    bool Exists(const Key& key)
+    {
+        auto it = m_KeyToIndex.find(key);
+        if (it != m_KeyToIndex.end()) 
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
     }
 
     // Iterators

@@ -22,8 +22,8 @@ namespace Sol
 		m_ActiveScene = std::make_unique<Scene>();
 
 		auto square = m_ActiveScene->CreateEntity();
-		//square.AddComponent<SpriteRendererComp>(glm::vec4{ 1.f,0.f,0.f,1.f });
-		//TODO figure out how path should be formatted for asimp to load the model
+		square.AddComponent<SpriteRendererComp>(glm::vec4{ 1.f,1.f,0.f,1.f });
+		//TODO There seems to be some origin and offset issues when loading a model containing seperate meshes
 		square.AddComponent<ModelComp>("assets/models/cube.fbx");
 		m_TempEntity = square;
 

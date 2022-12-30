@@ -176,6 +176,7 @@
     <ClInclude Include="Source\GalaxyDraw\ModelOld.h" />
     <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_InstanceBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.h" />
@@ -657,6 +658,7 @@
     <ClCompile Include="Source\GalaxyDraw\ModelOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_InstanceBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp" />

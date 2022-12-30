@@ -77,6 +77,21 @@ namespace GalaxyDraw
 		}
 	};
 
+
+	struct VertexAttributeSpecs
+	{
+			uint8_t TypeSize;
+			//GLenum type,
+			//GLboolean normalized,
+			//GLsizei stride,
+			size_t PointerOffset;
+
+			VertexAttributeSpecs(){}
+			VertexAttributeSpecs(uint8_t typeSize,size_t pointerOffset) :
+				TypeSize(typeSize), PointerOffset(pointerOffset) {}
+	};
+
+
 	class BufferLayout
 	{
 	public:
@@ -141,6 +156,21 @@ namespace GalaxyDraw
 
 		static std::shared_ptr <IndexBuffer> Create(uint32_t* indices, uint32_t count);
 		static std::shared_ptr <IndexBuffer> Create(const uint32_t* indices, uint32_t count);
+	};
+
+	class InstanceBuffer
+	{
+	public:
+		virtual ~InstanceBuffer() {};
+
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
+
+		virtual void SetData(const void* data, uint32_t size) = 0;
+		//virtual void SetVertexAttributes(uint32_t numAttriutes) = 0;
+
+		static std::shared_ptr <InstanceBuffer> Create(uint32_t size, uint32_t stride, std::vector<VertexAttributeSpecs> specs);
+		//static std::shared_ptr <InstanceBuffer> Create(const uint32_t* indices, uint32_t count);
 	};
 }
 

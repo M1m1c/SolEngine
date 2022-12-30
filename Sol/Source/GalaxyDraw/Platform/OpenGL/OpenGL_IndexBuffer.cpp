@@ -7,6 +7,10 @@
 namespace GalaxyDraw
 {
 
+	//TODO if we want to be able to handle a larger amount of more complex meshes, then we will need to generate more than 1 buffers,
+	// meaning we will need to have some way of checking if a mesh is complex and numerous enought to require
+	// the genration of more buffers, and handeling those multiple buffers.
+
 	// Constructor that generates a Elements Buffer Object and links it to indices
 	OpenGL_IndexBuffer::OpenGL_IndexBuffer(uint32_t* indicesArray, unsigned int elementCount) : count(elementCount)
 	{
@@ -18,9 +22,7 @@ namespace GalaxyDraw
 	// Constructor that generates a Elements Buffer Object and links it to indices
 	OpenGL_IndexBuffer::OpenGL_IndexBuffer(const uint32_t* indicesArray, unsigned int elementCount) : count(elementCount)
 	{
-		//TODO for some reason creating more than 1 buffer object names here,
-		// prevents the program from crashing when generating a 3D meshes render data, why could that be?
-		GLCall(glGenBuffers(2, &ID));
+		GLCall(glGenBuffers(1, &ID));
 		GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID));
 		GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indicesArray, GL_STATIC_DRAW));
 	}
