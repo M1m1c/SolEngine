@@ -10,6 +10,9 @@ namespace GalaxyDraw
 	{
 		std::shared_ptr<Model> retVal;
 
+		//TODO Actually we should check if this model is already loaded in another component when we load the file,
+		// if it ise we should simply return a pointer to that model so we don't have to process the same model again
+
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:
