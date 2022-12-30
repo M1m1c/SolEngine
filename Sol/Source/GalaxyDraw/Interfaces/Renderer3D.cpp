@@ -13,13 +13,15 @@
 namespace GalaxyDraw 
 {
 
+
 	//TODO make sure that only one of these exist per unique mesh, if more meshes of the same are loaded add their data to the buffers
 	// might want to store a map of string to id, pass in the name of the mesh file and get the mes render data name.
 	struct MeshRenderData 
 	{
 		std::string Name;
-		std::shared_ptr<VertexArray> VertexArray;
-		std::shared_ptr<VertexBuffer> VertexBuffer;
+		std::shared_ptr<VertexArray> m_VertexArray;
+		std::shared_ptr<VertexBuffer> m_VertexBuffer;
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<Shader> Shader;
 
 		uint32_t IndexCount = 0;
@@ -120,14 +122,14 @@ namespace GalaxyDraw
 			if (meshData.IndexCount)
 			{
 				uint32_t dataSize = (uint32_t)((uint8_t*)meshData.VertexBufferPtr - (uint8_t*)meshData.VertexBufferBase);
-				meshData.VertexBuffer->SetData(meshData.VertexBufferBase, dataSize);
+				meshData.m_VertexBuffer->SetData(meshData.VertexBufferBase, dataSize);
 
 				//// Bind textures
 				//for (uint32_t i = 0; i < s_3DData.TextureSlotIndex; i++)
 				//	s_3DData.TextureSlots[i]->Bind(i);
 
 				meshData.Shader->Bind();
-				RenderCommand::DrawIndexed(meshData.VertexArray, meshData.IndexCount);
+				RenderCommand::DrawIndexed(meshData.m_VertexArray, meshData.IndexCount);
 				s_3DData.Stats.DrawCalls++;
 			}
 		}
@@ -163,22 +165,22 @@ namespace GalaxyDraw
 		meshData.MaxIndicies = maxIndices;
 		meshData.MaxVerts = maxVerts;
 		meshData.IndexOffset = mesh.Indices.size();
-		meshData.VertexArray = VertexArray::Create();
-		meshData.VertexBuffer= VertexBuffer::Create(maxVerts * sizeof(Vertex));
+		meshData.m_VertexArray = VertexArray::Create();
+		meshData.m_VertexBuffer= VertexBuffer::Create(mesh.Vertices.size() * sizeof(Vertex));
 
-		meshData.VertexBuffer->SetLayout({
+		meshData.m_VertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position"     },
 			{ ShaderDataType::Float3, "a_Normal"     },
 			{ ShaderDataType::Float2, "a_TexCoord"     },
 			{ ShaderDataType::Float4, "a_Color"     },
 			{ ShaderDataType::Int, "a_EntityID"     }
 			});
-		meshData.VertexArray->AddVertexBuffer(meshData.VertexBuffer);
+		meshData.m_VertexArray->AddVertexBuffer(meshData.m_VertexBuffer);
 
 		meshData.VertexBufferBase = new Vertex[maxVerts];
 		//TODO so this might actually be a problem the gpu might need multiple index buffers even if the idicies are the same
-		std::shared_ptr<IndexBuffer> indexBuffer = IndexBuffer::Create(mesh.Indices.data(), mesh.Indices.size());
-		meshData.VertexArray->SetIndexBuffer(indexBuffer);
+		meshData.m_IndexBuffer = IndexBuffer::Create(mesh.Indices.data(), mesh.Indices.size());
+		meshData.m_VertexArray->SetIndexBuffer(meshData.m_IndexBuffer);
 
 		//TODO should use missing texture to color 3d mesh
 		//TODO I think the reason nothing shows up in the view port is becasuse we don't set the model unifrom in teh default shader
