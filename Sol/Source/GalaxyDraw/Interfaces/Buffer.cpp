@@ -65,7 +65,7 @@ namespace GalaxyDraw
 	}
 
 
-	std::shared_ptr<InstanceBuffer> InstanceBuffer::Create(uint32_t size)
+	std::shared_ptr<InstanceBuffer> InstanceBuffer::Create(uint32_t size, uint32_t stride, std::vector<VertexAttributeSpecs> specs)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -73,7 +73,7 @@ namespace GalaxyDraw
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_InstanceBuffer>(size);
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_InstanceBuffer>(size,stride,specs);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
