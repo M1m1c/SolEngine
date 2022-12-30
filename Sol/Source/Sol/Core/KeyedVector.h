@@ -46,6 +46,20 @@ public:
         return m_Vector[index];
     }
 
+
+    bool Exists(const Key& key)
+    {
+        auto it = m_KeyToIndex.find(key);
+        if (it != m_KeyToIndex.end()) 
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
     // Iterators
     using iterator = typename std::vector<T>::iterator;
     using const_iterator = typename std::vector<T>::const_iterator;
