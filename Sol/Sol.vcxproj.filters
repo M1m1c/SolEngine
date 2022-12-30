@@ -1493,6 +1493,7 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Mesh.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer3D.h" />
     <ClInclude Include="Source\Sol\Core\KeyedVector.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_InstanceBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1625,6 +1626,7 @@
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer3D.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_InstanceBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\GalaxyDraw\Shaders\cube.vert" />

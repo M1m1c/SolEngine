@@ -142,5 +142,19 @@ namespace GalaxyDraw
 		static std::shared_ptr <IndexBuffer> Create(uint32_t* indices, uint32_t count);
 		static std::shared_ptr <IndexBuffer> Create(const uint32_t* indices, uint32_t count);
 	};
+
+	class InstanceBuffer
+	{
+	public:
+		virtual ~InstanceBuffer() {};
+
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
+
+		virtual void SetData(const void* data, uint32_t size) = 0;
+
+		static std::shared_ptr <InstanceBuffer> Create(uint32_t size);
+		//static std::shared_ptr <InstanceBuffer> Create(const uint32_t* indices, uint32_t count);
+	};
 }
 

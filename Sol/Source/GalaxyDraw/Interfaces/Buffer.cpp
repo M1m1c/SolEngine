@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "GalaxyDraw/Platform/OpenGL/OpenGL_VertexBuffer.h"
 #include "GalaxyDraw/Platform/OpenGL/OpenGL_IndexBuffer.h"
+#include "GalaxyDraw/Platform/OpenGL/OpenGL_InstanceBuffer.h"
 #include <Sol/Core/Core.h>
 
 namespace GalaxyDraw
@@ -58,6 +59,21 @@ namespace GalaxyDraw
 			return nullptr;
 
 		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_IndexBuffer>(indices, count);
+		}
+		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
+		return nullptr;
+	}
+
+
+	std::shared_ptr<InstanceBuffer> InstanceBuffer::Create(uint32_t size)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::None:
+			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
+			return nullptr;
+
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_InstanceBuffer>(size);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;
