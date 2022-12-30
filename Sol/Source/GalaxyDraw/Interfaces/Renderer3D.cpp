@@ -13,7 +13,6 @@
 namespace GalaxyDraw 
 {
 
-
 	//TODO make sure that only one of these exist per unique mesh, if more meshes of the same are loaded add their data to the buffers
 	// might want to store a map of string to id, pass in the name of the mesh file and get the mes render data name.
 	struct MeshRenderData 
@@ -37,7 +36,7 @@ namespace GalaxyDraw
 		static const uint32_t MaxMeshes = 2000;
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
-		KeyedVector<std::string, MeshRenderData> MeshDataCollection;
+		KeyedVector<std::string, MeshRenderData> MeshDataCollections;
 		std::shared_ptr<Texture2D> MissingTexture;
 
 		Renderer3D::Statistics Stats;
@@ -66,9 +65,9 @@ namespace GalaxyDraw
 	void GalaxyDraw::Renderer3D::Shutdown()
 	{
 		SOL_PROFILE_FUNCTION();
-		for (size_t i = 0; i < s_3DData.MeshDataCollection.size(); i++)
+		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
 		{
-			delete[] s_3DData.MeshDataCollection[i].VertexBufferBase;
+			delete[] s_3DData.MeshDataCollections[i].VertexBufferBase;
 		}
 		
 	}
@@ -104,9 +103,9 @@ namespace GalaxyDraw
 	//we should probaably create a new container type where we can access via keys and iterate over it using indices
 	void Renderer3D::StartBatch()
 	{
-		for (size_t i = 0; i < s_3DData.MeshDataCollection.size(); i++)
+		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
 		{
-			auto& meshData = s_3DData.MeshDataCollection[i];
+			auto& meshData = s_3DData.MeshDataCollections[i];
 
 			meshData.IndexCount = 0;
 			meshData.VertexBufferPtr = meshData.VertexBufferBase;
@@ -116,9 +115,9 @@ namespace GalaxyDraw
 
 	void GalaxyDraw::Renderer3D::Flush()
 	{
-		for (size_t i = 0; i < s_3DData.MeshDataCollection.size(); i++)
+		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
 		{
-			auto& meshData = s_3DData.MeshDataCollection[i];
+			auto& meshData = s_3DData.MeshDataCollections[i];
 			if (meshData.IndexCount)
 			{
 				uint32_t dataSize = (uint32_t)((uint8_t*)meshData.VertexBufferPtr - (uint8_t*)meshData.VertexBufferBase);
@@ -187,7 +186,7 @@ namespace GalaxyDraw
 		//TODO make new default shader for use with 3d meshes, base it of of quad shader
 		meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
 
-		s_3DData.MeshDataCollection.push_back(name, meshData);
+		s_3DData.MeshDataCollections.push_back(name, meshData);
 	}
 
 	void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform)
@@ -207,7 +206,7 @@ namespace GalaxyDraw
 
 		//TODO make sure that this gives us the correct buffers
 		auto name = mesh.Name + modelName;
-		auto& renderData = s_3DData.MeshDataCollection[name];
+		auto& renderData = s_3DData.MeshDataCollections.Get(name);
 
 		uint32_t vertexCount = mesh.Vertices.size();
 		
