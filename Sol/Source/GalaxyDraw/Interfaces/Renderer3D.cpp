@@ -196,6 +196,10 @@ namespace GalaxyDraw
 			{ ShaderDataType::Float4, "a_Color"     },
 			{ ShaderDataType::Int, "a_EntityID"     }
 			});
+
+		//TODO with InstanceRendering we should only need one vertex buffer, 
+		// the InstanceBuffer should be what we have a collection of. 
+		// Make sure we update vertex array to be able to hold and interpret multiple instance buffers and only one vertex buffer.
 		meshData.m_VertexArray->AddVertexBuffer(meshData.m_VertexBuffer);
 
 		meshData.VertexBufferBase = new Vertex[maxVerts];
