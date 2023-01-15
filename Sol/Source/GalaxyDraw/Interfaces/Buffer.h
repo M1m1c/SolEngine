@@ -77,7 +77,7 @@ namespace GalaxyDraw
 		}
 	};
 
-
+	//This is used for determining the paramters sent to glVertexAttribPointer() in the instance buffer
 	struct VertexAttributeSpecs
 	{
 			uint8_t TypeSize;
