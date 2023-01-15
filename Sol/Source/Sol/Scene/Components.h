@@ -89,9 +89,9 @@ namespace Sol
 		ModelComp() = default;
 		ModelComp(const ModelComp&) = default;
 		//Sets up model based on providde file path
-		ModelComp(const std::string& modelPath) : ModelPath(modelPath)
+		ModelComp(const std::string& modelPath, uint32_t entityID) : ModelPath(modelPath)
 		{
-			Model = GalaxyDraw::Model::Create(modelPath);
+			Model = GalaxyDraw::Model::Create(modelPath,entityID);
 		}
 
 		//TODO when we create a model, it should be using the path provided and setup all values in m_Model,
