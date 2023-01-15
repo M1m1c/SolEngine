@@ -107,4 +107,11 @@ namespace GalaxyDraw
 		m_IndexBuffer = ebo;
 	}
 
+	//TODO maybe this should be more like the vertex buffer
+	void OpenGL_VertexArray::SetInstanceBuffer(const std::shared_ptr<InstanceBuffer>& instanceBuffer) 
+	{
+		glBindVertexArray(ID);
+		instanceBuffer->Bind();
+		m_InstanceBuffer = instanceBuffer;
+	}
 }
