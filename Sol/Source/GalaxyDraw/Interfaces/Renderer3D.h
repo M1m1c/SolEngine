@@ -20,8 +20,8 @@ namespace GalaxyDraw {
 		static void EndScene();
 
 
-		static void LoadModel(std::shared_ptr<Model> model);
-		static void LoadMesh(const Mesh& mesh, const std::string& modelName);
+		static void LoadModel(std::shared_ptr<Model> model, uint32_t entityID);
+		static void LoadMesh(const Mesh& mesh, const std::string& modelName, uint32_t entityID);
 
 		static void DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform);
 		static void DrawMesh(const std::string& modelName,const Mesh& mesh, const glm::mat4& transform);

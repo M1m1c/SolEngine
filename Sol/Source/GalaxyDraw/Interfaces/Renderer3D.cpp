@@ -31,8 +31,8 @@ namespace GalaxyDraw
 		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
 		std::shared_ptr<Shader> Shader;
 
-		//KeyedVector<uint32_t, InstanceData> Instances;
-		std::vector<InstanceData> Instances;
+		KeyedVector<uint32_t, InstanceData> Instances;
+		//std::vector<InstanceData> Instances;
 
 		uint32_t IndexCount = 0;
 		uint32_t IndexOffset = 0;
@@ -139,7 +139,8 @@ namespace GalaxyDraw
 				//	s_3DData.TextureSlots[i]->Bind(i);
 
 				meshData.Shader->Bind();
-				RenderCommand::DrawIndexed(meshData.m_VertexArray, meshData.IndexCount);
+				RenderCommand::DrawInstanced(meshData.m_VertexArray);
+				//RenderCommand::DrawIndexed(meshData.m_VertexArray, meshData.IndexCount);
 				s_3DData.Stats.DrawCalls++;
 			}
 		}
@@ -152,29 +153,29 @@ namespace GalaxyDraw
 	}
 
 	//When we create a model on a modelComp using Model::Create() this also gets called.
-	void Renderer3D::LoadModel(std::shared_ptr<Model> model)
+	void Renderer3D::LoadModel(std::shared_ptr<Model> model, uint32_t entityID)
 	{
 		SOL_PROFILE_FUNCTION();
 		auto& meshes = model->GetMeshes();
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
-			LoadMesh(meshes[i],model->GetName());
+			LoadMesh(meshes[i],model->GetName(),entityID);
 		}
 	}
 
-	void Renderer3D::LoadMesh(const Mesh& mesh,const std::string& modelName)
+	void Renderer3D::LoadMesh(const Mesh& mesh,const std::string& modelName, uint32_t entityID)
 	{
 		SOL_PROFILE_FUNCTION();
 		auto name = mesh.Name + modelName;
 
 		//TODO check if the mesh already has a mesh render data, then add an instance to it and exit.
-		
+		//TODO increase instances with each model loaded
 
 		if (s_3DData.MeshDataCollections.Exists(name)) 
 		{
 			auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
-			//meshRenderData.Instances.push_back(0,InstanceData())
+			meshRenderData.Instances.push_back(entityID, InstanceData());
 			return;
 		}
 
@@ -209,15 +210,19 @@ namespace GalaxyDraw
 		meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
 
 
-		//std::vector<VertexAttributeSpecs> vertAtribSpecs =
-		//{
-		//	VertexAttributeSpecs(3,offsetof(InstanceData, Position)),
-		//	VertexAttributeSpecs(4,offsetof(InstanceData, Color)),
-		//};
+		std::vector<VertexAttributeSpecs> vertAtribSpecs =
+		{
+			VertexAttributeSpecs(3,offsetof(InstanceData, Position)),
+			VertexAttributeSpecs(4,offsetof(InstanceData, Color)),
+		};
 
-		////TODO make sure to add instance before we do this, also make sure to check if this needs to be redone
-		//auto instanceStride = sizeof(InstanceData);
-		//meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * instanceStride, instanceStride, vertAtribSpecs);
+		meshData.Instances.push_back(entityID, InstanceData());
+
+		auto instanceStride = sizeof(InstanceData);
+		//TODO For some reason creating the instance buffer causes the cube to not draw, look into why.
+		//TODO Also make sure that the instance data is able to be modifed and be reflected in the rendering and that it is actually used.
+		/*meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * instanceStride, instanceStride, vertAtribSpecs);
+		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);*/
 
 		s_3DData.MeshDataCollections.push_back(name, meshData);
 	}
@@ -232,7 +237,8 @@ namespace GalaxyDraw
 			DrawMesh(model->GetName(), meshes[i], transform);
 		}
 	}
-
+	//This needs to be changed to reflect instanced rendering instead of teh old batch rendering,
+	//Meaning instead of setting color and stuff here we should be setting the instancedBuffer values
 	void Renderer3D::DrawMesh(const std::string& modelName,const Mesh& mesh, const glm::mat4& transform)
 	{
 		SOL_PROFILE_FUNCTION();
