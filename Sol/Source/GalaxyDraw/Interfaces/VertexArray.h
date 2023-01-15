@@ -13,6 +13,7 @@ namespace GalaxyDraw {
 
 		virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo)  = 0;
 		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ebo)  = 0;
+		virtual void SetInstanceBuffer(const std::shared_ptr<InstanceBuffer>& instanceBuffer)  = 0;
 
 		virtual const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const = 0;
 		virtual const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const = 0;
