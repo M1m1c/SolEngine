@@ -32,6 +32,9 @@ namespace GalaxyDraw
 		std::shared_ptr<Shader> Shader;
 
 		//TODO maybe eash instance needs its own vertex array where we bind the transform values
+		// ´Take a look at following links
+		//https://learnopengl.com/Advanced-OpenGL/Instancing
+		//https://learnopengl.com/code_viewer_gh.php?code=src/4.advanced_opengl/10.3.asteroids_instanced/asteroids_instanced.cpp
 		KeyedVector<uint32_t, InstanceData> Instances;
 		//std::vector<InstanceData> Instances;
 
