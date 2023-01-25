@@ -4,12 +4,12 @@
 namespace GalaxyDraw 
 {
 
-	OpenGL_InstanceBuffer::OpenGL_InstanceBuffer(GLsizeiptr size, uint32_t stride, std::vector<VertexAttributeSpecs> specs)
+	OpenGL_InstanceBuffer::OpenGL_InstanceBuffer(GLsizeiptr size, uint32_t stride, std::vector<VertexAttributeSpecs> specs, uint32_t layoutOffset)
 	{
 		GLCall(glGenBuffers(1, &ID));
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, ID));
 		GLCall(glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_STATIC_DRAW));
-		SetVertexAttributes(stride, specs);
+		SetVertexAttributes(stride, specs,layoutOffset);
 	}
 
 	OpenGL_InstanceBuffer::~OpenGL_InstanceBuffer()
@@ -30,18 +30,21 @@ namespace GalaxyDraw
 	void OpenGL_InstanceBuffer::SetData(const void* data, uint32_t size)
 	{
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, ID));
-		GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, size, data));
+		GLCall(glBufferSubData(GL_ARRAY_BUFFER, size * 10, size, data));
 	}
 
-	void OpenGL_InstanceBuffer::SetVertexAttributes(uint32_t stride, std::vector<VertexAttributeSpecs> specs)
+	void OpenGL_InstanceBuffer::SetVertexAttributes(uint32_t stride, std::vector<VertexAttributeSpecs> specs, uint32_t layoutOffset)
 	{
-		for (size_t i = 0; i < specs.size(); i++)
+		//TODO since this loop starts at 0 it overites the previously set layout locations in the shader,
+		//we need to forawrd how many positions are in the vertex layout and increase both teh start and end index by that
+		for (size_t i = layoutOffset; i < specs.size()+layoutOffset; i++)
 		{
-			auto& spec = specs[i];
+			auto specIndex = i - layoutOffset;
+			auto& spec = specs[specIndex];
 
-			GLCall(glVertexAttribDivisor(i, 1));
 			//TODO in teh future we could try and add the glfloat and glfale parameter types to vertecsAttribureSpecs
 			glVertexAttribPointer(i, spec.TypeSize, GL_FLOAT, GL_FALSE, stride, (void*)spec.PointerOffset);
+			GLCall(glVertexAttribDivisor(i, 1));
 
 			/*void glVertexAttribPointer(
 				GLuint index,

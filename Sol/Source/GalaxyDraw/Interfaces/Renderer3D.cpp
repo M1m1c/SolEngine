@@ -16,8 +16,7 @@ namespace GalaxyDraw
 
 	struct InstanceData
 	{
-		glm::vec3 Position;
-		glm::vec4 Color;
+		glm::vec3 MeshPosition;
 	};
 
 	//TODO make sure that only one of these exist per unique mesh, if more meshes of the same are loaded add their data to the buffers
@@ -216,8 +215,7 @@ namespace GalaxyDraw
 
 		std::vector<VertexAttributeSpecs> vertAtribSpecs =
 		{
-			VertexAttributeSpecs(3,offsetof(InstanceData, Position)),
-			VertexAttributeSpecs(4,offsetof(InstanceData, Color)),
+			VertexAttributeSpecs(3,offsetof(InstanceData, MeshPosition))
 		};
 
 		meshData.Instances.push_back(entityID, InstanceData());
@@ -225,8 +223,13 @@ namespace GalaxyDraw
 		auto instanceStride = sizeof(InstanceData);
 		//TODO For some reason creating the instance buffer causes the cube to not draw, look into why.
 		//TODO Also make sure that the instance data is able to be modifed and be reflected in the rendering and that it is actually used.
-		/*meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * instanceStride, instanceStride, vertAtribSpecs);
-		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);*/
+		meshData.m_InstanceBuffer = InstanceBuffer::Create(
+			s_3DData.MaxMeshes * instanceStride,
+			instanceStride, 
+			vertAtribSpecs,
+			5 //because we have five elements in the shader layout already
+			);
+		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
 
 		s_3DData.MeshDataCollections.push_back(name, meshData);
 	}

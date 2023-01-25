@@ -169,7 +169,7 @@ namespace GalaxyDraw
 		virtual void SetData(const void* data, uint32_t size) = 0;
 		//virtual void SetVertexAttributes(uint32_t numAttriutes) = 0;
 
-		static std::shared_ptr <InstanceBuffer> Create(uint32_t size, uint32_t stride, std::vector<VertexAttributeSpecs> specs);
+		static std::shared_ptr <InstanceBuffer> Create(uint32_t size, uint32_t stride, std::vector<VertexAttributeSpecs> specs, uint32_t layoutOffset);
 		//static std::shared_ptr <InstanceBuffer> Create(const uint32_t* indices, uint32_t count);
 	};
 }
