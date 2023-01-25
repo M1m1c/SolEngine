@@ -31,6 +31,7 @@ namespace GalaxyDraw
 		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
 		std::shared_ptr<Shader> Shader;
 
+		//TODO maybe eash instance needs its own vertex array where we bind the transform values
 		KeyedVector<uint32_t, InstanceData> Instances;
 		//std::vector<InstanceData> Instances;
 
