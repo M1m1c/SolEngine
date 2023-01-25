@@ -44,7 +44,9 @@ namespace Sol
 			for (auto entity : group3D)
 			{
 				auto& [model, transform] = group3D.get< ModelComp, TransformComp>(entity);
-
+				//TODO the problem here is that we render per entity, 
+				// when what we really need to do for instanced rendering is render per mesh,
+				//However this means that the transform needs to be reachable by each mesh instance
 				GD_Renderer3D::DrawModel(model.Model, transform);
 			}
 

@@ -13,7 +13,8 @@
 
 namespace GalaxyDraw 
 {
-
+	//TODO maybe instance data should actually hold refernces to the transforms,
+	// so that when we render a mesh we simply read the reference and forward that info to the draw elements instanced
 	struct InstanceData
 	{
 		glm::vec3 MeshPosition;
