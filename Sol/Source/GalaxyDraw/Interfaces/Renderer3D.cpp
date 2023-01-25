@@ -221,7 +221,7 @@ namespace GalaxyDraw
 		meshData.Instances.push_back(entityID, InstanceData());
 
 		auto instanceStride = sizeof(InstanceData);
-		//TODO For some reason creating the instance buffer causes the cube to not draw, look into why.
+		//TODO make it so we don't manually have to set the layoutOffset
 		//TODO Also make sure that the instance data is able to be modifed and be reflected in the rendering and that it is actually used.
 		meshData.m_InstanceBuffer = InstanceBuffer::Create(
 			s_3DData.MaxMeshes * instanceStride,
