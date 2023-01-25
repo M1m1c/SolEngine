@@ -26,6 +26,8 @@ namespace Sol
 		//TODO There seems to be some origin and offset issues when loading a model containing seperate meshes
 		square.AddComponent<ModelComp>("assets/models/cube.fbx", (uint32_t)square);
 		m_TempEntity = square;
+		auto& squareTransform = m_TempEntity.GetComponent<TransformComp>();
+		squareTransform.Position = glm::vec3(1.f, 1.f, 1.f);
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
 		auto& camTransform = m_CameraEntity.GetComponent<TransformComp>();

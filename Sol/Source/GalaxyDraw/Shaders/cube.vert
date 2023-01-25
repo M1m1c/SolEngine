@@ -29,5 +29,5 @@ void main()
 	Output.TexCoord = a_TexCoord;
 	v_EntityID = a_EntityID;
 
-	gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+	gl_Position = u_ViewProjection * vec4(a_Position + a_MeshPosition, 1.0);
 }
