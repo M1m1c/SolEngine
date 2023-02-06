@@ -20,6 +20,7 @@ namespace GalaxyDraw
 	struct MeshRenderData 
 	{
 		std::string Name;
+		std::shared_ptr<Mesh> m_Mesh;
 		std::shared_ptr<VertexArray> m_VertexArray;
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
@@ -41,6 +42,8 @@ namespace GalaxyDraw
 		uint32_t MaxVerts = 0;
 		Vertex* VertexBufferBase = nullptr;
 		Vertex* VertexBufferPtr = nullptr;
+		InstanceData* InstanceBufferBase = nullptr;
+		InstanceData* InstanceBufferPtr = nullptr;
 	};
 
 	struct Renderer3DData
@@ -121,6 +124,7 @@ namespace GalaxyDraw
 
 			meshData.IndexCount = 0;
 			meshData.VertexBufferPtr = meshData.VertexBufferBase;
+			//meshData.InstanceBufferPtr = meshData.m_InstanceBuffer;
 			//s_3DData.TextureSlotIndex = 1;
 		}
 	}
@@ -165,10 +169,10 @@ namespace GalaxyDraw
 		}
 	}
 
-	void Renderer3D::LoadMesh(const Mesh& mesh,const std::string& modelName, uint32_t entityID)
+	void Renderer3D::LoadMesh(const std::shared_ptr<Mesh>& mesh,const std::string& modelName, uint32_t entityID)
 	{
 		SOL_PROFILE_FUNCTION();
-		auto name = mesh.Name + modelName;
+		auto name = mesh->Name + modelName;
 
 		//TODO check if the mesh already has a mesh render data, then add an instance to it and exit.
 		//TODO increase instances with each model loaded
@@ -183,15 +187,16 @@ namespace GalaxyDraw
 			return;
 		}
 
-		uint32_t maxVerts = s_3DData.MaxMeshes * mesh.Vertices.size();
-		uint32_t maxIndices = s_3DData.MaxMeshes * mesh.Indices.size();
+		uint32_t maxVerts = s_3DData.MaxMeshes * mesh->Vertices.size();
+		uint32_t maxIndices = s_3DData.MaxMeshes * mesh->Indices.size();
 
 		MeshRenderData meshData;
+		meshData.m_Mesh = mesh;
 		meshData.MaxIndicies = maxIndices;
 		meshData.MaxVerts = maxVerts;
-		meshData.IndexOffset = mesh.Indices.size();
+		meshData.IndexOffset = mesh->Indices.size();
 		meshData.m_VertexArray = VertexArray::Create();
-		meshData.m_VertexBuffer= VertexBuffer::Create(mesh.Vertices.size() * sizeof(Vertex));
+		meshData.m_VertexBuffer= VertexBuffer::Create(mesh->Vertices.size() * sizeof(Vertex));
 
 		meshData.m_VertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position"     },
@@ -207,8 +212,9 @@ namespace GalaxyDraw
 		meshData.m_VertexArray->AddVertexBuffer(meshData.m_VertexBuffer);
 
 		meshData.VertexBufferBase = new Vertex[maxVerts];
+		//meshData.InstanceBufferBase = new InstanceData[maxVerts];
 		//TODO so this might actually be a problem the gpu might need multiple index buffers even if the idicies are the same
-		meshData.m_IndexBuffer = IndexBuffer::Create(mesh.Indices.data(), mesh.Indices.size());
+		meshData.m_IndexBuffer = IndexBuffer::Create(mesh->Indices.data(), mesh->Indices.size());
 		meshData.m_VertexArray->SetIndexBuffer(meshData.m_IndexBuffer);
 
 
@@ -241,6 +247,42 @@ namespace GalaxyDraw
 		s_3DData.MeshDataCollections.push_back(name, meshData);
 	}
 
+	void Renderer3D::DrawInstances()
+	{
+		SOL_PROFILE_FUNCTION();
+		for (auto& renderData :s_3DData.MeshDataCollections)
+		{
+			SOL_PROFILE_FUNCTION();
+
+			//TODO make sure that this gives us the correct buffers
+			
+			auto& mesh = renderData.m_Mesh;
+			uint32_t vertexCount = mesh->Vertices.size();
+
+			if (renderData.IndexCount >= renderData.MaxIndicies)
+				NextBatch();
+
+			//renderData.m_InstanceBuffer->SetData(renderData.Instances.data(), renderData.Instances.size() * sizeof(InstanceData));
+
+			for (size_t i = 0; i < vertexCount; i++)
+			{
+				auto& vert = mesh->Vertices[i];
+				renderData.VertexBufferPtr->Position = glm::vec4(vert.Position, 0.f);
+				renderData.VertexBufferPtr->Normal = vert.Normal;
+				renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
+				renderData.VertexBufferPtr->Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
+				renderData.VertexBufferPtr->EntityID = 0;
+				renderData.VertexBufferPtr++;
+			}
+
+			renderData.IndexCount += mesh->Indices.size();
+
+			//Mesh count needs to be reset
+			//s_3DData.Stats.MeshCount++;
+		}
+	
+	}
+
 	void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform)
 	{
 		SOL_PROFILE_FUNCTION();
@@ -253,15 +295,15 @@ namespace GalaxyDraw
 	}
 	//This needs to be changed to reflect instanced rendering instead of teh old batch rendering,
 	//Meaning instead of setting color and stuff here we should be setting the instancedBuffer values
-	void Renderer3D::DrawMesh(const std::string& modelName,const Mesh& mesh, const glm::mat4& transform)
+	void Renderer3D::DrawMesh(const std::string& modelName,const std::shared_ptr<Mesh>& mesh, const glm::mat4& transform)
 	{
 		SOL_PROFILE_FUNCTION();
 
 		//TODO make sure that this gives us the correct buffers
-		auto name = mesh.Name + modelName;
+		auto name = mesh->Name + modelName;
 		auto& renderData = s_3DData.MeshDataCollections.Get(name);
 
-		uint32_t vertexCount = mesh.Vertices.size();
+		uint32_t vertexCount = mesh->Vertices.size();
 		
 		if (renderData.IndexCount >= renderData.MaxIndicies)
 			NextBatch();
@@ -270,7 +312,7 @@ namespace GalaxyDraw
 
 		for (size_t i = 0; i < vertexCount; i++)
 		{
-			auto& vert = mesh.Vertices[i];
+			auto& vert = mesh->Vertices[i];
 			renderData.VertexBufferPtr->Position = transform * glm::vec4(vert.Position,0.f);
 			renderData.VertexBufferPtr->Normal = vert.Normal;
 			renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
@@ -279,7 +321,7 @@ namespace GalaxyDraw
 			renderData.VertexBufferPtr++;
 		}
 
-		renderData.IndexCount += mesh.Indices.size();
+		renderData.IndexCount += mesh->Indices.size();
 
 		//Mesh count needs to be reset
 		//s_3DData.Stats.MeshCount++;

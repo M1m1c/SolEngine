@@ -30,10 +30,12 @@ namespace GalaxyDraw {
 		static void UpdateInstanceData(uint32_t entityID, const InstanceData& instanceData);
 
 		static void LoadModel(std::shared_ptr<Model> model, uint32_t entityID);
-		static void LoadMesh(const Mesh& mesh, const std::string& modelName, uint32_t entityID);
+		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, uint32_t entityID);
 
+		//draws all instances of meshes
+		static void DrawInstances();
 		static void DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform);
-		static void DrawMesh(const std::string& modelName,const Mesh& mesh, const glm::mat4& transform);
+		static void DrawMesh(const std::string& modelName,const std::shared_ptr<Mesh>& mesh, const glm::mat4& transform);
 
 		struct Statistics
 		{
