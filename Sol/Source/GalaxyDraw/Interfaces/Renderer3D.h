@@ -12,6 +12,8 @@ namespace GalaxyDraw {
 	// so that when we render a mesh we simply read the reference and forward that info to the draw elements instanced
 	struct InstanceData
 	{
+		InstanceData(): MeshPosition() {};
+		InstanceData(glm::vec3 position) : MeshPosition(position) {};
 		glm::vec3 MeshPosition;
 	};
 
