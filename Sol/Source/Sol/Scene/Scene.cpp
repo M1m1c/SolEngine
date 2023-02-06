@@ -50,8 +50,8 @@ namespace Sol
 
 				//TODO create a InstanceData based on the transform that we can then use to update all render data,
 				// passing entity id and Instance data into UpdateInstanceData
-
-				//GD_Renderer3D::UpdateInstanceData((uint32_t)entity,)
+				
+				GD_Renderer3D::UpdateInstanceData((uint32_t)entity, GD_::InstanceData(transform.Position));
 				//GD_Renderer3D::DrawModel(model.Model, transform);
 			}
 			GD_Renderer3D::DrawInstances();
