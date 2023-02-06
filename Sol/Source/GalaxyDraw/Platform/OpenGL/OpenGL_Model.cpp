@@ -56,7 +56,7 @@ namespace GalaxyDraw
         }
     }
 
-    Mesh OpenGL_Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+    std::shared_ptr<Mesh> OpenGL_Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
     {
 		std::vector<Vertex> vertices;
 		std::vector<uint32_t> indices;
@@ -116,7 +116,7 @@ namespace GalaxyDraw
 		//	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 		//}
 		
-		return Mesh(mesh->mName.C_Str(), vertices, indices, textures);
+		return  std::make_shared<Mesh>(mesh->mName.C_Str(), vertices, indices, textures);
     }
 
 }
