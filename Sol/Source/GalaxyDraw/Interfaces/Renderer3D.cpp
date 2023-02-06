@@ -180,6 +180,8 @@ namespace GalaxyDraw
 		{
 			auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
 			meshRenderData.Instances.push_back(entityID, InstanceData());
+			meshRenderData.m_InstanceBuffer->SetData(meshRenderData.Instances.data(), meshRenderData.Instances.size());
+			meshRenderData.m_VertexArray->SetInstanceBuffer(meshRenderData.m_InstanceBuffer);
 			return;
 		}
 
@@ -234,6 +236,7 @@ namespace GalaxyDraw
 			vertAtribSpecs,
 			5 //because we have five elements in the shader layout already
 			);
+		meshData.m_InstanceBuffer->SetData(meshData.Instances.data(), meshData.Instances.size());
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
 
 		s_3DData.MeshDataCollections.push_back(name, meshData);
