@@ -30,7 +30,7 @@ namespace GalaxyDraw
 	void OpenGL_InstanceBuffer::SetData(const void* data, uint32_t size)
 	{
 		GLCall(glBindBuffer(GL_ARRAY_BUFFER, ID));
-		GLCall(glBufferSubData(GL_ARRAY_BUFFER, size * 10, size, data));
+		GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, size, data));
 	}
 
 	void OpenGL_InstanceBuffer::SetVertexAttributes(uint32_t stride, std::vector<VertexAttributeSpecs> specs, uint32_t layoutOffset)
