@@ -83,6 +83,7 @@ namespace GalaxyDraw
 		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
 		{
 			delete[] s_3DData.MeshDataCollections[i].VertexBufferBase;
+			delete[] s_3DData.MeshDataCollections[i].InstanceBufferBase;
 		}
 		
 	}
@@ -124,7 +125,7 @@ namespace GalaxyDraw
 
 			meshData.IndexCount = 0;
 			meshData.VertexBufferPtr = meshData.VertexBufferBase;
-			//meshData.InstanceBufferPtr = meshData.m_InstanceBuffer;
+			meshData.InstanceBufferPtr = meshData.InstanceBufferBase;
 			//s_3DData.TextureSlotIndex = 1;
 		}
 	}
@@ -138,6 +139,9 @@ namespace GalaxyDraw
 			{
 				uint32_t dataSize = (uint32_t)((uint8_t*)meshData.VertexBufferPtr - (uint8_t*)meshData.VertexBufferBase);
 				meshData.m_VertexBuffer->SetData(meshData.VertexBufferBase, dataSize);
+
+				uint32_t instanceDataSize = (uint32_t)((uint8_t*)meshData.InstanceBufferPtr - (uint8_t*)meshData.InstanceBufferBase);
+				meshData.m_InstanceBuffer->SetData(meshData.InstanceBufferBase, instanceDataSize);
 
 				//// Bind textures
 				//for (uint32_t i = 0; i < s_3DData.TextureSlotIndex; i++)
@@ -198,6 +202,7 @@ namespace GalaxyDraw
 		meshData.m_VertexArray = VertexArray::Create();
 		meshData.m_VertexBuffer= VertexBuffer::Create(mesh->Vertices.size() * sizeof(Vertex));
 
+		//TODO instance data not updating in shader probably has something to do with it not being set as a part of the layout
 		meshData.m_VertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position"     },
 			{ ShaderDataType::Float3, "a_Normal"     },
@@ -212,7 +217,8 @@ namespace GalaxyDraw
 		meshData.m_VertexArray->AddVertexBuffer(meshData.m_VertexBuffer);
 
 		meshData.VertexBufferBase = new Vertex[maxVerts];
-		//meshData.InstanceBufferBase = new InstanceData[maxVerts];
+		meshData.InstanceBufferBase = new InstanceData[s_3DData.MaxMeshes];
+
 		//TODO so this might actually be a problem the gpu might need multiple index buffers even if the idicies are the same
 		meshData.m_IndexBuffer = IndexBuffer::Create(mesh->Indices.data(), mesh->Indices.size());
 		meshData.m_VertexArray->SetIndexBuffer(meshData.m_IndexBuffer);
@@ -273,6 +279,12 @@ namespace GalaxyDraw
 				renderData.VertexBufferPtr->Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
 				renderData.VertexBufferPtr->EntityID = 0;
 				renderData.VertexBufferPtr++;
+			}
+			
+			for (auto& instanceData :renderData.m_Instances)
+			{
+				renderData.InstanceBufferPtr->MeshPosition = instanceData.MeshPosition;
+				renderData.InstanceBufferPtr++;
 			}
 
 			renderData.IndexCount += mesh->Indices.size();
