@@ -8,6 +8,13 @@
 
 namespace GalaxyDraw {
 
+	//TODO maybe instance data should actually hold refernces to the transforms,
+	// so that when we render a mesh we simply read the reference and forward that info to the draw elements instanced
+	struct InstanceData
+	{
+		glm::vec3 MeshPosition;
+	};
+
 	class Renderer3D
 	{
 	public:
@@ -19,6 +26,8 @@ namespace GalaxyDraw {
 		static void BeginScene(const OrthoCamera& camera); // TODO: Remove
 		static void EndScene();
 
+		//Updates all mesh datacollections instanceData containing entityID
+		static void UpdateInstanceData(uint32_t entityID, const InstanceData& instanceData);
 
 		static void LoadModel(std::shared_ptr<Model> model, uint32_t entityID);
 		static void LoadMesh(const Mesh& mesh, const std::string& modelName, uint32_t entityID);

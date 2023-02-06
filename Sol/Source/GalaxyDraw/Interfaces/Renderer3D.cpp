@@ -13,12 +13,7 @@
 
 namespace GalaxyDraw 
 {
-	//TODO maybe instance data should actually hold refernces to the transforms,
-	// so that when we render a mesh we simply read the reference and forward that info to the draw elements instanced
-	struct InstanceData
-	{
-		glm::vec3 MeshPosition;
-	};
+	
 
 	//TODO make sure that only one of these exist per unique mesh, if more meshes of the same are loaded add their data to the buffers
 	// might want to store a map of string to id, pass in the name of the mesh file and get the mes render data name.
@@ -35,8 +30,10 @@ namespace GalaxyDraw
 		// ´Take a look at following links
 		//https://learnopengl.com/Advanced-OpenGL/Instancing
 		//https://learnopengl.com/code_viewer_gh.php?code=src/4.advanced_opengl/10.3.asteroids_instanced/asteroids_instanced.cpp
-		KeyedVector<uint32_t, InstanceData> Instances;
+		KeyedVector<uint32_t, InstanceData> m_Instances;
 		//std::vector<InstanceData> Instances;
+
+		std::vector<uint32_t> m_ContainedEntityIds;
 
 		uint32_t IndexCount = 0;
 		uint32_t IndexOffset = 0;
@@ -179,9 +176,10 @@ namespace GalaxyDraw
 		if (s_3DData.MeshDataCollections.Exists(name)) 
 		{
 			auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
-			meshRenderData.Instances.push_back(entityID, InstanceData());
-			meshRenderData.m_InstanceBuffer->SetData(meshRenderData.Instances.data(), meshRenderData.Instances.size());
+			meshRenderData.m_Instances.push_back(entityID, InstanceData());
+			meshRenderData.m_InstanceBuffer->SetData(meshRenderData.m_Instances.data(), meshRenderData.m_Instances.size() * sizeof(InstanceData));
 			meshRenderData.m_VertexArray->SetInstanceBuffer(meshRenderData.m_InstanceBuffer);
+			meshRenderData.m_ContainedEntityIds.push_back(entityID);
 			return;
 		}
 
@@ -225,7 +223,7 @@ namespace GalaxyDraw
 			VertexAttributeSpecs(3,offsetof(InstanceData, MeshPosition))
 		};
 
-		meshData.Instances.push_back(entityID, InstanceData());
+		meshData.m_Instances.push_back(entityID, InstanceData());
 
 		auto instanceStride = sizeof(InstanceData);
 		//TODO make it so we don't manually have to set the layoutOffset
@@ -236,8 +234,9 @@ namespace GalaxyDraw
 			vertAtribSpecs,
 			5 //because we have five elements in the shader layout already
 			);
-		meshData.m_InstanceBuffer->SetData(meshData.Instances.data(), meshData.Instances.size());
+		meshData.m_InstanceBuffer->SetData(meshData.m_Instances.data(), meshData.m_Instances.size() * sizeof(InstanceData));
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
+		meshData.m_ContainedEntityIds.push_back(entityID);
 
 		s_3DData.MeshDataCollections.push_back(name, meshData);
 	}
@@ -284,6 +283,26 @@ namespace GalaxyDraw
 
 		//Mesh count needs to be reset
 		//s_3DData.Stats.MeshCount++;
+	}
+
+	void Renderer3D::UpdateInstanceData(uint32_t entityID, const InstanceData& instanceData)
+	{
+		for (auto& collection : s_3DData.MeshDataCollections)
+		{
+			bool containsEntityId = false;
+			for (auto id : collection.m_ContainedEntityIds)
+			{
+				if (id == entityID) 
+				{ 
+					containsEntityId = true;
+					break;
+				}
+			}
+			if (!containsEntityId) { continue; }
+			collection.m_Instances[entityID] = instanceData;
+			collection.m_InstanceBuffer->SetData(collection.m_Instances.data(), collection.m_Instances.size() * sizeof(InstanceData));
+			collection.m_VertexArray->SetInstanceBuffer(collection.m_InstanceBuffer);
+		}
 	}
 
 	void Renderer3D::ResetStats()
