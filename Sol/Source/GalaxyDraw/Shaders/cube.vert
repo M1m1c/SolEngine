@@ -6,6 +6,7 @@ layout(location = 2) in vec2 a_TexCoord;
 layout(location = 3) in vec4 a_Color;
 layout(location = 4) in int a_EntityID;
 layout(location = 5) in vec3 a_MeshPosition;
+layout(location = 6) in vec4 a_MeshColor;
 
 layout(std140, binding = 0) uniform Camera
 {
@@ -25,7 +26,7 @@ layout (location = 4) out flat int v_EntityID;
 void main()
 {
 	Output.Normal = a_Normal;  
-	Output.Color = a_Color;
+	Output.Color = a_MeshColor;
 	Output.TexCoord = a_TexCoord;
 	v_EntityID = a_EntityID;
 

@@ -11,13 +11,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-namespace GalaxyDraw 
+namespace GalaxyDraw
 {
-	
+
 
 	//for each unique mesh one of these structs are created,
 	//it contains the relevant buffers and data for rendering instances of said mesh.
-	struct MeshRenderData 
+	struct MeshRenderData
 	{
 		std::string Name;
 		std::shared_ptr<Mesh> m_Mesh;
@@ -26,7 +26,7 @@ namespace GalaxyDraw
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
 		std::shared_ptr<Shader> Shader;
-	
+
 		KeyedVector<EntityID, InstanceData> m_Instances;
 		std::vector<EntityID> m_ContainedEntityIds;
 
@@ -74,7 +74,7 @@ namespace GalaxyDraw
 		{
 			delete[] s_3DData.MeshDataCollections[i].VertexBufferBase;
 			delete[] s_3DData.MeshDataCollections[i].InstanceBufferBase;
-		}	
+		}
 	}
 
 	void Renderer3D::BeginScene(const glm::mat4& projection, const glm::mat4& transform)
@@ -137,7 +137,7 @@ namespace GalaxyDraw
 				//	s_3DData.TextureSlots[i]->Bind(i);
 
 				meshData.Shader->Bind();
-				RenderCommand::DrawInstanced(meshData.m_VertexArray,meshData.m_Instances.size());
+				RenderCommand::DrawInstanced(meshData.m_VertexArray, meshData.m_Instances.size());
 				s_3DData.Stats.DrawCalls++;
 			}
 		}
@@ -152,18 +152,18 @@ namespace GalaxyDraw
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
-			LoadMesh(meshes[i],model->GetName(),entityID);
+			LoadMesh(meshes[i], model->GetName(), entityID);
 		}
 	}
 
 	//Sets up the mesh data for the mesh, buffers and vertex array.
 	//Duplicate meshes get added to already exisisting mesh data.
-	void Renderer3D::LoadMesh(const std::shared_ptr<Mesh>& mesh,const std::string& modelName, EntityID entityID)
+	void Renderer3D::LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID)
 	{
 		SOL_PROFILE_FUNCTION();
 		auto name = mesh->Name + "_" + modelName;
 
-		if (s_3DData.MeshDataCollections.Exists(name)) 
+		if (s_3DData.MeshDataCollections.Exists(name))
 		{
 			auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
 			meshRenderData.m_Instances.push_back(entityID, InstanceData());
@@ -178,7 +178,7 @@ namespace GalaxyDraw
 		meshData.m_Mesh = mesh;
 
 		meshData.m_VertexArray = VertexArray::Create();
-		meshData.m_VertexBuffer= VertexBuffer::Create(mesh->Vertices.size() * sizeof(Vertex));
+		meshData.m_VertexBuffer = VertexBuffer::Create(mesh->Vertices.size() * sizeof(Vertex));
 
 		meshData.m_VertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position"     },
@@ -204,7 +204,8 @@ namespace GalaxyDraw
 		meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * sizeof(InstanceData));
 
 		meshData.m_InstanceBuffer->SetLayout({
-		{ ShaderDataType::Float3, "A_MeshPosition"     }
+		{ ShaderDataType::Float3, "A_MeshPosition"     },
+		{ ShaderDataType::Float4, "A_MeshColor"     }
 			});
 
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
@@ -217,7 +218,7 @@ namespace GalaxyDraw
 	void Renderer3D::DrawInstances()
 	{
 		SOL_PROFILE_FUNCTION();
-		for (auto& renderData :s_3DData.MeshDataCollections)
+		for (auto& renderData : s_3DData.MeshDataCollections)
 		{
 			SOL_PROFILE_FUNCTION();
 
@@ -230,21 +231,22 @@ namespace GalaxyDraw
 				renderData.VertexBufferPtr->Position = glm::vec4(vert.Position, 0.f);
 				renderData.VertexBufferPtr->Normal = vert.Normal;
 				renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
-				renderData.VertexBufferPtr->Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
+				renderData.VertexBufferPtr->Color = glm::vec4(1.f, 1.f, 1.f, 1.f);
 				renderData.VertexBufferPtr->EntityID = 0;
 				renderData.VertexBufferPtr++;
 			}
-			
+
 			for (auto& instanceData : renderData.m_Instances)
 			{
 				renderData.InstanceBufferPtr->MeshPosition = instanceData.MeshPosition;
+				renderData.InstanceBufferPtr->MeshColor = instanceData.MeshColor;
 				renderData.InstanceBufferPtr++;
 			}
 
 			//Mesh count needs to be reset
 			//s_3DData.Stats.MeshCount++;
 		}
-	
+
 	}
 
 	//Updates instance specific data, based on entity components in scene.
@@ -257,8 +259,8 @@ namespace GalaxyDraw
 			bool containsEntityId = false;
 			for (auto id : collection.m_ContainedEntityIds)
 			{
-				if (id == entityID) 
-				{ 
+				if (id == entityID)
+				{
 					containsEntityId = true;
 					break;
 				}

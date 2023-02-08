@@ -100,4 +100,14 @@ namespace Sol
 		// and draw them using a static function in Renderer DrawModel().
 		// look at ModelOld and MeshOld for reference of how it used to be done.
 	};
+
+	//TODO make this use and load textures, also every entity with a ModelComp should probably have a material comp
+	struct MaterialComp
+	{
+		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
+
+		MaterialComp() = default;
+		MaterialComp(const MaterialComp&) = default;
+		
+	};
 }

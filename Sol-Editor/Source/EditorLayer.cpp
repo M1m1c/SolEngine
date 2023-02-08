@@ -25,14 +25,20 @@ namespace Sol
 		square.AddComponent<SpriteRendererComp>(glm::vec4{ 1.f,1.f,0.f,1.f });
 		//TODO There seems to be some origin and offset issues when loading a model containing seperate meshes
 		square.AddComponent<ModelComp>("assets/models/cube.fbx", square.GetID());
+		square.AddComponent<MaterialComp>();
 		auto& squareTransform = square.GetComponent<TransformComp>();
 		squareTransform.Position = glm::vec3(1.f, 1.f, 1.f);
+		auto& squareMaterial = square.GetComponent<MaterialComp>();
+		squareMaterial.Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
 
 		auto square2 = m_ActiveScene->CreateEntity();
 		//TODO There seems to be some origin and offset issues when loading a model containing seperate meshes
 		square2.AddComponent<ModelComp>("assets/models/cube.fbx", square2.GetID());
+		square2.AddComponent<MaterialComp>();
 		auto& square2Transform = square2.GetComponent<TransformComp>();
 		square2Transform.Position = glm::vec3(-1.f, -1.f, -1.f);
+		auto& square2Material = square2.GetComponent<MaterialComp>();
+		square2Material.Color = glm::vec4(0.f, 0.f, 1.f, 1.f);
 
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
 		auto& camTransform = m_CameraEntity.GetComponent<TransformComp>();
