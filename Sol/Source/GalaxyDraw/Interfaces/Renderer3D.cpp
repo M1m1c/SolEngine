@@ -247,10 +247,13 @@ namespace GalaxyDraw
 	
 	}
 
+	//Updates instance specific data, based on entity components in scene.
 	void Renderer3D::UpdateInstanceData(EntityID entityID, const InstanceData& instanceData)
 	{
 		for (auto& collection : s_3DData.MeshDataCollections)
 		{
+			if (collection.m_Instances.size() == 0) { continue; }
+
 			bool containsEntityId = false;
 			for (auto id : collection.m_ContainedEntityIds)
 			{
@@ -260,6 +263,7 @@ namespace GalaxyDraw
 					break;
 				}
 			}
+
 			if (!containsEntityId) { continue; }
 			collection.m_Instances.Get(entityID) = instanceData;
 		}
