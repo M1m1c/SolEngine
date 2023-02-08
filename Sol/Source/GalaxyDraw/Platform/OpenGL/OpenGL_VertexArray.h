@@ -36,11 +36,13 @@ namespace GalaxyDraw
 
 		virtual const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const override { return m_VertexBuffers; }
 		virtual const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const override { return m_IndexBuffer; }
+		virtual const std::shared_ptr<InstanceBuffer>& GetInstanceBuffer() const override { return m_InstanceBuffer; }
 
 	private:
 		std::vector<std::shared_ptr<VertexBuffer>> m_VertexBuffers;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
+		uint32_t m_AttributeIndex = 0;
 	};
 
 }
