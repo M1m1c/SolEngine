@@ -167,7 +167,7 @@ namespace GalaxyDraw
 	void Renderer3D::LoadMesh(const std::shared_ptr<Mesh>& mesh,const std::string& modelName, EntityID entityID)
 	{
 		SOL_PROFILE_FUNCTION();
-		auto name = mesh->Name + modelName;
+		auto name = mesh->Name + "_" + modelName;
 
 		if (s_3DData.MeshDataCollections.Exists(name)) 
 		{
