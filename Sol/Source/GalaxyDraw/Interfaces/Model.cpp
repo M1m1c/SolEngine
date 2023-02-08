@@ -6,7 +6,7 @@
 
 namespace GalaxyDraw
 {
-	std::shared_ptr<Model> Model::Create(const std::string& path, uint32_t entityID)
+	std::shared_ptr<Model> Model::Create(const std::string& path, EntityID entityID)
 	{
 		std::shared_ptr<Model> retVal;
 

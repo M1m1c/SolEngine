@@ -31,10 +31,10 @@ namespace GalaxyDraw
 		// ´Take a look at following links
 		//https://learnopengl.com/Advanced-OpenGL/Instancing
 		//https://learnopengl.com/code_viewer_gh.php?code=src/4.advanced_opengl/10.3.asteroids_instanced/asteroids_instanced.cpp
-		KeyedVector<uint32_t, InstanceData> m_Instances;
+		KeyedVector<EntityID, InstanceData> m_Instances;
 		//std::vector<InstanceData> Instances;
 
-		std::vector<uint32_t> m_ContainedEntityIds;
+		std::vector<EntityID> m_ContainedEntityIds;
 
 		uint32_t IndexCount = 0;
 		uint32_t IndexOffset = 0;
@@ -164,7 +164,7 @@ namespace GalaxyDraw
 	}
 
 	//When we create a model on a modelComp using Model::Create() this also gets called.
-	void Renderer3D::LoadModel(std::shared_ptr<Model> model, uint32_t entityID)
+	void Renderer3D::LoadModel(std::shared_ptr<Model> model, EntityID entityID)
 	{
 		SOL_PROFILE_FUNCTION();
 		auto& meshes = model->GetMeshes();
@@ -175,7 +175,7 @@ namespace GalaxyDraw
 		}
 	}
 
-	void Renderer3D::LoadMesh(const std::shared_ptr<Mesh>& mesh,const std::string& modelName, uint32_t entityID)
+	void Renderer3D::LoadMesh(const std::shared_ptr<Mesh>& mesh,const std::string& modelName, EntityID entityID)
 	{
 		SOL_PROFILE_FUNCTION();
 		auto name = mesh->Name + modelName;
@@ -289,51 +289,7 @@ namespace GalaxyDraw
 	
 	}
 
-	//void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform)
-	//{
-	//	SOL_PROFILE_FUNCTION();
-	//	auto& meshes = model->GetMeshes();
-
-	//	for (size_t i = 0; i < meshes.size(); i++)
-	//	{
-	//		DrawMesh(model->GetName(), meshes[i], transform);
-	//	}
-	//}
-	////This needs to be changed to reflect instanced rendering instead of teh old batch rendering,
-	////Meaning instead of setting color and stuff here we should be setting the instancedBuffer values
-	//void Renderer3D::DrawMesh(const std::string& modelName,const std::shared_ptr<Mesh>& mesh, const glm::mat4& transform)
-	//{
-	//	SOL_PROFILE_FUNCTION();
-
-	//	//TODO make sure that this gives us the correct buffers
-	//	auto name = mesh->Name + modelName;
-	//	auto& renderData = s_3DData.MeshDataCollections.Get(name);
-
-	//	uint32_t vertexCount = mesh->Vertices.size();
-	//	
-	//	if (renderData.IndexCount >= renderData.MaxIndicies)
-	//		NextBatch();
-
-	//	//renderData.m_InstanceBuffer->SetData(renderData.Instances.data(), renderData.Instances.size() * sizeof(InstanceData));
-
-	//	for (size_t i = 0; i < vertexCount; i++)
-	//	{
-	//		auto& vert = mesh->Vertices[i];
-	//		renderData.VertexBufferPtr->Position = transform * glm::vec4(vert.Position,0.f);
-	//		renderData.VertexBufferPtr->Normal = vert.Normal;
-	//		renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
-	//		renderData.VertexBufferPtr->Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
-	//		renderData.VertexBufferPtr->EntityID = 0;
-	//		renderData.VertexBufferPtr++;
-	//	}
-
-	//	renderData.IndexCount += mesh->Indices.size();
-
-	//	//Mesh count needs to be reset
-	//	//s_3DData.Stats.MeshCount++;
-	//}
-
-	void Renderer3D::UpdateInstanceData(uint32_t entityID, const InstanceData& instanceData)
+	void Renderer3D::UpdateInstanceData(EntityID entityID, const InstanceData& instanceData)
 	{
 		for (auto& collection : s_3DData.MeshDataCollections)
 		{
@@ -347,9 +303,7 @@ namespace GalaxyDraw
 				}
 			}
 			if (!containsEntityId) { continue; }
-			collection.m_Instances[entityID] = instanceData;
-			//collection.m_InstanceBuffer->SetData(collection.m_Instances.data(), collection.m_Instances.size() * sizeof(InstanceData));
-			//collection.m_VertexArray->SetInstanceBuffer(collection.m_InstanceBuffer);
+			collection.m_Instances.Get(entityID) = instanceData;
 		}
 	}
 

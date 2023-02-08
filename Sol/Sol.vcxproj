@@ -220,6 +220,7 @@
     <ClInclude Include="Source\GalaxyDraw\Camera.h" />
     <ClInclude Include="Source\Sol\Scene\Scene.h" />
     <ClInclude Include="Source\solpch.h" />
+    <ClInclude Include="Source\Sol\SolDefines.h" />
     <ClInclude Include="thirdparty\entt\entt.hpp" />
     <ClInclude Include="thirdparty\glm\glm\common.hpp" />
     <ClInclude Include="thirdparty\glm\glm\detail\_features.hpp" />

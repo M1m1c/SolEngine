@@ -1494,6 +1494,7 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer3D.h" />
     <ClInclude Include="Source\Sol\Core\KeyedVector.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_InstanceBuffer.h" />
+    <ClInclude Include="Source\Sol\SolDefines.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">

@@ -5,6 +5,7 @@
 #include "GalaxyDraw/Camera.h"
 //#include "Hazel/Renderer/EditorCamera.h"
 #include "Sol/Scene/Components.h"
+#include "Sol/SolDefines.h"
 
 namespace GalaxyDraw {
 
@@ -29,10 +30,10 @@ namespace GalaxyDraw {
 		static void EndScene();
 
 		//Updates all mesh datacollections instanceData containing entityID
-		static void UpdateInstanceData(uint32_t entityID, const InstanceData& instanceData);
+		static void UpdateInstanceData(EntityID entityID, const InstanceData& instanceData);
 
-		static void LoadModel(std::shared_ptr<Model> model, uint32_t entityID);
-		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, uint32_t entityID);
+		static void LoadModel(std::shared_ptr<Model> model, EntityID entityID);
+		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID);
 
 		//draws all instances of meshes
 		static void DrawInstances();

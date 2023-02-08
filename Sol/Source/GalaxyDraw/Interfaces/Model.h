@@ -2,12 +2,14 @@
 #include <string>
 #include <memory>
 #include "Mesh.h"
+#include "Sol/SolDefines.h"
+
 namespace GalaxyDraw 
 {
 	class Model
 	{
 	public:
-		static std::shared_ptr<Model> Create(const std::string& modelpath, uint32_t entityID); //TODO add optional texture path
+		static std::shared_ptr<Model> Create(const std::string& modelpath, EntityID entityID); //TODO add optional texture path
 
 		virtual ~Model() = default;	
 		virtual void SetData(const std::string& path) = 0;

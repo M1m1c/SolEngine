@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 #include "entt.hpp"
+#include "Sol/SolDefines.h"
 
 namespace Sol
 {
@@ -37,15 +38,16 @@ namespace Sol
 		}
 
 		const std::string& GetName();
+		const EntityID& GetID() { return m_EntityID; }
 
 		bool operator==(const Entity& rhs) { return m_EntityID == rhs.m_EntityID; }
 
 		operator bool() const { return m_EntityID != entt::null; }
 
-		operator uint32_t() const { return static_cast<uint32_t>(m_EntityID); }
+		//operator uint32_t() const { return static_cast<uint32_t>(m_EntityID); }
 
 	private:
-		entt::entity m_EntityID{ entt::null };
+		EntityID m_EntityID{ entt::null };
 		Scene* m_Scene = nullptr;
 	};
 

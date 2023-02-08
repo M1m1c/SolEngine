@@ -6,6 +6,7 @@
 #include "GalaxyDraw/SceneCamera.h"
 #include <GalaxyDraw/Interfaces/Texture.h>
 #include <GalaxyDraw/Interfaces/Model.h>
+#include "Sol/SolDefines.h"
 
 namespace Sol
 {
@@ -89,7 +90,7 @@ namespace Sol
 		ModelComp() = default;
 		ModelComp(const ModelComp&) = default;
 		//Sets up model based on providde file path
-		ModelComp(const std::string& modelPath, uint32_t entityID) : ModelPath(modelPath)
+		ModelComp(const std::string& modelPath, EntityID entityID) : ModelPath(modelPath)
 		{
 			Model = GalaxyDraw::Model::Create(modelPath,entityID);
 		}
