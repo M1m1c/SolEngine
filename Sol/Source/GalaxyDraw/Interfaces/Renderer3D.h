@@ -51,8 +51,7 @@ namespace GalaxyDraw {
 		static void ResetStats();
 		static Statistics GetStats();
 	private:
-		static void StartBatch();
+		static void Submit();
 		static void Flush();
-		static void NextBatch();
 	};
 }

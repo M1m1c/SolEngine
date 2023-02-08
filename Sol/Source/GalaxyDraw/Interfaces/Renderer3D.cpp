@@ -30,10 +30,6 @@ namespace GalaxyDraw
 		KeyedVector<EntityID, InstanceData> m_Instances;
 		std::vector<EntityID> m_ContainedEntityIds;
 
-		uint32_t IndexCount = 0;
-		uint32_t IndexOffset = 0;
-		uint32_t MaxIndicies = 0;
-		uint32_t MaxVerts = 0;
 		Vertex* VertexBufferBase = nullptr;
 		Vertex* VertexBufferPtr = nullptr;
 		InstanceData* InstanceBufferBase = nullptr;
@@ -88,7 +84,7 @@ namespace GalaxyDraw
 		s_3DData.CameraBuffer.ViewProjection = projection * glm::inverse(transform);
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
 
-		StartBatch();
+		Submit();
 	}
 
 	void Renderer3D::BeginScene(const OrthoCamera& camera)
@@ -98,7 +94,7 @@ namespace GalaxyDraw
 		s_3DData.CameraBuffer.ViewProjection = camera.GetViewProjectionMatrix();
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
 
-		StartBatch();
+		Submit();
 	}
 
 	void Renderer3D::EndScene()
@@ -108,26 +104,27 @@ namespace GalaxyDraw
 		Flush();
 	}
 
-	void Renderer3D::StartBatch()
+	//Resets the buffer pointers for each mesh data entry
+	void Renderer3D::Submit()
 	{
 		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
 		{
 			auto& meshData = s_3DData.MeshDataCollections[i];
 
-			meshData.IndexCount = 0;
 			meshData.VertexBufferPtr = meshData.VertexBufferBase;
 			meshData.InstanceBufferPtr = meshData.InstanceBufferBase;
 			//s_3DData.TextureSlotIndex = 1;
 		}
 	}
 
-	//sets buffer data and calls draw instanced
+	//sets buffer data and calls draw instanced.
+	//each unique mesh results in a new draw call.
 	void Renderer3D::Flush()
 	{
 		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
 		{
 			auto& meshData = s_3DData.MeshDataCollections[i];
-			if (meshData.IndexCount)
+			if (meshData.m_Instances.size() > 0)
 			{
 				uint32_t dataSize = (uint32_t)((uint8_t*)meshData.VertexBufferPtr - (uint8_t*)meshData.VertexBufferBase);
 				meshData.m_VertexBuffer->SetData(meshData.VertexBufferBase, dataSize);
@@ -146,12 +143,7 @@ namespace GalaxyDraw
 		}
 	}
 
-	void Renderer3D::NextBatch()
-	{
-		Flush();
-		StartBatch();
-	}
-
+	//Loads all sub meshes of a model
 	//When we create a model on a modelComp using Model::Create() this also gets called.
 	void Renderer3D::LoadModel(std::shared_ptr<Model> model, EntityID entityID)
 	{
@@ -164,6 +156,8 @@ namespace GalaxyDraw
 		}
 	}
 
+	//Sets up the mesh data for the mesh, buffers and vertex array.
+	//Duplicate meshes get added to already exisisting mesh data.
 	void Renderer3D::LoadMesh(const std::shared_ptr<Mesh>& mesh,const std::string& modelName, EntityID entityID)
 	{
 		SOL_PROFILE_FUNCTION();
@@ -182,9 +176,7 @@ namespace GalaxyDraw
 
 		MeshRenderData meshData;
 		meshData.m_Mesh = mesh;
-		meshData.MaxIndicies = maxIndices;
-		meshData.MaxVerts = maxVerts;
-		meshData.IndexOffset = mesh->Indices.size();
+
 		meshData.m_VertexArray = VertexArray::Create();
 		meshData.m_VertexBuffer= VertexBuffer::Create(mesh->Vertices.size() * sizeof(Vertex));
 
@@ -208,7 +200,6 @@ namespace GalaxyDraw
 		//TODO should use missing texture to color 3d mesh
 		meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
 
-
 		meshData.m_Instances.push_back(entityID, InstanceData());
 		meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * sizeof(InstanceData));
 
@@ -230,15 +221,8 @@ namespace GalaxyDraw
 		{
 			SOL_PROFILE_FUNCTION();
 
-			//TODO make sure that this gives us the correct buffers
-			
 			auto& mesh = renderData.m_Mesh;
 			uint32_t vertexCount = mesh->Vertices.size();
-
-			//TODO this seems unnecessary, it never gets called
-			//if (renderData.IndexCount >= renderData.MaxIndicies)
-				//NextBatch();
-
 
 			for (size_t i = 0; i < vertexCount; i++)
 			{
@@ -256,8 +240,6 @@ namespace GalaxyDraw
 				renderData.InstanceBufferPtr->MeshPosition = instanceData.MeshPosition;
 				renderData.InstanceBufferPtr++;
 			}
-
-			renderData.IndexCount += mesh->Indices.size();
 
 			//Mesh count needs to be reset
 			//s_3DData.Stats.MeshCount++;
