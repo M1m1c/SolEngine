@@ -35,6 +35,9 @@ namespace GalaxyDraw {
 		static void LoadModel(std::shared_ptr<Model> model, EntityID entityID);
 		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID);
 
+		//TODO create function for handeling when entity is destroyed, needs to remove it self from relevant MeshRenderData m_ContainedEntityIds.
+		//TODO crate function for unloading a model and mesh.
+
 		//draws all instances of meshes
 		static void DrawInstances();
 		static void DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform);
