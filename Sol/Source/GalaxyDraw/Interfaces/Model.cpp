@@ -6,7 +6,7 @@
 
 namespace GalaxyDraw
 {
-	std::shared_ptr<Model> Model::Create(const std::string& path)
+	std::shared_ptr<Model> Model::Create(const std::string& path, EntityID entityID)
 	{
 		std::shared_ptr<Model> retVal;
 
@@ -27,7 +27,7 @@ namespace GalaxyDraw
 
 		if (retVal) 
 		{ 
-			Renderer3D::LoadModel(retVal);
+			Renderer3D::LoadModel(retVal,entityID);
 			return retVal; 
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");

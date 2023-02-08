@@ -12,6 +12,9 @@ public:
     KeyedVector(KeyedVector&& other) = default;
     KeyedVector& operator=(KeyedVector&& other) = default;
 
+    T* data() { return m_Vector.data(); }
+    const T* data() const { return m_Vector.data(); }
+
     // Element access
     T& Get(const Key& key)
     {

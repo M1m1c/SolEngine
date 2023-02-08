@@ -97,6 +97,7 @@ namespace GalaxyDraw
 
 			index++;
 		}
+		m_AttributeIndex = index;
 		m_VertexBuffers.push_back(vbo);
 	}
 
@@ -107,4 +108,36 @@ namespace GalaxyDraw
 		m_IndexBuffer = ebo;
 	}
 
+	//TODO maybe this should be more like the vertex buffer
+	void OpenGL_VertexArray::SetInstanceBuffer(const std::shared_ptr<InstanceBuffer>& instanceBuffer) 
+	{
+		/*glBindVertexArray(ID);
+		instanceBuffer->Bind();
+		m_InstanceBuffer = instanceBuffer;*/
+
+		SOL_CORE_ASSERT(instanceBuffer->GetLayout().GetElements().size(), "instanceBuffer has no layout!");
+
+		glBindVertexArray(ID);
+		instanceBuffer->Bind();
+
+		uint32_t index = m_AttributeIndex;
+		const auto& layout = instanceBuffer->GetLayout();
+		for (const auto& element : layout)
+		{
+	
+
+			glVertexAttribPointer(index,
+				element.GetComponentCount(),
+				ShaderDataTypeToGLBaseType(element.Type),
+				element.Normalized ? GL_TRUE : GL_FALSE,
+				layout.GetStride(),
+				(const void*)element.Offset);
+
+			GLCall(glVertexAttribDivisor(index, 1)); //specifies that this is per instance
+			glEnableVertexAttribArray(index);
+
+			index++;
+		}
+		m_InstanceBuffer = instanceBuffer;
+	}
 }

@@ -27,15 +27,22 @@ namespace GalaxyDraw
 		// Deletes the VAO
 		void Delete();
 
+		//TODO maybe we should change to SetVertexBuffer() when we go for instanced rendering
 		virtual void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo)  override;
 		virtual void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ebo) override;
+		//TODO maybe the instance buffer should be what the AddVertexBuffer() is, 
+		// meaning a collection of changable instance data.
+		virtual void SetInstanceBuffer(const std::shared_ptr<InstanceBuffer>& instanceBuffer) override;
 
 		virtual const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const override { return m_VertexBuffers; }
 		virtual const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const override { return m_IndexBuffer; }
+		virtual const std::shared_ptr<InstanceBuffer>& GetInstanceBuffer() const override { return m_InstanceBuffer; }
 
 	private:
 		std::vector<std::shared_ptr<VertexBuffer>> m_VertexBuffers;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
+		uint32_t m_AttributeIndex = 0;
 	};
 
 }

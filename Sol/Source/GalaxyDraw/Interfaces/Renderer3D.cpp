@@ -13,33 +13,27 @@
 
 namespace GalaxyDraw 
 {
+	
 
-	struct InstanceData
-	{
-		glm::vec3 Position;
-		glm::vec4 Color;
-	};
-
-	//TODO make sure that only one of these exist per unique mesh, if more meshes of the same are loaded add their data to the buffers
-	// might want to store a map of string to id, pass in the name of the mesh file and get the mes render data name.
+	//for each unique mesh one of these structs are created,
+	//it contains the relevant buffers and data for rendering instances of said mesh.
 	struct MeshRenderData 
 	{
 		std::string Name;
+		std::shared_ptr<Mesh> m_Mesh;
 		std::shared_ptr<VertexArray> m_VertexArray;
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
 		std::shared_ptr<Shader> Shader;
+	
+		KeyedVector<EntityID, InstanceData> m_Instances;
+		std::vector<EntityID> m_ContainedEntityIds;
 
-		//KeyedVector<uint32_t, InstanceData> Instances;
-		std::vector<InstanceData> Instances;
-
-		uint32_t IndexCount = 0;
-		uint32_t IndexOffset = 0;
-		uint32_t MaxIndicies = 0;
-		uint32_t MaxVerts = 0;
 		Vertex* VertexBufferBase = nullptr;
 		Vertex* VertexBufferPtr = nullptr;
+		InstanceData* InstanceBufferBase = nullptr;
+		InstanceData* InstanceBufferPtr = nullptr;
 	};
 
 	struct Renderer3DData
@@ -62,7 +56,7 @@ namespace GalaxyDraw
 
 	static Renderer3DData s_3DData;
 
-	void GalaxyDraw::Renderer3D::Init()
+	void Renderer3D::Init()
 	{
 		SOL_PROFILE_FUNCTION();
 
@@ -73,120 +67,118 @@ namespace GalaxyDraw
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 	}
 
-	void GalaxyDraw::Renderer3D::Shutdown()
+	void Renderer3D::Shutdown()
 	{
 		SOL_PROFILE_FUNCTION();
 		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
 		{
 			delete[] s_3DData.MeshDataCollections[i].VertexBufferBase;
-		}
-		
+			delete[] s_3DData.MeshDataCollections[i].InstanceBufferBase;
+		}	
 	}
 
-	void GalaxyDraw::Renderer3D::BeginScene(const glm::mat4& projection, const glm::mat4& transform)
+	void Renderer3D::BeginScene(const glm::mat4& projection, const glm::mat4& transform)
 	{
 		SOL_PROFILE_FUNCTION();
 
 		s_3DData.CameraBuffer.ViewProjection = projection * glm::inverse(transform);
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
 
-		StartBatch();
+		Submit();
 	}
 
-	void GalaxyDraw::Renderer3D::BeginScene(const OrthoCamera& camera)
+	void Renderer3D::BeginScene(const OrthoCamera& camera)
 	{
 		SOL_PROFILE_FUNCTION();
 
 		s_3DData.CameraBuffer.ViewProjection = camera.GetViewProjectionMatrix();
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
 
-		StartBatch();
+		Submit();
 	}
 
-	void GalaxyDraw::Renderer3D::EndScene()
+	void Renderer3D::EndScene()
 	{
 		SOL_PROFILE_FUNCTION();
 
 		Flush();
 	}
 
-	//TODO we have a problem here with the mesh data colleciton, since it needs to be able to be iterated over as well
-	//we should probaably create a new container type where we can access via keys and iterate over it using indices
-	void Renderer3D::StartBatch()
+	//Resets the buffer pointers for each mesh data entry
+	void Renderer3D::Submit()
 	{
 		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
 		{
 			auto& meshData = s_3DData.MeshDataCollections[i];
 
-			meshData.IndexCount = 0;
 			meshData.VertexBufferPtr = meshData.VertexBufferBase;
+			meshData.InstanceBufferPtr = meshData.InstanceBufferBase;
 			//s_3DData.TextureSlotIndex = 1;
 		}
 	}
 
-	void GalaxyDraw::Renderer3D::Flush()
+	//sets buffer data and calls draw instanced.
+	//each unique mesh results in a new draw call.
+	void Renderer3D::Flush()
 	{
 		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
 		{
 			auto& meshData = s_3DData.MeshDataCollections[i];
-			if (meshData.IndexCount)
+			if (meshData.m_Instances.size() > 0)
 			{
 				uint32_t dataSize = (uint32_t)((uint8_t*)meshData.VertexBufferPtr - (uint8_t*)meshData.VertexBufferBase);
 				meshData.m_VertexBuffer->SetData(meshData.VertexBufferBase, dataSize);
+
+				uint32_t instanceDataSize = (uint32_t)((uint8_t*)meshData.InstanceBufferPtr - (uint8_t*)meshData.InstanceBufferBase);
+				meshData.m_InstanceBuffer->SetData(meshData.InstanceBufferBase, instanceDataSize);
 
 				//// Bind textures
 				//for (uint32_t i = 0; i < s_3DData.TextureSlotIndex; i++)
 				//	s_3DData.TextureSlots[i]->Bind(i);
 
 				meshData.Shader->Bind();
-				RenderCommand::DrawIndexed(meshData.m_VertexArray, meshData.IndexCount);
+				RenderCommand::DrawInstanced(meshData.m_VertexArray,meshData.m_Instances.size());
 				s_3DData.Stats.DrawCalls++;
 			}
 		}
 	}
 
-	void Renderer3D::NextBatch()
-	{
-		Flush();
-		StartBatch();
-	}
-
+	//Loads all sub meshes of a model
 	//When we create a model on a modelComp using Model::Create() this also gets called.
-	void Renderer3D::LoadModel(std::shared_ptr<Model> model)
+	void Renderer3D::LoadModel(std::shared_ptr<Model> model, EntityID entityID)
 	{
 		SOL_PROFILE_FUNCTION();
 		auto& meshes = model->GetMeshes();
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
-			LoadMesh(meshes[i],model->GetName());
+			LoadMesh(meshes[i],model->GetName(),entityID);
 		}
 	}
 
-	void Renderer3D::LoadMesh(const Mesh& mesh,const std::string& modelName)
+	//Sets up the mesh data for the mesh, buffers and vertex array.
+	//Duplicate meshes get added to already exisisting mesh data.
+	void Renderer3D::LoadMesh(const std::shared_ptr<Mesh>& mesh,const std::string& modelName, EntityID entityID)
 	{
 		SOL_PROFILE_FUNCTION();
-		auto name = mesh.Name + modelName;
-
-		//TODO check if the mesh already has a mesh render data, then add an instance to it and exit.
-		
+		auto name = mesh->Name + "_" + modelName;
 
 		if (s_3DData.MeshDataCollections.Exists(name)) 
 		{
 			auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
-			//meshRenderData.Instances.push_back(0,InstanceData())
+			meshRenderData.m_Instances.push_back(entityID, InstanceData());
+			meshRenderData.m_ContainedEntityIds.push_back(entityID);
 			return;
 		}
 
-		uint32_t maxVerts = s_3DData.MaxMeshes * mesh.Vertices.size();
-		uint32_t maxIndices = s_3DData.MaxMeshes * mesh.Indices.size();
+		uint32_t maxVerts = s_3DData.MaxMeshes * mesh->Vertices.size();
+		uint32_t maxIndices = s_3DData.MaxMeshes * mesh->Indices.size();
 
 		MeshRenderData meshData;
-		meshData.MaxIndicies = maxIndices;
-		meshData.MaxVerts = maxVerts;
-		meshData.IndexOffset = mesh.Indices.size();
+		meshData.m_Mesh = mesh;
+
 		meshData.m_VertexArray = VertexArray::Create();
-		meshData.m_VertexBuffer= VertexBuffer::Create(mesh.Vertices.size() * sizeof(Vertex));
+		meshData.m_VertexBuffer= VertexBuffer::Create(mesh->Vertices.size() * sizeof(Vertex));
 
 		meshData.m_VertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position"     },
@@ -195,74 +187,86 @@ namespace GalaxyDraw
 			{ ShaderDataType::Float4, "a_Color"     },
 			{ ShaderDataType::Int, "a_EntityID"     }
 			});
+
 		meshData.m_VertexArray->AddVertexBuffer(meshData.m_VertexBuffer);
 
 		meshData.VertexBufferBase = new Vertex[maxVerts];
-		//TODO so this might actually be a problem the gpu might need multiple index buffers even if the idicies are the same
-		meshData.m_IndexBuffer = IndexBuffer::Create(mesh.Indices.data(), mesh.Indices.size());
+		meshData.InstanceBufferBase = new InstanceData[s_3DData.MaxMeshes];
+
+		meshData.m_IndexBuffer = IndexBuffer::Create(mesh->Indices.data(), mesh->Indices.size());
 		meshData.m_VertexArray->SetIndexBuffer(meshData.m_IndexBuffer);
 
 
 		//TODO should use missing texture to color 3d mesh
-		//TODO I think the reason nothing shows up in the view port is becasuse we don't set the model unifrom in teh default shader
-		//TODO make new default shader for use with 3d meshes, base it of of quad shader
 		meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
 
+		meshData.m_Instances.push_back(entityID, InstanceData());
+		meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * sizeof(InstanceData));
 
-		//std::vector<VertexAttributeSpecs> vertAtribSpecs =
-		//{
-		//	VertexAttributeSpecs(3,offsetof(InstanceData, Position)),
-		//	VertexAttributeSpecs(4,offsetof(InstanceData, Color)),
-		//};
+		meshData.m_InstanceBuffer->SetLayout({
+		{ ShaderDataType::Float3, "A_MeshPosition"     }
+			});
 
-		////TODO make sure to add instance before we do this, also make sure to check if this needs to be redone
-		//auto instanceStride = sizeof(InstanceData);
-		//meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * instanceStride, instanceStride, vertAtribSpecs);
+		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
+		meshData.m_ContainedEntityIds.push_back(entityID);
 
 		s_3DData.MeshDataCollections.push_back(name, meshData);
 	}
 
-	void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform)
+	//Iterates over all mesh data and updates their attributes
+	void Renderer3D::DrawInstances()
 	{
 		SOL_PROFILE_FUNCTION();
-		auto& meshes = model->GetMeshes();
-
-		for (size_t i = 0; i < meshes.size(); i++)
+		for (auto& renderData :s_3DData.MeshDataCollections)
 		{
-			DrawMesh(model->GetName(), meshes[i], transform);
+			SOL_PROFILE_FUNCTION();
+
+			auto& mesh = renderData.m_Mesh;
+			uint32_t vertexCount = mesh->Vertices.size();
+
+			for (size_t i = 0; i < vertexCount; i++)
+			{
+				auto& vert = mesh->Vertices[i];
+				renderData.VertexBufferPtr->Position = glm::vec4(vert.Position, 0.f);
+				renderData.VertexBufferPtr->Normal = vert.Normal;
+				renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
+				renderData.VertexBufferPtr->Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
+				renderData.VertexBufferPtr->EntityID = 0;
+				renderData.VertexBufferPtr++;
+			}
+			
+			for (auto& instanceData : renderData.m_Instances)
+			{
+				renderData.InstanceBufferPtr->MeshPosition = instanceData.MeshPosition;
+				renderData.InstanceBufferPtr++;
+			}
+
+			//Mesh count needs to be reset
+			//s_3DData.Stats.MeshCount++;
 		}
+	
 	}
 
-	void Renderer3D::DrawMesh(const std::string& modelName,const Mesh& mesh, const glm::mat4& transform)
+	//Updates instance specific data, based on entity components in scene.
+	void Renderer3D::UpdateInstanceData(EntityID entityID, const InstanceData& instanceData)
 	{
-		SOL_PROFILE_FUNCTION();
-
-		//TODO make sure that this gives us the correct buffers
-		auto name = mesh.Name + modelName;
-		auto& renderData = s_3DData.MeshDataCollections.Get(name);
-
-		uint32_t vertexCount = mesh.Vertices.size();
-		
-		if (renderData.IndexCount >= renderData.MaxIndicies)
-			NextBatch();
-
-		//renderData.m_InstanceBuffer->SetData(renderData.Instances.data(), renderData.Instances.size() * sizeof(InstanceData));
-
-		for (size_t i = 0; i < vertexCount; i++)
+		for (auto& collection : s_3DData.MeshDataCollections)
 		{
-			auto& vert = mesh.Vertices[i];
-			renderData.VertexBufferPtr->Position = transform * glm::vec4(vert.Position,0.f);
-			renderData.VertexBufferPtr->Normal = vert.Normal;
-			renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
-			renderData.VertexBufferPtr->Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
-			renderData.VertexBufferPtr->EntityID = 0;
-			renderData.VertexBufferPtr++;
+			if (collection.m_Instances.size() == 0) { continue; }
+
+			bool containsEntityId = false;
+			for (auto id : collection.m_ContainedEntityIds)
+			{
+				if (id == entityID) 
+				{ 
+					containsEntityId = true;
+					break;
+				}
+			}
+
+			if (!containsEntityId) { continue; }
+			collection.m_Instances.Get(entityID) = instanceData;
 		}
-
-		renderData.IndexCount += mesh.Indices.size();
-
-		//Mesh count needs to be reset
-		//s_3DData.Stats.MeshCount++;
 	}
 
 	void Renderer3D::ResetStats()

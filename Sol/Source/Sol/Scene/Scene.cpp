@@ -43,10 +43,18 @@ namespace Sol
 			auto group3D = m_Registry.group<ModelComp>(entt::get<TransformComp>);
 			for (auto entity : group3D)
 			{
-				auto& [model, transform] = group3D.get< ModelComp, TransformComp>(entity);
+				auto& transform = group3D.get<TransformComp>(entity);
+				//TODO the problem here is that we render per entity, 
+				// when what we really need to do for instanced rendering is render per mesh,
+				//However this means that the transform needs to be reachable by each mesh instance
 
-				GD_Renderer3D::DrawModel(model.Model, transform);
+				//TODO create a InstanceData based on the transform that we can then use to update all render data,
+				// passing entity id and Instance data into UpdateInstanceData
+				
+				GD_Renderer3D::UpdateInstanceData(entity, GD_::InstanceData(transform.Position));
+				//GD_Renderer3D::DrawModel(model.Model, transform);
 			}
+			GD_Renderer3D::DrawInstances();
 
 			GD_Renderer3D::EndScene();
 
