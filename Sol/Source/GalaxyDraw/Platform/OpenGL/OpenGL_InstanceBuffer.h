@@ -10,7 +10,7 @@ namespace GalaxyDraw
 	class OpenGL_InstanceBuffer : public InstanceBuffer
 	{
 	public:
-		OpenGL_InstanceBuffer(GLsizeiptr size, uint32_t stride, std::vector<VertexAttributeSpecs> specs, uint32_t layoutOffset);
+		OpenGL_InstanceBuffer(GLsizeiptr size);
 		~OpenGL_InstanceBuffer();
 
 
@@ -20,11 +20,13 @@ namespace GalaxyDraw
 
 		virtual void SetData(const void* data, uint32_t size) override;
 
+		virtual void SetLayout(const BufferLayout& layout) override { m_Layout = layout; }
+		virtual const BufferLayout& GetLayout() const override { return m_Layout; }
+
 	private:
 		// Reference ID of the Vertex Buffer Object
 		GLuint ID;
-
-		void SetVertexAttributes(uint32_t stride, std::vector<VertexAttributeSpecs> specs, uint32_t layoutOffset);
+		BufferLayout m_Layout;
 	};
 
 	
