@@ -33,9 +33,9 @@ namespace GalaxyDraw {
 		}
 
 		//TODO finialize this
-		inline static void DrawInstanced(const std::shared_ptr<VertexArray>& va)
+		inline static void DrawInstanced(const std::shared_ptr<VertexArray>& va, int32_t instanceCount)
 		{
-			s_RendererAPI->DrawInstanced(va);
+			s_RendererAPI->DrawInstanced(va,instanceCount);
 		}
 	private:
 		static RendererAPI* s_RendererAPI;

@@ -35,13 +35,11 @@ namespace GalaxyDraw
 		}
 	}
 
-	void OpenGL_RenderScreen::DrawInstanced(const std::shared_ptr<VertexArray> va)
+	void OpenGL_RenderScreen::DrawInstanced(const std::shared_ptr<VertexArray> va, int32_t instanceCount)
 	{
 		va->Bind();
 		uint32_t count = va->GetIndexBuffer()->GetCount();
-		//TODO determine instances dynamically
-		int instances = 10;
-		glDrawElementsInstanced(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr, instances);
+		glDrawElementsInstanced(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr, instanceCount);
 	}
 
 	void OpenGL_RenderScreen::DrawIndexed(const std::shared_ptr<VertexArray> va, uint32_t indexCount)

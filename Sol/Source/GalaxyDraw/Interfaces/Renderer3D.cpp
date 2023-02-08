@@ -143,12 +143,14 @@ namespace GalaxyDraw
 				uint32_t instanceDataSize = (uint32_t)((uint8_t*)meshData.InstanceBufferPtr - (uint8_t*)meshData.InstanceBufferBase);
 				meshData.m_InstanceBuffer->SetData(meshData.InstanceBufferBase, instanceDataSize);
 
+				//meshData.m_InstanceBuffer->SetData(meshData.m_Instances.data(), meshData.m_Instances.size() * sizeof(InstanceData));
+
 				//// Bind textures
 				//for (uint32_t i = 0; i < s_3DData.TextureSlotIndex; i++)
 				//	s_3DData.TextureSlots[i]->Bind(i);
 
 				meshData.Shader->Bind();
-				RenderCommand::DrawInstanced(meshData.m_VertexArray);
+				RenderCommand::DrawInstanced(meshData.m_VertexArray,meshData.m_Instances.size());
 				//RenderCommand::DrawIndexed(meshData.m_VertexArray, meshData.IndexCount);
 				s_3DData.Stats.DrawCalls++;
 			}
@@ -185,8 +187,8 @@ namespace GalaxyDraw
 		{
 			auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
 			meshRenderData.m_Instances.push_back(entityID, InstanceData());
-			meshRenderData.m_InstanceBuffer->SetData(meshRenderData.m_Instances.data(), meshRenderData.m_Instances.size() * sizeof(InstanceData));
-			meshRenderData.m_VertexArray->SetInstanceBuffer(meshRenderData.m_InstanceBuffer);
+			//meshRenderData.m_InstanceBuffer->SetData(meshRenderData.m_Instances.data(), meshRenderData.m_Instances.size() * sizeof(InstanceData));
+			//meshRenderData.m_VertexArray->SetInstanceBuffer(meshRenderData.m_InstanceBuffer);
 			meshRenderData.m_ContainedEntityIds.push_back(entityID);
 			return;
 		}
@@ -230,23 +232,15 @@ namespace GalaxyDraw
 		meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
 
 
-		std::vector<VertexAttributeSpecs> vertAtribSpecs =
-		{
-			VertexAttributeSpecs(3,offsetof(InstanceData, MeshPosition))
-		};
-
 		meshData.m_Instances.push_back(entityID, InstanceData());
-
-		auto instanceStride = sizeof(InstanceData);
-		//TODO make it so we don't manually have to set the layoutOffset
 		//TODO Also make sure that the instance data is able to be modifed and be reflected in the rendering and that it is actually used.
-		meshData.m_InstanceBuffer = InstanceBuffer::Create(
-			s_3DData.MaxMeshes * instanceStride,
-			instanceStride, 
-			vertAtribSpecs,
-			5 //because we have five elements in the shader layout already
-			);
-		meshData.m_InstanceBuffer->SetData(meshData.m_Instances.data(), meshData.m_Instances.size() * sizeof(InstanceData));
+		meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * sizeof(InstanceData));
+
+		meshData.m_InstanceBuffer->SetLayout({
+		{ ShaderDataType::Float3, "A_MeshPosition"     }
+			});
+
+		//meshData.m_InstanceBuffer->SetData(meshData.m_Instances.data(), meshData.m_Instances.size() * sizeof(InstanceData));
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
 		meshData.m_ContainedEntityIds.push_back(entityID);
 
@@ -281,7 +275,7 @@ namespace GalaxyDraw
 				renderData.VertexBufferPtr++;
 			}
 			
-			for (auto& instanceData :renderData.m_Instances)
+			for (auto& instanceData : renderData.m_Instances)
 			{
 				renderData.InstanceBufferPtr->MeshPosition = instanceData.MeshPosition;
 				renderData.InstanceBufferPtr++;
@@ -295,49 +289,49 @@ namespace GalaxyDraw
 	
 	}
 
-	void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform)
-	{
-		SOL_PROFILE_FUNCTION();
-		auto& meshes = model->GetMeshes();
+	//void Renderer3D::DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform)
+	//{
+	//	SOL_PROFILE_FUNCTION();
+	//	auto& meshes = model->GetMeshes();
 
-		for (size_t i = 0; i < meshes.size(); i++)
-		{
-			DrawMesh(model->GetName(), meshes[i], transform);
-		}
-	}
-	//This needs to be changed to reflect instanced rendering instead of teh old batch rendering,
-	//Meaning instead of setting color and stuff here we should be setting the instancedBuffer values
-	void Renderer3D::DrawMesh(const std::string& modelName,const std::shared_ptr<Mesh>& mesh, const glm::mat4& transform)
-	{
-		SOL_PROFILE_FUNCTION();
+	//	for (size_t i = 0; i < meshes.size(); i++)
+	//	{
+	//		DrawMesh(model->GetName(), meshes[i], transform);
+	//	}
+	//}
+	////This needs to be changed to reflect instanced rendering instead of teh old batch rendering,
+	////Meaning instead of setting color and stuff here we should be setting the instancedBuffer values
+	//void Renderer3D::DrawMesh(const std::string& modelName,const std::shared_ptr<Mesh>& mesh, const glm::mat4& transform)
+	//{
+	//	SOL_PROFILE_FUNCTION();
 
-		//TODO make sure that this gives us the correct buffers
-		auto name = mesh->Name + modelName;
-		auto& renderData = s_3DData.MeshDataCollections.Get(name);
+	//	//TODO make sure that this gives us the correct buffers
+	//	auto name = mesh->Name + modelName;
+	//	auto& renderData = s_3DData.MeshDataCollections.Get(name);
 
-		uint32_t vertexCount = mesh->Vertices.size();
-		
-		if (renderData.IndexCount >= renderData.MaxIndicies)
-			NextBatch();
+	//	uint32_t vertexCount = mesh->Vertices.size();
+	//	
+	//	if (renderData.IndexCount >= renderData.MaxIndicies)
+	//		NextBatch();
 
-		//renderData.m_InstanceBuffer->SetData(renderData.Instances.data(), renderData.Instances.size() * sizeof(InstanceData));
+	//	//renderData.m_InstanceBuffer->SetData(renderData.Instances.data(), renderData.Instances.size() * sizeof(InstanceData));
 
-		for (size_t i = 0; i < vertexCount; i++)
-		{
-			auto& vert = mesh->Vertices[i];
-			renderData.VertexBufferPtr->Position = transform * glm::vec4(vert.Position,0.f);
-			renderData.VertexBufferPtr->Normal = vert.Normal;
-			renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
-			renderData.VertexBufferPtr->Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
-			renderData.VertexBufferPtr->EntityID = 0;
-			renderData.VertexBufferPtr++;
-		}
+	//	for (size_t i = 0; i < vertexCount; i++)
+	//	{
+	//		auto& vert = mesh->Vertices[i];
+	//		renderData.VertexBufferPtr->Position = transform * glm::vec4(vert.Position,0.f);
+	//		renderData.VertexBufferPtr->Normal = vert.Normal;
+	//		renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
+	//		renderData.VertexBufferPtr->Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
+	//		renderData.VertexBufferPtr->EntityID = 0;
+	//		renderData.VertexBufferPtr++;
+	//	}
 
-		renderData.IndexCount += mesh->Indices.size();
+	//	renderData.IndexCount += mesh->Indices.size();
 
-		//Mesh count needs to be reset
-		//s_3DData.Stats.MeshCount++;
-	}
+	//	//Mesh count needs to be reset
+	//	//s_3DData.Stats.MeshCount++;
+	//}
 
 	void Renderer3D::UpdateInstanceData(uint32_t entityID, const InstanceData& instanceData)
 	{
@@ -354,8 +348,8 @@ namespace GalaxyDraw
 			}
 			if (!containsEntityId) { continue; }
 			collection.m_Instances[entityID] = instanceData;
-			collection.m_InstanceBuffer->SetData(collection.m_Instances.data(), collection.m_Instances.size() * sizeof(InstanceData));
-			collection.m_VertexArray->SetInstanceBuffer(collection.m_InstanceBuffer);
+			//collection.m_InstanceBuffer->SetData(collection.m_Instances.data(), collection.m_Instances.size() * sizeof(InstanceData));
+			//collection.m_VertexArray->SetInstanceBuffer(collection.m_InstanceBuffer);
 		}
 	}
 
