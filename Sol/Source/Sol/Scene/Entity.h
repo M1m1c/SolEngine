@@ -42,6 +42,8 @@ namespace Sol
 
 		operator bool() const { return m_EntityID != entt::null; }
 
+		operator uint32_t() const { return static_cast<uint32_t>(m_EntityID); }
+
 	private:
 		entt::entity m_EntityID{ entt::null };
 		Scene* m_Scene = nullptr;
