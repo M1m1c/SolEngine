@@ -222,6 +222,7 @@ namespace GalaxyDraw
 		s_3DData.MeshDataCollections.push_back(name, meshData);
 	}
 
+	//Iterates over all mesh data and updates their attributes
 	void Renderer3D::DrawInstances()
 	{
 		SOL_PROFILE_FUNCTION();
@@ -234,8 +235,9 @@ namespace GalaxyDraw
 			auto& mesh = renderData.m_Mesh;
 			uint32_t vertexCount = mesh->Vertices.size();
 
-			if (renderData.IndexCount >= renderData.MaxIndicies)
-				NextBatch();
+			//TODO this seems unnecessary, it never gets called
+			//if (renderData.IndexCount >= renderData.MaxIndicies)
+				//NextBatch();
 
 
 			for (size_t i = 0; i < vertexCount; i++)
