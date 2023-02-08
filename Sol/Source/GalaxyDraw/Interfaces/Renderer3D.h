@@ -37,6 +37,7 @@ namespace GalaxyDraw {
 
 		//TODO create function for handeling when entity is destroyed, needs to remove it self from relevant MeshRenderData m_ContainedEntityIds.
 		//TODO crate function for unloading a model and mesh.
+		//TODO fix so that when models wiht seperate sub meshes get loadad that each sub mesh instantiates a new entity wiht a transform at that sub meshes location relative to parent model.
 
 		//draws all instances of meshes
 		static void DrawInstances();
