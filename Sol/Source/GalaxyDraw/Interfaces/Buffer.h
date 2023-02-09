@@ -64,8 +64,8 @@ namespace GalaxyDraw
 			case GalaxyDraw::ShaderDataType::Float2:	return 2;
 			case GalaxyDraw::ShaderDataType::Float3:	return 3;
 			case GalaxyDraw::ShaderDataType::Float4:	return 4;
-			case GalaxyDraw::ShaderDataType::Mat3:		return 3 * 3;
-			case GalaxyDraw::ShaderDataType::Mat4:		return 4 * 4;
+			case GalaxyDraw::ShaderDataType::Mat3:		return 3;
+			case GalaxyDraw::ShaderDataType::Mat4:		return 4;
 			case GalaxyDraw::ShaderDataType::Int:		return 1;
 			case GalaxyDraw::ShaderDataType::Int2:		return 2;
 			case GalaxyDraw::ShaderDataType::Int3:		return 3;
