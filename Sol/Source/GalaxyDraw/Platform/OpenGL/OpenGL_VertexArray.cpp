@@ -111,9 +111,6 @@ namespace GalaxyDraw
 	//TODO maybe this should be more like the vertex buffer
 	void OpenGL_VertexArray::SetInstanceBuffer(const std::shared_ptr<InstanceBuffer>& instanceBuffer) 
 	{
-		/*glBindVertexArray(ID);
-		instanceBuffer->Bind();
-		m_InstanceBuffer = instanceBuffer;*/
 
 		SOL_CORE_ASSERT(instanceBuffer->GetLayout().GetElements().size(), "instanceBuffer has no layout!");
 
@@ -124,7 +121,6 @@ namespace GalaxyDraw
 		const auto& layout = instanceBuffer->GetLayout();
 		for (const auto& element : layout)
 		{
-	
 
 			glVertexAttribPointer(index,
 				element.GetComponentCount(),
