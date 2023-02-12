@@ -9,17 +9,19 @@
 
 namespace GalaxyDraw {
 
-	//TODO maybe instance data should actually hold refernces to the transforms,
-	// so that when we render a mesh we simply read the reference and forward that info to the draw elements instanced
+	//!VERY IMPORTANT!
+	// The order of intaliseation needs to match the location order in the shader,
+	// otherwise the columns will be missaligned.
 	struct InstanceData
 	{
-		InstanceData(): m_EntityTransform(),
+		InstanceData():
+			m_MeshColor(), 
+			m_EntityTransform()
 		//	m_MeshPosition(),
-			m_MeshColor() 
 		{};
 	
-		glm::mat4 m_EntityTransform;
 		glm::vec4 m_MeshColor;
+		glm::mat4 m_EntityTransform;
 		//glm::vec3 m_MeshPosition;
 	};
 

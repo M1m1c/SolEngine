@@ -205,8 +205,8 @@ namespace GalaxyDraw
 
 		meshData.m_InstanceBuffer->SetLayout({
 		//{ ShaderDataType::Float3, "a_MeshPosition"},
-		{ ShaderDataType::Mat4 , "a_EntityTransform"},
-		{ ShaderDataType::Float4, "a_MeshColor"}
+		{ ShaderDataType::Float4, "a_MeshColor"},
+		{ ShaderDataType::Mat4 , "a_EntityTransform"}
 			});
 
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
