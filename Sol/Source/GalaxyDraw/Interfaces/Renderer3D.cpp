@@ -204,8 +204,9 @@ namespace GalaxyDraw
 		meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * sizeof(InstanceData));
 
 		meshData.m_InstanceBuffer->SetLayout({
-		{ ShaderDataType::Float3, "A_MeshPosition"     },
-		{ ShaderDataType::Float4, "A_MeshColor"     }
+		//{ ShaderDataType::Float3, "a_MeshPosition"},
+		{ ShaderDataType::Mat4 , "a_EntityTransform"},
+		{ ShaderDataType::Float4, "a_MeshColor"}
 			});
 
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
@@ -238,8 +239,9 @@ namespace GalaxyDraw
 
 			for (auto& instanceData : renderData.m_Instances)
 			{
-				renderData.InstanceBufferPtr->MeshPosition = instanceData.MeshPosition;
-				renderData.InstanceBufferPtr->MeshColor = instanceData.MeshColor;
+				renderData.InstanceBufferPtr->m_MeshColor = instanceData.m_MeshColor;
+				//renderData.InstanceBufferPtr->m_MeshPosition = instanceData.m_MeshPosition;
+				renderData.InstanceBufferPtr->m_EntityTransform = instanceData.m_EntityTransform;
 				renderData.InstanceBufferPtr++;
 			}
 

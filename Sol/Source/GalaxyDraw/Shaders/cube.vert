@@ -5,8 +5,11 @@ layout(location = 1) in vec3 a_Normal;
 layout(location = 2) in vec2 a_TexCoord;
 layout(location = 3) in vec4 a_Color;
 layout(location = 4) in int a_EntityID;
-layout(location = 5) in vec3 a_MeshPosition;
-layout(location = 6) in vec4 a_MeshColor;
+
+//_____________Instanced attributes
+//layout(location = 6) in vec3 a_MeshPosition;
+layout(location = 5) in mat4 a_EntityTransform;//when using mat4 the next location is +3 from this location
+layout(location = 9) in vec4 a_MeshColor;
 
 layout(std140, binding = 0) uniform Camera
 {
@@ -30,5 +33,5 @@ void main()
 	Output.TexCoord = a_TexCoord;
 	v_EntityID = a_EntityID;
 
-	gl_Position = u_ViewProjection * vec4(a_Position + a_MeshPosition, 1.0);
+	gl_Position = u_ViewProjection * a_EntityTransform * vec4(a_Position, 1.0);
 }

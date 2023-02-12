@@ -28,6 +28,7 @@ namespace Sol
 		square.AddComponent<MaterialComp>();
 		auto& squareTransform = square.GetComponent<TransformComp>();
 		squareTransform.Position = glm::vec3(1.f, 1.f, 1.f);
+		squareTransform.Rotation = glm::vec3(1.f, 1.f, 1.f);
 		auto& squareMaterial = square.GetComponent<MaterialComp>();
 		squareMaterial.Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
 
@@ -37,6 +38,7 @@ namespace Sol
 		square2.AddComponent<MaterialComp>();
 		auto& square2Transform = square2.GetComponent<TransformComp>();
 		square2Transform.Position = glm::vec3(-1.f, -1.f, -1.f);
+		square2Transform.Scale = glm::vec3(2.f, 1.f, 1.f);
 		auto& square2Material = square2.GetComponent<MaterialComp>();
 		square2Material.Color = glm::vec4(0.f, 0.f, 1.f, 1.f);
 
