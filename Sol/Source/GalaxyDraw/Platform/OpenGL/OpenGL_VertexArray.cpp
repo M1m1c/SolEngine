@@ -75,6 +75,7 @@ namespace GalaxyDraw
 		GLCall(glDeleteVertexArrays(1, &ID));
 	}
 
+	//TODO refactor and fix so that mat4 and mat3s can be added, look at implementation in SetInstanceBuffer
 	void OpenGL_VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo)
 	{
 		SOL_CORE_ASSERT(vbo->GetLayout().GetElements().size(), "VBO has no layout!");
@@ -108,10 +109,9 @@ namespace GalaxyDraw
 		m_IndexBuffer = ebo;
 	}
 
-	//TODO maybe this should be more like the vertex buffer
+
 	void OpenGL_VertexArray::SetInstanceBuffer(const std::shared_ptr<InstanceBuffer>& instanceBuffer)
 	{
-
 		SOL_CORE_ASSERT(instanceBuffer->GetLayout().GetElements().size(), "instanceBuffer has no layout!");
 
 		glBindVertexArray(ID);
@@ -121,8 +121,6 @@ namespace GalaxyDraw
 		const auto& layout = instanceBuffer->GetLayout();
 		for (const auto& element : layout)
 		{
-
-
 			uint8_t locationCount = 1;
 			uint32_t subOffset = 0;
 
@@ -149,8 +147,6 @@ namespace GalaxyDraw
 
 				index++;
 			}
-		
-
 		}
 		m_AttributeIndex = index;
 		m_InstanceBuffer = instanceBuffer;
