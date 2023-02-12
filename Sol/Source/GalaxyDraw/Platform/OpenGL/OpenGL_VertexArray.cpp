@@ -101,7 +101,7 @@ namespace GalaxyDraw
 		m_VertexBuffers.push_back(vbo);
 	}
 
-	void OpenGL_VertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ebo) 
+	void OpenGL_VertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ebo)
 	{
 		glBindVertexArray(ID);
 		ebo->Bind();
@@ -109,7 +109,7 @@ namespace GalaxyDraw
 	}
 
 	//TODO maybe this should be more like the vertex buffer
-	void OpenGL_VertexArray::SetInstanceBuffer(const std::shared_ptr<InstanceBuffer>& instanceBuffer) 
+	void OpenGL_VertexArray::SetInstanceBuffer(const std::shared_ptr<InstanceBuffer>& instanceBuffer)
 	{
 
 		SOL_CORE_ASSERT(instanceBuffer->GetLayout().GetElements().size(), "instanceBuffer has no layout!");
@@ -121,19 +121,39 @@ namespace GalaxyDraw
 		const auto& layout = instanceBuffer->GetLayout();
 		for (const auto& element : layout)
 		{
+			if (element.Type == ShaderDataType::Mat4 || element.Type == ShaderDataType::Mat3)
+			{
+				uint8_t count = element.GetComponentCount();
+				for (uint8_t i = 0; i < count; i++)
+				{
+					glEnableVertexAttribArray(index);
+					uint32_t offset = (element.Offset + sizeof(float) * count * i);
+					glVertexAttribPointer(index,
+						count,
+						ShaderDataTypeToGLBaseType(element.Type),
+						element.Normalized ? GL_TRUE : GL_FALSE,
+						layout.GetStride(),
+						(const void*)offset);
+					GLCall(glVertexAttribDivisor(index, 1));
+					index++;
+				}
+			}
+			else
+			{
+				glEnableVertexAttribArray(index);
+				glVertexAttribPointer(index,
+					element.GetComponentCount(),
+					ShaderDataTypeToGLBaseType(element.Type),
+					element.Normalized ? GL_TRUE : GL_FALSE,
+					layout.GetStride(),
+					(const void*)element.Offset);
+				GLCall(glVertexAttribDivisor(index, 1)); //specifies that this is per instance
 
-			glVertexAttribPointer(index,
-				element.GetComponentCount(),
-				ShaderDataTypeToGLBaseType(element.Type),
-				element.Normalized ? GL_TRUE : GL_FALSE,
-				layout.GetStride(),
-				(const void*)element.Offset);
+				index++;
+			}
 
-			GLCall(glVertexAttribDivisor(index, 1)); //specifies that this is per instance
-			glEnableVertexAttribArray(index);
-
-			index++;
 		}
+		m_AttributeIndex = index;
 		m_InstanceBuffer = instanceBuffer;
 	}
 }

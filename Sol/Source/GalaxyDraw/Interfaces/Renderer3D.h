@@ -13,10 +13,14 @@ namespace GalaxyDraw {
 	// so that when we render a mesh we simply read the reference and forward that info to the draw elements instanced
 	struct InstanceData
 	{
-		InstanceData(): MeshPosition(), MeshColor() {};
-		//InstanceData(glm::vec3 position) : MeshPosition(position) {};
-		glm::vec3 MeshPosition;
-		glm::vec4 MeshColor;
+		InstanceData(): m_EntityTransform(),
+		//	m_MeshPosition(),
+			m_MeshColor() 
+		{};
+	
+		glm::mat4 m_EntityTransform;
+		glm::vec4 m_MeshColor;
+		//glm::vec3 m_MeshPosition;
 	};
 
 	class Renderer3D

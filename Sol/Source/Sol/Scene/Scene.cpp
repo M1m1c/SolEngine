@@ -47,8 +47,9 @@ namespace Sol
 				
 				auto temp = GD_::InstanceData();
 
-				temp.MeshPosition = transform.Position;
-				temp.MeshColor = material.Color;
+				temp.m_EntityTransform = transform;
+				//temp.m_MeshPosition = transform.Position;
+				temp.m_MeshColor = material.Color;
 
 				GD_Renderer3D::UpdateInstanceData(entity, temp);
 				//GD_Renderer3D::DrawModel(model.Model, transform);
