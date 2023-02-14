@@ -16,12 +16,14 @@ namespace GalaxyDraw {
 	{
 		InstanceData():
 			m_MeshColor(), 
-			m_EntityTransform()
+			m_EntityTransform(),
+			m_MeshTransform()
 		//	m_MeshPosition(),
 		{};
 	
 		glm::vec4 m_MeshColor;
 		glm::mat4 m_EntityTransform;
+		glm::mat4 m_MeshTransform;
 		//glm::vec3 m_MeshPosition;
 	};
 

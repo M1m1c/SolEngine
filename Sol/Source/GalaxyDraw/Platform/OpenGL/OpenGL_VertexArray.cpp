@@ -87,16 +87,30 @@ namespace GalaxyDraw
 		const auto& layout = vbo->GetLayout();
 		for (const auto& element : layout)
 		{
-			glEnableVertexAttribArray(index);
+			uint8_t locationCount = 1;
+			uint32_t subOffset = 0;
 
-			glVertexAttribPointer(index,
-				element.GetComponentCount(),
-				ShaderDataTypeToGLBaseType(element.Type),
-				element.Normalized ? GL_TRUE : GL_FALSE,
-				layout.GetStride(),
-				(const void*)element.Offset);
+			if (element.Type == ShaderDataType::Mat4 || element.Type == ShaderDataType::Mat3)
+			{
+				locationCount = element.GetComponentCount();
+				subOffset = sizeof(float) * locationCount;
+			}
 
-			index++;
+			for (size_t i = 0; i < locationCount; i++)
+			{
+				uint32_t offset = element.Offset + (subOffset * i);
+
+				glEnableVertexAttribArray(index);
+
+				glVertexAttribPointer(index,
+					element.GetComponentCount(),
+					ShaderDataTypeToGLBaseType(element.Type),
+					element.Normalized ? GL_TRUE : GL_FALSE,
+					layout.GetStride(),
+					(const void*)offset);
+
+				index++;
+			}
 		}
 		m_AttributeIndex = index;
 		m_VertexBuffers.push_back(vbo);

@@ -1495,6 +1495,12 @@
     <ClInclude Include="Source\Sol\Core\KeyedVector.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_InstanceBuffer.h" />
     <ClInclude Include="Source\Sol\SolDefines.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\TransformComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\NameComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\SpriteRendererComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\CameraComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\ModelComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\MaterialComp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
