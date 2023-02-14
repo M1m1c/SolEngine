@@ -216,6 +216,12 @@
     <ClInclude Include="Source\Sol\Events\MouseEvent.h" />
     <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h" />
     <ClInclude Include="Source\Sol\Scene\Components.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\CameraComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\MaterialComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\ModelComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\NameComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\SpriteRendererComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\TransformComp.h" />
     <ClInclude Include="Source\Sol\Scene\Entity.h" />
     <ClInclude Include="Source\GalaxyDraw\Camera.h" />
     <ClInclude Include="Source\Sol\Scene\Scene.h" />
