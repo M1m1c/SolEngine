@@ -27,7 +27,7 @@ namespace GalaxyDraw
 	private:
 		void LoadModel(const std::string& modelpath);
 		void ProcessNode(aiNode* node, const aiScene* scene);
-		std::shared_ptr<Mesh> ProcessMesh(aiMesh* mesh, const aiScene* scene);
+		std::shared_ptr<Mesh> ProcessMesh(aiMesh* mesh, const aiScene* scene, aiNode* node);
 
 		uint32_t m_RendererID;
 		std::string m_ModelDirectory;
