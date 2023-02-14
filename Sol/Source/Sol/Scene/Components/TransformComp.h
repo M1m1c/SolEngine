@@ -1,11 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
-#include "GalaxyDraw/GalaxyMacros.h"
-#include "GalaxyDraw/SceneCamera.h"
-#include <GalaxyDraw/Interfaces/Texture.h>
-#include <GalaxyDraw/Interfaces/Model.h>
-#include "Sol/SolDefines.h"
 
 namespace Sol
 {
