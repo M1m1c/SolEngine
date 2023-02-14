@@ -7,6 +7,7 @@
 #include <GalaxyDraw/Interfaces/Texture.h>
 #include <GalaxyDraw/Interfaces/Model.h>
 #include "Sol/SolDefines.h"
+#include "Sol/Scene/Components/TransformComp.h"
 
 namespace Sol
 {
@@ -23,34 +24,6 @@ namespace Sol
 		std::string m_Name;
 	};
 
-	struct TransformComp
-	{
-	public:
-
-		TransformComp() = default;
-		TransformComp(const TransformComp&) = default;
-		TransformComp(const glm::vec3& position) : Position(position) { }
-		~TransformComp() = default;
-
-		glm::mat4 GetTransformMatrix() const
-		{
-			glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
-
-			return glm::translate(glm::mat4(1.0f), Position)
-				* rotation
-				* glm::scale(glm::mat4(1.0f), Scale);
-		}
-		
-		operator const glm::mat4 () const {
-			return GetTransformMatrix();
-		}
-
-
-		glm::vec3 Position = { 0.0f, 0.0f, 0.0f };
-		glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
-		glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
-
-	};
 
 	struct SpriteRendererComp
 	{
