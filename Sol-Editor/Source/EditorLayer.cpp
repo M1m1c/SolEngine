@@ -24,11 +24,12 @@ namespace Sol
 		auto square = m_ActiveScene->CreateEntity();
 		square.AddComponent<SpriteRendererComp>(glm::vec4{ 1.f,1.f,0.f,1.f });
 		//TODO There seems to be some origin and offset issues when loading a model containing seperate meshes
-		square.AddComponent<ModelComp>("assets/models/cube.fbx", square.GetID());
+		square.AddComponent<ModelComp>("assets/models/multiSeperate.fbx", square.GetID());
 		square.AddComponent<MaterialComp>();
 		auto& squareTransform = square.GetComponent<TransformComp>();
 		squareTransform.Position = glm::vec3(1.f, 1.f, 1.f);
 		squareTransform.Rotation = glm::vec3(1.f, 1.f, 1.f);
+		squareTransform.Scale = glm::vec3(1.f, 1.f, 1.f);
 		auto& squareMaterial = square.GetComponent<MaterialComp>();
 		squareMaterial.Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
 
