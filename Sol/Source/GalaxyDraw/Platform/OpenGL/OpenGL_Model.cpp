@@ -124,7 +124,7 @@ namespace GalaxyDraw
 		node->mTransformation.Decompose(scale, rotation, position);
 
 		glm::vec3 meshScale = glm::vec3(scale.x, scale.y, scale.z) * 0.01f;
-		glm::vec3 meshRotation = glm::vec3(rotation.x + 1.57079649f , rotation.y, rotation.z);
+		glm::vec3 meshRotation = glm::vec3(rotation.x , rotation.y, rotation.z);
 		glm::vec3 meshPosition = glm::vec3(position.x, position.y, position.z) * 0.01f;
 
 		auto transform = Sol::TransformComp(meshPosition, meshRotation, meshScale);
