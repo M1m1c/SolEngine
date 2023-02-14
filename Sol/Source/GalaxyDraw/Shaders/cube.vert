@@ -9,7 +9,8 @@ layout(location = 4) in int a_EntityID;
 //_____________Instanced attributes
 //layout(location = 6) in vec3 a_MeshPosition;
 layout(location = 5) in vec4 a_MeshColor;
-layout(location = 6) in mat4 a_EntityTransform;//when using mat4 the next location is +3 from this location
+layout(location = 6) in mat4 a_EntityTransform;//when using mat4 the next location is +4 from this location
+layout(location = 10) in mat4 a_MeshTransform;//when using mat4 the next location is +4 from this location
 
 layout(std140, binding = 0) uniform Camera
 {
@@ -33,5 +34,5 @@ void main()
 	Output.TexCoord = a_TexCoord;
 	v_EntityID = a_EntityID;
 
-	gl_Position = u_ViewProjection * a_EntityTransform * vec4(a_Position, 1.0);
+	gl_Position = u_ViewProjection * a_EntityTransform * a_MeshTransform * vec4(a_Position, 1.0);
 }

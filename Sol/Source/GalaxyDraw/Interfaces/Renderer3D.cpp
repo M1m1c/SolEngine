@@ -206,7 +206,8 @@ namespace GalaxyDraw
 		meshData.m_InstanceBuffer->SetLayout({
 		//{ ShaderDataType::Float3, "a_MeshPosition"},
 		{ ShaderDataType::Float4, "a_MeshColor"},
-		{ ShaderDataType::Mat4 , "a_EntityTransform"}
+		{ ShaderDataType::Mat4 , "a_EntityTransform"},
+		{ ShaderDataType::Mat4 , "a_MeshTransform"}
 			});
 
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
@@ -242,6 +243,7 @@ namespace GalaxyDraw
 				renderData.InstanceBufferPtr->m_MeshColor = instanceData.m_MeshColor;
 				//renderData.InstanceBufferPtr->m_MeshPosition = instanceData.m_MeshPosition;
 				renderData.InstanceBufferPtr->m_EntityTransform = instanceData.m_EntityTransform;
+				renderData.InstanceBufferPtr->m_MeshTransform = instanceData.m_MeshTransform;
 				renderData.InstanceBufferPtr++;
 			}
 
@@ -269,7 +271,10 @@ namespace GalaxyDraw
 			}
 
 			if (!containsEntityId) { continue; }
-			collection.m_Instances.Get(entityID) = instanceData;
+			auto& collectionData = collection.m_Instances.Get(entityID);
+			collectionData = instanceData;
+			//TODO fix so we can adjust the meshtransform per instance
+			collectionData.m_MeshTransform = collection.m_Mesh->MeshTransform;
 		}
 	}
 
