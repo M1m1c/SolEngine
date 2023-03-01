@@ -26,7 +26,7 @@ namespace Sol
 		if (m_DirInputs.any())
 		{
 			auto forward = m_CameraTransform.GetForward();
-			auto right = glm::normalize(glm::cross(forward, WorldUp));
+			auto right = m_CameraTransform.GetRight();//glm::normalize(glm::cross(forward, WorldUp));
 
 			m_InputAxis.x = (m_DirInputs[MoveDir::mForward] == 1 ? -1.f : (m_DirInputs[MoveDir::mBack] == 1 ? 1.f : 0.f));
 			m_InputAxis.y = (m_DirInputs[MoveDir::mRight] == 1 ? 1.f : (m_DirInputs[MoveDir::mLeft] == 1 ? -1.f : 0.f));

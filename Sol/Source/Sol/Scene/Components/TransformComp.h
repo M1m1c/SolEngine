@@ -30,9 +30,9 @@ namespace Sol
 			float pitch = glm::radians(Pitch());
 			float yaw = glm::radians(Yaw());
 
-			dir.x = -cos(yaw) * sin(pitch);
-			dir.y = cos(pitch);
-			dir.z = sin(yaw) * sin(pitch);
+			dir.x = sin(yaw) * cos(pitch);
+			dir.y = -sin(pitch);
+			dir.z = -cos(yaw) * cos(pitch);
 
 			return glm::normalize(dir);
 		}
@@ -44,9 +44,9 @@ namespace Sol
 			float yaw = glm::radians(Yaw());
 			float roll = glm::radians(Roll());
 
-			up.x = sin(roll) * sin(yaw) + cos(roll) * sin(pitch) * cos(yaw);
-			up.y = cos(pitch) * sin(roll);
-			up.z = cos(roll) * sin(yaw) * sin(pitch) - sin(roll) * cos(yaw);
+			up.x = sin(pitch) * sin(yaw) * cos(roll) + cos(pitch) * sin(roll);
+			up.y = cos(pitch) * cos(roll);
+			up.z = -sin(yaw) * cos(pitch) * cos(roll) + sin(pitch) * sin(roll);
 
 			return glm::normalize(up);
 		}
@@ -54,13 +54,13 @@ namespace Sol
 		glm::vec3 GetRight()
 		{
 			glm::vec3 right;
-			float yaw = glm::radians(Yaw());
 			float pitch = glm::radians(Pitch());
+			float yaw = glm::radians(Yaw());
 			float roll = glm::radians(Roll());
 
-			right.x = cos(yaw) * cos(pitch);
+			right.x = cos(yaw) * cos(roll) - sin(yaw) * sin(pitch) * sin(roll);
 			right.y = sin(yaw) * cos(pitch);
-			right.z = sin(pitch);
+			right.z = cos(yaw) * sin(roll) + sin(yaw) * sin(pitch) * cos(roll);
 
 			return glm::normalize(right);
 		}
