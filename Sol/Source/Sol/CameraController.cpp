@@ -18,52 +18,39 @@ namespace Sol
 	//TODO make sure that all controllsare in relation to rotation and posiiton
 	void CameraController::OnUpdate(TimeStep deltaTime)
 	{
-		if (Input::IsKeyPressed(SOL_KEY_D))
+
+		UpdateInputs();
+
+		float dt = deltaTime;
+
+		if (m_DirInputs.any())
 		{
-			
-			m_CameraTransform.Position.x += m_CameraSpeed * deltaTime;
-		}
-		else if (Input::IsKeyPressed(SOL_KEY_A))
-		{
-			m_CameraTransform.Position.x += -m_CameraSpeed * deltaTime;
+			auto forward = m_CameraTransform.GetForward();
+			auto right = glm::normalize(glm::cross(forward, WorldUp));
+
+			m_InputAxis.x = (m_DirInputs[MoveDir::mForward] == 1 ? -1.f : (m_DirInputs[MoveDir::mBack] == 1 ? 1.f : 0.f));
+			m_InputAxis.y = (m_DirInputs[MoveDir::mRight] == 1 ? 1.f : (m_DirInputs[MoveDir::mLeft] == 1 ? -1.f : 0.f));
+			m_InputAxis.z = (m_DirInputs[MoveDir::mUp] == 1 ? 1.f : (m_DirInputs[MoveDir::mDown] == 1 ? -1.f : 0.f));
+
+			glm::vec3 dir = glm::normalize((forward * m_InputAxis.x) + (right * m_InputAxis.y) + (WorldUp * m_InputAxis.z));
+
+			dir = glm::isnan(dir).b ? glm::vec3(0.f) : dir;
+			m_CameraTransform.Position = m_CameraTransform.Position + (dir * m_CameraSpeed * dt);
 		}
 
-		if (Input::IsKeyPressed(SOL_KEY_W))
-		{
-			m_CameraTransform.Position.y += m_CameraSpeed * deltaTime;
-		}
-		else if (Input::IsKeyPressed(SOL_KEY_S))
-		{
-			m_CameraTransform.Position.y += -m_CameraSpeed * deltaTime;
-		}
+		//Rotation
+		float camYawDir = 0;
+		float camPitchDir = 0;
 
-		if (Input::IsKeyPressed(SOL_KEY_R))
+		if (m_RotInputs.any())
 		{
-			
-			m_CameraTransform.Rotation.x += m_CameraSpeed * deltaTime;
+			camYawDir = (m_RotInputs[RotDir::rRight] == 1 ? -m_RotSpeed : (m_RotInputs[RotDir::rLeft] == 1 ? m_RotSpeed : 0.f));
+			camPitchDir = (m_RotInputs[RotDir::rUp] == 1 ? m_RotSpeed : (m_RotInputs[RotDir::rDown] == 1 ? -m_RotSpeed : 0.f));
 		}
-		else if (Input::IsKeyPressed(SOL_KEY_F))
-		{
-			m_CameraTransform.Rotation.x += -m_CameraSpeed * deltaTime;
-		}
+		m_CameraTransform.Yaw() += glm::radians(camYawDir) * m_Sensitivity * deltaTime;
+		m_CameraTransform.Pitch() += glm::radians(camPitchDir) * m_Sensitivity * deltaTime;
 
-		if (Input::IsKeyPressed(SOL_KEY_Q))
-		{
-			m_CameraTransform.Rotation.y += m_CameraSpeed * deltaTime;
-		}
-		else if (Input::IsKeyPressed(SOL_KEY_E))
-		{
-			m_CameraTransform.Rotation.y += -m_CameraSpeed  * deltaTime;
-		}
 
-		if (Input::IsKeyPressed(SOL_KEY_T))
-		{
-			m_CameraTransform.Rotation.z += m_CameraSpeed  * deltaTime;
-		}
-		else if (Input::IsKeyPressed(SOL_KEY_G))
-		{
-			m_CameraTransform.Rotation.z += -m_CameraSpeed * deltaTime;
-		}
 	}
 
 	void CameraController::OnEvent(Event& e)
@@ -87,6 +74,19 @@ namespace Sol
 	bool CameraController::OnWindowResized(WindowResizeEvent& e)
 	{
 		return false;
+	}
+
+	void CameraController::UpdateInputs()
+	{
+		m_DirInputs[MoveDir::mForward] = Input::IsKeyPressed(SOL_KEY_W);
+		m_DirInputs[MoveDir::mBack] = Input::IsKeyPressed(SOL_KEY_S);
+		m_DirInputs[MoveDir::mRight] = Input::IsKeyPressed(SOL_KEY_D);
+		m_DirInputs[MoveDir::mLeft] = Input::IsKeyPressed(SOL_KEY_A);
+		
+		m_RotInputs[RotDir::rRight] = Input::IsKeyPressed(SOL_KEY_E);
+		m_RotInputs[RotDir::rLeft] = Input::IsKeyPressed(SOL_KEY_Q);
+		m_RotInputs[RotDir::rUp] = Input::IsKeyPressed(SOL_KEY_R);
+		m_RotInputs[RotDir::rDown] = Input::IsKeyPressed(SOL_KEY_F);
 	}
 
 }
