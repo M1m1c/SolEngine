@@ -37,21 +37,21 @@ namespace Sol
 			m_CameraTransform.Position.y += -m_CameraSpeed * deltaTime;
 		}
 
-		if (Input::IsKeyPressed(SOL_KEY_E))
+		if (Input::IsKeyPressed(SOL_KEY_R))
 		{
 			
 			m_CameraTransform.Rotation.x += m_CameraSpeed * deltaTime;
 		}
-		else if (Input::IsKeyPressed(SOL_KEY_Q))
+		else if (Input::IsKeyPressed(SOL_KEY_F))
 		{
 			m_CameraTransform.Rotation.x += -m_CameraSpeed * deltaTime;
 		}
 
-		if (Input::IsKeyPressed(SOL_KEY_R))
+		if (Input::IsKeyPressed(SOL_KEY_Q))
 		{
 			m_CameraTransform.Rotation.y += m_CameraSpeed * deltaTime;
 		}
-		else if (Input::IsKeyPressed(SOL_KEY_F))
+		else if (Input::IsKeyPressed(SOL_KEY_E))
 		{
 			m_CameraTransform.Rotation.y += -m_CameraSpeed  * deltaTime;
 		}
