@@ -9,6 +9,11 @@ namespace GalaxyDraw
 		RecalcProjection();
 	}
 
+	void SceneCamera::ChangeOrthoSize(float sizeChange) 
+	{
+		SetOrtho(glm::max(m_OrthoSize + sizeChange, 0.1f), m_OrthoNear, m_OrthoFar);
+	}
+
 	void SceneCamera::SetOrtho(float size, float nearClip, float farClip)
 	{
 		m_OrthoSize = size;

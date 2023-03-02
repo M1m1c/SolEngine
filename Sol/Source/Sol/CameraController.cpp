@@ -36,6 +36,7 @@ namespace Sol
 
 			dir = glm::isnan(dir).b ? glm::vec3(0.f) : dir;
 			m_CameraTransform.Position = m_CameraTransform.Position + (dir * m_CameraSpeed * dt);
+			m_SceneCamera.Camera.ChangeOrthoSize(m_InputAxis.x * dt);
 		}
 
 		//Rotation

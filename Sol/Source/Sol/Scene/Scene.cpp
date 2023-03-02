@@ -27,7 +27,7 @@ namespace Sol
 
 				if (camera.IsPirmary)
 				{
-					mainCamera = &camera.OrthoCamera;
+					mainCamera = &camera.Camera;
 					cameraTransform = &transform.GetTransformMatrix();
 					break;
 				}
@@ -85,7 +85,7 @@ namespace Sol
 
 			if (!camComp.IsFixedAspectRatio)
 			{
-				camComp.OrthoCamera.SetViewportSize(width, height);
+				camComp.Camera.SetViewportSize(width, height);
 			}
 
 		}

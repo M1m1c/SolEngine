@@ -6,7 +6,7 @@ namespace Sol
 {
 	struct CameraComp
 	{
-		GalaxyDraw::SceneCamera OrthoCamera;
+		GalaxyDraw::SceneCamera Camera;
 		bool IsPirmary = true;
 		bool IsFixedAspectRatio = false;
 

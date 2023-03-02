@@ -10,6 +10,7 @@ namespace GalaxyDraw
 	public:
 		SceneCamera();
 		virtual ~SceneCamera() = default;
+		void ChangeOrthoSize(float sizeChange);
 		void SetOrtho(float size, float nearClip, float farClip);
 
 		void SetViewportSize(uint32_t width, uint32_t height);
