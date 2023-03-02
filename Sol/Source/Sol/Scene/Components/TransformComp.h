@@ -22,7 +22,8 @@ namespace Sol
 			glm::mat4 rotationMatrix = GetRotationMatrix();
 			glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), Scale);
 
-			return transformMatrix * rotationMatrix * scaleMatrix;
+			glm::mat4 retval = transformMatrix * rotationMatrix * scaleMatrix;
+			return SanitizeMatrix(transformMatrix * rotationMatrix * scaleMatrix);
 		}
 
 		glm::mat4 GetViewMatrix() const
@@ -30,10 +31,10 @@ namespace Sol
 			glm::mat4 viewMatrix = glm::mat4(1.0f);
 
 			viewMatrix = glm::translate(viewMatrix, -Position);
-			viewMatrix = viewMatrix * glm::toMat4(glm::quat(glm::vec3(Rotation)));
+			viewMatrix = viewMatrix * GetRotationMatrix();
 			viewMatrix = glm::inverse(viewMatrix);
 
-			return viewMatrix;
+			return SanitizeMatrix(viewMatrix);
 		}
 
 		glm::vec3 GetForward()
@@ -69,17 +70,38 @@ namespace Sol
 
 		operator const glm::mat4() const { return GetTransformMatrix(); }
 
-		glm::mat4 GetRotationMatrix() const { return glm::toMat4(glm::quat(Rotation)); }
+		glm::mat4 GetRotationMatrix() const { return SanitizeMatrix(glm::toMat4(glm::quat(glm::radians(Rotation)))); }
 
-		float& Pitch() { return Rotation.x; }
+		float& Pitch() { return Rotation.x = std::fmod(Rotation.x, 360.0f); }
 
-		float& Yaw() { return Rotation.y; }
+		float& Yaw() { return Rotation.y = std::fmod(Rotation.y, 360.0f); }
 
-		float& Roll() { return Rotation.z; }
+		float& Roll() { return Rotation.z = std::fmod(Rotation.z, 360.0f); }
 
 		glm::vec3 Position = { 0.0f, 0.0f, 0.0f };
 		glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
 		glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
+
+	private:
+		glm::mat4 SanitizeMatrix(const glm::mat4& matrix) const
+		{
+			glm::mat4 sanitizedMatrix = matrix;
+
+			// Loop through each element in the matrix
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					// Check if the element is -0.0
+					if (sanitizedMatrix[i][j] == -0.0f)
+					{
+						sanitizedMatrix[i][j] = 0.0f;
+					}
+				}
+			}
+
+			return sanitizedMatrix;
+		}
 
 	};
 }
