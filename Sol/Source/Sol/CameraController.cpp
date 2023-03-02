@@ -82,7 +82,9 @@ namespace Sol
 		m_DirInputs[MoveDir::mBack] = Input::IsKeyPressed(SOL_KEY_S);
 		m_DirInputs[MoveDir::mRight] = Input::IsKeyPressed(SOL_KEY_D);
 		m_DirInputs[MoveDir::mLeft] = Input::IsKeyPressed(SOL_KEY_A);
-		
+		m_DirInputs[MoveDir::mUp] = Input::IsKeyPressed(SOL_KEY_SPACE);
+		m_DirInputs[MoveDir::mDown] = Input::IsKeyPressed(SOL_KEY_LEFT_SHIFT);
+
 		m_RotInputs[RotDir::rRight] = Input::IsKeyPressed(SOL_KEY_E);
 		m_RotInputs[RotDir::rLeft] = Input::IsKeyPressed(SOL_KEY_Q);
 		m_RotInputs[RotDir::rUp] = Input::IsKeyPressed(SOL_KEY_R);
