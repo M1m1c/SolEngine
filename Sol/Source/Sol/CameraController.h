@@ -33,7 +33,7 @@ namespace Sol
 		std::bitset<4> m_RotInputs;
 
 		float m_CameraSpeed = 3.f;
-		float m_RotSpeed = 60.f;
+		float m_RotSpeed = 4000.f;
 		float m_Sensitivity = 1.f;
 
 		enum MoveDir
