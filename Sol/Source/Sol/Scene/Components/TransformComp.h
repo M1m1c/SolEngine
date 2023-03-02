@@ -18,12 +18,13 @@ namespace Sol
 
 		glm::mat4 GetTransformMatrix() const
 		{
-			glm::mat4 rotation = GetRotationMatrix();
+			glm::mat4 transformMatrix = glm::translate(glm::mat4(1.0f), Position);
+			glm::mat4 rotationMatrix = GetRotationMatrix();
+			glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), Scale);
 
-			return glm::translate(glm::mat4(1.0f), Position)
-				* rotation
-				* glm::scale(glm::mat4(1.0f), Scale);
+			return transformMatrix * rotationMatrix * scaleMatrix;
 		}
+
 
 		glm::vec3 GetForward()
 		{
