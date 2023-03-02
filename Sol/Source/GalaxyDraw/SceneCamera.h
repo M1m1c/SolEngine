@@ -33,5 +33,25 @@ namespace GalaxyDraw
 		float m_AspectRatio = 1.0f;
 
 		bool m_IsPerspective = false;
+
+		glm::mat4 SanitizeMatrix(const glm::mat4& matrix) const
+		{
+			glm::mat4 sanitizedMatrix = matrix;
+
+			// Loop through each element in the matrix
+			for (int i = 0; i < 4; i++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					// Check if the element is -0.0
+					if (sanitizedMatrix[i][j] == -0.0f)
+					{
+						sanitizedMatrix[i][j] = 0.0f;
+					}
+				}
+			}
+
+			return sanitizedMatrix;
+		}
 	};
 }

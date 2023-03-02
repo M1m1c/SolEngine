@@ -2,14 +2,14 @@
 #include "SceneCamera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace GalaxyDraw 
+namespace GalaxyDraw
 {
 	SceneCamera::SceneCamera()
 	{
 		RecalcProjection();
 	}
 
-	void SceneCamera::ChangeOrthoSize(float sizeChange) 
+	void SceneCamera::ChangeOrthoSize(float sizeChange)
 	{
 		SetOrtho(glm::max(m_OrthoSize + sizeChange, 0.1f), m_OrthoNear, m_OrthoFar);
 	}
@@ -34,17 +34,19 @@ namespace GalaxyDraw
 		{
 
 		}
-		else 
+		else
 		{
 			float orhtoLeft = -m_OrthoSize * m_AspectRatio * 0.5f;
 			float orhtoRight = m_OrthoSize * m_AspectRatio * 0.5f;
 			float orhtoBottom = -m_OrthoSize * 0.5f;
 			float orhtoTop = m_OrthoSize * 0.5f;
 
-			m_Projection = glm::ortho(
-				orhtoLeft, orhtoRight,
-				orhtoBottom, orhtoTop,
-				m_OrthoNear, m_OrthoFar);
+			m_Projection = SanitizeMatrix(
+				glm::ortho(
+					orhtoLeft, orhtoRight,
+					orhtoBottom, orhtoTop,
+					m_OrthoNear, m_OrthoFar)
+			);
 		}
 	}
 }
