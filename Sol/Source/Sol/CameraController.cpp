@@ -39,7 +39,7 @@ namespace Sol
 			m_CameraTransform.Position = m_CameraTransform.Position + (dir * m_CameraSpeed * dt);
 
 			if (!isCameraPesrpective)
-				m_SceneCamera.Camera.ChangeOrthoSize(m_InputAxis.x * dt);
+				m_SceneCamera.Camera.ChangeOrthoSize(m_InputAxis.x * m_CameraSpeed * dt);
 		}
 
 		//Rotation
