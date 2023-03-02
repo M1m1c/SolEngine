@@ -77,11 +77,11 @@ namespace GalaxyDraw
 		}
 	}
 
-	void Renderer3D::BeginScene(const glm::mat4& projection, const glm::mat4& transform)
+	void Renderer3D::BeginScene(const glm::mat4& projection, const glm::mat4& view)
 	{
 		SOL_PROFILE_FUNCTION();
 
-		s_3DData.CameraBuffer.ViewProjection = projection * glm::inverse(transform);
+		s_3DData.CameraBuffer.ViewProjection = projection * view;
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
 
 		Submit();

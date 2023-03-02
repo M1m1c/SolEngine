@@ -25,6 +25,16 @@ namespace Sol
 			return transformMatrix * rotationMatrix * scaleMatrix;
 		}
 
+		glm::mat4 GetViewMatrix() const
+		{
+			glm::mat4 viewMatrix = glm::mat4(1.0f);
+
+			viewMatrix = glm::translate(viewMatrix, -Position);
+			viewMatrix = viewMatrix * glm::toMat4(glm::quat(glm::vec3(Rotation)));
+			viewMatrix = glm::inverse(viewMatrix);
+
+			return viewMatrix;
+		}
 
 		glm::vec3 GetForward()
 		{

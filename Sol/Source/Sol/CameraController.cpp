@@ -30,8 +30,8 @@ namespace Sol
 			auto right = m_CameraTransform.GetRight();
 
 			m_InputAxis.x = (m_DirInputs[MoveDir::mForward] == 1 ? -1.f : (m_DirInputs[MoveDir::mBack] == 1 ? 1.f : 0.f));
-			m_InputAxis.y = (m_DirInputs[MoveDir::mRight] == 1 ? 1.f : (m_DirInputs[MoveDir::mLeft] == 1 ? -1.f : 0.f));
-			m_InputAxis.z = (m_DirInputs[MoveDir::mUp] == 1 ? 1.f : (m_DirInputs[MoveDir::mDown] == 1 ? -1.f : 0.f));
+			m_InputAxis.y = (m_DirInputs[MoveDir::mRight] == 1 ? -1.f : (m_DirInputs[MoveDir::mLeft] == 1 ? 1.f : 0.f));
+			m_InputAxis.z = (m_DirInputs[MoveDir::mUp] == 1 ? -1.f : (m_DirInputs[MoveDir::mDown] == 1 ? 1.f : 0.f));
 
 			glm::vec3 dir = glm::normalize((forward * m_InputAxis.x) + (right * m_InputAxis.y) + (WorldUp * m_InputAxis.z));
 

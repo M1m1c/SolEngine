@@ -18,7 +18,7 @@ namespace Sol
 	{
 
 		GD_Camera* mainCamera = nullptr;
-		glm::mat4* cameraTransform = nullptr;
+		glm::mat4 cameraViewMat = glm::mat4(1.f);
 		{
 			auto view = m_Registry.view<TransformComp, CameraComp>();
 			for (auto entity : view)
@@ -28,7 +28,7 @@ namespace Sol
 				if (camera.IsPirmary)
 				{
 					mainCamera = &camera.Camera;
-					cameraTransform = &transform.GetTransformMatrix();
+					cameraViewMat = transform.GetViewMatrix();
 					break;
 				}
 			}
@@ -37,8 +37,8 @@ namespace Sol
 
 		if (mainCamera)
 		{
-
-			GD_Renderer3D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+			glm::mat4 projectionMat = mainCamera->GetProjection();
+			GD_Renderer3D::BeginScene(projectionMat, cameraViewMat);
 
 			auto group3D = m_Registry.group<ModelComp>(entt::get<TransformComp,MaterialComp>);
 			for (auto entity : group3D)
@@ -59,7 +59,7 @@ namespace Sol
 			GD_Renderer3D::EndScene();
 
 
-			GD_Renderer2D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+			GD_Renderer2D::BeginScene(projectionMat, cameraViewMat);
 
 			auto group2D = m_Registry.group<SpriteRendererComp>(entt::get<TransformComp>);
 			for (auto entity : group2D)
