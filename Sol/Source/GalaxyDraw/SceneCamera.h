@@ -27,8 +27,8 @@ namespace GalaxyDraw
 		void RecalcProjection();
 
 		float m_OrthoSize = 10.f;
-		float m_OrthoNear = -10.f;
-		float m_OrthoFar = 10.f;
+		float m_OrthoNear = -100.f;
+		float m_OrthoFar = 100.f;
 
 		float m_AspectRatio = 1.0f;
 
