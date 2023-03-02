@@ -25,7 +25,8 @@ namespace Sol
 
 		if (m_DirInputs.any())
 		{
-			auto forward = m_SceneCamera.Camera.GetIsPerspective() ? m_CameraTransform.GetForward() : glm::vec3(0.f, .0f, .0f);
+			auto isCameraPesrpective = m_SceneCamera.Camera.GetIsPerspective();
+			auto forward = isCameraPesrpective ? m_CameraTransform.GetForward() : glm::vec3(0.f, .0f, .0f);
 			auto right = m_CameraTransform.GetRight();
 
 			m_InputAxis.x = (m_DirInputs[MoveDir::mForward] == 1 ? -1.f : (m_DirInputs[MoveDir::mBack] == 1 ? 1.f : 0.f));
@@ -37,21 +38,24 @@ namespace Sol
 			dir = glm::isnan(dir).b ? glm::vec3(0.f) : dir;
 			m_CameraTransform.Position = m_CameraTransform.Position + (dir * m_CameraSpeed * dt);
 
-			m_SceneCamera.Camera.ChangeOrthoSize(m_InputAxis.x * dt);
+			if (!isCameraPesrpective)
+				m_SceneCamera.Camera.ChangeOrthoSize(m_InputAxis.x * dt);
 		}
 
 		//Rotation
-		float camYawDir = 0;
-		float camPitchDir = 0;
+
 
 		if (m_RotInputs.any())
 		{
+			float camYawDir = 0;
+			float camPitchDir = 0;
+
 			camYawDir = (m_RotInputs[RotDir::rRight] == 1 ? -m_RotSpeed : (m_RotInputs[RotDir::rLeft] == 1 ? m_RotSpeed : 0.f));
 			camPitchDir = (m_RotInputs[RotDir::rUp] == 1 ? m_RotSpeed : (m_RotInputs[RotDir::rDown] == 1 ? -m_RotSpeed : 0.f));
-		}
-		m_CameraTransform.Yaw() += glm::radians(camYawDir) * m_Sensitivity * deltaTime;
-		m_CameraTransform.Pitch() += glm::radians(camPitchDir) * m_Sensitivity * deltaTime;
 
+			m_CameraTransform.Yaw() += glm::radians(camYawDir) * m_Sensitivity * deltaTime;
+			m_CameraTransform.Pitch() += glm::radians(camPitchDir) * m_Sensitivity * deltaTime;
+		}
 
 	}
 
