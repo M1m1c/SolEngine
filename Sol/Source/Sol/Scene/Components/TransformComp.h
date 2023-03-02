@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/euler_angles.hpp>
 
 namespace Sol
 {
@@ -17,7 +18,7 @@ namespace Sol
 
 		glm::mat4 GetTransformMatrix() const
 		{
-			glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
+			glm::mat4 rotation = GetRotationMatrix();
 
 			return glm::translate(glm::mat4(1.0f), Position)
 				* rotation
@@ -26,60 +27,44 @@ namespace Sol
 
 		glm::vec3 GetForward()
 		{
-			glm::vec3 dir;
-			float pitch = glm::radians(Pitch());
-			float yaw = glm::radians(Yaw());
+			glm::mat4 rotationMatrix = GetRotationMatrix();
 
-			dir.x = sin(yaw) * cos(pitch);
-			dir.y = -sin(pitch);
-			dir.z = -cos(yaw) * cos(pitch);
+			glm::vec3 forward = glm::vec3(0.0f, 0.0f, -1.0f);
+			forward = glm::normalize(glm::vec3(rotationMatrix * glm::vec4(forward, 0.0f)));
 
-			return glm::normalize(dir);
+			return forward;
 		}
 
 		glm::vec3 GetUp()
 		{
-			glm::vec3 up;
-			float pitch = glm::radians(Pitch());
-			float yaw = glm::radians(Yaw());
-			float roll = glm::radians(Roll());
+			glm::mat4 rotationMatrix = GetRotationMatrix();
 
-			up.x = sin(pitch) * sin(yaw) * cos(roll) + cos(pitch) * sin(roll);
-			up.y = cos(pitch) * cos(roll);
-			up.z = -sin(yaw) * cos(pitch) * cos(roll) + sin(pitch) * sin(roll);
+			glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+			up = glm::normalize(glm::vec3(rotationMatrix * glm::vec4(up, 0.0f)));
 
-			return glm::normalize(up);
+			return up;
 		}
 
 		glm::vec3 GetRight()
 		{
-			glm::vec3 right;
-			float pitch = glm::radians(Pitch());
-			float yaw = glm::radians(Yaw());
-			float roll = glm::radians(Roll());
+			glm::mat4 rotationMatrix = GetRotationMatrix();
 
-			right.x = cos(yaw) * cos(roll) - sin(yaw) * sin(pitch) * sin(roll);
-			right.y = sin(yaw) * cos(pitch);
-			right.z = cos(yaw) * sin(roll) + sin(yaw) * sin(pitch) * cos(roll);
+			glm::vec3 right = glm::vec3(1.0f, 0.0f, 0.0f);
+			right = glm::normalize(glm::vec3(rotationMatrix * glm::vec4(right, 0.0f)));
 
-			return glm::normalize(right);
+			return right;
 		}
 
-		operator const glm::mat4() const {
-			return GetTransformMatrix();
-		}
 
-		float& Pitch() {
-			return Rotation.x;
-		}
+		operator const glm::mat4() const { return GetTransformMatrix(); }
 
-		float& Yaw() {
-			return Rotation.y;
-		}
+		glm::mat4 GetRotationMatrix() const { return glm::toMat4(glm::quat(Rotation)); }
 
-		float& Roll() {
-			return Rotation.z;
-		}
+		float& Pitch() { return Rotation.x; }
+
+		float& Yaw() { return Rotation.y; }
+
+		float& Roll() { return Rotation.z; }
 
 		glm::vec3 Position = { 0.0f, 0.0f, 0.0f };
 		glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
