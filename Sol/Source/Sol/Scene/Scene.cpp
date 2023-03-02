@@ -35,16 +35,17 @@ namespace Sol
 		}
 
 
+
 		if (mainCamera)
 		{
 			glm::mat4 projectionMat = mainCamera->GetProjection();
 			GD_Renderer3D::BeginScene(projectionMat, cameraViewMat);
 
-			auto group3D = m_Registry.group<ModelComp>(entt::get<TransformComp,MaterialComp>);
+			auto group3D = m_Registry.group<ModelComp>(entt::get<TransformComp, MaterialComp>);
 			for (auto entity : group3D)
 			{
 				auto& [transform, material] = group3D.get<TransformComp, MaterialComp>(entity);
-				
+
 				auto temp = GD_::InstanceData();
 
 				temp.m_EntityTransform = transform;
