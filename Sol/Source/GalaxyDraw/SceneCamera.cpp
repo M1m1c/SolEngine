@@ -30,14 +30,21 @@ namespace GalaxyDraw
 
 	void SceneCamera::RecalcProjection()
 	{
-		float orhtoLeft = -m_OrthoSize * m_AspectRatio * 0.5f;
-		float orhtoRight = m_OrthoSize * m_AspectRatio * 0.5f;
-		float orhtoBottom = -m_OrthoSize * 0.5f;
-		float orhtoTop = m_OrthoSize * 0.5f;
+		if (m_IsPerspective)
+		{
 
-		m_Projection = glm::ortho(
-			orhtoLeft, orhtoRight,
-			orhtoBottom, orhtoTop,
-			m_OrthoNear, m_OrthoFar);
+		}
+		else 
+		{
+			float orhtoLeft = -m_OrthoSize * m_AspectRatio * 0.5f;
+			float orhtoRight = m_OrthoSize * m_AspectRatio * 0.5f;
+			float orhtoBottom = -m_OrthoSize * 0.5f;
+			float orhtoTop = m_OrthoSize * 0.5f;
+
+			m_Projection = glm::ortho(
+				orhtoLeft, orhtoRight,
+				orhtoBottom, orhtoTop,
+				m_OrthoNear, m_OrthoFar);
+		}
 	}
 }

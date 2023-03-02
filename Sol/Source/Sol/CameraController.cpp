@@ -6,7 +6,7 @@
 namespace Sol
 {
 
-	CameraController::CameraController(TransformComp& camTransform, CameraComp& sceneCamera):
+	CameraController::CameraController(TransformComp& camTransform, CameraComp& sceneCamera) :
 		m_CameraTransform(camTransform),
 		m_SceneCamera(sceneCamera)
 	{
@@ -25,8 +25,8 @@ namespace Sol
 
 		if (m_DirInputs.any())
 		{
-			auto forward = m_CameraTransform.GetForward();
-			auto right = m_CameraTransform.GetRight();//glm::normalize(glm::cross(forward, WorldUp));
+			auto forward = m_SceneCamera.Camera.GetIsPerspective() ? m_CameraTransform.GetForward() : glm::vec3(0.f, .0f, .0f);
+			auto right = m_CameraTransform.GetRight();
 
 			m_InputAxis.x = (m_DirInputs[MoveDir::mForward] == 1 ? -1.f : (m_DirInputs[MoveDir::mBack] == 1 ? 1.f : 0.f));
 			m_InputAxis.y = (m_DirInputs[MoveDir::mRight] == 1 ? 1.f : (m_DirInputs[MoveDir::mLeft] == 1 ? -1.f : 0.f));
@@ -36,6 +36,7 @@ namespace Sol
 
 			dir = glm::isnan(dir).b ? glm::vec3(0.f) : dir;
 			m_CameraTransform.Position = m_CameraTransform.Position + (dir * m_CameraSpeed * dt);
+
 			m_SceneCamera.Camera.ChangeOrthoSize(m_InputAxis.x * dt);
 		}
 
@@ -65,10 +66,10 @@ namespace Sol
 	// do it in OnUpdate so we can get smoother and shorter zoom steps
 	bool CameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		
-	/*	m_ZoomLevel = glm::max(m_ZoomLevel- e.GetYOffset(),0.1f);
-		m_Camera->SetProjection(m_AspectRatio * m_ZoomLevel);
-		*/
+
+		/*	m_ZoomLevel = glm::max(m_ZoomLevel- e.GetYOffset(),0.1f);
+			m_Camera->SetProjection(m_AspectRatio * m_ZoomLevel);
+			*/
 		return false;
 	}
 
