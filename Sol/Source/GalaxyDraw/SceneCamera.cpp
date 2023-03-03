@@ -9,11 +9,6 @@ namespace GalaxyDraw
 		RecalcProjection();
 	}
 
-	void SceneCamera::ChangeOrthoSize(float sizeChange)
-	{
-		SetOrtho(glm::max(m_OrthoSize + sizeChange, 0.1f), m_NearClippingPlane, m_FarClippingPlane);
-	}
-
 	void SceneCamera::SetOrtho(float size, float nearClip, float farClip)
 	{
 		m_OrthoSize = size;
@@ -22,9 +17,23 @@ namespace GalaxyDraw
 		RecalcProjection();
 	}
 
+	void SceneCamera::SetPerspective(float FOV, float nearClip, float farClip)
+	{
+		m_FOV = FOV;
+		m_NearClippingPlane = nearClip;
+		m_FarClippingPlane = farClip;
+		RecalcProjection();
+	}
+
 	void SceneCamera::SetViewportSize(uint32_t width, uint32_t height)
 	{
 		m_AspectRatio = (float)width / (float)height;
+		RecalcProjection();
+	}
+
+	void SceneCamera::ChangeOrthoSize(float sizeChange)
+	{
+		m_OrthoSize = glm::max(m_OrthoSize + sizeChange, 0.1f);
 		RecalcProjection();
 	}
 

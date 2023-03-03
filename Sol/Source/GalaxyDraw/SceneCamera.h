@@ -10,14 +10,19 @@ namespace GalaxyDraw
 	public:
 		SceneCamera();
 		virtual ~SceneCamera() = default;
-		void ChangeOrthoSize(float sizeChange);
+		
 		void SetOrtho(float size, float nearClip, float farClip);
+		void SetPerspective(float FOV, float nearClip, float farClip);
 
 		void SetViewportSize(uint32_t width, uint32_t height);
 
 
 		float GetOrthoSize() { return m_OrthoSize; }
 		void SetOrthoSize(float size) { m_OrthoSize = size; RecalcProjection(); }
+		void ChangeOrthoSize(float sizeChange);
+
+		void SetFOV(float FOV) { m_FOV = FOV; RecalcProjection(); }
+		float GetFOV() { return m_FOV; }
 
 		bool GetIsPerspective() { return m_IsPerspective; }
 		void SetIsPerspective(bool b) { m_IsPerspective = b; }
