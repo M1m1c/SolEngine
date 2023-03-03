@@ -12,16 +12,16 @@ namespace GalaxyDraw
 	void SceneCamera::SetOrtho(float size, float nearClip, float farClip)
 	{
 		m_OrthoSize = size;
-		m_NearClippingPlane = nearClip;
-		m_FarClippingPlane = farClip;
+		m_ONearClippingPlane = nearClip;
+		m_OFarClippingPlane = farClip;
 		RecalcProjection();
 	}
 
 	void SceneCamera::SetPerspective(float FOV, float nearClip, float farClip)
 	{
 		m_FOV = FOV;
-		m_NearClippingPlane = nearClip;
-		m_FarClippingPlane = farClip;
+		m_PNearClippingPlane = nearClip;
+		m_PFarClippingPlane = farClip;
 		RecalcProjection();
 	}
 
@@ -41,7 +41,7 @@ namespace GalaxyDraw
 	{
 		if (m_IsPerspective)
 		{
-			m_Projection = glm::perspective(glm::radians(m_FOV), m_AspectRatio, m_NearClippingPlane, m_FarClippingPlane);
+			m_Projection = glm::perspective(glm::radians(m_FOV), m_AspectRatio, m_PNearClippingPlane, m_PFarClippingPlane);
 		}
 		else
 		{
@@ -54,7 +54,7 @@ namespace GalaxyDraw
 				glm::ortho(
 					orhtoLeft, orhtoRight,
 					orhtoBottom, orhtoTop,
-					m_NearClippingPlane, m_FarClippingPlane)
+					m_ONearClippingPlane, m_OFarClippingPlane)
 			);
 		}
 	}

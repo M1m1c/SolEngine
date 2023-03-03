@@ -34,9 +34,12 @@ namespace GalaxyDraw
 		float m_AspectRatio = 1.0f;
 
 		float m_OrthoSize = 10.f;
-		float m_NearClippingPlane = 0.1f;
-		float m_FarClippingPlane = 100.f;
+		float m_ONearClippingPlane = -10.f;
+		float m_OFarClippingPlane = 100.f;
+
 		float m_FOV = 60.f;
+		float m_PNearClippingPlane = 0.1f;
+		float m_PFarClippingPlane = 100.f;
 
 		bool m_IsPerspective = true;
 
