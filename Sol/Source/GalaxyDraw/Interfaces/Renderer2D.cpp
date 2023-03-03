@@ -202,11 +202,11 @@ namespace GalaxyDraw {
 		StartBatch();
 	}
 
-	void Renderer2D::BeginScene(const glm::mat4& projection, const glm::mat4& transform)
+	void Renderer2D::BeginScene(const glm::mat4& projection, const glm::mat4& view)
 	{
 		SOL_PROFILE_FUNCTION();
 
-		s_Data.CameraBuffer.ViewProjection = projection * glm::inverse(transform);
+		s_Data.CameraBuffer.ViewProjection = projection * view;
 		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2DData::CameraData));
 
 		StartBatch();

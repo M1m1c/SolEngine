@@ -6,7 +6,7 @@
 namespace Sol
 {
 
-	CameraController::CameraController(TransformComp& camTransform, CameraComp& sceneCamera):
+	CameraController::CameraController(TransformComp& camTransform, CameraComp& sceneCamera) :
 		m_CameraTransform(camTransform),
 		m_SceneCamera(sceneCamera)
 	{
@@ -18,52 +18,45 @@ namespace Sol
 	//TODO make sure that all controllsare in relation to rotation and posiiton
 	void CameraController::OnUpdate(TimeStep deltaTime)
 	{
-		if (Input::IsKeyPressed(SOL_KEY_D))
+
+		UpdateInputs();
+
+		float dt = deltaTime;
+
+		if (m_DirInputs.any())
 		{
-			
-			m_CameraTransform.Position.x += m_CameraSpeed * deltaTime;
-		}
-		else if (Input::IsKeyPressed(SOL_KEY_A))
-		{
-			m_CameraTransform.Position.x += -m_CameraSpeed * deltaTime;
+			auto isCameraPesrpective = m_SceneCamera.Camera.GetIsPerspective();
+			auto forward = isCameraPesrpective ? m_CameraTransform.GetForward() : glm::vec3(0.f, .0f, .0f);
+			auto right = m_CameraTransform.GetRight();
+
+			m_InputAxis.x = (m_DirInputs[MoveDir::mForward] == 1 ? -1.f : (m_DirInputs[MoveDir::mBack] == 1 ? 1.f : 0.f));
+			m_InputAxis.y = (m_DirInputs[MoveDir::mRight] == 1 ? -1.f : (m_DirInputs[MoveDir::mLeft] == 1 ? 1.f : 0.f));
+			m_InputAxis.z = (m_DirInputs[MoveDir::mUp] == 1 ? -1.f : (m_DirInputs[MoveDir::mDown] == 1 ? 1.f : 0.f));
+
+			glm::vec3 dir = glm::normalize((forward * m_InputAxis.x) + (right * m_InputAxis.y) + (WorldUp * m_InputAxis.z));
+
+			dir = glm::isnan(dir).b ? glm::vec3(0.f) : dir;
+			m_CameraTransform.Position = m_CameraTransform.Position + (dir * m_CameraSpeed * dt);
+
+			if (!isCameraPesrpective)
+				m_SceneCamera.Camera.ChangeOrthoSize(m_InputAxis.x * m_CameraSpeed * dt);
 		}
 
-		if (Input::IsKeyPressed(SOL_KEY_W))
+		//Rotation
+
+
+		if (m_RotInputs.any())
 		{
-			m_CameraTransform.Position.y += m_CameraSpeed * deltaTime;
-		}
-		else if (Input::IsKeyPressed(SOL_KEY_S))
-		{
-			m_CameraTransform.Position.y += -m_CameraSpeed * deltaTime;
+			float camYawDir = 0;
+			float camPitchDir = 0;
+
+			camYawDir = (m_RotInputs[RotDir::rRight] == 1 ? -m_RotSpeed : (m_RotInputs[RotDir::rLeft] == 1 ? m_RotSpeed : 0.f));
+			camPitchDir = (m_RotInputs[RotDir::rUp] == 1 ? m_RotSpeed : (m_RotInputs[RotDir::rDown] == 1 ? -m_RotSpeed : 0.f));
+
+			m_CameraTransform.Yaw() += glm::radians(camYawDir) * m_Sensitivity * deltaTime;
+			m_CameraTransform.Pitch() += glm::radians(camPitchDir) * m_Sensitivity * deltaTime;
 		}
 
-		if (Input::IsKeyPressed(SOL_KEY_E))
-		{
-			
-			m_CameraTransform.Rotation.x += m_CameraSpeed * deltaTime;
-		}
-		else if (Input::IsKeyPressed(SOL_KEY_Q))
-		{
-			m_CameraTransform.Rotation.x += -m_CameraSpeed * deltaTime;
-		}
-
-		if (Input::IsKeyPressed(SOL_KEY_R))
-		{
-			m_CameraTransform.Rotation.y += m_CameraSpeed * deltaTime;
-		}
-		else if (Input::IsKeyPressed(SOL_KEY_F))
-		{
-			m_CameraTransform.Rotation.y += -m_CameraSpeed  * deltaTime;
-		}
-
-		if (Input::IsKeyPressed(SOL_KEY_T))
-		{
-			m_CameraTransform.Rotation.z += m_CameraSpeed  * deltaTime;
-		}
-		else if (Input::IsKeyPressed(SOL_KEY_G))
-		{
-			m_CameraTransform.Rotation.z += -m_CameraSpeed * deltaTime;
-		}
 	}
 
 	void CameraController::OnEvent(Event& e)
@@ -77,16 +70,48 @@ namespace Sol
 	// do it in OnUpdate so we can get smoother and shorter zoom steps
 	bool CameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		
-	/*	m_ZoomLevel = glm::max(m_ZoomLevel- e.GetYOffset(),0.1f);
-		m_Camera->SetProjection(m_AspectRatio * m_ZoomLevel);
-		*/
+
+		/*	m_ZoomLevel = glm::max(m_ZoomLevel- e.GetYOffset(),0.1f);
+			m_Camera->SetProjection(m_AspectRatio * m_ZoomLevel);
+			*/
 		return false;
 	}
 
 	bool CameraController::OnWindowResized(WindowResizeEvent& e)
 	{
 		return false;
+	}
+
+	void CameraController::UpdateInputs()
+	{
+		m_DirInputs[MoveDir::mForward] = Input::IsKeyPressed(SOL_KEY_W);
+		m_DirInputs[MoveDir::mBack] = Input::IsKeyPressed(SOL_KEY_S);
+		m_DirInputs[MoveDir::mRight] = Input::IsKeyPressed(SOL_KEY_D);
+		m_DirInputs[MoveDir::mLeft] = Input::IsKeyPressed(SOL_KEY_A);
+		m_DirInputs[MoveDir::mUp] = Input::IsKeyPressed(SOL_KEY_SPACE);
+		m_DirInputs[MoveDir::mDown] = Input::IsKeyPressed(SOL_KEY_LEFT_SHIFT);
+
+		m_RotInputs[RotDir::rRight] = Input::IsKeyPressed(SOL_KEY_E);
+		m_RotInputs[RotDir::rLeft] = Input::IsKeyPressed(SOL_KEY_Q);
+		m_RotInputs[RotDir::rUp] = Input::IsKeyPressed(SOL_KEY_R);
+		m_RotInputs[RotDir::rDown] = Input::IsKeyPressed(SOL_KEY_F);
+
+		if (Input::IsKeyPressed(SOL_KEY_P) && m_OldPserpesctiveInput == false)
+		{
+			m_OldPserpesctiveInput = true;
+			m_PerspectiveToggle = !m_PerspectiveToggle;
+			m_SceneCamera.Camera.SetIsPerspective(m_PerspectiveToggle);
+		}
+		else if(!Input::IsKeyPressed(SOL_KEY_P))
+		{
+			m_OldPserpesctiveInput = false;
+		}
+
+		if (Input::IsKeyPressed(SOL_KEY_H))
+		{
+			m_CameraTransform.Position = glm::vec3(0.0f);
+			m_CameraTransform.Rotation = glm::vec3(0.0f);
+		}
 	}
 
 }

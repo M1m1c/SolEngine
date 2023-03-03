@@ -24,22 +24,23 @@ namespace Sol
 		auto square = m_ActiveScene->CreateEntity();
 		square.AddComponent<SpriteRendererComp>(glm::vec4{ 1.f,1.f,0.f,1.f });
 		//TODO There seems to be some origin and offset issues when loading a model containing seperate meshes
-		square.AddComponent<ModelComp>("assets/models/multiSeperate.fbx", square.GetID());
+		square.AddComponent<ModelComp>("assets/models/starship.fbx", square.GetID());
 		square.AddComponent<MaterialComp>();
 		auto& squareTransform = square.GetComponent<TransformComp>();
 		squareTransform.Position = glm::vec3(1.f, 1.f, 1.f);
-		squareTransform.Rotation = glm::vec3(1.f, 1.f, 1.f);
-		squareTransform.Scale = glm::vec3(1.f, 1.f, 1.f);
+		squareTransform.Rotation = glm::vec3(-45.f, 45.f, 45.f);
+		squareTransform.Scale = glm::vec3(0.5f, 0.5f, 0.5f);
 		auto& squareMaterial = square.GetComponent<MaterialComp>();
 		squareMaterial.Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
 
 		auto square2 = m_ActiveScene->CreateEntity();
 		//TODO There seems to be some origin and offset issues when loading a model containing seperate meshes
-		square2.AddComponent<ModelComp>("assets/models/cube.fbx", square2.GetID());
+		square2.AddComponent<ModelComp>("assets/models/starship.fbx", square2.GetID());
 		square2.AddComponent<MaterialComp>();
 		auto& square2Transform = square2.GetComponent<TransformComp>();
 		square2Transform.Position = glm::vec3(-1.f, -1.f, -1.f);
-		square2Transform.Scale = glm::vec3(2.f, 1.f, 1.f);
+		square2Transform.Scale = glm::vec3(0.5f, 0.5f, 0.5f);
+		square2Transform.Rotation = glm::vec3(-90.f, 0.f, 0.f);
 		auto& square2Material = square2.GetComponent<MaterialComp>();
 		square2Material.Color = glm::vec4(0.f, 0.f, 1.f, 1.f);
 
@@ -59,6 +60,7 @@ namespace Sol
 		
 
 		//RESIZE
+		if(m_ViewPortSize.x>0.0f && m_ViewPortSize.y>0.0f) 
 		{
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 
