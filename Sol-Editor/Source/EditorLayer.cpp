@@ -60,6 +60,7 @@ namespace Sol
 		
 
 		//RESIZE
+		if(m_ViewPortSize.x>0.0f && m_ViewPortSize.y>0.0f) 
 		{
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 
