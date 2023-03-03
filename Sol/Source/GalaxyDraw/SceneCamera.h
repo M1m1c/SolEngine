@@ -26,13 +26,14 @@ namespace GalaxyDraw
 
 		void RecalcProjection();
 
-		float m_OrthoSize = 10.f;
-		float m_OrthoNear = -100.f;
-		float m_OrthoFar = 100.f;
-
 		float m_AspectRatio = 1.0f;
 
-		bool m_IsPerspective = false;
+		float m_OrthoSize = 10.f;
+		float m_NearClippingPlane = 0.1f;
+		float m_FarClippingPlane = 100.f;
+		float m_FOV = 60.f;
+
+		bool m_IsPerspective = true;
 
 		glm::mat4 SanitizeMatrix(const glm::mat4& matrix) const
 		{
