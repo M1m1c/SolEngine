@@ -36,6 +36,9 @@ namespace Sol
 		float m_RotSpeed = 4000.f;
 		float m_Sensitivity = 1.f;
 
+		bool m_PerspectiveToggle = true;
+		bool m_OldPserpesctiveInput = false;
+
 		enum MoveDir
 		{
 			mForward = 0,

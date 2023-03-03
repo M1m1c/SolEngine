@@ -95,6 +95,17 @@ namespace Sol
 		m_RotInputs[RotDir::rLeft] = Input::IsKeyPressed(SOL_KEY_Q);
 		m_RotInputs[RotDir::rUp] = Input::IsKeyPressed(SOL_KEY_R);
 		m_RotInputs[RotDir::rDown] = Input::IsKeyPressed(SOL_KEY_F);
+
+		if (Input::IsKeyPressed(SOL_KEY_P) && m_OldPserpesctiveInput == false)
+		{
+			m_OldPserpesctiveInput = true;
+			m_PerspectiveToggle = !m_PerspectiveToggle;
+			m_SceneCamera.Camera.SetIsPerspective(m_PerspectiveToggle);
+		}
+		else if(!Input::IsKeyPressed(SOL_KEY_P))
+		{
+			m_OldPserpesctiveInput = false;
+		}
 	}
 
 }

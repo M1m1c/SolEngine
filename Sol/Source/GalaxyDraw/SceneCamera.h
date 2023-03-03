@@ -25,7 +25,7 @@ namespace GalaxyDraw
 		float GetFOV() { return m_FOV; }
 
 		bool GetIsPerspective() { return m_IsPerspective; }
-		void SetIsPerspective(bool b) { m_IsPerspective = b; }
+		void SetIsPerspective(bool b) { m_IsPerspective = b; RecalcProjection();}
 
 	private:
 
