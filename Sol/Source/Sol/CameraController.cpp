@@ -106,6 +106,12 @@ namespace Sol
 		{
 			m_OldPserpesctiveInput = false;
 		}
+
+		if (Input::IsKeyPressed(SOL_KEY_H))
+		{
+			m_CameraTransform.Position = glm::vec3(0.0f);
+			m_CameraTransform.Rotation = glm::vec3(0.0f);
+		}
 	}
 
 }
