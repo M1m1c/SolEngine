@@ -28,7 +28,19 @@ namespace Sol
 			{
 
 				Entity entity{ entityID, m_CurrentScene.get() };
-				DrawEntityNode(entity);
+				bool shouldShow = true;
+
+				auto isInternal = entity.HasComponent<InternalComp>();
+				if (isInternal)
+				{
+					shouldShow = entity.GetComponent<InternalComp>().IsVisible();
+				}
+
+				if (shouldShow)
+				{
+					DrawEntityNode(entity);
+				}
+
 
 			});
 
@@ -38,11 +50,11 @@ namespace Sol
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	{
 		auto name = entity.GetComponent<NameComp>().GetName();
-		ImGuiTreeNodeFlags flags = 
+		ImGuiTreeNodeFlags flags =
 			(m_CurrentSelection == entity ? ImGuiTreeNodeFlags_Selected : 0) |
 			ImGuiTreeNodeFlags_OpenOnArrow;
 
-		bool opened= ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, name.c_str());
+		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, name.c_str());
 		if (ImGui::IsItemClicked())
 		{
 			m_CurrentSelection = entity;

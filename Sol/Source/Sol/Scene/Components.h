@@ -6,3 +6,16 @@
 #include "Sol/Scene/Components/CameraComp.h"
 #include "Sol/Scene/Components/ModelComp.h"
 #include "Sol/Scene/Components/MaterialComp.h"
+
+namespace Sol {
+	struct InternalComp
+	{
+	public:
+		InternalComp() = default;
+		~InternalComp() = default;
+		bool IsVisible() { return m_Visible; }
+		void SetIsVisible(bool b) { m_Visible = b; }
+	private:
+		bool m_Visible = false;
+	};
+}

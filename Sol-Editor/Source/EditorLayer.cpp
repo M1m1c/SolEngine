@@ -59,6 +59,7 @@ namespace Sol
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
 		auto& camTransform = m_CameraEntity.GetComponent<TransformComp>();
 		auto& sceneCam = m_CameraEntity.AddComponent<CameraComp>();
+		auto& intComp = m_CameraEntity.AddComponent<InternalComp>();
 
 		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
 		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
