@@ -2,6 +2,8 @@
 
 #include "Sol.h"
 
+#include "Panels/SceneHierarchyPanel.h"
+
 namespace Sol
 {
 	class EditorLayer : public Layer
@@ -20,7 +22,7 @@ namespace Sol
 		virtual void OnEvent(Event& e) override;
 	private:
 		u_ptr<GD_Framebuffer> m_Framebuffer;
-		u_ptr<Scene> m_ActiveScene;
+		s_ptr<Scene> m_ActiveScene;
 		Entity m_CameraEntity;
 
 		u_ptr<CameraController> m_CameraController;
@@ -30,5 +32,9 @@ namespace Sol
 		bool m_ViewPortHovered = false;
 
 		glm::vec2 m_ViewPortSize = { 0,0 };
+
+
+		//Panels
+		SceneHierarchyPanel m_HierarchyPanel;
 	};
 }

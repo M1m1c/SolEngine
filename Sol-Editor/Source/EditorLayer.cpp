@@ -19,13 +19,15 @@ namespace Sol
 		properties.Height = 720;
 		m_Framebuffer = GD_Framebuffer::Create(properties);
 
-		m_ActiveScene = std::make_unique<Scene>();
+		m_ActiveScene = std::make_shared<Scene>();
 
-
+		
 		for (size_t i = 0; i < 3; i++)
 		{
-			auto TestEntity = m_ActiveScene->CreateEntity();
-			TestEntity.AddComponent<ModelComp>("assets/models/starship.fbx", TestEntity.GetID());
+
+			std::string name = "Cube" + std::to_string(i);
+			auto TestEntity = m_ActiveScene->CreateEntity(name);
+			TestEntity.AddComponent<ModelComp>("assets/models/cube.fbx", TestEntity.GetID());
 			TestEntity.AddComponent<MaterialComp>();
 			auto& entityTransform = TestEntity.GetComponent<TransformComp>();
 			auto& entityMaterial = TestEntity.GetComponent<MaterialComp>();
@@ -60,6 +62,8 @@ namespace Sol
 
 		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
 		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
+
+		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
 	}
 
 	void EditorLayer::OnDetach()
@@ -178,6 +182,8 @@ namespace Sol
 		}
 
 		//All windows and tabs need to be here___________________________________________
+
+		m_HierarchyPanel.OnImGuiRender();
 
 		{
 			ImGui::Begin("Test");
