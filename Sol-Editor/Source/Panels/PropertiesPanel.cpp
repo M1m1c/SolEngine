@@ -34,16 +34,21 @@ namespace Sol {
 
 		if (entity.HasComponent<TransformComp>())
 		{
-			auto& transform = entity.GetComponent<TransformComp>();
+			if (ImGui::TreeNodeEx((void*)typeid(TransformComp).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
+			{
+				auto& transform = entity.GetComponent<TransformComp>();
 
-			auto& position = transform.Position;
-			ImGui::DragFloat3("Position", glm::value_ptr(position), 0.5f);
+				auto& position = transform.Position;
+				ImGui::DragFloat3("Position", glm::value_ptr(position), 0.5f);
 
-			auto& rotation = transform.Rotation;
-			ImGui::DragFloat3("Rotation", glm::value_ptr(rotation), 0.5f);
+				auto& rotation = transform.Rotation;
+				ImGui::DragFloat3("Rotation", glm::value_ptr(rotation), 0.5f);
 
-			auto& scale = transform.Scale;
-			ImGui::DragFloat3("Scale", glm::value_ptr(scale), 0.5f);
+				auto& scale = transform.Scale;
+				ImGui::DragFloat3("Scale", glm::value_ptr(scale), 0.5f);
+
+				ImGui::TreePop();
+			}	
 		}
 	}
 }
