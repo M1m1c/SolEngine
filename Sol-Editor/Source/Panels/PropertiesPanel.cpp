@@ -1,6 +1,8 @@
 #include "PropertiesPanel.h"
 
 #include "Sol/Scene/Components.h"
+
+#include <glm/gtc/type_ptr.hpp>
 #include <imgui.h>
 
 namespace Sol {
@@ -28,6 +30,20 @@ namespace Sol {
 			if (ImGui::InputText("Name", buffer, sizeof(buffer))) {
 				name = std::string(buffer);
 			}
+		}
+
+		if (entity.HasComponent<TransformComp>())
+		{
+			auto& transform = entity.GetComponent<TransformComp>();
+
+			auto& position = transform.Position;
+			ImGui::DragFloat3("Position", glm::value_ptr(position), 0.5f);
+
+			auto& rotation = transform.Rotation;
+			ImGui::DragFloat3("Rotation", glm::value_ptr(rotation), 0.5f);
+
+			auto& scale = transform.Scale;
+			ImGui::DragFloat3("Scale", glm::value_ptr(scale), 0.5f);
 		}
 	}
 }
