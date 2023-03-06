@@ -20,6 +20,8 @@ namespace Sol
 		//Creates an entity with a TransformComp and a TagComp in the scene, returns created entity.
 		Entity CreateEntity(const std::string& name = std::string());
 
+		const entt::registry& GetRegistry() const { return m_Registry; }
+
 	private:
 
 		entt::registry m_Registry;

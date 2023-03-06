@@ -40,11 +40,12 @@ namespace Sol
 		const std::string& GetName();
 		const EntityID& GetID() { return m_EntityID; }
 
-		bool operator==(const Entity& rhs) { return m_EntityID == rhs.m_EntityID; }
+		bool operator==(const Entity& other) { return m_EntityID == other.m_EntityID && m_Scene == other.m_Scene; }
+		bool operator!=(const Entity& other) { return !operator==(other); }
 
 		operator bool() const { return m_EntityID != entt::null; }
 
-		//operator uint32_t() const { return static_cast<uint32_t>(m_EntityID); }
+		operator uint32_t() const { return (uint32_t)m_EntityID; }
 
 	private:
 		EntityID m_EntityID{ entt::null };
