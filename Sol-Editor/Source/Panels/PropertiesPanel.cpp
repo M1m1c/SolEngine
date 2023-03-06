@@ -39,13 +39,13 @@ namespace Sol {
 				auto& transform = entity.GetComponent<TransformComp>();
 
 				auto& position = transform.Position;
-				ImGui::DragFloat3("Position", glm::value_ptr(position), 0.5f);
+				ImGui::DragFloat3("Position", glm::value_ptr(position), 0.25f);
 
 				auto& rotation = transform.Rotation;
-				ImGui::DragFloat3("Rotation", glm::value_ptr(rotation), 0.5f);
+				ImGui::DragFloat3("Rotation", glm::value_ptr(rotation), 0.25f);
 
 				auto& scale = transform.Scale;
-				ImGui::DragFloat3("Scale", glm::value_ptr(scale), 0.5f);
+				ImGui::DragFloat3("Scale", glm::value_ptr(scale), 0.25f);
 
 				ImGui::TreePop();
 			}	
