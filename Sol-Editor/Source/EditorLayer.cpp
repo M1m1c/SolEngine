@@ -56,7 +56,7 @@ namespace Sol
 		}
 
 
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		m_CameraEntity = m_ActiveScene->CreateEntity("Editor Camera");
 		auto& camTransform = m_CameraEntity.GetComponent<TransformComp>();
 		auto& sceneCam = m_CameraEntity.AddComponent<CameraComp>();
 		auto& intComp = m_CameraEntity.AddComponent<InternalComp>();
@@ -64,6 +64,7 @@ namespace Sol
 		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
 		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
 
+		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
 		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
 	}
 
@@ -185,6 +186,7 @@ namespace Sol
 		//All windows and tabs need to be here___________________________________________
 
 		m_HierarchyPanel.OnImGuiRender();
+		m_PropertiesPanel.OnImGuiRender();
 
 		{
 			ImGui::Begin("Test");

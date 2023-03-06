@@ -36,5 +36,6 @@ namespace Sol
 
 		//Panels
 		SceneHierarchyPanel m_HierarchyPanel;
+		PropertiesPanel m_PropertiesPanel;
 	};
 }
