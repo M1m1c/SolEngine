@@ -15,8 +15,13 @@ namespace Sol {
 		void SetCurrentScene(const s_ptr<Scene>& scene);
 
 		void OnImGuiRender();
+
+	private:
+		void DrawEntityNode(Entity entity);
+
 	private:
 
 		s_ptr<Scene> m_CurrentScene;
+		Entity m_CurrentSelection;
 	};
 }
