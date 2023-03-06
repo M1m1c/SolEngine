@@ -39,6 +39,11 @@ namespace Sol
 
 
 				});
+
+			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+			{
+				m_CurrentSelection = {};
+			}
 		}	
 		ImGui::End();
 
