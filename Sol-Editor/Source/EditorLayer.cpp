@@ -188,11 +188,11 @@ namespace Sol
 		m_HierarchyPanel.OnImGuiRender();
 		m_PropertiesPanel.OnImGuiRender();
 
-		{
-			ImGui::Begin("Test");
-			ImGui::Text("test stats");
-			ImGui::End();
-		}
+		//{
+		//	/*ImGui::Begin("Test");
+		//	ImGui::Text("test stats");
+		//	ImGui::End();*/
+		//}
 
 		{
 			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
