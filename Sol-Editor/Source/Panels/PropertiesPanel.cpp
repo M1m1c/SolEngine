@@ -64,7 +64,6 @@ namespace Sol {
 			ImGui::SameLine();
 			ImGui::DragFloat("##Z", &values.z, 0.1f, 0.f, 0.f, "%.2f");
 			ImGui::PopItemWidth();
-			ImGui::SameLine();
 		}
 
 		ImGui::PopStyleVar();
@@ -119,9 +118,11 @@ namespace Sol {
 			ImGui::Columns(1);
 		}
 
+		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
+
 		if (entity.HasComponent<TransformComp>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(TransformComp).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
+			if (ImGui::TreeNodeEx((void*)typeid(TransformComp).hash_code(), treeNodeFlags, "Transform"))
 			{
 				auto& transform = entity.GetComponent<TransformComp>();
 
@@ -140,7 +141,27 @@ namespace Sol {
 
 		if (entity.HasComponent<ModelComp>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(ModelComp).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Model"))
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4,4 });
+			bool open = ImGui::TreeNodeEx((void*)typeid(ModelComp).hash_code(), treeNodeFlags, "Model");
+			//TODO this smae line does not end up on the same line, it appears above
+			ImGui::SameLine(ImGui::GetWindowWidth()-25.f);
+
+			if (ImGui::Button("+", ImVec2{20,20})) {
+				ImGui::OpenPopup("ComponentSettings");
+			}
+			ImGui::PopStyleVar();
+
+			bool removeComponent = false;
+			if(ImGui::BeginPopup("ComponentSettings"))
+			{
+				if (ImGui::MenuItem("Remove Compnent"))
+				{
+					removeComponent = true;
+				}
+				ImGui::EndPopup();
+			}
+
+			if (open)
 			{
 				auto& model = entity.GetComponent<ModelComp>();
 
@@ -156,7 +177,7 @@ namespace Sol {
 
 		if (entity.HasComponent<MaterialComp>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(MaterialComp).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Material"))
+			if (ImGui::TreeNodeEx((void*)typeid(MaterialComp).hash_code(), treeNodeFlags, "Material"))
 			{
 				auto& material = entity.GetComponent<MaterialComp>();
 
