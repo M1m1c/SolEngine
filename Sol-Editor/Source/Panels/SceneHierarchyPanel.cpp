@@ -44,6 +44,17 @@ namespace Sol
 			{
 				m_CurrentSelection = {};
 			}
+
+			if (ImGui::BeginPopupContextWindow(0,1,false)) 
+			{
+				if (ImGui::MenuItem("Create Empty Entity")) 
+				{
+					m_CurrentScene->CreateEntity("Empty Entity");
+				}
+
+				ImGui::EndPopup();
+			}
+
 		}	
 		ImGui::End();
 
@@ -68,9 +79,30 @@ namespace Sol
 			m_CurrentSelection = entity;
 		}
 
+		bool entityDeleted = false;
+		if (ImGui::BeginPopupContextItem())
+		{
+			if (ImGui::MenuItem("Delete Entity"))
+			{
+				entityDeleted = true;
+			}
+
+			ImGui::EndPopup();
+		}
+
 		if (opened)
 		{
 			ImGui::TreePop();
+		}
+
+		if (entityDeleted) 
+		{
+			m_CurrentScene->DestroyEntity(entity);
+
+			if (m_CurrentSelection == entity) 
+			{
+				m_CurrentSelection = {};
+			}
 		}
 	}
 
