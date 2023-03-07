@@ -32,7 +32,7 @@ namespace Sol {
 			ImGui::PopStyleColor(3);
 
 			ImGui::SameLine();
-			ImGui::DragFloat("##X", &values.x, 0.1f);
+			ImGui::DragFloat("##X", &values.x, 0.1f, 0.f, 0.f, "%.2f");
 			ImGui::PopItemWidth();
 			ImGui::SameLine();
 		}
@@ -47,7 +47,7 @@ namespace Sol {
 			ImGui::PopStyleColor(3);
 
 			ImGui::SameLine();
-			ImGui::DragFloat("##Y", &values.y, 0.1f);
+			ImGui::DragFloat("##Y", &values.y, 0.1f, 0.f, 0.f, "%.2f");
 			ImGui::PopItemWidth();
 			ImGui::SameLine();
 		}
@@ -62,7 +62,7 @@ namespace Sol {
 			ImGui::PopStyleColor(3);
 
 			ImGui::SameLine();
-			ImGui::DragFloat("##Z", &values.z, 0.1f);
+			ImGui::DragFloat("##Z", &values.z, 0.1f, 0.f, 0.f, "%.2f");
 			ImGui::PopItemWidth();
 			ImGui::SameLine();
 		}
@@ -105,15 +105,12 @@ namespace Sol {
 
 				auto& position = transform.Position;
 				DrawVec3Control("Position", position);
-				//ImGui::DragFloat3("Position", glm::value_ptr(position), 0.25f);
 
 				auto& rotation = transform.Rotation;
 				DrawVec3Control("Rotation", rotation);
-				//ImGui::DragFloat3("Rotation", glm::value_ptr(rotation), 0.25f);
 
 				auto& scale = transform.Scale;
 				DrawVec3Control("Scale", scale, 1.f);
-				//ImGui::DragFloat3("Scale", glm::value_ptr(scale), 0.25f);
 
 				ImGui::TreePop();
 			}
