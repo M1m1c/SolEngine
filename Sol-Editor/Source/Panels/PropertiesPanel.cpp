@@ -78,6 +78,23 @@ namespace Sol {
 		if (m_CurrentSelection)
 		{
 			DrawComponentNodes(m_CurrentSelection);
+
+			if (ImGui::Button("Add Component")) 
+			{
+				ImGui::OpenPopup("AddComponent");
+			}
+
+			if (ImGui::BeginPopup("AddComponent"))
+			{
+				if (ImGui::MenuItem("Model Component")) 
+				{
+					//TODO provide a path to model file
+					m_CurrentSelection.AddComponent<ModelComp>("assets/models/cube.fbx", m_CurrentSelection.GetID());
+					m_CurrentSelection.AddComponent<MaterialComp>();
+					ImGui::CloseCurrentPopup();
+				}
+				ImGui::EndPopup();
+			}
 		}
 		ImGui::End();
 
