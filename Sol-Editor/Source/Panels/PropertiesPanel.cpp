@@ -92,9 +92,14 @@ namespace Sol {
 			memset(buffer, 0, sizeof(buffer));
 			strcpy_s(buffer, sizeof(buffer), name.c_str());
 
-			if (ImGui::InputText("Name", buffer, sizeof(buffer))) {
+			ImGui::Columns(2);
+			ImGui::SetColumnWidth(0, 100.f);
+			ImGui::Text("Name");
+			ImGui::NextColumn();
+			if (ImGui::InputText("##Name", buffer, sizeof(buffer))) {
 				name = std::string(buffer);
 			}
+			ImGui::Columns(1);
 		}
 
 		if (entity.HasComponent<TransformComp>())
