@@ -137,5 +137,22 @@ namespace Sol {
 				ImGui::TreePop();
 			}
 		}
+
+		if (entity.HasComponent<MaterialComp>())
+		{
+			if (ImGui::TreeNodeEx((void*)typeid(MaterialComp).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Material"))
+			{
+				auto& material = entity.GetComponent<MaterialComp>();
+
+				ImGui::Columns(2);
+				ImGui::SetColumnWidth(0, 100.f);
+				ImGui::Text("Color");
+				ImGui::NextColumn();
+				ImGui::DragFloat4("##MaterialColor", glm::value_ptr(material.Color), 0.01f,0.0f,1.f);
+				ImGui::Columns(1);
+
+				ImGui::TreePop();
+			}
+		}
 	}
 }
