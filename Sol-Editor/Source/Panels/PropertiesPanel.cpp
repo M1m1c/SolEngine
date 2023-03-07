@@ -138,6 +138,22 @@ namespace Sol {
 			}
 		}
 
+		if (entity.HasComponent<ModelComp>())
+		{
+			if (ImGui::TreeNodeEx((void*)typeid(ModelComp).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Model"))
+			{
+				auto& model = entity.GetComponent<ModelComp>();
+
+				ImGui::Columns(2);
+				ImGui::SetColumnWidth(0, 100.f);
+				ImGui::Text("Name");
+				ImGui::NextColumn();
+				ImGui::Text(model.Model->GetName().c_str());
+				ImGui::Columns(1);
+				ImGui::TreePop();
+			}
+		}
+
 		if (entity.HasComponent<MaterialComp>())
 		{
 			if (ImGui::TreeNodeEx((void*)typeid(MaterialComp).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Material"))
@@ -150,7 +166,6 @@ namespace Sol {
 				ImGui::NextColumn();
 				ImGui::DragFloat4("##MaterialColor", glm::value_ptr(material.Color), 0.01f,0.0f,1.f);
 				ImGui::Columns(1);
-
 				ImGui::TreePop();
 			}
 		}
