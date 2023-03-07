@@ -8,6 +8,14 @@ namespace GalaxyDraw
 	class SceneCamera : public Camera
 	{
 	public:
+
+		//TODO use this instead of bool for setting camera projection
+		enum class ProjectionType
+		{
+			Perspective=0, 
+			Orthographic=1
+		};
+
 		SceneCamera();
 		virtual ~SceneCamera() = default;
 		
