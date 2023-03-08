@@ -64,77 +64,36 @@ namespace Sol
 			ImGui::Columns(1);
 		}
 
-		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_AllowItemOverlap;
+		const ImGuiTreeNodeFlags treeNodeFlags = 
+			ImGuiTreeNodeFlags_DefaultOpen |
+			ImGuiTreeNodeFlags_AllowItemOverlap |
+			ImGuiTreeNodeFlags_SpanAvailWidth;
 
-		if (entity.HasComponent<TransformComp>())
-		{
-			if (ImGui::TreeNodeEx((void*)typeid(TransformComp).hash_code(), treeNodeFlags, "Transform"))
-			{
-				auto& transform = entity.GetComponent<TransformComp>();
+		DrawComponent<TransformComp>("Transform", entity, treeNodeFlags, [](TransformComp& component) {
 
-				auto& position = transform.Position;
-				DrawVec3Control("Position", position);
+			auto& position = component.Position;
+			DrawVec3Control("Position", position);
 
-				auto& rotation = transform.Rotation;
-				DrawVec3Control("Rotation", rotation);
+			auto& rotation = component.Rotation;
+			DrawVec3Control("Rotation", rotation);
 
-				auto& scale = transform.Scale;
-				DrawVec3Control("Scale", scale, 1.f);
+			auto& scale = component.Scale;
+			DrawVec3Control("Scale", scale, 1.f);
 
-				ImGui::TreePop();
-			}
-		}
+			}, false);
 
-		if (entity.HasComponent<ModelComp>())
-		{
-			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4,4 });
-			bool open = ImGui::TreeNodeEx((void*)typeid(ModelComp).hash_code(), treeNodeFlags, "Model");
-			//TODO this smae line does not end up on the same line, it appears above
-			ImGui::SameLine(ImGui::GetWindowWidth() - 25.f);
+		DrawComponent<ModelComp>("Model", entity, treeNodeFlags, [](ModelComp& component) {
+			ImGui::Columns(2);
+			ImGui::SetColumnWidth(0, 80.f);
+			ImGui::Text("Name");
+			ImGui::NextColumn();
+			ImGui::Text(component.Model->GetName().c_str());
+			ImGui::Columns(1);
+			});
 
-			if (ImGui::Button("+", ImVec2{ 20,20 })) {
-				ImGui::OpenPopup("ComponentSettings");
-			}
-			ImGui::PopStyleVar();
-
-			bool removeComponent = false;
-			if (ImGui::BeginPopup("ComponentSettings"))
-			{
-				if (ImGui::MenuItem("Remove Compnent"))
-				{
-					removeComponent = true;
-				}
-				ImGui::EndPopup();
-			}
-
-			if (open)
-			{
-				auto& model = entity.GetComponent<ModelComp>();
-
-				ImGui::Columns(2);
-				ImGui::SetColumnWidth(0, 100.f);
-				ImGui::Text("Name");
-				ImGui::NextColumn();
-				ImGui::Text(model.Model->GetName().c_str());
-				ImGui::Columns(1);
-				ImGui::TreePop();
-			}
-
-			if (removeComponent)
-			{
-				entity.RemoveComponent<ModelComp>();
-			}
-		}
-
-		if (entity.HasComponent<MaterialComp>())
-		{
-			if (ImGui::TreeNodeEx((void*)typeid(MaterialComp).hash_code(), treeNodeFlags, "Material"))
-			{
-				auto& color = entity.GetComponent<MaterialComp>().Color;
-				DrawVec4Control("Color", color, 1.f, 0.01f, 0.f, 1.f, { "R","G","B","A" });
-
-				ImGui::TreePop();
-			}
-		}
+		DrawComponent<MaterialComp>("Material", entity, treeNodeFlags, [](MaterialComp& component) {
+			auto& color = component.Color;
+			DrawVec4Control("Color", color, 1.f, 0.01f, 0.f, 1.f, { "R","G","B","A" });
+			});
 	}
 }

@@ -7,7 +7,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-namespace Sol 
+namespace Sol
 {
 	static void DrawDragFloatWithReset(const std::string& label, ImFont* bold, ImVec2& buttonSize, float& value, std::array<ImVec4, 2> colors, float resetValue = 0.0f, float stepSize = 0.1f, float min = 0.0f, float max = 0.0f)
 	{
@@ -113,7 +113,7 @@ namespace Sol
 	}
 
 	template<typename T, typename UIFunction>
-	static void DrawComponent(const std::string& name, Entity entity, ImGuiTreeNodeFlags treeNodeFlags, UIFunction uiFunction)
+	static void DrawComponent(const std::string& name, Entity entity, ImGuiTreeNodeFlags treeNodeFlags, UIFunction uiFunction, bool removable = true)
 	{
 		if (entity.HasComponent<T>())
 		{
@@ -121,11 +121,15 @@ namespace Sol
 
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4,4 });
 			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
-			ImGui::SameLine(ImGui::GetWindowWidth() - 25.f);
 
-			if (ImGui::Button("+", ImVec2{ 20,20 })) {
-				ImGui::OpenPopup("ComponentSettings");
+			if (removable)
+			{
+				ImGui::SameLine(ImGui::GetWindowWidth() - 25.f);
+				if (ImGui::Button("+", ImVec2{ 20,20 })) {
+					ImGui::OpenPopup("ComponentSettings");
+				}
 			}
+
 			ImGui::PopStyleVar();
 
 			bool removeComponent = false;
@@ -142,7 +146,7 @@ namespace Sol
 			{
 
 				uiFunction(component);
-				
+
 				ImGui::TreePop();
 			}
 
