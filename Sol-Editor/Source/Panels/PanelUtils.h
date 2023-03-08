@@ -113,13 +113,20 @@ namespace Sol
 	}
 
 	template<typename T, typename UIFunction>
-	static void DrawComponent(const std::string& name, Entity entity, ImGuiTreeNodeFlags treeNodeFlags, UIFunction uiFunction, bool removable = true)
+	static void DrawComponent(const std::string& name, Entity entity, UIFunction uiFunction, bool removable = true)
 	{
 		if (entity.HasComponent<T>())
 		{
+
 			auto& component = entity.GetComponent<T>();
 
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4,4 });
+
+			const ImGuiTreeNodeFlags treeNodeFlags =
+				ImGuiTreeNodeFlags_DefaultOpen |
+				ImGuiTreeNodeFlags_AllowItemOverlap |
+				ImGuiTreeNodeFlags_SpanAvailWidth;
+
 			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
 
 			if (removable)

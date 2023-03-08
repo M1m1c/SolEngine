@@ -64,12 +64,8 @@ namespace Sol
 			ImGui::Columns(1);
 		}
 
-		const ImGuiTreeNodeFlags treeNodeFlags = 
-			ImGuiTreeNodeFlags_DefaultOpen |
-			ImGuiTreeNodeFlags_AllowItemOverlap |
-			ImGuiTreeNodeFlags_SpanAvailWidth;
 
-		DrawComponent<TransformComp>("Transform", entity, treeNodeFlags, [](TransformComp& component) {
+		DrawComponent<TransformComp>("Transform", entity, [](TransformComp& component) {
 
 			auto& position = component.Position;
 			DrawVec3Control("Position", position);
@@ -82,7 +78,7 @@ namespace Sol
 
 			}, false);
 
-		DrawComponent<ModelComp>("Model", entity, treeNodeFlags, [](ModelComp& component) {
+		DrawComponent<ModelComp>("Model", entity, [](ModelComp& component) {
 			ImGui::Columns(2);
 			ImGui::SetColumnWidth(0, 80.f);
 			ImGui::Text("Name");
@@ -91,7 +87,7 @@ namespace Sol
 			ImGui::Columns(1);
 			});
 
-		DrawComponent<MaterialComp>("Material", entity, treeNodeFlags, [](MaterialComp& component) {
+		DrawComponent<MaterialComp>("Material", entity, [](MaterialComp& component) {
 			auto& color = component.Color;
 			DrawVec4Control("Color", color, 1.f, 0.01f, 0.f, 1.f, { "R","G","B","A" });
 			});
