@@ -6,7 +6,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-namespace Sol 
+namespace Sol
 {
 
 	static void DrawDragFloatWithReset(const std::string& label, ImFont* bold, ImVec2& buttonSize, float& value, std::array<ImVec4, 2> colors, float resetValue = 0.0f, float stepSize = 0.1f, float min = 0.0f, float max = 0.0f)
@@ -28,11 +28,9 @@ namespace Sol
 		ImGui::PopItemWidth();
 	}
 
-	static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f,std::array<std::string,3> buttonLabels={"X","Y","Z"}, float columnWidth = 80.f)
+	static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float stepSize = 0.1f, float min = 0.0f, float max = 0.0f, std::array<std::string, 3> buttonLabels = { "X","Y","Z" }, float columnWidth = 80.f)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-
-		//auto regular = io.Fonts->Fonts[0];
 		auto bold = io.Fonts->Fonts[1];
 
 		ImGui::PushID(label.c_str());
@@ -49,19 +47,19 @@ namespace Sol
 
 		{
 			std::array<ImVec4, 2> colors = { ImVec4{0.9f, 0.2f, 0.15f, 1.f}, ImVec4{1.f, 0.2f, 0.2f, 1.f} };
-			DrawDragFloatWithReset(buttonLabels[0], bold, buttonSize, values.x, colors, resetValue);
+			DrawDragFloatWithReset(buttonLabels[0], bold, buttonSize, values.x, colors, resetValue, stepSize, min, max);
 			ImGui::SameLine();
 		}
 
 		{
 			std::array<ImVec4, 2> colors = { ImVec4{ 0.2f,0.7f,0.15f,1.f }, { 0.2f,0.8f,0.2f,1.f } };
-			DrawDragFloatWithReset(buttonLabels[1], bold, buttonSize, values.y, colors, resetValue);
+			DrawDragFloatWithReset(buttonLabels[1], bold, buttonSize, values.y, colors, resetValue, stepSize, min, max);
 			ImGui::SameLine();
 		}
 
 		{
 			std::array<ImVec4, 2> colors = { ImVec4{ 0.15f,0.2f,0.8f,1.f }, ImVec4{ 0.2f,0.2f,1.f,1.f } };
-			DrawDragFloatWithReset(buttonLabels[2], bold, buttonSize, values.z, colors, resetValue);
+			DrawDragFloatWithReset(buttonLabels[2], bold, buttonSize, values.z, colors, resetValue, stepSize, min, max);
 		}
 
 		ImGui::PopStyleVar();
@@ -69,11 +67,9 @@ namespace Sol
 		ImGui::PopID();
 	}
 
-	static void DrawVec4Control(const std::string& label, glm::vec4& values, float resetValue = 0.0f, float columnWidth = 80.f)
+	static void DrawVec4Control(const std::string& label, glm::vec4& values, float resetValue = 0.0f, float stepSize = 0.1f, float min = 0.0f, float max = 0.0f, std::array<std::string, 4> buttonLabels = { "X","Y","Z","W" }, float columnWidth = 80.f)
 	{
 		ImGuiIO& io = ImGui::GetIO();
-
-		//auto regular = io.Fonts->Fonts[0];
 		auto bold = io.Fonts->Fonts[1];
 
 		ImGui::PushID(label.c_str());
@@ -90,25 +86,25 @@ namespace Sol
 
 		{
 			std::array<ImVec4, 2> colors = { ImVec4{0.9f, 0.2f, 0.15f, 1.f}, ImVec4{1.f, 0.2f, 0.2f, 1.f} };
-			DrawDragFloatWithReset("X", bold, buttonSize, values.x, colors, resetValue);
+			DrawDragFloatWithReset(buttonLabels[0], bold, buttonSize, values.x, colors, resetValue, stepSize, min, max);
 			ImGui::SameLine();
 		}
 
 		{
 			std::array<ImVec4, 2> colors = { ImVec4{ 0.2f,0.7f,0.15f,1.f }, { 0.2f,0.8f,0.2f,1.f } };
-			DrawDragFloatWithReset("Y", bold, buttonSize, values.y, colors, resetValue);
+			DrawDragFloatWithReset(buttonLabels[1], bold, buttonSize, values.y, colors, resetValue, stepSize, min, max);
 			ImGui::SameLine();
 		}
 
 		{
 			std::array<ImVec4, 2> colors = { ImVec4{ 0.15f,0.2f,0.8f,1.f }, ImVec4{ 0.2f,0.2f,1.f,1.f } };
-			DrawDragFloatWithReset("Z", bold, buttonSize, values.z, colors, resetValue);
+			DrawDragFloatWithReset(buttonLabels[2], bold, buttonSize, values.z, colors, resetValue, stepSize, min, max);
 			ImGui::SameLine();
 		}
 
 		{
 			std::array<ImVec4, 2> colors = { ImVec4{ 0.4f,0.4f,0.4f,1.f }, ImVec4{ 0.6f,0.6f,0.6f,1.f } };
-			DrawDragFloatWithReset("W", bold, buttonSize, values.w, colors, resetValue);
+			DrawDragFloatWithReset(buttonLabels[3], bold, buttonSize, values.w, colors, resetValue, stepSize, min, max);
 		}
 
 		ImGui::PopStyleVar();
@@ -238,46 +234,9 @@ namespace Sol
 		{
 			if (ImGui::TreeNodeEx((void*)typeid(MaterialComp).hash_code(), treeNodeFlags, "Material"))
 			{
-				auto& material = entity.GetComponent<MaterialComp>().Color;
+				auto& color = entity.GetComponent<MaterialComp>().Color;
+				DrawVec4Control("Color", color, 1.f, 0.01f, 0.f, 1.f, { "R","G","B","A" });
 
-				DrawVec4Control("Color", material, 1.f);
-				//ImGui::Columns(2);
-				//ImGui::SetColumnWidth(0, 80.f);
-				//ImGui::Text("Color");
-				//ImGui::NextColumn();
-
-
-				//ImGui::PushMultiItemsWidths(4, ImGui::CalcItemWidth());
-				//ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0,0 });
-				////float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.f;
-
-				////ImVec2 buttonSize = { lineHeight - 10.f, lineHeight };
-
-				//{
-				//	ImGui::DragFloat("##MaterialColorR", &material.Color.r, 0.01f, 0.f, 1.f, "%.2f");
-				//	ImGui::PopItemWidth();
-				//}
-
-				//{
-				//	ImGui::SameLine();
-				//	ImGui::DragFloat("##MaterialColorG", &material.Color.g, 0.01f, 0.f, 1.f, "%.2f");
-				//	ImGui::PopItemWidth();
-				//}
-
-				//{
-				//	ImGui::SameLine();
-				//	ImGui::DragFloat("##MaterialColorB", &material.Color.b, 0.01f, 0.f, 1.f, "%.2f");
-				//	ImGui::PopItemWidth();
-				//}
-
-				//{
-				//	ImGui::SameLine();
-				//	ImGui::DragFloat("##MaterialColorA", &material.Color.a, 0.01f, 0.f, 1.f, "%.2f");
-				//	ImGui::PopItemWidth();
-				//}
-				////ImGui::DragFloat4("##MaterialColorR", glm::value_ptr(material.Color), 0.01f, 0.0f, 1.f);
-				//ImGui::PopStyleVar();
-				//ImGui::Columns(1);
 				ImGui::TreePop();
 			}
 		}
