@@ -27,6 +27,10 @@ namespace Sol
 		void End();
 
 		void SetBlockEvents(bool b) { m_BlockEvents = b; }
+
+		void SetDarkTheme();
+		void SetChernoDarkTheme();
+
 	private:
 		bool m_BlockEvents = true;
 		float m_Time = 0.0f;
