@@ -52,6 +52,13 @@ namespace Sol
 					m_CurrentScene->CreateEntity("Empty Entity");
 				}
 
+				if (ImGui::MenuItem("Create Cube"))
+				{
+					auto& entity = m_CurrentScene->CreateEntity("Cube");
+					entity.AddComponent<MaterialComp>();
+					entity.AddComponent<ModelComp>("assets/models/cube.fbx", entity.GetID());
+				}
+
 				ImGui::EndPopup();
 			}
 
