@@ -53,6 +53,8 @@ namespace GalaxyDraw {
 		static void DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform);
 		static void DrawMesh(const std::string& modelName,const std::shared_ptr<Mesh>& mesh, const glm::mat4& transform);
 
+		static void EraseModelInstance(EntityID entityID, std::shared_ptr<Model> model);
+
 		struct Statistics
 		{
 			uint32_t DrawCalls = 0;

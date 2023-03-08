@@ -278,6 +278,31 @@ namespace GalaxyDraw
 		}
 	}
 
+	//Removes all the model's mesh instances tied to the entityID from the MeshDataCollections
+	void Renderer3D::EraseModelInstance(EntityID entityID, std::shared_ptr<Model> model)
+	{
+		auto modelName = model->GetName();
+
+		auto& meshes = model->GetMeshes();
+
+		for (size_t i = 0; i < meshes.size(); i++)
+		{
+			auto name = meshes[i]->Name + "_" + modelName;
+
+			if (s_3DData.MeshDataCollections.Exists(name))
+			{
+				auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
+				meshRenderData.m_Instances.eraseWithKey(entityID);
+
+				auto iterator = std::find(meshRenderData.m_ContainedEntityIds.begin(), meshRenderData.m_ContainedEntityIds.end(), entityID);
+				if (iterator != meshRenderData.m_ContainedEntityIds.end()) 
+				{
+					meshRenderData.m_ContainedEntityIds.erase(iterator);
+				}
+			}
+		}
+	}
+
 	void Renderer3D::ResetStats()
 	{
 		memset(&s_3DData.Stats, 0, sizeof(Statistics));
