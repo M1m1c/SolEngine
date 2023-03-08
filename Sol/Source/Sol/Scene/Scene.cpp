@@ -102,6 +102,11 @@ namespace Sol
 
 	void Scene::DestroyEntity(Entity entity)
 	{
+		//TODO it needs to call destroy on all the components too
+		if (entity.HasComponent<ModelComp>()) 
+		{
+			GD_Renderer3D::EraseMeshInstances(entity, entity.GetComponent<ModelComp>().Model);
+		}
 		m_Registry.destroy(entity);
 	}
 
