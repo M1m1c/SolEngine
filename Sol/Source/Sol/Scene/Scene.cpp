@@ -100,9 +100,13 @@ namespace Sol
 		return entity;
 	}
 
-	void Scene::DestroyEntity(Entity entity)
+	void Scene::DestroyEntity(EntityID entityID)
 	{
-		m_Registry.destroy(entity);
+		//TODO it needs to call destroy on all the components too
+		if (m_Registry.any_of<ModelComp>(entityID))
+		{
+			GD_Renderer3D::EraseMeshInstances(entityID, m_Registry.get<ModelComp>(entityID).Model);
+		}
+		m_Registry.destroy(entityID);
 	}
-
 }

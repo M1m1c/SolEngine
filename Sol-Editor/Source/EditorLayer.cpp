@@ -21,6 +21,13 @@ namespace Sol
 
 		m_ActiveScene = std::make_shared<Scene>();
 
+		m_EditorCameraEntity = m_ActiveScene->CreateEntity("Editor Camera");
+		auto& camTransform = m_EditorCameraEntity.GetComponent<TransformComp>();
+		auto& sceneCam = m_EditorCameraEntity.AddComponent<CameraComp>();
+		auto& intComp = m_EditorCameraEntity.AddComponent<InternalComp>();
+
+		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
+		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
 		
 		for (size_t i = 0; i < 3; i++)
 		{
@@ -56,13 +63,7 @@ namespace Sol
 		}
 
 
-		m_CameraEntity = m_ActiveScene->CreateEntity("Editor Camera");
-		auto& camTransform = m_CameraEntity.GetComponent<TransformComp>();
-		auto& sceneCam = m_CameraEntity.AddComponent<CameraComp>();
-		auto& intComp = m_CameraEntity.AddComponent<InternalComp>();
-
-		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
-		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
+		
 
 		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
 		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);

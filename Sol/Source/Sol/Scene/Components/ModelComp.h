@@ -14,6 +14,7 @@ namespace Sol {
 		ModelComp() = default;
 		ModelComp(const ModelComp&) = default;
 		//Sets up model based on providde file path
+		//Keep in mind that you should apply transforms to 3D meshes before exporting, or else meshes might be skewed or rotated weirdly
 		ModelComp(const std::string& modelPath, EntityID entityID) : ModelPath(modelPath)
 		{
 			Model = GalaxyDraw::Model::Create(modelPath, entityID);

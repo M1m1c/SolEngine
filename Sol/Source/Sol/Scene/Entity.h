@@ -34,7 +34,11 @@ namespace Sol
 		template<typename T>
 		void RemoveComponent() {
 			SOL_CORE_ASSERT(HasComponent<T>(), "Entity does not have component!");
-			m_Scene->m_Registry.remove<T>(m_EntityID);
+			m_Scene->RemoveComponent<T>(m_EntityID);
+		}
+
+		void Destroy() {
+			m_Scene->DestroyEntity(m_EntityID);
 		}
 
 		const std::string& GetName();

@@ -20,7 +20,20 @@ namespace Sol
 		//Creates an entity with a TransformComp and a TagComp in the scene, returns created entity.
 		Entity CreateEntity(const std::string& name = std::string());
 
-		void DestroyEntity(Entity entity);
+		void DestroyEntity(EntityID entityID);
+
+		template<typename T>
+		void RemoveComponent(EntityID entityID)
+		{
+			if constexpr (std::is_same<T, ModelComp>::value)
+			{
+				if (m_Registry.any_of<ModelComp>(entityID))
+				{
+					GD_Renderer3D::EraseMeshInstances(entityID, m_Registry.get<ModelComp>(entityID).Model);
+				}
+			}
+			m_Registry.remove<T>(entityID);
+		}
 
 		const entt::registry& GetRegistry() const { return m_Registry; }
 
@@ -38,6 +51,5 @@ namespace Sol
 		s_ptr<GD_VAO> m_VertexArray;
 		s_ptr<GD_Texture2D> m_Texture;
 	};
-
 }
 

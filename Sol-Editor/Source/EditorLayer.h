@@ -23,7 +23,7 @@ namespace Sol
 	private:
 		u_ptr<GD_Framebuffer> m_Framebuffer;
 		s_ptr<Scene> m_ActiveScene;
-		Entity m_CameraEntity;
+		Entity m_EditorCameraEntity;
 
 		u_ptr<CameraController> m_CameraController;
 
