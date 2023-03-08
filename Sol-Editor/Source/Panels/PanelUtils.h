@@ -1,6 +1,7 @@
 #pragma once
 #include "Sol/Core/Core.h"
 #include "Sol/Core/Log.h"
+#include "Sol/Scene/Entity.h"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui.h>
@@ -109,6 +110,47 @@ namespace Sol
 		ImGui::PopStyleVar();
 		ImGui::Columns(1);
 		ImGui::PopID();
+	}
+
+	template<typename T, typename UIFunction>
+	static void DrawComponent(const std::string& name, Entity entity, ImGuiTreeNodeFlags treeNodeFlags, UIFunction uiFunction)
+	{
+		if (entity.HasComponent<T>())
+		{
+			auto& component = entity.GetComponent<T>();
+
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4,4 });
+			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
+			ImGui::SameLine(ImGui::GetWindowWidth() - 25.f);
+
+			if (ImGui::Button("+", ImVec2{ 20,20 })) {
+				ImGui::OpenPopup("ComponentSettings");
+			}
+			ImGui::PopStyleVar();
+
+			bool removeComponent = false;
+			if (ImGui::BeginPopup("ComponentSettings"))
+			{
+				if (ImGui::MenuItem("Remove Compnent"))
+				{
+					removeComponent = true;
+				}
+				ImGui::EndPopup();
+			}
+
+			if (open)
+			{
+
+				uiFunction(component);
+				
+				ImGui::TreePop();
+			}
+
+			if (removeComponent)
+			{
+				entity.RemoveComponent<T>();
+			}
+		}
 	}
 
 }
