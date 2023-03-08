@@ -173,6 +173,11 @@ namespace Sol {
 				ImGui::Columns(1);
 				ImGui::TreePop();
 			}
+
+			if (removeComponent) 
+			{
+				entity.RemoveComponent<ModelComp>();
+			}
 		}
 
 		if (entity.HasComponent<MaterialComp>())
