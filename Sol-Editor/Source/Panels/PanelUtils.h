@@ -120,24 +120,38 @@ namespace Sol
 
 			auto& component = entity.GetComponent<T>();
 
-			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4,4 });
-
 			const ImGuiTreeNodeFlags treeNodeFlags =
 				ImGuiTreeNodeFlags_DefaultOpen |
+				ImGuiTreeNodeFlags_Framed |
+				ImGuiTreeNodeFlags_FramePadding |
 				ImGuiTreeNodeFlags_AllowItemOverlap |
 				ImGuiTreeNodeFlags_SpanAvailWidth;
 
+			ImVec2 contetnRegionAvail = ImGui::GetContentRegionAvail();
+
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4,4 });
+			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.f;
+			ImGui::Separator();
 			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
+			ImGui::PopStyleVar();
 
 			if (removable)
 			{
-				ImGui::SameLine(ImGui::GetWindowWidth() - 25.f);
-				if (ImGui::Button("+", ImVec2{ 20,20 })) {
+				ImVec2 buttonSize = { lineHeight - 8.f, lineHeight };
+
+				ImGui::SameLine(contetnRegionAvail.x - buttonSize.x * 0.5f);
+
+				ImGuiIO& io = ImGui::GetIO();
+				auto bold = io.Fonts->Fonts[1];
+			
+				ImGui::PushFont(bold);
+				if (ImGui::Button("+", buttonSize))
+				{
 					ImGui::OpenPopup("ComponentSettings");
 				}
+				ImGui::PopFont();
 			}
 
-			ImGui::PopStyleVar();
 
 			bool removeComponent = false;
 			if (ImGui::BeginPopup("ComponentSettings"))
