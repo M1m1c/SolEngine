@@ -31,6 +31,7 @@ namespace Sol
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
 		io.FontDefault = io.Fonts->AddFontFromFileTTF("assets/fonts/Saira/Saira-SemiBold.ttf", 24.f);
+		io.Fonts->AddFontFromFileTTF("assets/fonts/Saira/Saira-Bold.ttf", 24.f);
 		//"assets/fonts/Roboto/Roboto-Medium.ttf", 18.f);
 		//"assets/fonts/Golos/static/GolosText-Medium.ttf", 18.f);
 
