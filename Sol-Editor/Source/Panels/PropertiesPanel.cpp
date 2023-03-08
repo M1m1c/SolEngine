@@ -78,20 +78,27 @@ namespace Sol {
 		{
 			DrawComponentNodes(m_CurrentSelection);
 
-			if (ImGui::Button("Add Component")) 
+			if (ImGui::Button("Add Component"))
 			{
 				ImGui::OpenPopup("AddComponent");
 			}
 
 			if (ImGui::BeginPopup("AddComponent"))
 			{
-				if (ImGui::MenuItem("Model Component")) 
+				if (!m_CurrentSelection.HasComponent<ModelComp>()) 
 				{
-					//TODO provide a path to model file
-					m_CurrentSelection.AddComponent<ModelComp>("assets/models/cube.fbx", m_CurrentSelection.GetID());
-					m_CurrentSelection.AddComponent<MaterialComp>();
-					ImGui::CloseCurrentPopup();
+					if (ImGui::MenuItem("Model Component"))
+					{
+						//TODO provide a path to model file
+						m_CurrentSelection.AddComponent<ModelComp>("assets/models/cube.fbx", m_CurrentSelection.GetID());
+						if (!m_CurrentSelection.HasComponent<MaterialComp>())
+						{
+							m_CurrentSelection.AddComponent<MaterialComp>();
+						}
+						ImGui::CloseCurrentPopup();
+					}
 				}
+				
 				ImGui::EndPopup();
 			}
 		}
@@ -144,15 +151,15 @@ namespace Sol {
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4,4 });
 			bool open = ImGui::TreeNodeEx((void*)typeid(ModelComp).hash_code(), treeNodeFlags, "Model");
 			//TODO this smae line does not end up on the same line, it appears above
-			ImGui::SameLine(ImGui::GetWindowWidth()-25.f);
+			ImGui::SameLine(ImGui::GetWindowWidth() - 25.f);
 
-			if (ImGui::Button("+", ImVec2{20,20})) {
+			if (ImGui::Button("+", ImVec2{ 20,20 })) {
 				ImGui::OpenPopup("ComponentSettings");
 			}
 			ImGui::PopStyleVar();
 
 			bool removeComponent = false;
-			if(ImGui::BeginPopup("ComponentSettings"))
+			if (ImGui::BeginPopup("ComponentSettings"))
 			{
 				if (ImGui::MenuItem("Remove Compnent"))
 				{
@@ -174,7 +181,7 @@ namespace Sol {
 				ImGui::TreePop();
 			}
 
-			if (removeComponent) 
+			if (removeComponent)
 			{
 				entity.RemoveComponent<ModelComp>();
 			}
@@ -190,7 +197,7 @@ namespace Sol {
 				ImGui::SetColumnWidth(0, 100.f);
 				ImGui::Text("Color");
 				ImGui::NextColumn();
-				ImGui::DragFloat4("##MaterialColor", glm::value_ptr(material.Color), 0.01f,0.0f,1.f);
+				ImGui::DragFloat4("##MaterialColor", glm::value_ptr(material.Color), 0.01f, 0.0f, 1.f);
 				ImGui::Columns(1);
 				ImGui::TreePop();
 			}
