@@ -1601,9 +1601,6 @@
     <ClCompile Include="Source\GalaxyDraw\ModelOld.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1647,9 +1644,6 @@
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\SceneCamera.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\mainGraphicsOld.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\stb.cpp">

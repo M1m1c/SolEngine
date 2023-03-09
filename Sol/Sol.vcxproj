@@ -655,7 +655,6 @@
     <ClCompile Include="Source\GalaxyDraw\MeshOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp" />
     <ClCompile Include="Source\GalaxyDraw\ModelOld.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.cpp" />
@@ -671,7 +670,6 @@
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexArray.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\SceneCamera.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\mainGraphicsOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\stb.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp" />
