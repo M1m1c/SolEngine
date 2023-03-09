@@ -47,3 +47,13 @@ Sol-Editor/assets/textures/think.png
 *.log
 *.idb
 *.lib
+bin
+bin-int
+yaml-cpp.vcxproj
+yaml-cpp.vcxproj.filters
+Sol/thirdparty/assimp
+Sol/thirdparty/GLFW
+Sol/thirdparty/glm/
+Sol/thirdparty/imgui/
+Sol/thirdparty/stb/
+Sol/thirdparty/yaml-cpp/
