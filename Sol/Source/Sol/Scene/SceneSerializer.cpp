@@ -1,5 +1,6 @@
 #include "solpch.h"
 #include "SceneSerializer.h"
+#include "Entity.h"
 
 #include <yaml-cpp/yaml.h>
 
@@ -7,6 +8,24 @@ namespace Sol
 {
 	SceneSerializer::SceneSerializer(const s_ptr<Scene>& scene) : m_Scene(scene)
 	{
+	}
+
+	static void SerializeEntity(YAML::Emitter& out, Entity entity) 
+	{
+		out << YAML::BeginMap;
+		out << YAML::Key << "Entity" << YAML::Value << "1234"; //EntityID goes in value
+
+		if (entity.HasComponent<NameComp>())
+		{
+			out << YAML::Key << "NameComp";
+			out << YAML::BeginMap;
+			auto& name = entity.GetComponent<NameComp>().GetName();
+			out << YAML::Key << "Name" << YAML::Value << name;
+			out << YAML::EndMap;
+		}
+
+
+		out << YAML::EndMap;
 	}
 
 	void SceneSerializer::SerializeToText(const std::string& filePath)
@@ -20,7 +39,7 @@ namespace Sol
 				
 				Entity entity = { entityID,m_Scene.get() };
 				if (!entity) { return; }
-				//SerializeEntity(out, entity);
+				SerializeEntity(out, entity);
 			});
 		out << YAML::EndSeq;
 		out << YAML::EndMap;
@@ -35,6 +54,7 @@ namespace Sol
 
 	bool SceneSerializer::DeserializeText(const std::string& filePath)
 	{
+		return false;
 	}
 
 	bool SceneSerializer::DeserializeBinary(const std::string& filePath)
