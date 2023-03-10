@@ -76,13 +76,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;YAML_CPP_STATIC_DEFINE;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;thirdparty\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -91,13 +92,17 @@
     <Lib>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul)
+IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sol-Editor" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sol-Editor" &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;YAML_CPP_STATIC_DEFINE;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;thirdparty\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -107,6 +112,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -116,13 +122,17 @@
     <Lib>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul)
+IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sol-Editor" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sol-Editor" &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;YAML_CPP_STATIC_DEFINE;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;thirdparty\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -132,6 +142,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,6 +152,10 @@
     <Lib>
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul)
+IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sol-Editor" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sol-Editor" &gt; nul)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\GalaxyDraw\Camera.h" />
@@ -216,6 +231,7 @@
     <ClInclude Include="Source\Sol\Scene\Components\TransformComp.h" />
     <ClInclude Include="Source\Sol\Scene\Entity.h" />
     <ClInclude Include="Source\Sol\Scene\Scene.h" />
+    <ClInclude Include="Source\Sol\Scene\SceneSerializer.h" />
     <ClInclude Include="Source\Sol\SolDefines.h" />
     <ClInclude Include="Source\solpch.h" />
     <ClInclude Include="thirdparty\entt\entt.hpp" />
@@ -684,6 +700,7 @@
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="Source\Sol\Scene\Entity.cpp" />
     <ClCompile Include="Source\Sol\Scene\Scene.cpp" />
+    <ClCompile Include="Source\Sol\Scene\SceneSerializer.cpp" />
     <ClCompile Include="Source\solpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

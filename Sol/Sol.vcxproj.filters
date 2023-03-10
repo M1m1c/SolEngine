@@ -288,6 +288,9 @@
     <ClInclude Include="Source\Sol\Scene\Scene.h">
       <Filter>Source\Sol\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sol\Scene\SceneSerializer.h">
+      <Filter>Source\Sol\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Sol\SolDefines.h">
       <Filter>Source\Sol</Filter>
     </ClInclude>
@@ -1686,6 +1689,9 @@
       <Filter>Source\Sol\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\Scene\Scene.cpp">
+      <Filter>Source\Sol\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\Scene\SceneSerializer.cpp">
       <Filter>Source\Sol\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Source\solpch.cpp">
