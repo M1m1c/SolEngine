@@ -42,7 +42,7 @@ project "Sol"
 
 	pchheader"solpch.h"
 	pchsource "Sol/Source/solpch.cpp"
-
+	
 	files
 	{
 		"%{prj.name}/Source/**.h",
@@ -54,7 +54,8 @@ project "Sol"
 
 	defines
 	{
-		"_CRT_SECURE_NO_WARNINGS"
+		"_CRT_SECURE_NO_WARNINGS",
+		"YAML_CPP_STATIC_DEFINE"
 	}
 
 	includedirs
@@ -72,6 +73,7 @@ project "Sol"
 		"%{IncludeDir.yaml_cpp}"
 	}
 	
+
 	links
 	{
 		"GLFW",
