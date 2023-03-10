@@ -1,8 +1,11 @@
 #include "EditorLayer.h"
 
+#include "Sol/Scene/SceneSerializer.h"
+
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
 namespace Sol
 {
 	EditorLayer::EditorLayer() :
@@ -67,6 +70,8 @@ namespace Sol
 
 		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
 		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
+		SceneSerializer serializer(m_ActiveScene);
+		serializer.SerializeToText("assets/scenes/Example.scene");
 	}
 
 	void EditorLayer::OnDetach()
