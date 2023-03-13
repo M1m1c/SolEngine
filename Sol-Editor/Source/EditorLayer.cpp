@@ -38,9 +38,8 @@ namespace Sol
 			std::string name = "Cube" + std::to_string(i);
 			auto TestEntity = m_ActiveScene->CreateEntity(name);
 			TestEntity.AddComponent<ModelComp>("assets/models/cube.fbx", TestEntity.GetID());
-			TestEntity.AddComponent<MaterialComp>();
+			auto& entityMaterial = TestEntity.AddComponent<MaterialComp>();
 			auto& entityTransform = TestEntity.GetComponent<TransformComp>();
-			auto& entityMaterial = TestEntity.GetComponent<MaterialComp>();
 
 			if (i == 0) {
 				entityTransform.Position = glm::vec3(2.f, 2.f, 2.f);
@@ -71,7 +70,7 @@ namespace Sol
 		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
 		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
 		SceneSerializer serializer(m_ActiveScene);
-		serializer.SerializeToText("assets/scenes/Example.scene");
+		//serializer.SerializeToText("assets/scenes/Example.scene");
 	}
 
 	void EditorLayer::OnDetach()
