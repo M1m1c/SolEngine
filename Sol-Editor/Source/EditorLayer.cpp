@@ -148,12 +148,12 @@ namespace Sol
 
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("New Scene...", "Ctrl+N"))
+				if (ImGui::MenuItem("New...", "Ctrl+N"))
 				{
 					CreateNewScene();
 				}
 
-				if (ImGui::MenuItem("Open Scene...", "Ctrl+O"))
+				if (ImGui::MenuItem("Open...", "Ctrl+O"))
 				{
 					std::string filePath = FileDialogs::OpenFile("Sol Scene (*.scene)\0*.scene\0");
 					if (!filePath.empty())
@@ -165,7 +165,7 @@ namespace Sol
 					}
 				}
 
-				if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S"))
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 				{
 					std::string filePath = FileDialogs::SaveFile("Sol Scene (*.scene)\0*.scene\0");
 					if (!filePath.empty())
