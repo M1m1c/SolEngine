@@ -32,45 +32,12 @@ namespace Sol
 		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
 		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
 		
-		for (size_t i = 0; i < 3; i++)
-		{
-
-			std::string name = "Cube" + std::to_string(i);
-			auto TestEntity = m_ActiveScene->CreateEntity(name);
-			TestEntity.AddComponent<ModelComp>("assets/models/cube.fbx", TestEntity.GetID());
-			auto& entityMaterial = TestEntity.AddComponent<MaterialComp>();
-			auto& entityTransform = TestEntity.GetComponent<TransformComp>();
-
-			if (i == 0) {
-				entityTransform.Position = glm::vec3(2.f, 2.f, 2.f);
-				entityTransform.Rotation = glm::vec3(-45.f, 45.f, 45.f);
-				entityTransform.Scale = glm::vec3(0.5f, 0.5f, 0.5f);
-				entityMaterial.Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
-			}
-			else if (i==1)
-			{
-				entityTransform.Position = glm::vec3(0.f, 0.f, 0.f);
-				entityTransform.Scale = glm::vec3(0.5f, 0.5f, 0.5f);
-				entityTransform.Rotation = glm::vec3(-90.f, 0.f, 0.f);
-				entityMaterial.Color = glm::vec4(0.f, 0.f, 1.f, 1.f);
-			}
-			else if (i == 2)
-			{
-				entityTransform.Position = glm::vec3(-2.f, -2.f, -2.f);
-				entityTransform.Scale = glm::vec3(0.5f, 0.5f, 0.5f);
-				entityTransform.Rotation = glm::vec3(-90.f, -45.f, -45.f);
-				entityMaterial.Color = glm::vec4(0.f, 1.f, 0.f, 1.f);
-			}
-			
-		}
-
-
-		
 
 		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
 		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
 		SceneSerializer serializer(m_ActiveScene);
 		//serializer.SerializeToText("assets/scenes/Example.scene");
+		serializer.DeserializeText("assets/scenes/Example.scene");
 	}
 
 	void EditorLayer::OnDetach()
