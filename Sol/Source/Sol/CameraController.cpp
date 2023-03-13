@@ -29,9 +29,9 @@ namespace Sol
 			auto forward = isCameraPesrpective ? m_CameraTransform.GetForward() : glm::vec3(0.f, .0f, .0f);
 			auto right = m_CameraTransform.GetRight();
 
-			m_InputAxis.x = (m_DirInputs[MoveDir::mForward] == 1 ? -1.f : (m_DirInputs[MoveDir::mBack] == 1 ? 1.f : 0.f));
-			m_InputAxis.y = (m_DirInputs[MoveDir::mRight] == 1 ? -1.f : (m_DirInputs[MoveDir::mLeft] == 1 ? 1.f : 0.f));
-			m_InputAxis.z = (m_DirInputs[MoveDir::mUp] == 1 ? -1.f : (m_DirInputs[MoveDir::mDown] == 1 ? 1.f : 0.f));
+			m_InputAxis.x = m_DirInputs[MoveDir::mBack] - m_DirInputs[MoveDir::mForward];
+			m_InputAxis.y = m_DirInputs[MoveDir::mLeft] - m_DirInputs[MoveDir::mRight];
+			m_InputAxis.z = m_DirInputs[MoveDir::mDown] - m_DirInputs[MoveDir::mUp];
 
 			glm::vec3 dir = glm::normalize((forward * m_InputAxis.x) + (right * m_InputAxis.y) + (WorldUp * m_InputAxis.z));
 
@@ -50,8 +50,8 @@ namespace Sol
 			float camYawDir = 0;
 			float camPitchDir = 0;
 
-			camYawDir = (m_RotInputs[RotDir::rRight] == 1 ? -m_RotSpeed : (m_RotInputs[RotDir::rLeft] == 1 ? m_RotSpeed : 0.f));
-			camPitchDir = (m_RotInputs[RotDir::rUp] == 1 ? m_RotSpeed : (m_RotInputs[RotDir::rDown] == 1 ? -m_RotSpeed : 0.f));
+			camYawDir = (m_RotInputs[RotDir::rLeft] * m_RotSpeed) - (m_RotInputs[RotDir::rRight] * m_RotSpeed);
+			camPitchDir = (m_RotInputs[RotDir::rUp] * m_RotSpeed) - (m_RotInputs[RotDir::rDown] * m_RotSpeed);
 
 			m_CameraTransform.Yaw() += glm::radians(camYawDir) * m_Sensitivity * deltaTime;
 			m_CameraTransform.Pitch() += glm::radians(camPitchDir) * m_Sensitivity * deltaTime;
@@ -102,7 +102,7 @@ namespace Sol
 			m_PerspectiveToggle = !m_PerspectiveToggle;
 			m_SceneCamera.Camera.SetIsPerspective(m_PerspectiveToggle);
 		}
-		else if(!Input::IsKeyPressed(Key::P))
+		else if (!Input::IsKeyPressed(Key::P))
 		{
 			m_OldPserpesctiveInput = false;
 		}
