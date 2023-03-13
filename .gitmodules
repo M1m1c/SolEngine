@@ -16,3 +16,6 @@
 [submodule "Sol/thirdparty/stb"]
 	path = Sol/thirdparty/stb
 	url = https://github.com/nothings/stb
+[submodule "Sol/thirdparty/yaml-cpp"]
+	path = Sol/thirdparty/yaml-cpp
+	url = https://github.com/M1m1c/yaml-cpp-Sol.git

@@ -76,13 +76,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;YAML_CPP_STATIC_DEFINE;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;thirdparty\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -92,7 +93,8 @@
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul)</Command>
+      <Command>IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sandbox" &gt; nul)
+IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sol-Editor" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Debug-windows-x86_64\Sol-Editor" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -100,8 +102,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;YAML_CPP_STATIC_DEFINE;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;thirdparty\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -110,6 +112,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -120,7 +123,8 @@
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul)</Command>
+      <Command>IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sandbox" &gt; nul)
+IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sol-Editor" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Release-windows-x86_64\Sol-Editor" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -128,8 +132,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>solpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;YAML_CPP_STATIC_DEFINE;SOL_PLATFORM_WINDOWS;SOL_BUILD_DLL;GLFW_INCLUDE_NONE;SOL_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>Source;thirdparty\spdlog\include;;thirdparty\GLFW\include;thirdparty\Glad\include;thirdparty\imgui;thirdparty\assimp\include;thirdparty\assimp\include\include;thirdparty\stb;thirdparty\glm;thirdparty\entt;thirdparty\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -138,6 +142,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,19 +153,21 @@
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul)</Command>
+      <Command>IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sandbox" &gt; nul)
+IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sol-Editor" &gt; nul) ELSE (xcopy /Q /Y /I ..\Sol\thirdparty\assimp\lib\*.dll "..\binaries\Dist-windows-x86_64\Sol-Editor" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\GalaxyDraw\Camera.h" />
     <ClInclude Include="Source\GalaxyDraw\GalaxyDraw.h" />
     <ClInclude Include="Source\GalaxyDraw\GalaxyMacros.h" />
     <ClInclude Include="Source\GalaxyDraw\IBuildable.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Framebuffer.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Mesh.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Model.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\OrthoCamera.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\Framebuffer.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\ParticleSystem.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\RenderCommand.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Renderer.h" />
@@ -173,20 +180,20 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\VertexArray.h" />
     <ClInclude Include="Source\GalaxyDraw\MeshOld.h" />
-    <ClInclude Include="Source\GalaxyDraw\ModelOld.h" />
     <ClInclude Include="Source\GalaxyDraw\ModelBuilder.h" />
+    <ClInclude Include="Source\GalaxyDraw\ModelOld.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_InstanceBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.h" />
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.h" />
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.h" />
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.h" />
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Shader.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexArray.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\SceneCamera.h" />
@@ -223,10 +230,11 @@
     <ClInclude Include="Source\Sol\Scene\Components\SpriteRendererComp.h" />
     <ClInclude Include="Source\Sol\Scene\Components\TransformComp.h" />
     <ClInclude Include="Source\Sol\Scene\Entity.h" />
-    <ClInclude Include="Source\GalaxyDraw\Camera.h" />
     <ClInclude Include="Source\Sol\Scene\Scene.h" />
-    <ClInclude Include="Source\solpch.h" />
+    <ClInclude Include="Source\Sol\Scene\SceneSerializer.h" />
     <ClInclude Include="Source\Sol\SolDefines.h" />
+    <ClInclude Include="Source\solpch.h" />
+    <ClInclude Include="Source\Sol\Utils\PlatformUtils.h" />
     <ClInclude Include="thirdparty\entt\entt.hpp" />
     <ClInclude Include="thirdparty\glm\glm\common.hpp" />
     <ClInclude Include="thirdparty\glm\glm\detail\_features.hpp" />
@@ -646,10 +654,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\Model.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\OrthoCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Framebuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\Model.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\OrthoCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\ParticleSystem.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderCommand.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Renderer.cpp" />
@@ -662,15 +670,15 @@
     <ClCompile Include="Source\GalaxyDraw\Interfaces\UniformBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\VertexArray.cpp" />
     <ClCompile Include="Source\GalaxyDraw\MeshOld.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\ModelOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\ModelOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_InstanceBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Shader.cpp" />
@@ -681,6 +689,7 @@
     <ClCompile Include="Source\GalaxyDraw\SceneCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\stb.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="Source\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="Source\Sol\CameraController.cpp" />
     <ClCompile Include="Source\Sol\Core\Application.cpp" />
@@ -693,6 +702,7 @@
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="Source\Sol\Scene\Entity.cpp" />
     <ClCompile Include="Source\Sol\Scene\Scene.cpp" />
+    <ClCompile Include="Source\Sol\Scene\SceneSerializer.cpp" />
     <ClCompile Include="Source\solpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -713,10 +723,9 @@
     <ProjectReference Include="thirdparty\assimp\assimp.vcxproj">
       <Project>{724885F2-5EEA-AFC8-47A5-C31C33E63619}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Source\GalaxyDraw\Shaders\cube.frag" />
-    <None Include="Source\GalaxyDraw\Shaders\cube.vert" />
+    <ProjectReference Include="thirdparty\yaml-cpp\yaml-cpp.vcxproj">
+      <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

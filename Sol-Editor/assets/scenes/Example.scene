@@ -1,0 +1,35 @@
+Scene: Untitled Scene
+Entities:
+  - Entity: 3
+    NameComp:
+      Name: Cube2
+    TransformComp:
+      Position: [-2, -2, -2]
+      Rotation: [-90, -45, -45]
+      Scale: [0.5, 0.5, 0.5]
+    ModelComp:
+      ModelPath: assets/models/cube.fbx
+    MaterialComp:
+      Color: [0, 1, 0, 1]
+  - Entity: 2
+    NameComp:
+      Name: Cube1
+    TransformComp:
+      Position: [0, 0, 0]
+      Rotation: [-90, 0, 0]
+      Scale: [0.5, 0.5, 0.5]
+    ModelComp:
+      ModelPath: assets/models/cube.fbx
+    MaterialComp:
+      Color: [0, 0, 1, 1]
+  - Entity: 1
+    NameComp:
+      Name: Cube0
+    TransformComp:
+      Position: [2, 2, 2]
+      Rotation: [-45, 45, 45]
+      Scale: [0.5, 0.5, 0.5]
+    ModelComp:
+      ModelPath: assets/models/cube.fbx
+    MaterialComp:
+      Color: [1, 0, 0, 1]

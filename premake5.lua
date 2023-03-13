@@ -19,6 +19,7 @@ IncludeDir ["stb"] = "Sol/thirdparty/stb"
 IncludeDir ["glm"] = "Sol/thirdparty/glm"
 IncludeDir ["assimp"] = "Sol/thirdparty/assimp/include"
 IncludeDir ["entt"] = "Sol/thirdparty/entt"
+IncludeDir ["yaml_cpp"] = "Sol/thirdparty/yaml-cpp/include"
 
 group "Dependencies"
 	include "Sol/thirdparty/GLFW"
@@ -26,6 +27,7 @@ group "Dependencies"
 	include "Sol/thirdparty/imgui"
 	include "Sol/thirdparty/assimp"
 	include "Sol/thirdparty/stb"
+	include "Sol/thirdparty/yaml-cpp"
 group ""
 
 project "Sol"
@@ -40,7 +42,7 @@ project "Sol"
 
 	pchheader"solpch.h"
 	pchsource "Sol/Source/solpch.cpp"
-
+	
 	files
 	{
 		"%{prj.name}/Source/**.h",
@@ -52,7 +54,8 @@ project "Sol"
 
 	defines
 	{
-		"_CRT_SECURE_NO_WARNINGS"
+		"_CRT_SECURE_NO_WARNINGS",
+		"YAML_CPP_STATIC_DEFINE"
 	}
 
 	includedirs
@@ -66,9 +69,11 @@ project "Sol"
 		"%{IncludeDir.assimp}/include",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}"
 	}
 	
+
 	links
 	{
 		"GLFW",
@@ -76,6 +81,7 @@ project "Sol"
 		"ImGui",
 		"stb",
 		"assimp",
+		"yaml-cpp",
 		"opengl32.lib"
 	}
 
@@ -93,9 +99,8 @@ project "Sol"
 
 		postbuildcommands
 		{
-			("{COPY} ../Sol/thirdparty/assimp/lib/*.dll \"../binaries/".. outputdir .."/Sandbox\"")
+			("{COPY} ../Sol/thirdparty/assimp/lib/*.dll \"../binaries/".. outputdir .."/Sandbox\""),
 			("{COPY} ../Sol/thirdparty/assimp/lib/*.dll \"../binaries/".. outputdir .."/Sol-Editor\"")
-
 		}
 
 	filter "configurations:Debug"

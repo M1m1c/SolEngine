@@ -1,16 +1,15 @@
 #include "EditorLayer.h"
 
+#include "Sol/Scene/SceneSerializer.h"
+#include "Sol/Utils/PlatformUtils.h"
+
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
 namespace Sol
 {
-	EditorLayer::EditorLayer() :
-		Layer("Example")
-	{
-		
-
-	}
+	EditorLayer::EditorLayer() : Layer("Example") {	}
 
 	void EditorLayer::OnAttach()
 	{
@@ -19,54 +18,13 @@ namespace Sol
 		properties.Height = 720;
 		m_Framebuffer = GD_Framebuffer::Create(properties);
 
-		m_ActiveScene = std::make_shared<Scene>();
-
-		m_EditorCameraEntity = m_ActiveScene->CreateEntity("Editor Camera");
-		auto& camTransform = m_EditorCameraEntity.GetComponent<TransformComp>();
-		auto& sceneCam = m_EditorCameraEntity.AddComponent<CameraComp>();
-		auto& intComp = m_EditorCameraEntity.AddComponent<InternalComp>();
-
-		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
-		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
-		
-		for (size_t i = 0; i < 3; i++)
-		{
-
-			std::string name = "Cube" + std::to_string(i);
-			auto TestEntity = m_ActiveScene->CreateEntity(name);
-			TestEntity.AddComponent<ModelComp>("assets/models/cube.fbx", TestEntity.GetID());
-			TestEntity.AddComponent<MaterialComp>();
-			auto& entityTransform = TestEntity.GetComponent<TransformComp>();
-			auto& entityMaterial = TestEntity.GetComponent<MaterialComp>();
-
-			if (i == 0) {
-				entityTransform.Position = glm::vec3(2.f, 2.f, 2.f);
-				entityTransform.Rotation = glm::vec3(-45.f, 45.f, 45.f);
-				entityTransform.Scale = glm::vec3(0.5f, 0.5f, 0.5f);
-				entityMaterial.Color = glm::vec4(1.f, 0.f, 0.f, 1.f);
-			}
-			else if (i==1)
-			{
-				entityTransform.Position = glm::vec3(0.f, 0.f, 0.f);
-				entityTransform.Scale = glm::vec3(0.5f, 0.5f, 0.5f);
-				entityTransform.Rotation = glm::vec3(-90.f, 0.f, 0.f);
-				entityMaterial.Color = glm::vec4(0.f, 0.f, 1.f, 1.f);
-			}
-			else if (i == 2)
-			{
-				entityTransform.Position = glm::vec3(-2.f, -2.f, -2.f);
-				entityTransform.Scale = glm::vec3(0.5f, 0.5f, 0.5f);
-				entityTransform.Rotation = glm::vec3(-90.f, -45.f, -45.f);
-				entityMaterial.Color = glm::vec4(0.f, 1.f, 0.f, 1.f);
-			}
-			
-		}
-
-
-		
-
 		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
-		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
+
+		CreateNewScene();
+
+		//SceneSerializer serializer(m_ActiveScene);
+		//serializer.SerializeToText("assets/scenes/Example.scene");
+		//serializer.DeserializeText("assets/scenes/Example.scene");
 	}
 
 	void EditorLayer::OnDetach()
@@ -76,10 +34,10 @@ namespace Sol
 	void EditorLayer::OnUpdate(TimeStep deltaTime)
 	{
 		SOL_PROFILE_FUNCTION();
-		
+
 
 		//RESIZE
-		if(m_ViewPortSize.x>0.0f && m_ViewPortSize.y>0.0f) 
+		if (m_ViewPortSize.x > 0.0f && m_ViewPortSize.y > 0.0f)
 		{
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 
@@ -88,13 +46,12 @@ namespace Sol
 			bool viewLargerThanZero = m_ViewPortSize.x > 0.0f && m_ViewPortSize.y > 0.0f;
 			bool propsDontMatch = props.Width != m_ViewPortSize.x || props.Height != m_ViewPortSize.y;
 
-			if (viewLargerThanZero && propsDontMatch) 
+			if (viewLargerThanZero && propsDontMatch)
 			{
 				m_Framebuffer->Resize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 			}
 		}
 
-		//TODO tie camera controller to new entity with camera comp
 		if (m_ViewPortFocused)
 		{
 			m_CameraController->OnUpdate(deltaTime);
@@ -106,12 +63,7 @@ namespace Sol
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
 
-		//GD_Renderer2D::BeginScene(m_CameraController.GetCamera());
-
 		m_ActiveScene->OnUpdate(deltaTime);
-	
-
-		//GD_Renderer2D::EndScene();
 
 		m_Framebuffer->UnBind();
 	}
@@ -182,8 +134,15 @@ namespace Sol
 
 		if (ImGui::BeginMenuBar())
 		{
+
 			if (ImGui::BeginMenu("File"))
 			{
+				if (ImGui::MenuItem("New...", "Ctrl+N")) { CreateNewScene(); }
+
+				if (ImGui::MenuItem("Open...", "Ctrl+O")) { OpenScene(); }
+
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S")) { SaveSceneAs(); }
+
 				if (ImGui::MenuItem("Exit")) { Sol::Application::Get().Close(); }
 				ImGui::EndMenu();
 			}
@@ -231,6 +190,81 @@ namespace Sol
 	{
 		//SOL_TRACE("{0}", event);
 		m_CameraController->OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(SOL_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
 	}
 
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		//SHORTCUTS
+		if (e.GetRepeatCount() > 0)
+		{
+			return false;
+		}
+
+		bool control = Input::IsKeyPressed(Key::LEFT_CONTROL) || Input::IsKeyPressed(Key::RIGHT_CONTROL);
+		bool shift = Input::IsKeyPressed(Key::LEFT_SHIFT) || Input::IsKeyPressed(Key::RIGHT_SHIFT);
+
+		switch (e.GetKeyCode())
+		{
+		case Key::N:
+			if (control) { CreateNewScene(); }
+			break;
+
+		case Key::O:
+			if (control) { OpenScene(); }
+			break;
+
+		case Key::S:
+			if (control && shift) { SaveSceneAs(); }
+			break;
+		}
+	}
+
+	void EditorLayer::CreateNewScene()
+	{
+		if (m_ActiveScene)
+		{
+			m_ActiveScene->DestroyAllEntities();
+		}
+
+		m_ActiveScene = std::make_shared<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
+		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
+		CreateEditorCamera(m_ActiveScene);
+	}
+
+	void EditorLayer::CreateEditorCamera(s_ptr<Scene> activeScene)
+	{
+		m_EditorCameraEntity = activeScene->CreateEntity("Editor Camera");
+		auto& camTransform = m_EditorCameraEntity.GetComponent<TransformComp>();
+		auto& sceneCam = m_EditorCameraEntity.AddComponent<CameraComp>();
+		auto& intComp = m_EditorCameraEntity.AddComponent<InternalComp>();
+
+		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
+		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filePath = FileDialogs::OpenFile("Sol Scene (*.scene)\0*.scene\0");
+		if (!filePath.empty())
+		{
+			CreateNewScene();
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.DeserializeText(filePath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filePath = FileDialogs::SaveFile("Sol Scene (*.scene)\0*.scene\0");
+		if (!filePath.empty())
+		{
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.SerializeToText(filePath);
+		}
+	}
 }

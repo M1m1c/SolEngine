@@ -29,9 +29,9 @@ namespace Sol
 			auto forward = isCameraPesrpective ? m_CameraTransform.GetForward() : glm::vec3(0.f, .0f, .0f);
 			auto right = m_CameraTransform.GetRight();
 
-			m_InputAxis.x = (m_DirInputs[MoveDir::mForward] == 1 ? -1.f : (m_DirInputs[MoveDir::mBack] == 1 ? 1.f : 0.f));
-			m_InputAxis.y = (m_DirInputs[MoveDir::mRight] == 1 ? -1.f : (m_DirInputs[MoveDir::mLeft] == 1 ? 1.f : 0.f));
-			m_InputAxis.z = (m_DirInputs[MoveDir::mUp] == 1 ? -1.f : (m_DirInputs[MoveDir::mDown] == 1 ? 1.f : 0.f));
+			m_InputAxis.x = m_DirInputs[MoveDir::mBack] - m_DirInputs[MoveDir::mForward];
+			m_InputAxis.y = m_DirInputs[MoveDir::mLeft] - m_DirInputs[MoveDir::mRight];
+			m_InputAxis.z = m_DirInputs[MoveDir::mDown] - m_DirInputs[MoveDir::mUp];
 
 			glm::vec3 dir = glm::normalize((forward * m_InputAxis.x) + (right * m_InputAxis.y) + (WorldUp * m_InputAxis.z));
 
@@ -50,8 +50,8 @@ namespace Sol
 			float camYawDir = 0;
 			float camPitchDir = 0;
 
-			camYawDir = (m_RotInputs[RotDir::rRight] == 1 ? -m_RotSpeed : (m_RotInputs[RotDir::rLeft] == 1 ? m_RotSpeed : 0.f));
-			camPitchDir = (m_RotInputs[RotDir::rUp] == 1 ? m_RotSpeed : (m_RotInputs[RotDir::rDown] == 1 ? -m_RotSpeed : 0.f));
+			camYawDir = (m_RotInputs[RotDir::rLeft] * m_RotSpeed) - (m_RotInputs[RotDir::rRight] * m_RotSpeed);
+			camPitchDir = (m_RotInputs[RotDir::rUp] * m_RotSpeed) - (m_RotInputs[RotDir::rDown] * m_RotSpeed);
 
 			m_CameraTransform.Yaw() += glm::radians(camYawDir) * m_Sensitivity * deltaTime;
 			m_CameraTransform.Pitch() += glm::radians(camPitchDir) * m_Sensitivity * deltaTime;
@@ -84,30 +84,30 @@ namespace Sol
 
 	void CameraController::UpdateInputs()
 	{
-		m_DirInputs[MoveDir::mForward] = Input::IsKeyPressed(SOL_KEY_W);
-		m_DirInputs[MoveDir::mBack] = Input::IsKeyPressed(SOL_KEY_S);
-		m_DirInputs[MoveDir::mRight] = Input::IsKeyPressed(SOL_KEY_D);
-		m_DirInputs[MoveDir::mLeft] = Input::IsKeyPressed(SOL_KEY_A);
-		m_DirInputs[MoveDir::mUp] = Input::IsKeyPressed(SOL_KEY_SPACE);
-		m_DirInputs[MoveDir::mDown] = Input::IsKeyPressed(SOL_KEY_LEFT_SHIFT);
+		m_DirInputs[MoveDir::mForward] = Input::IsKeyPressed(Key::W);
+		m_DirInputs[MoveDir::mBack] = Input::IsKeyPressed(Key::S);
+		m_DirInputs[MoveDir::mRight] = Input::IsKeyPressed(Key::D);
+		m_DirInputs[MoveDir::mLeft] = Input::IsKeyPressed(Key::A);
+		m_DirInputs[MoveDir::mUp] = Input::IsKeyPressed(Key::SPACE);
+		m_DirInputs[MoveDir::mDown] = Input::IsKeyPressed(Key::LEFT_SHIFT);
 
-		m_RotInputs[RotDir::rRight] = Input::IsKeyPressed(SOL_KEY_E);
-		m_RotInputs[RotDir::rLeft] = Input::IsKeyPressed(SOL_KEY_Q);
-		m_RotInputs[RotDir::rUp] = Input::IsKeyPressed(SOL_KEY_R);
-		m_RotInputs[RotDir::rDown] = Input::IsKeyPressed(SOL_KEY_F);
+		m_RotInputs[RotDir::rRight] = Input::IsKeyPressed(Key::E);
+		m_RotInputs[RotDir::rLeft] = Input::IsKeyPressed(Key::Q);
+		m_RotInputs[RotDir::rUp] = Input::IsKeyPressed(Key::R);
+		m_RotInputs[RotDir::rDown] = Input::IsKeyPressed(Key::F);
 
-		if (Input::IsKeyPressed(SOL_KEY_P) && m_OldPserpesctiveInput == false)
+		if (Input::IsKeyPressed(Key::P) && m_OldPserpesctiveInput == false)
 		{
 			m_OldPserpesctiveInput = true;
 			m_PerspectiveToggle = !m_PerspectiveToggle;
 			m_SceneCamera.Camera.SetIsPerspective(m_PerspectiveToggle);
 		}
-		else if(!Input::IsKeyPressed(SOL_KEY_P))
+		else if (!Input::IsKeyPressed(Key::P))
 		{
 			m_OldPserpesctiveInput = false;
 		}
 
-		if (Input::IsKeyPressed(SOL_KEY_H))
+		if (Input::IsKeyPressed(Key::H))
 		{
 			m_CameraTransform.Position = glm::vec3(0.0f);
 			m_CameraTransform.Rotation = glm::vec3(0.0f);

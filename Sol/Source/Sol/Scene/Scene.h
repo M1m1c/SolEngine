@@ -22,6 +22,8 @@ namespace Sol
 
 		void DestroyEntity(EntityID entityID);
 
+		void DestroyAllEntities();
+
 		template<typename T>
 		void RemoveComponent(EntityID entityID)
 		{
