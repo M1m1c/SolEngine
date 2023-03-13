@@ -234,6 +234,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\Sol\Scene\SceneSerializer.h" />
     <ClInclude Include="Source\Sol\SolDefines.h" />
     <ClInclude Include="Source\solpch.h" />
+    <ClInclude Include="Source\Sol\Utils\PlatformUtils.h" />
     <ClInclude Include="thirdparty\entt\entt.hpp" />
     <ClInclude Include="thirdparty\glm\glm\common.hpp" />
     <ClInclude Include="thirdparty\glm\glm\detail\_features.hpp" />
@@ -688,6 +689,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClCompile Include="Source\GalaxyDraw\SceneCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\stb.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="Source\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="Source\Sol\CameraController.cpp" />
     <ClCompile Include="Source\Sol\Core\Application.cpp" />
