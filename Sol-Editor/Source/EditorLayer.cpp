@@ -9,12 +9,7 @@
 
 namespace Sol
 {
-	EditorLayer::EditorLayer() :
-		Layer("Example")
-	{
-
-
-	}
+	EditorLayer::EditorLayer() : Layer("Example") {	}
 
 	void EditorLayer::OnAttach()
 	{
@@ -57,7 +52,6 @@ namespace Sol
 			}
 		}
 
-		//TODO tie camera controller to new entity with camera comp
 		if (m_ViewPortFocused)
 		{
 			m_CameraController->OnUpdate(deltaTime);
@@ -69,12 +63,7 @@ namespace Sol
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
 
-		//GD_Renderer2D::BeginScene(m_CameraController.GetCamera());
-
 		m_ActiveScene->OnUpdate(deltaTime);
-
-
-		//GD_Renderer2D::EndScene();
 
 		m_Framebuffer->UnBind();
 	}
@@ -148,33 +137,11 @@ namespace Sol
 
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("New...", "Ctrl+N"))
-				{
-					CreateNewScene();
-				}
+				if (ImGui::MenuItem("New...", "Ctrl+N")) { CreateNewScene(); }
 
-				if (ImGui::MenuItem("Open...", "Ctrl+O"))
-				{
-					std::string filePath = FileDialogs::OpenFile("Sol Scene (*.scene)\0*.scene\0");
-					if (!filePath.empty())
-					{
-						CreateNewScene();
+				if (ImGui::MenuItem("Open...", "Ctrl+O")) { OpenScene(); }
 
-						SceneSerializer serializer(m_ActiveScene);
-						serializer.DeserializeText(filePath);
-					}
-				}
-
-				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
-				{
-					std::string filePath = FileDialogs::SaveFile("Sol Scene (*.scene)\0*.scene\0");
-					if (!filePath.empty())
-					{
-						SceneSerializer serializer(m_ActiveScene);
-						serializer.SerializeToText(filePath);
-					}
-
-				}
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S")) { SaveSceneAs(); }
 
 				if (ImGui::MenuItem("Exit")) { Sol::Application::Get().Close(); }
 				ImGui::EndMenu();
@@ -223,11 +190,41 @@ namespace Sol
 	{
 		//SOL_TRACE("{0}", event);
 		m_CameraController->OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(SOL_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		//SHORTCUTS
+		if (e.GetRepeatCount() > 0)
+		{
+			return false;
+		}
+
+		bool control = Input::IsKeyPressed(Key::LEFT_CONTROL) || Input::IsKeyPressed(Key::RIGHT_CONTROL);
+		bool shift = Input::IsKeyPressed(Key::LEFT_SHIFT) || Input::IsKeyPressed(Key::RIGHT_SHIFT);
+
+		switch (e.GetKeyCode())
+		{
+		case Key::N:
+			if (control) { CreateNewScene(); }
+			break;
+
+		case Key::O:
+			if (control) { OpenScene(); }
+			break;
+
+		case Key::S:
+			if (control && shift) { SaveSceneAs(); }
+			break;
+		}
 	}
 
 	void EditorLayer::CreateNewScene()
 	{
-		if (m_ActiveScene) 
+		if (m_ActiveScene)
 		{
 			m_ActiveScene->DestroyAllEntities();
 		}
@@ -247,5 +244,27 @@ namespace Sol
 
 		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
 		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filePath = FileDialogs::OpenFile("Sol Scene (*.scene)\0*.scene\0");
+		if (!filePath.empty())
+		{
+			CreateNewScene();
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.DeserializeText(filePath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filePath = FileDialogs::SaveFile("Sol Scene (*.scene)\0*.scene\0");
+		if (!filePath.empty())
+		{
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.SerializeToText(filePath);
+		}
 	}
 }

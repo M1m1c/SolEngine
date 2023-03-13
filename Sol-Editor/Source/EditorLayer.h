@@ -23,9 +23,17 @@ namespace Sol
 		virtual void OnEvent(Event& e) override;
 	private:
 
+		bool OnKeyPressed(KeyPressedEvent& e);
+
 		void CreateNewScene();
 
 		void CreateEditorCamera(s_ptr<Scene> activeScene);
+
+		void OpenScene();
+
+		void SaveSceneAs();
+
+	private:
 
 		u_ptr<GD_Framebuffer> m_Framebuffer;
 		s_ptr<Scene> m_ActiveScene;
