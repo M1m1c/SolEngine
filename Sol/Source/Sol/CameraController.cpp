@@ -84,30 +84,30 @@ namespace Sol
 
 	void CameraController::UpdateInputs()
 	{
-		m_DirInputs[MoveDir::mForward] = Input::IsKeyPressed(SOL_KEY_W);
-		m_DirInputs[MoveDir::mBack] = Input::IsKeyPressed(SOL_KEY_S);
-		m_DirInputs[MoveDir::mRight] = Input::IsKeyPressed(SOL_KEY_D);
-		m_DirInputs[MoveDir::mLeft] = Input::IsKeyPressed(SOL_KEY_A);
-		m_DirInputs[MoveDir::mUp] = Input::IsKeyPressed(SOL_KEY_SPACE);
-		m_DirInputs[MoveDir::mDown] = Input::IsKeyPressed(SOL_KEY_LEFT_SHIFT);
+		m_DirInputs[MoveDir::mForward] = Input::IsKeyPressed(Key::W);
+		m_DirInputs[MoveDir::mBack] = Input::IsKeyPressed(Key::S);
+		m_DirInputs[MoveDir::mRight] = Input::IsKeyPressed(Key::D);
+		m_DirInputs[MoveDir::mLeft] = Input::IsKeyPressed(Key::A);
+		m_DirInputs[MoveDir::mUp] = Input::IsKeyPressed(Key::SPACE);
+		m_DirInputs[MoveDir::mDown] = Input::IsKeyPressed(Key::LEFT_SHIFT);
 
-		m_RotInputs[RotDir::rRight] = Input::IsKeyPressed(SOL_KEY_E);
-		m_RotInputs[RotDir::rLeft] = Input::IsKeyPressed(SOL_KEY_Q);
-		m_RotInputs[RotDir::rUp] = Input::IsKeyPressed(SOL_KEY_R);
-		m_RotInputs[RotDir::rDown] = Input::IsKeyPressed(SOL_KEY_F);
+		m_RotInputs[RotDir::rRight] = Input::IsKeyPressed(Key::E);
+		m_RotInputs[RotDir::rLeft] = Input::IsKeyPressed(Key::Q);
+		m_RotInputs[RotDir::rUp] = Input::IsKeyPressed(Key::R);
+		m_RotInputs[RotDir::rDown] = Input::IsKeyPressed(Key::F);
 
-		if (Input::IsKeyPressed(SOL_KEY_P) && m_OldPserpesctiveInput == false)
+		if (Input::IsKeyPressed(Key::P) && m_OldPserpesctiveInput == false)
 		{
 			m_OldPserpesctiveInput = true;
 			m_PerspectiveToggle = !m_PerspectiveToggle;
 			m_SceneCamera.Camera.SetIsPerspective(m_PerspectiveToggle);
 		}
-		else if(!Input::IsKeyPressed(SOL_KEY_P))
+		else if(!Input::IsKeyPressed(Key::P))
 		{
 			m_OldPserpesctiveInput = false;
 		}
 
-		if (Input::IsKeyPressed(SOL_KEY_H))
+		if (Input::IsKeyPressed(Key::H))
 		{
 			m_CameraTransform.Position = glm::vec3(0.0f);
 			m_CameraTransform.Rotation = glm::vec3(0.0f);
