@@ -205,6 +205,7 @@ namespace Sol
 			}
 		}
 
+		return true;
 	}
 
 	bool SceneSerializer::DeserializeBinary(const std::string& filePath)
