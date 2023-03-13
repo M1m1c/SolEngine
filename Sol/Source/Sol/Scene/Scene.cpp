@@ -109,4 +109,11 @@ namespace Sol
 		}
 		m_Registry.destroy(entityID);
 	}
+
+	void Scene::DestroyAllEntities()
+	{
+		m_Registry.each([&](EntityID entityID) {
+			DestroyEntity(entityID);
+			});
+	}
 }
