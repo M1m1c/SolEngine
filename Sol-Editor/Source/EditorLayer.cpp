@@ -232,11 +232,8 @@ namespace Sol
 			m_ActiveScene->DestroyAllEntities();
 		}
 
-		m_PropertiesPanel.SetCurrentSelection({});
-
 		m_ActiveScene = std::make_shared<Scene>();
 		m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
-
 		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
 		CreateEditorCamera(m_ActiveScene);
 	}

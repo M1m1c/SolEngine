@@ -14,7 +14,12 @@ namespace Sol {
 		SceneHierarchyPanel(const s_ptr<Scene>& scene);
 		~SceneHierarchyPanel() = default;
 
-		void SetCurrentScene(const s_ptr<Scene>& scene) { m_CurrentScene = scene; }
+		void SetCurrentScene(const s_ptr<Scene>& scene)
+		{
+			m_CurrentScene = scene;
+			m_CurrentSelection = {};
+		}
+
 		void SetPropertiesPanel(PropertiesPanel* panel) { m_PropertiesPanel = panel; }
 
 		void OnImGuiRender();
