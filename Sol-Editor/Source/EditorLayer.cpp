@@ -23,6 +23,8 @@ namespace Sol
 		properties.Height = 720;
 		m_Framebuffer = GD_Framebuffer::Create(properties);
 
+		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
+
 		CreateNewScene();
 
 		//SceneSerializer serializer(m_ActiveScene);
@@ -230,9 +232,11 @@ namespace Sol
 			m_ActiveScene->DestroyAllEntities();
 		}
 
+		m_PropertiesPanel.SetCurrentSelection({});
+
 		m_ActiveScene = std::make_shared<Scene>();
 		m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
-		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
+
 		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
 		CreateEditorCamera(m_ActiveScene);
 	}
