@@ -4,6 +4,59 @@
 
 #include <yaml-cpp/yaml.h>
 
+
+namespace YAML
+{
+	template<>
+	struct convert<glm::vec3>
+	{
+		static Node encode(const glm::vec3& rhs)
+		{
+			Node node;
+			node.push_back(rhs.x);
+			node.push_back(rhs.y);
+			node.push_back(rhs.z);
+			return node;
+		}
+
+		static bool decode(const Node& node, glm::vec3& rhs)
+		{
+			if (!node.IsSequence() || node.size() != 3) { return false; }
+
+			rhs.x = node[0].as<float>();
+			rhs.y = node[1].as<float>();
+			rhs.z = node[2].as<float>();
+			return true;
+		}
+	};
+
+
+	template<>
+	struct convert<glm::vec4>
+	{
+		static Node encode(const glm::vec4& rhs)
+		{
+			Node node;
+			node.push_back(rhs.x);
+			node.push_back(rhs.y);
+			node.push_back(rhs.z);
+			node.push_back(rhs.w);
+			return node;
+		}
+
+		static bool decode(const Node& node, glm::vec4& rhs)
+		{
+			if (!node.IsSequence() || node.size() != 4) { return false; }
+
+			rhs.x = node[0].as<float>();
+			rhs.y = node[1].as<float>();
+			rhs.z = node[2].as<float>();
+			rhs.w = node[3].as<float>();
+			return true;
+		}
+	};
+}
+
 namespace Sol
 {
 	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec3& v)
@@ -23,7 +76,7 @@ namespace Sol
 	static void SerializeEntity(YAML::Emitter& out, Entity entity)
 	{
 		out << YAML::BeginMap;
-		out << YAML::Key << "Entity" << YAML::Value << (uint32_t)entity.GetID();
+		out << YAML::Key << "Entity" << YAML::Value << (uint64_t)entity.GetID();
 
 		if (entity.HasComponent<NameComp>())
 		{
@@ -81,7 +134,10 @@ namespace Sol
 
 				Entity entity = { entityID,m_Scene.get() };
 				if (!entity) { return; }
-				SerializeEntity(out, entity);
+				if (!entity.HasComponent<InternalComp>()) //TODO might want to change this later so that camera transform gets stored
+				{
+					SerializeEntity(out, entity);
+				}
 			});
 		out << YAML::EndSeq;
 		out << YAML::EndMap;
@@ -96,7 +152,59 @@ namespace Sol
 
 	bool SceneSerializer::DeserializeText(const std::string& filePath)
 	{
-		return false;
+		std::ifstream stream(filePath);
+		std::stringstream strStream;
+		strStream << stream.rdbuf();
+
+		YAML::Node data = YAML::Load(strStream.str());
+		if (!data["Scene"]) { return false; }
+
+		std::string sceneName = data["Scene"].as<std::string>();
+		SOL_CORE_TRACE("Loading scene |{0}|", sceneName);
+
+		auto entities = data["Entities"];
+		if (entities)
+		{
+			for (auto entity : entities)
+			{
+				uint64_t id = entity["Entity"].as<uint64_t>();
+
+				std::string name;
+				auto nameComp = entity["NameComp"];
+				if (nameComp)
+				{
+					name = nameComp["Name"].as<std::string>();
+				}
+
+				SOL_CORE_TRACE("Loading entity: ID = {0}, Name = {1}", id, name);
+
+				Entity loadedEntity = m_Scene->CreateEntity(name);//TODO add so we can set id on creation
+
+				auto transformComp = entity["TransformComp"];
+				if (transformComp)
+				{
+					auto& transform = loadedEntity.GetComponent<TransformComp>();
+					transform.Position = transformComp["Position"].as<glm::vec3>();
+					transform.Rotation = transformComp["Rotation"].as<glm::vec3>();
+					transform.Scale = transformComp["Scale"].as<glm::vec3>();
+				}
+
+				auto materialComp = entity["MaterialComp"];
+				if (materialComp)
+				{
+					auto& material = loadedEntity.AddComponent<MaterialComp>();
+					material.Color = materialComp["Color"].as<glm::vec4>();
+				}
+
+				auto modelComp = entity["ModelComp"];
+				if (modelComp)
+				{
+					auto path = modelComp["ModelPath"].as<std::string>();
+					auto& model = loadedEntity.AddComponent<ModelComp>(path, loadedEntity.GetID());
+				}
+			}
+		}
+
 	}
 
 	bool SceneSerializer::DeserializeBinary(const std::string& filePath)
