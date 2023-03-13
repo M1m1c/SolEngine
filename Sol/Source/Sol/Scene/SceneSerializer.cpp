@@ -6,14 +6,24 @@
 
 namespace Sol
 {
-	SceneSerializer::SceneSerializer(const s_ptr<Scene>& scene) : m_Scene(scene)
+	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec3& v)
 	{
+		out << YAML::Flow;
+		out << YAML::BeginSeq << v.x << v.y << v.z << YAML::EndSeq;
+		return out;
 	}
 
-	static void SerializeEntity(YAML::Emitter& out, Entity entity) 
+	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec4& v)
+	{
+		out << YAML::Flow;
+		out << YAML::BeginSeq << v.x << v.y << v.z << v.w << YAML::EndSeq;
+		return out;
+	}
+
+	static void SerializeEntity(YAML::Emitter& out, Entity entity)
 	{
 		out << YAML::BeginMap;
-		out << YAML::Key << "Entity" << YAML::Value << "1234"; //EntityID goes in value
+		out << YAML::Key << "Entity" << YAML::Value << (uint32_t)entity.GetID();
 
 		if (entity.HasComponent<NameComp>())
 		{
@@ -24,8 +34,40 @@ namespace Sol
 			out << YAML::EndMap;
 		}
 
+		if (entity.HasComponent<TransformComp>())
+		{
+			out << YAML::Key << "TransformComp";
+			out << YAML::BeginMap;
+			auto& transform = entity.GetComponent<TransformComp>();
+			out << YAML::Key << "Position" << YAML::Value << transform.Position;
+			out << YAML::Key << "Rotation" << YAML::Value << transform.Rotation;
+			out << YAML::Key << "Scale" << YAML::Value << transform.Scale;
+			out << YAML::EndMap;
+		}
+
+		if (entity.HasComponent<ModelComp>())
+		{
+			out << YAML::Key << "ModelComp";
+			out << YAML::BeginMap;
+			auto& modelpath = entity.GetComponent<ModelComp>().ModelPath;
+			out << YAML::Key << "ModelPath" << YAML::Value << modelpath;
+			out << YAML::EndMap;
+		}
+
+		if (entity.HasComponent<MaterialComp>())
+		{
+			out << YAML::Key << "MaterialComp";
+			out << YAML::BeginMap;
+			auto& color = entity.GetComponent<MaterialComp>().Color;
+			out << YAML::Key << "Color" << YAML::Value << color;
+			out << YAML::EndMap;
+		}
 
 		out << YAML::EndMap;
+	}
+
+	SceneSerializer::SceneSerializer(const s_ptr<Scene>& scene) : m_Scene(scene)
+	{
 	}
 
 	void SceneSerializer::SerializeToText(const std::string& filePath)
@@ -36,7 +78,7 @@ namespace Sol
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
 		m_Scene->GetRegistry().each([&](auto entityID)
 			{
-				
+
 				Entity entity = { entityID,m_Scene.get() };
 				if (!entity) { return; }
 				SerializeEntity(out, entity);
