@@ -19,8 +19,14 @@ namespace Sol
 		virtual void OnFixedUpdate(TimeStep fixedStep, const float fixedTime) override;
 
 		virtual void OnImGuiRender() override;
+		
 		virtual void OnEvent(Event& e) override;
 	private:
+
+		void CreateNewScene();
+
+		void CreateEditorCamera(s_ptr<Scene> activeScene);
+
 		u_ptr<GD_Framebuffer> m_Framebuffer;
 		s_ptr<Scene> m_ActiveScene;
 		Entity m_EditorCameraEntity;

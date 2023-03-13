@@ -1,6 +1,7 @@
 #include "EditorLayer.h"
 
 #include "Sol/Scene/SceneSerializer.h"
+#include "Sol/Utils/PlatformUtils.h"
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -11,7 +12,7 @@ namespace Sol
 	EditorLayer::EditorLayer() :
 		Layer("Example")
 	{
-		
+
 
 	}
 
@@ -22,22 +23,11 @@ namespace Sol
 		properties.Height = 720;
 		m_Framebuffer = GD_Framebuffer::Create(properties);
 
-		m_ActiveScene = std::make_shared<Scene>();
+		CreateNewScene();
 
-		m_EditorCameraEntity = m_ActiveScene->CreateEntity("Editor Camera");
-		auto& camTransform = m_EditorCameraEntity.GetComponent<TransformComp>();
-		auto& sceneCam = m_EditorCameraEntity.AddComponent<CameraComp>();
-		auto& intComp = m_EditorCameraEntity.AddComponent<InternalComp>();
-
-		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
-		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
-		
-
-		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
-		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
-		SceneSerializer serializer(m_ActiveScene);
+		//SceneSerializer serializer(m_ActiveScene);
 		//serializer.SerializeToText("assets/scenes/Example.scene");
-		serializer.DeserializeText("assets/scenes/Example.scene");
+		//serializer.DeserializeText("assets/scenes/Example.scene");
 	}
 
 	void EditorLayer::OnDetach()
@@ -47,10 +37,10 @@ namespace Sol
 	void EditorLayer::OnUpdate(TimeStep deltaTime)
 	{
 		SOL_PROFILE_FUNCTION();
-		
+
 
 		//RESIZE
-		if(m_ViewPortSize.x>0.0f && m_ViewPortSize.y>0.0f) 
+		if (m_ViewPortSize.x > 0.0f && m_ViewPortSize.y > 0.0f)
 		{
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 
@@ -59,7 +49,7 @@ namespace Sol
 			bool viewLargerThanZero = m_ViewPortSize.x > 0.0f && m_ViewPortSize.y > 0.0f;
 			bool propsDontMatch = props.Width != m_ViewPortSize.x || props.Height != m_ViewPortSize.y;
 
-			if (viewLargerThanZero && propsDontMatch) 
+			if (viewLargerThanZero && propsDontMatch)
 			{
 				m_Framebuffer->Resize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 			}
@@ -80,7 +70,7 @@ namespace Sol
 		//GD_Renderer2D::BeginScene(m_CameraController.GetCamera());
 
 		m_ActiveScene->OnUpdate(deltaTime);
-	
+
 
 		//GD_Renderer2D::EndScene();
 
@@ -153,8 +143,37 @@ namespace Sol
 
 		if (ImGui::BeginMenuBar())
 		{
+
 			if (ImGui::BeginMenu("File"))
 			{
+				if (ImGui::MenuItem("New Scene...", "Ctrl+N"))
+				{
+					CreateNewScene();
+				}
+
+				if (ImGui::MenuItem("Open Scene...", "Ctrl+O"))
+				{
+					std::string filePath = FileDialogs::OpenFile("Sol Scene (*.scene)\0*.scene\0");
+					if (!filePath.empty())
+					{
+						CreateNewScene();
+
+						SceneSerializer serializer(m_ActiveScene);
+						serializer.DeserializeText(filePath);
+					}
+				}
+
+				if (ImGui::MenuItem("Save Scene As...", "Ctrl+Shift+S"))
+				{
+					std::string filePath = FileDialogs::SaveFile("Sol Scene (*.scene)\0*.scene\0");
+					if (!filePath.empty())
+					{
+						SceneSerializer serializer(m_ActiveScene);
+						serializer.SerializeToText(filePath);
+					}
+
+				}
+
 				if (ImGui::MenuItem("Exit")) { Sol::Application::Get().Close(); }
 				ImGui::EndMenu();
 			}
@@ -204,4 +223,23 @@ namespace Sol
 		m_CameraController->OnEvent(e);
 	}
 
+	void EditorLayer::CreateNewScene()
+	{
+		m_ActiveScene = std::make_shared<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
+		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
+		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
+		CreateEditorCamera(m_ActiveScene);
+	}
+
+	void EditorLayer::CreateEditorCamera(s_ptr<Scene> activeScene)
+	{
+		m_EditorCameraEntity = activeScene->CreateEntity("Editor Camera");
+		auto& camTransform = m_EditorCameraEntity.GetComponent<TransformComp>();
+		auto& sceneCam = m_EditorCameraEntity.AddComponent<CameraComp>();
+		auto& intComp = m_EditorCameraEntity.AddComponent<InternalComp>();
+
+		camTransform.Position = glm::vec3(0.f, 0.f, -5.f);
+		m_CameraController = std::make_unique<CameraController>(camTransform, sceneCam);
+	}
 }
