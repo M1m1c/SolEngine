@@ -2,6 +2,8 @@
 
 #include "Sol/Scene/SceneSerializer.h"
 #include "Sol/Utils/PlatformUtils.h"
+#include "GalaxyDraw/Camera.h"
+#include "Sol/Math/Math.h"
 
 #include <imgui.h>
 #include <ImGuizmo.h>
@@ -187,9 +189,49 @@ namespace Sol
 
 		//GIZMOS__________________________________
 		Entity selectedEntity = m_HierarchyPanel.GetCurrentSelectedEntity();
-		if (selectedEntity)
+		if (selectedEntity && m_GizmoType != -1)
 		{
 			ImGuizmo::SetOrthographic(false);
+			ImGuizmo::SetDrawlist();
+
+			float windowWidth = (float)ImGui::GetWindowWidth();
+			float windowHeight = (float)ImGui::GetWindowHeight();
+			auto windowPos = ImGui::GetWindowPos();
+			ImGuizmo::SetRect(windowPos.x, windowPos.y, windowWidth, windowHeight);
+
+			const auto& cameraTransform = m_EditorCameraEntity.GetComponent<TransformComp>();
+			auto& camera = m_EditorCameraEntity.GetComponent<CameraComp>().Camera;
+			auto camView = cameraTransform.GetViewMatrix();
+			auto camProj = camera.GetProjection();
+
+
+			auto& selectedTransform = selectedEntity.GetComponent<TransformComp>();
+			auto transformMatrix = selectedTransform.GetTransformMatrix();
+
+			bool isSnapping = Input::IsKeyPressed(Key::LEFT_SHIFT);
+			float snapValue = m_GizmoType == ImGuizmo::OPERATION::ROTATE ? 45.f : 0.5f;
+			float snaapValues[3] = { snapValue,snapValue,snapValue };
+
+			ImGuizmo::Manipulate(
+				glm::value_ptr(camView),
+				glm::value_ptr(camProj),
+				(ImGuizmo::OPERATION)m_GizmoType,
+				ImGuizmo::LOCAL,
+				glm::value_ptr(transformMatrix),
+				nullptr,
+				isSnapping ? snaapValues : nullptr);
+
+			if (ImGuizmo::IsUsing())
+			{
+				glm::vec3 position, rotation, scale;
+				Math::DecomposeTransform(transformMatrix, position, rotation, scale);
+
+				selectedTransform.Position = position;
+				selectedTransform.Scale = scale;
+
+				auto deltaRot = selectedTransform.Rotation - rotation;
+				selectedTransform.Rotation += deltaRot;
+			}
 		}
 
 		ImGui::End();
@@ -227,6 +269,18 @@ namespace Sol
 
 		case Key::S:
 			if (control && shift) { SaveSceneAs(); }
+			break;
+
+		case Key::G:
+			m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+			break;
+
+		case Key::T:
+			m_GizmoType = ImGuizmo::OPERATION::SCALE;
+			break;
+
+		case Key::V:
+			m_GizmoType = ImGuizmo::OPERATION::ROTATE;
 			break;
 		}
 	}

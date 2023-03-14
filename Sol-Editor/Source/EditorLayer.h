@@ -47,6 +47,7 @@ namespace Sol
 
 		glm::vec2 m_ViewPortSize = { 0,0 };
 
+		int m_GizmoType = 0;
 
 		//Panels
 		SceneHierarchyPanel m_HierarchyPanel;
