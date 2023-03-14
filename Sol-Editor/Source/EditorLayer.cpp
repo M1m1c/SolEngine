@@ -227,9 +227,7 @@ namespace Sol
 
 				//TODO ROtation needs additional fixing here, sometimes display numbers go haywire when rotating
 				auto deltaRot = selectedTransform.Rotation - glm::degrees(rotation);
-				selectedTransform.Pitch() -= deltaRot.x;
-				selectedTransform.Yaw() -= deltaRot.y;
-				selectedTransform.Roll() -= deltaRot.z;
+				selectedTransform.Rotation -= deltaRot;
 			}
 		}
 
