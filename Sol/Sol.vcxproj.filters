@@ -1557,6 +1557,7 @@
     <ClInclude Include="thirdparty\imguizmo\ImGuizmo.h">
       <Filter>thirdparty\imguizmo</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Sol\Math\Math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1616,9 +1617,6 @@
     <ClCompile Include="Source\GalaxyDraw\ModelOld.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp">
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1662,9 +1660,6 @@
       <Filter>Source\GalaxyDraw\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\SceneCamera.cpp">
-      <Filter>Source\GalaxyDraw</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GalaxyDraw\mainGraphicsOld.cpp">
       <Filter>Source\GalaxyDraw</Filter>
     </ClCompile>
     <ClCompile Include="Source\GalaxyDraw\stb.cpp">
@@ -1721,5 +1716,6 @@
     <ClCompile Include="thirdparty\imguizmo\ImGuizmo.cpp">
       <Filter>thirdparty\imguizmo</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Sol\Math\Math.cpp" />
   </ItemGroup>
 </Project>

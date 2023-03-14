@@ -222,6 +222,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\Sol\Events\KeyEvent.h" />
     <ClInclude Include="Source\Sol\Events\MouseEvent.h" />
     <ClInclude Include="Source\Sol\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="Source\Sol\Math\Math.h" />
     <ClInclude Include="Source\Sol\Scene\Components.h" />
     <ClInclude Include="Source\Sol\Scene\Components\CameraComp.h" />
     <ClInclude Include="Source\Sol\Scene\Components\MaterialComp.h" />
@@ -673,7 +674,6 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClCompile Include="Source\GalaxyDraw\MeshOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\ModelBuilder.cpp" />
     <ClCompile Include="Source\GalaxyDraw\ModelOld.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\MonkeyHeadStencils.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\GLMacros.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Context.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.cpp" />
@@ -689,7 +689,6 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexArray.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\SceneCamera.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\mainGraphicsOld.cpp" />
     <ClCompile Include="Source\GalaxyDraw\stb.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="Source\Platform\Windows\WindowsPlatformUtils.cpp" />
@@ -703,6 +702,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClCompile Include="Source\Sol\Core\Random.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="Source\Sol\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="Source\Sol\Math\Math.cpp" />
     <ClCompile Include="Source\Sol\Scene\Entity.cpp" />
     <ClCompile Include="Source\Sol\Scene\Scene.cpp" />
     <ClCompile Include="Source\Sol\Scene\SceneSerializer.cpp" />

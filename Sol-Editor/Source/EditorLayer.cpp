@@ -22,6 +22,7 @@ namespace Sol
 		m_Framebuffer = GD_Framebuffer::Create(properties);
 
 		m_HierarchyPanel.SetPropertiesPanel(&m_PropertiesPanel);
+		m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
 
 		CreateNewScene();
 
@@ -163,29 +164,24 @@ namespace Sol
 		//	ImGui::End();*/
 		//}
 
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
+		ImGui::Begin("ViewPort");
+
+		m_ViewPortFocused = ImGui::IsWindowFocused();
+		m_ViewPortHovered = ImGui::IsWindowHovered();
+		Application::Get().GetImGuiLayer()->SetBlockEvents(!m_ViewPortFocused && !m_ViewPortHovered);
+
+		ImVec2 size = ImGui::GetContentRegionAvail();
+		if (m_ViewPortSize != *((glm::vec2*)&size))
 		{
-			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
-			ImGui::Begin("ViewPort");
-
-			m_ViewPortFocused = ImGui::IsWindowFocused();
-			m_ViewPortHovered = ImGui::IsWindowHovered();
-			Application::Get().GetImGuiLayer()->SetBlockEvents(!m_ViewPortFocused && !m_ViewPortHovered);
-
-			ImVec2 size = ImGui::GetContentRegionAvail();
-			if (m_ViewPortSize != *((glm::vec2*)&size))
-			{
-				m_Framebuffer->Resize((uint32_t)size.x, (uint32_t)size.y);
-				m_ViewPortSize = { size.x,size.y };
-			}
-
-			uint32_t textureID = m_Framebuffer->GetColorAttachmentsRendererID();
-			ImGui::Image((void*)textureID, ImVec2{ m_ViewPortSize.x, m_ViewPortSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
-
-			ImGui::End();
-			ImGui::PopStyleVar();
+			m_Framebuffer->Resize((uint32_t)size.x, (uint32_t)size.y);
+			m_ViewPortSize = { size.x,size.y };
 		}
 
-		//All windows and tabs need to be here___________________________________________
+		uint32_t textureID = m_Framebuffer->GetColorAttachmentsRendererID();
+		ImGui::Image((void*)textureID, ImVec2{ m_ViewPortSize.x, m_ViewPortSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
+
 
 		//GIZMOS__________________________________
 		Entity selectedEntity = m_HierarchyPanel.GetCurrentSelectedEntity();
@@ -208,8 +204,8 @@ namespace Sol
 			auto& selectedTransform = selectedEntity.GetComponent<TransformComp>();
 			auto transformMatrix = selectedTransform.GetTransformMatrix();
 
-			bool isSnapping = Input::IsKeyPressed(Key::LEFT_SHIFT);
-			float snapValue = m_GizmoType == ImGuizmo::OPERATION::ROTATE ? 45.f : 0.5f;
+			bool isSnapping = Input::IsKeyPressed(Key::LEFT_CONTROL);
+			float snapValue = m_GizmoType == ImGuizmo::OPERATION::ROTATE ? 5.f : 0.5f;
 			float snapValues[3] = { snapValue,snapValue,snapValue };
 
 			ImGuizmo::Manipulate(
@@ -229,11 +225,18 @@ namespace Sol
 				selectedTransform.Position = position;
 				selectedTransform.Scale = scale;
 
-				auto deltaRot = selectedTransform.Rotation - rotation;
-				selectedTransform.Rotation += deltaRot;
+				//TODO ROtation needs additional fixing here, sometimes display numbers go haywire when rotating
+				auto deltaRot = selectedTransform.Rotation - glm::degrees(rotation);
+				selectedTransform.Pitch() -= deltaRot.x;
+				selectedTransform.Yaw() -= deltaRot.y;
+				selectedTransform.Roll() -= deltaRot.z;
 			}
 		}
 
+
+		ImGui::End();
+		ImGui::PopStyleVar();
+		
 		ImGui::End();
 	}
 
