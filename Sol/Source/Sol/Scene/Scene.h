@@ -13,7 +13,8 @@ namespace Sol
 		Scene();
 		~Scene();
 
-		void OnUpdate(TimeStep deltaTime);
+		void OnUpdateEditor(TimeStep deltaTime);
+		void OnUpdateRuntime(TimeStep deltaTime);
 
 		void OnViewportResize(uint32_t width, uint32_t height);
 

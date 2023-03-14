@@ -67,7 +67,7 @@ namespace Sol
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
 
-		m_ActiveScene->OnUpdate(deltaTime);
+		m_ActiveScene->OnUpdateRuntime(deltaTime);
 
 		m_Framebuffer->UnBind();
 	}
