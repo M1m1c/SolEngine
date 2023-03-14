@@ -4,6 +4,7 @@
 #include "Sol/Utils/PlatformUtils.h"
 
 #include <imgui.h>
+#include <ImGuizmo.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -183,6 +184,14 @@ namespace Sol
 		}
 
 		//All windows and tabs need to be here___________________________________________
+
+		//GIZMOS__________________________________
+		Entity selectedEntity = m_HierarchyPanel.GetCurrentSelectedEntity();
+		if (selectedEntity)
+		{
+			ImGuizmo::SetOrthographic(false);
+		}
+
 		ImGui::End();
 	}
 

@@ -19,3 +19,6 @@
 [submodule "Sol/thirdparty/yaml-cpp"]
 	path = Sol/thirdparty/yaml-cpp
 	url = https://github.com/M1m1c/yaml-cpp-Sol.git
+[submodule "Sol/thirdparty/imguizmo"]
+	path = Sol/thirdparty/imguizmo
+	url = https://github.com/M1m1c/ImGuizmo-Sol.git
