@@ -210,7 +210,7 @@ namespace Sol
 
 			bool isSnapping = Input::IsKeyPressed(Key::LEFT_SHIFT);
 			float snapValue = m_GizmoType == ImGuizmo::OPERATION::ROTATE ? 45.f : 0.5f;
-			float snaapValues[3] = { snapValue,snapValue,snapValue };
+			float snapValues[3] = { snapValue,snapValue,snapValue };
 
 			ImGuizmo::Manipulate(
 				glm::value_ptr(camView),
@@ -219,7 +219,7 @@ namespace Sol
 				ImGuizmo::LOCAL,
 				glm::value_ptr(transformMatrix),
 				nullptr,
-				isSnapping ? snaapValues : nullptr);
+				isSnapping ? snapValues : nullptr);
 
 			if (ImGuizmo::IsUsing())
 			{
