@@ -44,7 +44,7 @@ namespace Sol
 		if (m_ViewPortSize.x > 0.0f && m_ViewPortSize.y > 0.0f)
 		{
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
-
+			m_CameraController->SetCenterOfView(m_ViewPortSize);
 
 			GD_FramebufferProps props = m_Framebuffer->GetProperties();
 			bool viewLargerThanZero = m_ViewPortSize.x > 0.0f && m_ViewPortSize.y > 0.0f;
@@ -53,6 +53,7 @@ namespace Sol
 			if (viewLargerThanZero && propsDontMatch)
 			{
 				m_Framebuffer->Resize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
+				
 			}
 		}
 
