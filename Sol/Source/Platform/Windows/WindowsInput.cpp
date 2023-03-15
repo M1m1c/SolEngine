@@ -28,6 +28,25 @@ namespace Sol
 		return { (float)xPos, (float)yPos };
 	}
 
+	void Input::SetMousePosition(float posX, float posY)
+	{
+		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+		glfwSetCursorPos(window, posX, posY);
+	}
+
+	void Input::SetDisplayCursor(bool b) {
+		auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+		if (b)
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
+		else 
+		{
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		}
+	}
+
+
 	float Input::GetMouseX()
 	{
 		return GetMousePosition().first;
