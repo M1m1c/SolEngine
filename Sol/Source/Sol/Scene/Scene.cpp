@@ -14,7 +14,7 @@ namespace Sol
 	{
 	}
 
-	void Scene::OnUpdate(TimeStep deltaTime)
+	void Scene::OnUpdateRuntime(TimeStep deltaTime)
 	{
 
 		GD_Camera* mainCamera = nullptr;

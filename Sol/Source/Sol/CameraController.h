@@ -19,6 +19,8 @@ namespace Sol
 		void OnUpdate(TimeStep deltaTime);
 		void OnEvent(Event& e);
 
+		void SetCenterOfView(glm::vec2 center) { m_ViewCenter = center; }
+
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);
@@ -33,11 +35,16 @@ namespace Sol
 		std::bitset<4> m_RotInputs;
 
 		float m_CameraSpeed = 3.f;
-		float m_RotSpeed = 4000.f;
-		float m_Sensitivity = 1.f;
+		float m_Sensitivity = 300.f;
+
+		glm::vec2 m_ViewCenter = {0.f,0.f};
 
 		bool m_PerspectiveToggle = true;
-		bool m_OldPserpesctiveInput = false;
+		bool m_OldPerspectiveInput = false;
+
+		bool m_AltPressed = false;
+		bool m_RightMousePressed = false;
+		bool m_OldRightMousePressed = true;
 
 		enum MoveDir
 		{

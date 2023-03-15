@@ -43,6 +43,9 @@
     <Filter Include="Source\Sol\Scene\Components">
       <UniqueIdentifier>{65666FF9-D173-9DDF-5A5A-99CAC6666996}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Sol\Utils">
+      <UniqueIdentifier>{93C7A857-7FC0-C7A9-A8F2-AC2E944AA7B5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="thirdparty">
       <UniqueIdentifier>{50A5DA7C-3C5D-1CCA-A564-F525913BB7BA}</UniqueIdentifier>
     </Filter>
@@ -66,6 +69,9 @@
     </Filter>
     <Filter Include="thirdparty\glm\glm\gtx">
       <UniqueIdentifier>{D02B9BF1-BC25-C443-A592-5A54912B2AB0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="thirdparty\imguizmo">
+      <UniqueIdentifier>{F0C11AAE-5C23-F8BB-E590-3E6E51F12E7B}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +299,9 @@
     </ClInclude>
     <ClInclude Include="Source\Sol\SolDefines.h">
       <Filter>Source\Sol</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Utils\PlatformUtils.h">
+      <Filter>Source\Sol\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\solpch.h">
       <Filter>Source</Filter>
@@ -1545,7 +1554,10 @@
     <ClInclude Include="thirdparty\glm\glm\vector_relational.hpp">
       <Filter>thirdparty\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Sol\Utils\PlatformUtils.h" />
+    <ClInclude Include="thirdparty\imguizmo\ImGuizmo.h">
+      <Filter>thirdparty\imguizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sol\Math\Math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1656,6 +1668,9 @@
     <ClCompile Include="Source\Platform\Windows\WindowsInput.cpp">
       <Filter>Source\Platform\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Platform\Windows\WindowsPlatformUtils.cpp">
+      <Filter>Source\Platform\Windows</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Platform\Windows\WindowsWindow.cpp">
       <Filter>Source\Platform\Windows</Filter>
     </ClCompile>
@@ -1698,6 +1713,9 @@
     <ClCompile Include="Source\solpch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Platform\Windows\WindowsPlatformUtils.cpp" />
+    <ClCompile Include="thirdparty\imguizmo\ImGuizmo.cpp">
+      <Filter>thirdparty\imguizmo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sol\Math\Math.cpp" />
   </ItemGroup>
 </Project>
