@@ -11,11 +11,7 @@ namespace Sol
 		m_SceneCamera(sceneCamera)
 	{
 	}
-	//TODO look at your other camera implemantations and rework this to function like those
-	//TODO add controls for rotating Camera
-	//TODO steal some code from my RTS camera made in Unity to improve controlls
-	//TODO change so we move relative to our current rotation instead of set axies.
-	//TODO make sure that all controllsare in relation to rotation and posiiton
+	
 	void CameraController::OnUpdate(TimeStep deltaTime)
 	{
 
@@ -23,7 +19,9 @@ namespace Sol
 
 		float dt = deltaTime;
 
-		//TODO normalize direction, lock mouse to view
+		//TODO add panning with mouse when alt is held down and right mouse is held as well
+		//TODO add scrolling to zoom/ move forwards and backwards
+		//TODO steal some code from my RTS camera made in Unity to improve camera movement
 
 		Input::SetDisplayCursor(!m_RightMousePressed);
 		if (m_RightMousePressed)
@@ -38,10 +36,6 @@ namespace Sol
 			Input::SetMousePosition(m_ViewCenter.x, m_ViewCenter.y);
 			
 		}
-		
-
-		
-
 
 		if (m_DirInputs.any())
 		{
