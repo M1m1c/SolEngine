@@ -97,7 +97,7 @@ namespace Sol
 		m_DirInputs[MoveDir::mRight] = Input::IsKeyPressed(Key::D);
 		m_DirInputs[MoveDir::mLeft] = Input::IsKeyPressed(Key::A);
 		m_DirInputs[MoveDir::mUp] = Input::IsKeyPressed(Key::SPACE);
-		m_DirInputs[MoveDir::mDown] = Input::IsKeyPressed(Key::LEFT_SHIFT);
+		m_DirInputs[MoveDir::mDown] = Input::IsKeyPressed(Key::F);
 
 		if (Input::IsKeyPressed(Key::P) && m_OldPerspectiveInput == false)
 		{
