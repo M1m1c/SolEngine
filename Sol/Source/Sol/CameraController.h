@@ -34,7 +34,7 @@ namespace Sol
 		std::bitset<6> m_DirInputs;
 		std::bitset<4> m_RotInputs;
 
-		float m_CameraSpeed = 3.f;
+		float m_CameraSpeed = 10.f;
 		float m_Sensitivity = 300.f;
 
 		glm::vec2 m_ViewCenter = {0.f,0.f};
