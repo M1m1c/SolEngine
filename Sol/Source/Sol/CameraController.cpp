@@ -11,7 +11,7 @@ namespace Sol
 		m_SceneCamera(sceneCamera)
 	{
 	}
-	
+
 	void CameraController::OnUpdate(TimeStep deltaTime)
 	{
 
@@ -26,38 +26,49 @@ namespace Sol
 		Input::SetDisplayCursor(!m_RightMousePressed);
 		if (m_RightMousePressed)
 		{
-			
 			float xDir = m_ViewCenter.x - Input::GetMouseX();
 			float yDir = m_ViewCenter.y - Input::GetMouseY();
 
-			m_CameraTransform.Yaw() += glm::radians(xDir) * m_Sensitivity * dt;
-			m_CameraTransform.Pitch() += glm::radians(yDir) * m_Sensitivity * dt;
-
+			if (m_AltPressed)
+			{
+				//Panning
+				m_InputAxis.y = -xDir;
+				m_InputAxis.z = yDir;
+			}
+			else
+			{
+				//Rotation
+				m_CameraTransform.Yaw() += glm::radians(xDir) * m_Sensitivity * dt;
+				m_CameraTransform.Pitch() += glm::radians(yDir) * m_Sensitivity * dt;
+			}
 			Input::SetMousePosition(m_ViewCenter.x, m_ViewCenter.y);
-			
 		}
 
-		if (m_DirInputs.any())
+		if (m_DirInputs.any() && !m_AltPressed)
 		{
-
-			
-				//Input Movment
-				auto isCameraPesrpective = m_SceneCamera.Camera.GetIsPerspective();
-				auto forward = isCameraPesrpective ? m_CameraTransform.GetForward() : glm::vec3(0.f, .0f, .0f);
-				auto right = m_CameraTransform.GetRight();
-
-				m_InputAxis.x = m_DirInputs[MoveDir::mBack] - m_DirInputs[MoveDir::mForward];
-				m_InputAxis.y = m_DirInputs[MoveDir::mLeft] - m_DirInputs[MoveDir::mRight];
-				m_InputAxis.z = m_DirInputs[MoveDir::mDown] - m_DirInputs[MoveDir::mUp];
-
-				glm::vec3 dir = glm::normalize((forward * m_InputAxis.x) + (right * m_InputAxis.y) + (WorldUp * m_InputAxis.z));
-
-				dir = glm::isnan(dir).b ? glm::vec3(0.f) : dir;
-				m_CameraTransform.Position = m_CameraTransform.Position + (dir * m_CameraSpeed * dt);
-
-				if (!isCameraPesrpective)
-					m_SceneCamera.Camera.ChangeOrthoSize(m_InputAxis.x * m_CameraSpeed * dt);
+			//Input Movment
+			m_InputAxis.x = m_DirInputs[MoveDir::mBack] - m_DirInputs[MoveDir::mForward];
+			m_InputAxis.y = m_DirInputs[MoveDir::mLeft] - m_DirInputs[MoveDir::mRight];
+			m_InputAxis.z = m_DirInputs[MoveDir::mDown] - m_DirInputs[MoveDir::mUp];
 		}
+
+
+
+		auto isCameraPesrpective = m_SceneCamera.Camera.GetIsPerspective();
+		auto forward = isCameraPesrpective ? m_CameraTransform.GetForward() : glm::vec3(0.f, .0f, .0f);
+		auto right = m_CameraTransform.GetRight();
+
+		glm::vec3 dir = glm::normalize((forward * m_InputAxis.x) + (right * m_InputAxis.y) + (WorldUp * m_InputAxis.z));
+
+		dir = glm::isnan(dir).b ? glm::vec3(0.f) : dir;
+		m_CameraTransform.Position = m_CameraTransform.Position + (dir * m_CameraSpeed * dt);
+
+		if (!isCameraPesrpective)
+			m_SceneCamera.Camera.ChangeOrthoSize(m_InputAxis.x * m_CameraSpeed * dt);
+
+		m_InputAxis.x = 0.f;
+		m_InputAxis.y = 0.f;
+		m_InputAxis.z = 0.f;
 
 	}
 
@@ -114,7 +125,7 @@ namespace Sol
 		m_AltPressed = Input::IsKeyPressed(Key::LEFT_ALT);
 
 		m_RightMousePressed = Input::IsMouseButtonPressed(1);
-		if (m_OldRightMousePressed != m_RightMousePressed && m_RightMousePressed==true) 
+		if (m_OldRightMousePressed != m_RightMousePressed && m_RightMousePressed == true)
 		{
 			Input::SetMousePosition(m_ViewCenter.x, m_ViewCenter.y);
 		}
