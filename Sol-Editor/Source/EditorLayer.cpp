@@ -259,6 +259,7 @@ namespace Sol
 		bool control = Input::IsKeyPressed(Key::LEFT_CONTROL) || Input::IsKeyPressed(Key::RIGHT_CONTROL);
 		bool shift = Input::IsKeyPressed(Key::LEFT_SHIFT) || Input::IsKeyPressed(Key::RIGHT_SHIFT);
 
+		//TODO make some of these bindable
 		switch (e.GetKeyCode())
 		{
 		case Key::N:
@@ -277,11 +278,11 @@ namespace Sol
 			m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
 			break;
 
-		case Key::T:
+		case Key::F:
 			m_GizmoType = ImGuizmo::OPERATION::SCALE;
 			break;
 
-		case Key::V:
+		case Key::R:
 			m_GizmoType = ImGuizmo::OPERATION::ROTATE;
 			break;
 		}
