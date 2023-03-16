@@ -33,6 +33,7 @@ namespace Sol
 		TransformComp& m_CameraTransform;
 		CameraComp& m_SceneCamera;
 
+		glm::vec2 m_ViewCenter = { 0.f,0.f };
 		glm::vec3 m_InputAxis{ 0.f,0.f,0.f };
 		std::bitset<6> m_DirInputs;
 		std::bitset<4> m_RotInputs;
@@ -40,16 +41,10 @@ namespace Sol
 		float m_CameraSpeed = 10.f;
 		float m_Sensitivity = 300.f;
 
-		//TODO implement movement with acceleration and velocity
-		float minMoveSpeed = 5.f;
-		float maxMoveSpeed = 10.f;
-
 		float m_MoveVelocity = .0f;
 		float m_MoveAccelerationSpeed = 2.f;
 		float m_MoveDecelerationSpeed = 3.f;
 
-
-		glm::vec2 m_ViewCenter = { 0.f,0.f };
 
 		bool m_PerspectiveToggle = true;
 		bool m_OldPerspectiveInput = false;

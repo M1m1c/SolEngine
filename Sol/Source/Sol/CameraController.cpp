@@ -43,7 +43,7 @@ namespace Sol
 		dispatcher.Dispatch<WindowResizeEvent>(SOL_BIND_EVENT_FN(CameraController::OnWindowResized));
 	}
 
-	//TODO make scrolling move faster
+	//TODO fix scrolling and make scrolling move faster
 	bool CameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		m_InputAxis.x = -e.GetYOffset();
@@ -62,8 +62,8 @@ namespace Sol
 		m_DirInputs[MoveDir::mBack] = Input::IsKeyPressed(Key::S);
 		m_DirInputs[MoveDir::mRight] = Input::IsKeyPressed(Key::D);
 		m_DirInputs[MoveDir::mLeft] = Input::IsKeyPressed(Key::A);
-		m_DirInputs[MoveDir::mUp] = Input::IsKeyPressed(Key::SPACE);
-		m_DirInputs[MoveDir::mDown] = Input::IsKeyPressed(Key::F);
+		m_DirInputs[MoveDir::mUp] = Input::IsKeyPressed(Key::SPACE) || Input::IsKeyPressed(Key::E);
+		m_DirInputs[MoveDir::mDown] = Input::IsKeyPressed(Key::Q);
 
 		if (Input::IsKeyPressed(Key::P) && m_OldPerspectiveInput == false)
 		{
