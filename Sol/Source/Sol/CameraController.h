@@ -10,7 +10,7 @@
 namespace Sol
 {
 	static const  glm::vec3 WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);
-	
+
 	class CameraController
 	{
 	public:
@@ -26,6 +26,9 @@ namespace Sol
 		bool OnWindowResized(WindowResizeEvent& e);
 
 		void UpdateInputs();
+		void MouseNavigation(float dt);
+		void ButtonNavigation(float dt);
+		void ApplyCameraMovement(float dt);
 
 		TransformComp& m_CameraTransform;
 		CameraComp& m_SceneCamera;
@@ -37,14 +40,23 @@ namespace Sol
 		float m_CameraSpeed = 10.f;
 		float m_Sensitivity = 300.f;
 
-		glm::vec2 m_ViewCenter = {0.f,0.f};
+		//TODO implement movement with acceleration and velocity
+		float minMoveSpeed = 5.f;
+		float maxMoveSpeed = 10.f;
+
+		float m_MoveVelocity = .0f;
+		float m_MoveAccelerationSpeed = 2.f;
+		float m_MoveDecelerationSpeed = 3.f;
+
+
+		glm::vec2 m_ViewCenter = { 0.f,0.f };
 
 		bool m_PerspectiveToggle = true;
 		bool m_OldPerspectiveInput = false;
 
-		bool m_AltPressed = false;
-		bool m_RightMousePressed = false;
-		bool m_OldRightMousePressed = true;
+		bool m_AltMovePressed = false;
+		bool m_MouseNavigationPressed = false;
+		bool m_OldMouseNavigationPressed = true;
 
 		enum MoveDir
 		{
