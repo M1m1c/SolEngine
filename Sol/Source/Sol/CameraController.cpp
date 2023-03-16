@@ -25,7 +25,7 @@ namespace Sol
 
 		ApplyCameraMovement(dt);
 
-		if (m_MouseNavigationPressed && m_AltMovePressed)
+		if (m_AltMovePressed)
 		{
 			m_InputAxis.x = 0.f;
 			m_InputAxis.y = 0.f;
