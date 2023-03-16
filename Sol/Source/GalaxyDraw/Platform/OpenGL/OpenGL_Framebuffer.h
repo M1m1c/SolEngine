@@ -23,6 +23,9 @@ namespace GalaxyDraw
 		uint32_t m_ColorAttachment = 0;
 		uint32_t m_DepthAttachment = 0;
 		FramebufferProperties m_Properties;
+
+		std::vector<FramebufferTextureSpecification> m_ColorAttachmentSpecs;
+		FramebufferTextureSpecification m_DepthAttachmentSpec;
 	};
 
 

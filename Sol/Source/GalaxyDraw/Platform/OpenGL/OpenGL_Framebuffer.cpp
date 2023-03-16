@@ -5,9 +5,41 @@
 
 namespace GalaxyDraw
 {
+	namespace Utils 
+	{
+		static bool IsDepthFormat(FramebufferTextureFormat format) {
+			switch (format)
+			{
+				/*case GalaxyDraw::FramebufferTextureFormat::None:
+					break;
+				case GalaxyDraw::FramebufferTextureFormat::RGBA8:
+					break;*/
+			case GalaxyDraw::FramebufferTextureFormat::DEPTH24STENCIL8: return true;
+				/*case GalaxyDraw::FramebufferTextureFormat::Depth:
+					break;
+				default:
+					break;*/
+			}
+		}
+	}
+	
+
 	OpenGL_Framebuffer::OpenGL_Framebuffer(const FramebufferProperties& properties) :
 		m_Properties(properties)
 	{
+
+		for (auto spec : m_Properties.Attachments.Attachments)
+		{
+			if (!Utils::IsDepthFormat(spec.TextureFormat))
+			{
+				m_ColorAttachmentSpecs.emplace_back(spec);
+			}
+			else
+			{
+				m_DepthAttachmentSpec = spec;
+			}
+		}
+
 		Invalidate();
 	}
 
@@ -28,6 +60,13 @@ namespace GalaxyDraw
 
 		glCreateFramebuffers(1, &m_RendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
+
+		//Attachments
+		for (auto& spec : m_ColorAttachmentSpecs)
+		{
+
+		}
+
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_ColorAttachment);
 		glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);

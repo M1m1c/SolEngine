@@ -89,4 +89,5 @@ typedef GalaxyDraw::SceneCamera GD_SceneCamera;
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::Framebuffer GD_Framebuffer;
 typedef GalaxyDraw::FramebufferProperties GD_FramebufferProps;
+typedef GalaxyDraw::FramebufferTextureFormat GD_FramebufferTextureFormat;
 /////////////////////////////////////////////////////

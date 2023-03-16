@@ -1,12 +1,39 @@
 #pragma once
 #include <memory>
 
-namespace GalaxyDraw 
+namespace GalaxyDraw
 {
+
+	enum class FramebufferTextureFormat
+	{
+		None = 0,
+		RGBA8,
+		DEPTH24STENCIL8,
+		Depth = DEPTH24STENCIL8
+	};
+
+	struct FramebufferTextureSpecification
+	{
+		FramebufferTextureSpecification() = default;
+		FramebufferTextureSpecification(FramebufferTextureFormat format) : TextureFormat(format) {}
+
+		FramebufferTextureFormat TextureFormat = FramebufferTextureFormat::None;
+		//TODO filterin and wrap
+	};
+
+	struct FramebufferAttachmentSpecification
+	{
+		FramebufferAttachmentSpecification() = default;
+		FramebufferAttachmentSpecification(std::initializer_list<FramebufferTextureSpecification> attachments) : Attachments(attachments) {}
+		std::vector<FramebufferTextureSpecification> Attachments;
+	};
+
 	struct FramebufferProperties
 	{
 		uint32_t Width, Height;
 		uint32_t samples = 1;
+
+		FramebufferAttachmentSpecification Attachments;
 
 		bool SwapChainTarget = false;
 	};

@@ -17,6 +17,7 @@ namespace Sol
 	void EditorLayer::OnAttach()
 	{
 		GD_FramebufferProps properties;
+		properties.Attachments = { GD_FramebufferTextureFormat::RGBA8,GD_FramebufferTextureFormat::Depth };
 		properties.Width = 1280;
 		properties.Height = 720;
 		m_Framebuffer = GD_Framebuffer::Create(properties);
