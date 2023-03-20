@@ -5,40 +5,34 @@
 
 namespace GalaxyDraw
 {
-	namespace Utils 
+	namespace Utils
 	{
-		static bool IsDepthFormat(FramebufferTextureFormat format) 
+		static bool IsDepthFormat(FramebufferTextureFormat format)
 		{
 			switch (format)
 			{
-				/*case GalaxyDraw::FramebufferTextureFormat::None:
-					break;
-				case GalaxyDraw::FramebufferTextureFormat::RGBA8:
-					break;*/
 			case GalaxyDraw::FramebufferTextureFormat::DEPTH24STENCIL8: return true;
-				/*case GalaxyDraw::FramebufferTextureFormat::Depth:
-					break;
-				default:
-					break;*/
 			}
+
+			return false;
 		}
 
-		static GLenum TextureTarget(bool multiSampled) 
+		static GLenum TextureTarget(bool multiSampled)
 		{
 			return multiSampled ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
 		}
 
-		static void CreateTextures(bool multiSampled, uint32_t* outID, uint32_t count) 
+		static void CreateTextures(bool multiSampled, uint32_t* outID, uint32_t count)
 		{
 			glCreateTextures(TextureTarget(multiSampled), count, outID);
 		}
 
-		static void BindTexture(bool multiSampled, uint32_t id) 
+		static void BindTexture(bool multiSampled, uint32_t id)
 		{
 			glBindTexture(TextureTarget(multiSampled), id);
 		}
 
-		static void AttachColorTexture(uint32_t id, int samples, GLenum format, uint32_t width, uint32_t height, int index) 
+		static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format, uint32_t width, uint32_t height, int index)
 		{
 			bool multiSampled = samples > 1;
 			if (multiSampled)
@@ -47,7 +41,7 @@ namespace GalaxyDraw
 			}
 			else
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -80,7 +74,7 @@ namespace GalaxyDraw
 			glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, TextureTarget(multiSampled), id, 0);
 		}
 	}
-	
+
 
 	OpenGL_Framebuffer::OpenGL_Framebuffer(const FramebufferProperties& properties) :
 		m_Properties(properties)
@@ -129,7 +123,7 @@ namespace GalaxyDraw
 		if (m_ColorAttachmentSpecs.size())
 		{
 			m_ColorAttachments.resize(m_ColorAttachmentSpecs.size());
-			Utils::CreateTextures(multiSample, m_ColorAttachments.data(),m_ColorAttachments.size());
+			Utils::CreateTextures(multiSample, m_ColorAttachments.data(), m_ColorAttachments.size());
 
 			for (size_t i = 0; i < m_ColorAttachments.size(); i++)
 			{
@@ -141,10 +135,11 @@ namespace GalaxyDraw
 						m_ColorAttachments[i],
 						m_Properties.samples,
 						GL_RGBA8,
+						GL_RGBA,
 						m_Properties.Width,
 						m_Properties.Height,
 						i);
-						break;
+					break;
 				}
 			}
 		}
@@ -154,11 +149,11 @@ namespace GalaxyDraw
 		{
 			Utils::CreateTextures(multiSample, &m_DepthAttachment, 1);
 			Utils::BindTexture(multiSample, m_DepthAttachment);
-			
+
 			switch (m_DepthAttachmentSpec.TextureFormat)
 			{
 			case FramebufferTextureFormat::DEPTH24STENCIL8:
-				Utils::AttachColorTexture(
+				Utils::AttachDepthTexture(
 					m_DepthAttachment,
 					m_Properties.samples,
 					GL_DEPTH24_STENCIL8,
@@ -169,51 +164,17 @@ namespace GalaxyDraw
 			}
 		}
 
-		if (m_ColorAttachments.size()>1)
+		if (m_ColorAttachments.size() > 1)
 		{
-			SOL_CORE_ASSERT("Too many color attachments",m_ColorAttachments.size() <= 4);
+			SOL_CORE_ASSERT("Too many color attachments", m_ColorAttachments.size() <= 4);
 			GLenum buffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
 			glDrawBuffers(m_ColorAttachments.size(), buffers);
 		}
-		else if(m_ColorAttachments.empty())
+		else if (m_ColorAttachments.empty())
 		{
 			// Only depth-pass
 			glDrawBuffer(GL_NONE);
 		}
-
-		/*glCreateTextures(GL_TEXTURE_2D, 1, &m_ColorAttachment);
-		glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);
-
-		glTexImage2D(
-			GL_TEXTURE_2D,
-			0,
-			GL_RGB8,
-			m_Properties.Width,
-			m_Properties.Height,
-			0,
-			GL_RGBA,
-			GL_UNSIGNED_BYTE,
-			nullptr);*/
-
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorAttachment, 0);
-
-		//glCreateTextures(GL_TEXTURE_2D, 1, &m_DepthAttachment);
-		//glBindTexture(GL_TEXTURE_2D, m_DepthAttachment);
-		//glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, m_Properties.Width, m_Properties.Height);
-		///*glTexImage2D(
-		//	GL_TEXTURE_2D,
-		//	0,
-		//	GL_DEPTH24_STENCIL8,
-		//	m_Properties.Width,
-		//	m_Properties.Height,
-		//	0,
-		//	GL_DEPTH_STENCIL,
-		//	GL_UNSIGNED_INT_24_8,
-		//	NULL);*/
-		//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_DepthAttachment, 0);
 
 		SOL_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
 
