@@ -37,11 +37,11 @@ namespace GalaxyDraw
 			bool multiSampled = samples > 1;
 			if (multiSampled)
 			{
-				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, GL_FALSE);
+				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internalFormat, width, height, GL_FALSE);
 			}
 			else
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, nullptr);
 
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -136,6 +136,17 @@ namespace GalaxyDraw
 						m_Properties.samples,
 						GL_RGBA8,
 						GL_RGBA,
+						m_Properties.Width,
+						m_Properties.Height,
+						i);
+					break;
+					
+				case FramebufferTextureFormat::RED_INTERGER:
+					Utils::AttachColorTexture(
+						m_ColorAttachments[i],
+						m_Properties.samples,
+						GL_R32I,
+						GL_RED_INTEGER,
 						m_Properties.Width,
 						m_Properties.Height,
 						i);

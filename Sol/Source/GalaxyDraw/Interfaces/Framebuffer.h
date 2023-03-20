@@ -8,6 +8,7 @@ namespace GalaxyDraw
 	{
 		None = 0,
 		RGBA8,
+		RED_INTERGER,
 		DEPTH24STENCIL8,
 		Depth = DEPTH24STENCIL8
 	};
