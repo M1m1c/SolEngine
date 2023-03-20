@@ -17,7 +17,7 @@ namespace Sol
 	void EditorLayer::OnAttach()
 	{
 		GD_FramebufferProps properties;
-		properties.Attachments = { GD_FramebufferTextureFormat::RGBA8,GD_FramebufferTextureFormat::Depth };
+		properties.Attachments = { GD_FramebufferTextureFormat::RGBA8,GD_FramebufferTextureFormat::RED_INTERGER,GD_FramebufferTextureFormat::Depth };
 		properties.Width = 1280;
 		properties.Height = 720;
 		m_Framebuffer = GD_Framebuffer::Create(properties);
@@ -42,19 +42,19 @@ namespace Sol
 
 
 		//RESIZE
-		if (m_ViewPortSize.x > 0.0f && m_ViewPortSize.y > 0.0f)
+		if (m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f)
 		{
-			m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
-			m_CameraController->SetCenterOfView(m_ViewPortSize);
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_CameraController->SetCenterOfView(m_ViewportSize);
 
 			GD_FramebufferProps props = m_Framebuffer->GetProperties();
-			bool viewLargerThanZero = m_ViewPortSize.x > 0.0f && m_ViewPortSize.y > 0.0f;
-			bool propsDontMatch = props.Width != m_ViewPortSize.x || props.Height != m_ViewPortSize.y;
+			bool viewLargerThanZero = m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f;
+			bool propsDontMatch = props.Width != m_ViewportSize.x || props.Height != m_ViewportSize.y;
 
 			if (viewLargerThanZero && propsDontMatch)
 			{
-				m_Framebuffer->Resize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
-				
+				m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+
 			}
 		}
 
@@ -70,6 +70,20 @@ namespace Sol
 		GD_RenderCommand::Clear();
 
 		m_ActiveScene->OnUpdateRuntime(deltaTime);
+
+		auto [mx, my] = ImGui::GetMousePos();
+		mx -= m_ViewportBounds[0].x;
+		my -= m_ViewportBounds[0].y;
+		glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
+
+		int mouseX = (int)mx;
+		int mouseY = (int)my;
+
+		if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+		{
+			SOL_CORE_WARN("Mouse = {0}, {1}", mouseX, mouseY);
+			//TODO continue here from 21:00
+		}
 
 		m_Framebuffer->UnBind();
 	}
@@ -169,20 +183,33 @@ namespace Sol
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0,0 });
 		ImGui::Begin("ViewPort");
+		auto viewportOffset = ImGui::GetCursorPos();//Includes tab bar
 
 		m_ViewPortFocused = ImGui::IsWindowFocused();
 		m_ViewPortHovered = ImGui::IsWindowHovered();
 		Application::Get().GetImGuiLayer()->SetBlockEvents(!m_ViewPortFocused && !m_ViewPortHovered);
 
 		ImVec2 size = ImGui::GetContentRegionAvail();
-		if (m_ViewPortSize != *((glm::vec2*)&size))
+		if (m_ViewportSize != *((glm::vec2*)&size))
 		{
 			m_Framebuffer->Resize((uint32_t)size.x, (uint32_t)size.y);
-			m_ViewPortSize = { size.x,size.y };
+			m_ViewportSize = { size.x,size.y };
 		}
 
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentsRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ m_ViewPortSize.x, m_ViewPortSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
+		ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
+
+		//TODO continue here
+		auto windowSize = ImGui::GetWindowSize();
+		ImVec2 minBound = ImGui::GetWindowPos();
+
+		minBound.x += viewportOffset.x;
+		minBound.y += viewportOffset.y;
+
+		ImVec2 maxBound = { minBound.x + windowSize.x,minBound.y + windowSize.y };
+
+		m_ViewportBounds[0] = { minBound.x,minBound.y };
+		m_ViewportBounds[1] = { maxBound.x,maxBound.y };
 
 
 		//GIZMOS__________________________________
@@ -236,7 +263,7 @@ namespace Sol
 
 		ImGui::End();
 		ImGui::PopStyleVar();
-		
+
 		ImGui::End();
 	}
 
@@ -297,7 +324,7 @@ namespace Sol
 		}
 
 		m_ActiveScene = std::make_shared<Scene>();
-		m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
 		CreateEditorCamera(m_ActiveScene);
 	}
