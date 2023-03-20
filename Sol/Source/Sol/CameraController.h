@@ -33,8 +33,9 @@ namespace Sol
 		TransformComp& m_CameraTransform;
 		CameraComp& m_SceneCamera;
 
-		glm::vec2 m_ViewCenter = { 0.f,0.f };
+		glm::vec2 m_ViewCenter{ 0.f,0.f };
 		glm::vec3 m_InputAxis{ 0.f,0.f,0.f };
+		glm::vec2 m_OldMousePos{ 0.f,0.f };
 		std::bitset<6> m_DirInputs;
 		std::bitset<4> m_RotInputs;
 
