@@ -75,25 +75,12 @@ namespace Sol
 		//UPDATE SCENE
 		m_ActiveScene->OnUpdateRuntime(deltaTime);
 
-		//mouse picking
-		auto [mx, my] = ImGui::GetMousePos();
-		mx -= m_ViewportBounds[0].x;
-		my -= m_ViewportBounds[0].y;
-		glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
-		my = viewportSize.y - my;
-		int mouseX = (int)mx;
-		int mouseY = (int)my;
-
-		if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
-		{
-			int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-			SOL_CORE_WARN("Pixel Data = {0}", pixelData);
-			//TODO continue here from 21:00
-
-		}
+		CheckMouseSelection();
 
 		m_Framebuffer->UnBind();
 	}
+
+
 
 	void EditorLayer::OnFixedUpdate(TimeStep fixedStep, const float fixedTime)
 	{
@@ -267,7 +254,6 @@ namespace Sol
 			}
 		}
 
-
 		ImGui::End();
 		ImGui::PopStyleVar();
 
@@ -320,6 +306,44 @@ namespace Sol
 		case Key::R:
 			m_GizmoType = ImGuizmo::OPERATION::ROTATE;
 			break;
+		}
+	}
+
+	void EditorLayer::CheckMouseSelection()
+	{
+		auto [mx, my] = ImGui::GetMousePos();
+		mx -= m_ViewportBounds[0].x;
+		my -= m_ViewportBounds[0].y;
+		glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
+		my = viewportSize.y - my;
+		int mouseX = (int)mx;
+		int mouseY = (int)my;
+
+		bool isMouseInViewportPanel = mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x&& mouseY < (int)viewportSize.y;
+		if (isMouseInViewportPanel)
+		{
+			int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
+			SOL_CORE_WARN("Pixel Data = {0}", pixelData);
+
+			//TODO since we are using signed ints now we won't be able to select every entity in the scene,
+			//in the future we might want to change so we render unsigned ints in the framebuffer.
+		
+			//TODO there seems to be abug where the entity framebufer is offset from the rendered framebuffer, 
+			// causing a missmatch when hovering and allowing you to miss when clicking
+			m_HoveredEntity = pixelData < 0 ? Entity() : Entity((EntityID)pixelData, m_ActiveScene.get());
+		}
+
+		//LeftClick
+		if (Input::IsMouseButtonPressed(0) && m_AllowOneClick)
+		{
+			m_AllowOneClick = false;
+
+			//TODO fix so that object does not get deselected when manipulating gizmo
+			//m_HierarchyPanel.SetCurrentSelectedEntity(m_HoveredEntity);
+		}
+		else if (!Input::IsMouseButtonPressed(0) && !ImGuizmo::IsUsing())
+		{
+			m_AllowOneClick = true;
 		}
 	}
 

@@ -25,6 +25,8 @@ namespace Sol
 
 		bool OnKeyPressed(KeyPressedEvent& e);
 
+		void CheckMouseSelection();
+
 		void CreateNewScene();
 
 		void CreateEditorCamera(s_ptr<Scene> activeScene);
@@ -37,13 +39,16 @@ namespace Sol
 
 		u_ptr<GD_Framebuffer> m_Framebuffer;
 		s_ptr<Scene> m_ActiveScene;
+		
 		Entity m_EditorCameraEntity;
-
 		u_ptr<CameraController> m_CameraController;
+
+		Entity m_HoveredEntity = {};
 
 
 		bool m_ViewPortFocused = false;
 		bool m_ViewPortHovered = false;
+		bool m_AllowOneClick = true;
 
 		glm::vec2 m_ViewportSize = { 0,0 };
 		glm::vec2 m_ViewportBounds[2];
