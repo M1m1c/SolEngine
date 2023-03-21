@@ -73,6 +73,17 @@ namespace GalaxyDraw
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, TextureTarget(multiSampled), id, 0);
 		}
+
+		static GLenum SolFBTextureFormatToGL(FramebufferTextureFormat format) {
+			switch (format)
+			{
+			case GalaxyDraw::FramebufferTextureFormat::RGBA8: return GL_RGBA8;
+			case GalaxyDraw::FramebufferTextureFormat::RED_INTERGER: return GL_RED_INTEGER;		
+			}
+
+			SOL_CORE_ASSERT("Unkown format!", false)
+			return 0;
+		}
 	}
 
 
@@ -221,5 +232,18 @@ namespace GalaxyDraw
 		int pixelData;
 		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
 		return pixelData;
+	}
+	void OpenGL_Framebuffer::ClearAttachment(uint32_t attachmentIndex, int clearValue)
+	{
+		SOL_CORE_ASSERT("attachmentIndex out of bounds!", attachmentIndex < m_ColorAttachments.size());
+
+		auto& spec = m_ColorAttachmentSpecs[attachmentIndex];
+
+		glClearTexImage(
+			m_ColorAttachments[attachmentIndex],
+			0,
+			Utils::SolFBTextureFormatToGL(spec.TextureFormat),
+			GL_INT,
+			&clearValue);
 	}
 }
