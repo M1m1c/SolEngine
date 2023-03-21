@@ -214,4 +214,12 @@ namespace GalaxyDraw
 		m_Properties.Height = height;
 		Invalidate();
 	}
+	int OpenGL_Framebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
+	{
+		SOL_CORE_ASSERT("attachmentIndex out of bounds!", attachmentIndex < m_ColorAttachments.size());
+		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
+		int pixelData;
+		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+		return pixelData;
+	}
 }
