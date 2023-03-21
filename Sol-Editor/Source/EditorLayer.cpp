@@ -69,20 +69,27 @@ namespace Sol
 		GD_RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		GD_RenderCommand::Clear();
 
+		//Clear EntityID attachment to -1
+		m_Framebuffer->ClearAttachment(1, -1);
+
+		//UPDATE SCENE
 		m_ActiveScene->OnUpdateRuntime(deltaTime);
 
+		//mouse picking
 		auto [mx, my] = ImGui::GetMousePos();
 		mx -= m_ViewportBounds[0].x;
 		my -= m_ViewportBounds[0].y;
 		glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
-
+		my = viewportSize.y - my;
 		int mouseX = (int)mx;
 		int mouseY = (int)my;
 
 		if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 		{
-			SOL_CORE_WARN("Mouse = {0}, {1}", mouseX, mouseY);
+			int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
+			SOL_CORE_WARN("Pixel Data = {0}", pixelData);
 			//TODO continue here from 21:00
+
 		}
 
 		m_Framebuffer->UnBind();
