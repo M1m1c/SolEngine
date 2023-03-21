@@ -75,7 +75,6 @@ namespace GalaxyDraw
 		GLCall(glDeleteVertexArrays(1, &ID));
 	}
 
-	//TODO refactor and fix so that mat4 and mat3s can be added, look at implementation in SetInstanceBuffer
 	void OpenGL_VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo)
 	{
 		SOL_CORE_ASSERT(vbo->GetLayout().GetElements().size(), "VBO has no layout!");
@@ -102,12 +101,40 @@ namespace GalaxyDraw
 
 				glEnableVertexAttribArray(index);
 
-				glVertexAttribPointer(index,
-					element.GetComponentCount(),
-					ShaderDataTypeToGLBaseType(element.Type),
-					element.Normalized ? GL_TRUE : GL_FALSE,
-					layout.GetStride(),
-					(const void*)offset);
+				switch (element.Type)
+				{
+				case GalaxyDraw::ShaderDataType::none:
+					break;
+				case GalaxyDraw::ShaderDataType::Float:
+				case GalaxyDraw::ShaderDataType::Float2:
+				case GalaxyDraw::ShaderDataType::Float3:
+				case GalaxyDraw::ShaderDataType::Float4:
+				case GalaxyDraw::ShaderDataType::Mat3:
+				case GalaxyDraw::ShaderDataType::Mat4:
+				{
+					glVertexAttribPointer(index,
+						element.GetComponentCount(),
+						ShaderDataTypeToGLBaseType(element.Type),
+						element.Normalized ? GL_TRUE : GL_FALSE,
+						layout.GetStride(),
+						(const void*)offset);
+
+					break;
+				}
+				case GalaxyDraw::ShaderDataType::Int:
+				case GalaxyDraw::ShaderDataType::Int2:
+				case GalaxyDraw::ShaderDataType::Int3:
+				case GalaxyDraw::ShaderDataType::Int4:
+				case GalaxyDraw::ShaderDataType::Bool:
+				{
+					glVertexAttribIPointer(index,
+						element.GetComponentCount(),
+						ShaderDataTypeToGLBaseType(element.Type),
+						layout.GetStride(),
+						(const void*)offset);
+					break;
+				}
+				}
 
 				index++;
 			}
@@ -150,12 +177,40 @@ namespace GalaxyDraw
 
 				glEnableVertexAttribArray(index);
 
-				glVertexAttribPointer(index,
-					element.GetComponentCount(),
-					ShaderDataTypeToGLBaseType(element.Type),
-					element.Normalized ? GL_TRUE : GL_FALSE,
-					layout.GetStride(),
-					(const void*)offset);
+				switch (element.Type)
+				{
+				case GalaxyDraw::ShaderDataType::none:
+					break;
+				case GalaxyDraw::ShaderDataType::Float:
+				case GalaxyDraw::ShaderDataType::Float2:
+				case GalaxyDraw::ShaderDataType::Float3:
+				case GalaxyDraw::ShaderDataType::Float4:
+				case GalaxyDraw::ShaderDataType::Mat3:
+				case GalaxyDraw::ShaderDataType::Mat4:
+				{
+					glVertexAttribPointer(index,
+						element.GetComponentCount(),
+						ShaderDataTypeToGLBaseType(element.Type),
+						element.Normalized ? GL_TRUE : GL_FALSE,
+						layout.GetStride(),
+						(const void*)offset);
+
+					break;
+				}
+				case GalaxyDraw::ShaderDataType::Int:
+				case GalaxyDraw::ShaderDataType::Int2:
+				case GalaxyDraw::ShaderDataType::Int3:
+				case GalaxyDraw::ShaderDataType::Int4:
+				case GalaxyDraw::ShaderDataType::Bool:
+				{
+					glVertexAttribIPointer(index,
+						element.GetComponentCount(),
+						ShaderDataTypeToGLBaseType(element.Type),
+						layout.GetStride(),
+						(const void*)offset);
+					break;
+				}
+				}
 
 				GLCall(glVertexAttribDivisor(index, 1)); //specifies that this is per instance
 
