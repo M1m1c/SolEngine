@@ -24,8 +24,9 @@ namespace Sol
 	private:
 
 		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 
-		void CheckMouseSelection();
+		void CheckMouseHover();
 
 		void CreateNewScene();
 
@@ -48,7 +49,6 @@ namespace Sol
 
 		bool m_ViewPortFocused = false;
 		bool m_ViewPortHovered = false;
-		bool m_AllowOneClick = true;
 
 		glm::vec2 m_ViewportSize = { 0,0 };
 		glm::vec2 m_ViewportBounds[2];

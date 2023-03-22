@@ -75,7 +75,7 @@ namespace Sol
 		//UPDATE SCENE
 		m_ActiveScene->OnUpdateRuntime(deltaTime);
 
-		CheckMouseSelection();
+		CheckMouseHover();
 
 		m_Framebuffer->UnBind();
 	}
@@ -198,7 +198,7 @@ namespace Sol
 		uint32_t textureID = m_Framebuffer->GetColorAttachmentsRendererID();
 		ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
 
-		
+
 
 
 		//GIZMOS__________________________________
@@ -208,7 +208,7 @@ namespace Sol
 			ImGuizmo::SetOrthographic(false);
 			ImGuizmo::SetDrawlist();
 
-			ImGuizmo::SetRect(m_ViewportBounds[0].x, m_ViewportBounds[0].y, m_ViewportBounds[1].x - m_ViewportBounds[0].x, m_ViewportBounds[1].y- m_ViewportBounds[0].y);
+			ImGuizmo::SetRect(m_ViewportBounds[0].x, m_ViewportBounds[0].y, m_ViewportBounds[1].x - m_ViewportBounds[0].x, m_ViewportBounds[1].y - m_ViewportBounds[0].y);
 
 			const auto& cameraTransform = m_EditorCameraEntity.GetComponent<TransformComp>();
 			auto& camera = m_EditorCameraEntity.GetComponent<CameraComp>().Camera;
@@ -259,6 +259,7 @@ namespace Sol
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(SOL_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+		dispatcher.Dispatch<MouseButtonPressedEvent>(SOL_BIND_EVENT_FN(EditorLayer::OnMouseButtonPressed));
 	}
 
 	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
@@ -301,7 +302,19 @@ namespace Sol
 		}
 	}
 
-	void EditorLayer::CheckMouseSelection()
+	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+	{
+		if (e.GetMouseButton() == MouseButton::BUTTON_LEFT)
+		{
+			if (m_ViewPortHovered && m_ViewPortFocused && !ImGuizmo::IsOver())
+				m_HierarchyPanel.SetCurrentSelectedEntity(m_HoveredEntity);
+
+		}
+
+		return false;
+	}
+
+	void EditorLayer::CheckMouseHover()
 	{
 		auto [mx, my] = ImGui::GetMousePos();
 		mx -= m_ViewportBounds[0].x;
@@ -315,27 +328,9 @@ namespace Sol
 		if (isMouseInViewportPanel)
 		{
 			int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-			SOL_CORE_WARN("Pixel Data = {0}", pixelData);
-
 			//TODO since we are using signed ints now we won't be able to select every entity in the scene,
 			//in the future we might want to change so we render unsigned ints in the framebuffer.
-		
-			//TODO there seems to be abug where the entity framebufer is offset from the rendered framebuffer, 
-			// causing a missmatch when hovering and allowing you to miss when clicking
 			m_HoveredEntity = pixelData < 0 ? Entity() : Entity((EntityID)pixelData, m_ActiveScene.get());
-		}
-
-		//LeftClick
-		if (Input::IsMouseButtonPressed(0) && m_AllowOneClick)
-		{
-			m_AllowOneClick = false;
-
-			//TODO fix so that object does not get deselected when manipulating gizmo
-			//m_HierarchyPanel.SetCurrentSelectedEntity(m_HoveredEntity);
-		}
-		else if (!Input::IsMouseButtonPressed(0) && !ImGuizmo::IsUsing())
-		{
-			m_AllowOneClick = true;
 		}
 	}
 
