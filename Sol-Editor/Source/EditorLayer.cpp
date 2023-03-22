@@ -306,12 +306,17 @@ namespace Sol
 	{
 		if (e.GetMouseButton() == MouseButton::BUTTON_LEFT)
 		{
-			if (m_ViewPortHovered && m_ViewPortFocused && !ImGuizmo::IsOver())
+			if (CanMouseSelectEntity())
 				m_HierarchyPanel.SetCurrentSelectedEntity(m_HoveredEntity);
 
 		}
 
 		return false;
+	}
+
+	bool EditorLayer::CanMouseSelectEntity()
+	{
+		return m_ViewPortHovered && m_ViewPortFocused && !ImGuizmo::IsOver();
 	}
 
 	void EditorLayer::CheckMouseHover()

@@ -24,7 +24,10 @@ namespace Sol
 	private:
 
 		bool OnKeyPressed(KeyPressedEvent& e);
+
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+
+		bool CanMouseSelectEntity();
 
 		void CheckMouseHover();
 
