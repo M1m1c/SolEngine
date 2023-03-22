@@ -90,7 +90,12 @@ namespace Sol
 
 		if (m_OldMouseNavigationPressed != m_MouseNavigationPressed && m_MouseNavigationPressed == true)
 		{
+			m_OldMousePos = { Input::GetMouseX(),Input::GetMouseY() };
 			Input::SetMousePosition(m_ViewCenter.x, m_ViewCenter.y);
+		}
+		else if (m_OldMouseNavigationPressed != m_MouseNavigationPressed && m_MouseNavigationPressed == false && m_OldMousePos.x != -1.f)
+		{
+			Input::SetMousePosition(m_OldMousePos.x, m_OldMousePos.y);
 		}
 		m_OldMouseNavigationPressed = m_MouseNavigationPressed;
 

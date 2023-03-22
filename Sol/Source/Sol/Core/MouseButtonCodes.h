@@ -1,17 +1,27 @@
 #pragma once
 
 
-//From glfw3.h
+namespace Sol {
 
-#define SOL_MOUSE_BUTTON_1         0
-#define SOL_MOUSE_BUTTON_2         1
-#define SOL_MOUSE_BUTTON_3         2
-#define SOL_MOUSE_BUTTON_4         3
-#define SOL_MOUSE_BUTTON_5         4
-#define SOL_MOUSE_BUTTON_6         5
-#define SOL_MOUSE_BUTTON_7         6
-#define SOL_MOUSE_BUTTON_8         7
-#define SOL_MOUSE_BUTTON_LAST      SOL_MOUSE_BUTTON_8
-#define SOL_MOUSE_BUTTON_LEFT      SOL_MOUSE_BUTTON_1
-#define SOL_MOUSE_BUTTON_RIGHT     SOL_MOUSE_BUTTON_2
-#define SOL_MOUSE_BUTTON_MIDDLE    SOL_MOUSE_BUTTON_3
+	using MouseCode = uint16_t;
+	namespace MouseButton
+	{
+		enum : MouseCode
+		{
+			//From glfw3.h
+			BUTTON_0 = 0,
+			BUTTON_1 = 1,
+			BUTTON_2 = 2,
+			BUTTON_3 = 3,
+			BUTTON_4 = 4,
+			BUTTON_5 = 5,
+			BUTTON_6 = 6,
+			BUTTON_7 = 7,
+			BUTTON_LAST = BUTTON_7,
+			BUTTON_LEFT = BUTTON_0,
+			BUTTON_RIGHT = BUTTON_1,
+			BUTTON_MIDDLE = BUTTON_2
+		};
+	}
+
+}

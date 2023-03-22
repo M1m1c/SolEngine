@@ -25,6 +25,7 @@ namespace Sol {
 		void OnImGuiRender();
 
 		Entity GetCurrentSelectedEntity() { return m_CurrentSelection; }
+		void SetCurrentSelectedEntity(Entity entity) { m_CurrentSelection = entity; }
 	private:
 		void DrawEntityNode(Entity entity);
 
