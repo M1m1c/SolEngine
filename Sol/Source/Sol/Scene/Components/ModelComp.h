@@ -20,6 +20,11 @@ namespace Sol {
 			Model = GalaxyDraw::Model::Create(modelPath, entityID);
 		}
 
+		~ModelComp() 
+		{
+			Model = nullptr; 
+		};
+
 		//TODO when we create a model, it should be using the path provided and setup all values in m_Model,
 		// later in the scene when we are updating we should get all modelComps that are set to be visible
 		// and draw them using a static function in Renderer DrawModel().

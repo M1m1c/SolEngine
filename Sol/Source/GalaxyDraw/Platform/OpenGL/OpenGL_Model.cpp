@@ -14,6 +14,11 @@ namespace GalaxyDraw
 		LoadModel(modelpath);
 	}
 
+	OpenGL_Model::~OpenGL_Model()
+	{
+		m_Meshes.clear();
+	}
+
 	void OpenGL_Model::SetData(const std::string& path)
 	{
 		LoadModel(path);

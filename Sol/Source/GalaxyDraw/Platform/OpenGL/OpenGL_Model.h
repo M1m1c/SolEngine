@@ -11,7 +11,7 @@ namespace GalaxyDraw
 	{
 	public:
 		OpenGL_Model(const std::string& modelpath);
-
+		~OpenGL_Model();
 		// Inherited via Model3D
 
 		virtual void SetData(const std::string& path) override;
