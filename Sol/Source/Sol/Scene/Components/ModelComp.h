@@ -1,13 +1,13 @@
 #pragma once
 
-#include <GalaxyDraw/Interfaces/Model.h>
+#include <GalaxyDraw/Interfaces/IModel.h>
 #include <GalaxyDraw/Interfaces/Texture.h>
 #include "Sol/SolDefines.h"
 
 namespace Sol {
 	struct ModelComp
 	{
-		s_ptr<GalaxyDraw::Model> Model;
+		s_ptr<GalaxyDraw::IModel> Model;
 		std::string ModelPath;
 		std::string TexturePath;
 
@@ -17,7 +17,7 @@ namespace Sol {
 		//Keep in mind that you should apply transforms to 3D meshes before exporting, or else meshes might be skewed or rotated weirdly
 		ModelComp(const std::string& modelPath, EntityID entityID) : ModelPath(modelPath)
 		{
-			Model = GalaxyDraw::Model::Create(modelPath, entityID);
+			Model = GalaxyDraw::IModel::Create(modelPath, entityID);
 		}
 
 		~ModelComp() 

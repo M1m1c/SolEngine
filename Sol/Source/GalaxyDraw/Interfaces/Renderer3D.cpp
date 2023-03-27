@@ -145,7 +145,7 @@ namespace GalaxyDraw
 
 	//Loads all sub meshes of a model
 	//When we create a model on a modelComp using Model::Create() this also gets called.
-	void Renderer3D::LoadModel(std::shared_ptr<Model> model, EntityID entityID)
+	void Renderer3D::LoadModel(std::shared_ptr<IModel> model, EntityID entityID)
 	{
 		SOL_PROFILE_FUNCTION();
 		auto& meshes = model->GetMeshes();
@@ -279,7 +279,7 @@ namespace GalaxyDraw
 	}
 
 	//Removes all the model's mesh instances tied to the entityID from the MeshDataCollections
-	void Renderer3D::EraseMeshInstances(EntityID entityID, std::shared_ptr<Model> model)
+	void Renderer3D::EraseMeshInstances(EntityID entityID, std::shared_ptr<IModel> model)
 	{
 		auto modelName = model->GetName();
 

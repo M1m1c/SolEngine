@@ -43,7 +43,7 @@ namespace GalaxyDraw {
 		//Updates all mesh datacollections instanceData containing entityID
 		static void UpdateInstanceData(EntityID entityID, const InstanceData& instanceData);
 
-		static void LoadModel(std::shared_ptr<Model> model, EntityID entityID);
+		static void LoadModel(std::shared_ptr<IModel> model, EntityID entityID);
 		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID);
 
 		//TODO create function for handeling when entity is destroyed, needs to remove it self from relevant MeshRenderData m_ContainedEntityIds.
@@ -52,10 +52,10 @@ namespace GalaxyDraw {
 
 		//draws all instances of meshes
 		static void DrawInstances();
-		static void DrawModel(std::shared_ptr<Model> model, const glm::mat4& transform);
+		static void DrawModel(std::shared_ptr<IModel> model, const glm::mat4& transform);
 		static void DrawMesh(const std::string& modelName,const std::shared_ptr<Mesh>& mesh, const glm::mat4& transform);
 
-		static void EraseMeshInstances(EntityID entityID, std::shared_ptr<Model> model);
+		static void EraseMeshInstances(EntityID entityID, std::shared_ptr<IModel> model);
 
 		struct Statistics
 		{

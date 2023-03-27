@@ -24,7 +24,7 @@ namespace GalaxyDraw
 		LoadModel(path);
 	}
 
-	bool OpenGL_Model::operator==(const Model& other) const
+	bool OpenGL_Model::operator==(const IModel& other) const
 	{
 		return m_RendererID == ((OpenGL_Model&)other).m_RendererID;
 	}

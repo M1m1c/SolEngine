@@ -1,5 +1,5 @@
 #pragma once
-#include "GalaxyDraw/Interfaces/Model.h"
+#include "GalaxyDraw/Interfaces/IModel.h"
 
 struct aiNode;
 struct aiScene;
@@ -7,7 +7,7 @@ struct aiMesh;
 
 namespace GalaxyDraw 
 {
-	class OpenGL_Model : public Model
+	class OpenGL_Model : public IModel
 	{
 	public:
 		OpenGL_Model(const std::string& modelpath);
@@ -16,7 +16,7 @@ namespace GalaxyDraw
 
 		virtual void SetData(const std::string& path) override;
 
-		virtual bool operator==(const Model& other) const override;
+		virtual bool operator==(const IModel& other) const override;
 
 		virtual uint32_t GetRendererID() const override { return m_RendererID; };
 
