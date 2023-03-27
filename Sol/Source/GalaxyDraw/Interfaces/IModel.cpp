@@ -2,7 +2,7 @@
 #include "IModel.h"
 #include "Renderer.h"
 #include "Renderer3D.h"
-#include "GalaxyDraw/Platform/OpenGL/OpenGL_Model.h"
+#include "GalaxyDraw/Model.h"
 
 namespace GalaxyDraw
 {
@@ -20,7 +20,7 @@ namespace GalaxyDraw
 			return nullptr;
 
 		case RendererAPI::API::OpenGL:
-			retVal = std::make_shared<OpenGL_Model>(path);
+			retVal = std::make_shared<Model>(path);
 			break;
 
 		}

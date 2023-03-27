@@ -7,11 +7,11 @@ struct aiMesh;
 
 namespace GalaxyDraw 
 {
-	class OpenGL_Model : public IModel
+	class Model : public IModel
 	{
 	public:
-		OpenGL_Model(const std::string& modelpath);
-		~OpenGL_Model();
+		Model(const std::string& modelpath);
+		~Model();
 		// Inherited via Model3D
 
 		virtual void SetData(const std::string& path) override;

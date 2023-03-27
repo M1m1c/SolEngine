@@ -1,5 +1,5 @@
 #include "solpch.h"
-#include "OpenGL_Model.h"
+#include "Model.h"
 
 #include "GalaxyDraw/Platform/OpenGL/GLMacros.h"
 #include <glad/glad.h>
@@ -9,27 +9,27 @@
 
 namespace GalaxyDraw
 {
-	OpenGL_Model::OpenGL_Model(const std::string& modelpath)
+	Model::Model(const std::string& modelpath)
 	{
 		LoadModel(modelpath);
 	}
 
-	OpenGL_Model::~OpenGL_Model()
+	Model::~Model()
 	{
 		m_Meshes.clear();
 	}
 
-	void OpenGL_Model::SetData(const std::string& path)
+	void Model::SetData(const std::string& path)
 	{
 		LoadModel(path);
 	}
 
-	bool OpenGL_Model::operator==(const IModel& other) const
+	bool Model::operator==(const IModel& other) const
 	{
-		return m_RendererID == ((OpenGL_Model&)other).m_RendererID;
+		return m_RendererID == ((Model&)other).m_RendererID;
 	}
 
-	void OpenGL_Model::LoadModel(const std::string& modelpath)
+	void Model::LoadModel(const std::string& modelpath)
 	{
 		Assimp::Importer import;
 		const aiScene* scene = import.ReadFile(modelpath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals | aiProcess_JoinIdenticalVertices);
@@ -46,7 +46,7 @@ namespace GalaxyDraw
 		ProcessNode(scene->mRootNode, scene);
 	}
 
-	void OpenGL_Model::ProcessNode(aiNode* node, const aiScene* scene)
+	void Model::ProcessNode(aiNode* node, const aiScene* scene)
 	{
 		//node->mt
 		// process all the node's meshes (if any)
@@ -62,7 +62,7 @@ namespace GalaxyDraw
 		}
 	}
 
-	std::shared_ptr<Mesh> OpenGL_Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, aiNode* node)
+	std::shared_ptr<Mesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, aiNode* node)
 	{
 		std::vector<Vertex> vertices;
 		std::vector<uint32_t> indices;
