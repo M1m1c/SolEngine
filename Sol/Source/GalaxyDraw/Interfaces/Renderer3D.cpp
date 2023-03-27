@@ -306,9 +306,10 @@ namespace GalaxyDraw
 				if (meshRenderData.m_Instances.size() == 0)
 				{
 					//TODO figure out how to dealocate the loaded mesh
+					
+					delete[] meshRenderData.VertexBufferBase;
+					delete[] meshRenderData.InstanceBufferBase;
 					s_3DData.MeshDataCollections.eraseWithKey(name);
-					SOL_CORE_WARN("use count {0}", meshRenderData.m_Mesh.use_count());
-
 				}
 			}
 		}
