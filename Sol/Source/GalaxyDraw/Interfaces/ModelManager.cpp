@@ -8,16 +8,28 @@
 
 namespace GalaxyDraw 
 {
-	void ModelManager::DiscardModel(const std::string& path)
+	void ModelManager::DiscardModel(const std::string& modelpath)
 	{
+		auto& s = ModelManager::GetInstance();
+		if (s.m_LoadedModels.Exists(modelpath))
+		{
+			auto& modelInstance = s.m_LoadedModels.Get(modelpath);
+			modelInstance.Count--;
+			if (modelInstance.Count == 0) 
+			{
+				s.m_LoadedModels.eraseWithKey(modelpath);
+			}
+		}
 	}
 
 	std::shared_ptr<Model> ModelManager::ProcessModel(const std::string& modelpath)
 	{
-		auto& inst = ModelManager::GetInstance();
-		if (inst.m_LoadedModels.Exists(modelpath)) 
+		auto& s = ModelManager::GetInstance();
+		if (s.m_LoadedModels.Exists(modelpath)) 
 		{
-			return inst.m_LoadedModels.Get(modelpath);
+			auto& modelInstance = s.m_LoadedModels.Get(modelpath);
+			modelInstance.Count++;
+			return modelInstance.Model;
 		}
 
 		Assimp::Importer import;
@@ -38,7 +50,7 @@ namespace GalaxyDraw
 		if (meshes.size() > 0) 
 		{
 			auto model = std::make_shared<Model>(path, name, meshes);
-			inst.m_LoadedModels.push_back(path, model);
+			s.m_LoadedModels.push_back(modelpath, ModelInstanceData(1,model));
 			return model;
 		}
 
@@ -48,10 +60,10 @@ namespace GalaxyDraw
 
 	std::shared_ptr<Model> ModelManager::GetModel(const std::string& path)
 	{
-		auto& inst = ModelManager::GetInstance();
-		if (inst.m_LoadedModels.Exists(path))
+		auto& s = ModelManager::GetInstance();
+		if (s.m_LoadedModels.Exists(path))
 		{
-			return inst.m_LoadedModels.Get(path);
+			return s.m_LoadedModels.Get(path).Model;
 		}
 
 		SOL_CORE_ASSERT(false, "Model not found!");

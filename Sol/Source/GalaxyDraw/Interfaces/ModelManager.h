@@ -11,6 +11,14 @@ struct aiMesh;
 
 namespace GalaxyDraw 
 {
+
+    struct ModelInstanceData
+    {
+        ModelInstanceData(uint32_t count, std::shared_ptr<Model> model): Count(count),Model(model){}
+        uint32_t Count;
+        std::shared_ptr<Model> Model;
+    };
+
     static class ModelManager
     {
     public:
@@ -33,6 +41,6 @@ namespace GalaxyDraw
         static std::shared_ptr<Mesh> ProcessMesh(aiMesh * mesh, const aiScene * scene, aiNode * node);
 
     private:
-        KeyedVector<std::string, std::shared_ptr<Model>> m_LoadedModels;
+        KeyedVector < std::string, ModelInstanceData> m_LoadedModels;
     };
 }
