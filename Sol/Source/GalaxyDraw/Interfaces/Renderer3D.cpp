@@ -145,7 +145,7 @@ namespace GalaxyDraw
 
 	//Loads all sub meshes of a model
 	//When we create a model on a modelComp using Model::Create() this also gets called.
-	void Renderer3D::LoadModel(std::shared_ptr<Model> model, EntityID entityID)
+	void Renderer3D::LoadModel(std::shared_ptr<IModel> model, EntityID entityID)
 	{
 		SOL_PROFILE_FUNCTION();
 		auto& meshes = model->GetMeshes();
@@ -236,7 +236,7 @@ namespace GalaxyDraw
 				renderData.VertexBufferPtr++;
 			}
 
-			for (auto& id: renderData.m_ContainedEntityIds)
+			for (auto& id : renderData.m_ContainedEntityIds)
 			{
 				auto& instanceData = renderData.m_Instances.Get(id);
 
@@ -279,7 +279,7 @@ namespace GalaxyDraw
 	}
 
 	//Removes all the model's mesh instances tied to the entityID from the MeshDataCollections
-	void Renderer3D::EraseMeshInstances(EntityID entityID, std::shared_ptr<Model> model)
+	void Renderer3D::EraseMeshInstances(EntityID entityID, std::shared_ptr<IModel> model)
 	{
 		auto modelName = model->GetName();
 
@@ -289,15 +289,27 @@ namespace GalaxyDraw
 		{
 			auto name = meshes[i]->Name + "_" + modelName;
 
+			
+			
 			if (s_3DData.MeshDataCollections.Exists(name))
 			{
 				auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
 				meshRenderData.m_Instances.eraseWithKey(entityID);
 
 				auto iterator = std::find(meshRenderData.m_ContainedEntityIds.begin(), meshRenderData.m_ContainedEntityIds.end(), entityID);
-				if (iterator != meshRenderData.m_ContainedEntityIds.end()) 
+				if (iterator != meshRenderData.m_ContainedEntityIds.end())
 				{
 					meshRenderData.m_ContainedEntityIds.erase(iterator);
+				}
+
+				//TODO if there are no more instances in the mesh render data then unload the mesh and delete mesh render data
+				if (meshRenderData.m_Instances.size() == 0)
+				{
+					//TODO figure out how to dealocate the loaded mesh
+					
+					delete[] meshRenderData.VertexBufferBase;
+					delete[] meshRenderData.InstanceBufferBase;
+					s_3DData.MeshDataCollections.eraseWithKey(name);
 				}
 			}
 		}

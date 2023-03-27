@@ -32,7 +32,11 @@ namespace Sol
 			{
 				if (m_Registry.any_of<ModelComp>(entityID))
 				{
-					GD_Renderer3D::EraseMeshInstances(entityID, m_Registry.get<ModelComp>(entityID).Model);
+					auto& modelManager = GD_ModelManager::GetInstance();
+					auto& modelComp = m_Registry.get<ModelComp>(entityID);
+
+					GD_Renderer3D::EraseMeshInstances(entityID, modelManager.GetModel(modelComp.ModelPath));
+					modelManager.DiscardModel(modelComp.ModelPath);
 				}
 			}
 			m_Registry.remove<T>(entityID);

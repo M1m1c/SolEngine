@@ -83,7 +83,7 @@ namespace Sol
 			ImGui::SetColumnWidth(0, 80.f);
 			ImGui::Text("Name");
 			ImGui::NextColumn();
-			ImGui::Text(component.Model->GetName().c_str());
+			ImGui::Text(component.ModelPath.c_str());
 			ImGui::Columns(1);
 			});
 

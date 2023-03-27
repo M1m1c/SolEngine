@@ -30,5 +30,12 @@ namespace GalaxyDraw
 			Name(name), Vertices(vertices), Indices(indices), Textures(textures), MeshTransform(meshTransform)
 		{}
 
+		~Mesh() 
+		{
+			//TODO clear all vectors and data
+			Vertices.clear();
+			Indices.clear();
+			Textures.clear();
+		};
 	};
 }

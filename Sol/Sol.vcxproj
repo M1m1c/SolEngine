@@ -166,7 +166,8 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Framebuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Mesh.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\Model.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\IModel.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\ModelManager.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\OrthoCamera.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\ParticleSystem.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\RenderCommand.h" />
@@ -187,7 +188,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_InstanceBuffer.h" />
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.h" />
+    <ClInclude Include="Source\GalaxyDraw\Model.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.h" />
@@ -658,7 +659,8 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Framebuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\Model.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\IModel.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\ModelManager.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\OrthoCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\ParticleSystem.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderCommand.cpp" />
@@ -679,7 +681,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Framebuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_IndexBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_InstanceBuffer.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Model.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Model.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_OrthoCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_ParticleSystem.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.cpp" />
