@@ -1,6 +1,5 @@
 #include "solpch.h"
 #include "ModelManager.h"
-#include "Renderer.h"
 
 #include <glad/glad.h>
 #include <assimp/Importer.hpp>
@@ -15,9 +14,10 @@ namespace GalaxyDraw
 
 	std::shared_ptr<Model> ModelManager::ProcessModel(const std::string& modelpath)
 	{
-		if (m_LoadedModels.Exists(modelpath)) 
+		auto& inst = ModelManager::GetInstance();
+		if (inst.m_LoadedModels.Exists(modelpath)) 
 		{
-			return m_LoadedModels.Get(modelpath);
+			return inst.m_LoadedModels.Get(modelpath);
 		}
 
 		Assimp::Importer import;
@@ -38,19 +38,20 @@ namespace GalaxyDraw
 		if (meshes.size() > 0) 
 		{
 			auto model = std::make_shared<Model>(path, name, meshes);
-			m_LoadedModels.push_back(path, model);
+			inst.m_LoadedModels.push_back(path, model);
 			return model;
 		}
 
-		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
+		SOL_CORE_ASSERT(false, "No Meshes Found!");
 		return nullptr;
 	}
 
 	std::shared_ptr<Model> ModelManager::GetModel(const std::string& path)
 	{
-		if (m_LoadedModels.Exists(path))
+		auto& inst = ModelManager::GetInstance();
+		if (inst.m_LoadedModels.Exists(path))
 		{
-			return m_LoadedModels.Get(path);
+			return inst.m_LoadedModels.Get(path);
 		}
 
 		SOL_CORE_ASSERT(false, "Model not found!");

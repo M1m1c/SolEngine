@@ -1558,6 +1558,7 @@
       <Filter>thirdparty\imguizmo</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sol\Math\Math.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\ModelManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1717,5 +1718,6 @@
       <Filter>thirdparty\imguizmo</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sol\Math\Math.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\ModelManager.cpp" />
   </ItemGroup>
 </Project>

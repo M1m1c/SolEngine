@@ -167,6 +167,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Mesh.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\IModel.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\ModelManager.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\OrthoCamera.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\ParticleSystem.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\RenderCommand.h" />
@@ -659,6 +660,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Framebuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\IModel.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\ModelManager.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\OrthoCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\ParticleSystem.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderCommand.cpp" />
