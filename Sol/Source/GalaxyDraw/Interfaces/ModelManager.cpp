@@ -8,7 +8,7 @@
 
 namespace GalaxyDraw 
 {
-	void ModelManager::DiscardModel(const std::string& modelpath)
+	void ModelManager::DiscardModelInstance(const std::string& modelpath)
 	{
 		auto& s = ModelManager::GetInstance();
 		if (s.m_LoadedModels.Exists(modelpath))

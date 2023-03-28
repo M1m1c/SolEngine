@@ -278,7 +278,7 @@ namespace GalaxyDraw
 	}
 
 	//Removes all the model's mesh instances tied to the entityID from the MeshDataCollections
-	void Renderer3D::EraseMeshInstances(EntityID entityID, std::shared_ptr<IModel> model)
+	void Renderer3D::DiscardMeshInstances(EntityID entityID, std::shared_ptr<IModel> model)
 	{
 		auto modelName = model->GetName();
 
