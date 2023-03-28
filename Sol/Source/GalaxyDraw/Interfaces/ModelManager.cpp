@@ -49,7 +49,7 @@ namespace GalaxyDraw
 
 		if (meshes.size() > 0) 
 		{
-			auto model = std::make_shared<Model>(path, name, meshes);
+			auto model = std::make_shared<Model>(modelpath, name, meshes);
 			s.m_LoadedModels.push_back(modelpath, ModelInstanceData(1,model));
 			return model;
 		}
