@@ -35,8 +35,8 @@ namespace Sol
 					auto& modelManager = GD_ModelManager::GetInstance();
 					auto& modelComp = m_Registry.get<ModelComp>(entityID);
 
-					GD_Renderer3D::EraseMeshInstances(entityID, modelManager.GetModel(modelComp.ModelPath));
-					modelManager.DiscardModel(modelComp.ModelPath);
+					GD_Renderer3D::DiscardMeshInstances(entityID, modelManager.GetModel(modelComp.ModelPath));
+					modelManager.DiscardModelInstance(modelComp.ModelPath);
 				}
 			}
 			m_Registry.remove<T>(entityID);

@@ -19,6 +19,8 @@ namespace Sol
 	private:
 		void DrawComponentNodes(Entity entity);
 
+		std::string CleanUpFilePath(std::string& filePath);
+
 	private:
 		Entity m_CurrentSelection;
 	};
