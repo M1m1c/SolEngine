@@ -171,8 +171,6 @@ namespace GalaxyDraw
 			return;
 		}
 
-		uint32_t maxVerts = s_3DData.MaxMeshes * mesh->Vertices.size();
-		uint32_t maxIndices = s_3DData.MaxMeshes * mesh->Indices.size();
 
 		MeshRenderData meshData;
 		meshData.m_Mesh = mesh;
@@ -189,6 +187,7 @@ namespace GalaxyDraw
 
 		meshData.m_VertexArray->AddVertexBuffer(meshData.m_VertexBuffer);
 
+		uint32_t maxVerts = mesh->Vertices.size();
 		meshData.VertexBufferBase = new Vertex[maxVerts];
 		meshData.InstanceBufferBase = new InstanceData[s_3DData.MaxMeshes];
 
