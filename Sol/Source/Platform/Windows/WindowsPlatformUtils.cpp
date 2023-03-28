@@ -2,6 +2,7 @@
 #include "Sol/Utils/PlatformUtils.h"
 #include "Sol/Core/Application.h"
 
+#include <filesystem>
 #include <commdlg.h>
 #include <GLFW/glfw3.h>
 #define GLFW_EXPOSE_NATIVE_WIN32
@@ -12,19 +13,17 @@ namespace Sol {
 	{
 		OPENFILENAMEA ofn;
 		CHAR szFile[260] = { 0 };
-		CHAR currentDir[256] = { 0 };
 
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
 		ofn.lStructSize = sizeof(OPENFILENAME);
 		ofn.hwndOwner = glfwGetWin32Window((GLFWwindow*)Application::Get().GetWindow().GetNativeWindow());
 		ofn.lpstrFile = szFile;
 		ofn.nMaxFile = sizeof(szFile);
+	
+		std::string assetsFolder = GetAssetsFolder();
+		ofn.lpstrInitialDir = assetsFolder.c_str();
 
-		if (GetCurrentDirectoryA(256, currentDir))
-		{
-
-			ofn.lpstrInitialDir = currentDir;
-		}
+		GetAssetsFolder();
 
 		ofn.lpstrFilter = filter;
 		ofn.nFilterIndex = 1;
@@ -32,7 +31,19 @@ namespace Sol {
 
 		if (GetOpenFileNameA(&ofn) == TRUE)
 		{
-			return ofn.lpstrFile;
+
+			std::string selectedFolder = ofn.lpstrFile;
+
+			// Ensure that the selected folder is within the "assets" folder or a subdirectory of it	
+			if (selectedFolder.compare(0, assetsFolder.length(), assetsFolder) == 0)
+			{
+				return selectedFolder;
+			}
+			else 
+			{
+				MessageBoxA(NULL, "Cannot open file. File must be located in the asset folder or its subdirectories.", "Error", MB_ICONERROR);
+				return std::string();
+			}
 		}
 
 		return std::string();
@@ -42,7 +53,6 @@ namespace Sol {
 	{
 		OPENFILENAMEA ofn;
 		CHAR szFile[260] = { 0 };
-		CHAR currentDir[256] = { 0 };
 
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
 		ofn.lStructSize = sizeof(OPENFILENAME);
@@ -50,10 +60,8 @@ namespace Sol {
 		ofn.lpstrFile = szFile;
 		ofn.nMaxFile = sizeof(szFile);
 
-		if (GetCurrentDirectoryA(256, currentDir))
-		{
-			ofn.lpstrInitialDir = currentDir;
-		}
+		std::string assetsFolder = GetAssetsFolder();
+		ofn.lpstrInitialDir = GetAssetsFolder().c_str();
 
 		ofn.lpstrFilter = filter;
 		ofn.nFilterIndex = 1;
@@ -64,9 +72,27 @@ namespace Sol {
 
 		if (GetSaveFileNameA(&ofn) == TRUE)
 		{
-			return ofn.lpstrFile;
+			std::string selectedFolder = ofn.lpstrFile;
+
+			std::string assetsFolder = GetAssetsFolder();
+			if (selectedFolder.compare(0, assetsFolder.length(), assetsFolder) == 0)
+			{
+				return selectedFolder;
+			}
+			else
+			{
+				MessageBoxA(NULL, "Cannot save file. File must be stored in the asset folder or its subdirectories.", "Error", MB_ICONERROR);
+				return std::string();
+			}
 		}
 
 		return std::string();
+	}
+
+	std::string FileDialogs::GetAssetsFolder()
+	{
+		std::string rootDir = std::filesystem::current_path().string();
+		std::string assetPath = rootDir + "\\assets";
+		return assetPath;
 	}
 }
