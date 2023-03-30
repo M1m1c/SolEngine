@@ -52,8 +52,6 @@ namespace GalaxyDraw {
 
 		//draws all instances of meshes
 		static void DrawInstances();
-		static void DrawModel(std::shared_ptr<IModel> model, const glm::mat4& transform);
-		static void DrawMesh(const std::string& modelName,const std::shared_ptr<Mesh>& mesh, const glm::mat4& transform);
 
 		static void DiscardMeshInstances(EntityID entityID, std::shared_ptr<IModel> model);
 
