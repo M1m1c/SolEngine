@@ -165,6 +165,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Framebuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Material.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Mesh.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\IModel.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\ModelManager.h" />

@@ -1559,6 +1559,7 @@
     </ClInclude>
     <ClInclude Include="Source\Sol\Math\Math.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\ModelManager.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\Material.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">

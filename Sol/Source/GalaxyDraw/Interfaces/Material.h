@@ -1,10 +1,12 @@
 #pragma once
 #include <glm/glm.hpp>
 
-class Material 
-{
-public:
-    uint32_t textureIndices[5];
-    glm::vec4 color; 
-    // Other material properties go here
-};
+namespace GalaxyDraw {
+
+	struct Material
+	{
+		uint32_t TextureIndex;//TextureIndices[5];
+		glm::vec4 Color;
+		// Other material properties go here
+	};
+}
