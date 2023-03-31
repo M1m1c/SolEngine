@@ -2,6 +2,7 @@
 #include "Material.h"
 #include "Texture.h"
 #include <vector>
+#include "Sol/Core/KeyedVector.h"
 
 namespace GalaxyDraw
 {
@@ -10,7 +11,8 @@ namespace GalaxyDraw
 	{
 	public:
 
-		static uint32_t CreateMaterial(const std::string& path);
+		static uint32_t SetupMaterial(const std::string& texturePath);
+		static uint32_t CreateNewMaterial(const std::string& texturePath);
 		static std::shared_ptr <Material> GetMaterial(uint32_t index);
 		static void DiscardMaterial(uint32_t index);
 
@@ -25,11 +27,9 @@ namespace GalaxyDraw
 
 	private:
 		MaterialManager();
-
-		static uint32_t CreateTexture(const std::string& path);
 	private:
 		std::vector < std::shared_ptr<Material>> m_Materials;
-		std::vector < std::shared_ptr<Texture>> m_LoadedTextures;
+		KeyedVector <std::string, std::shared_ptr<Texture>> m_LoadedTextures;
 	};
 
 
