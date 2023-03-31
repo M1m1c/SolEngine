@@ -1,6 +1,6 @@
 #pragma once
 
-//#include "GalaxyDraw/Interfaces/MaterialManager.h"
+#include "GalaxyDraw/Interfaces/IMaterial.h"
 #include "GalaxyDraw/Interfaces/Texture.h"
 #include <glm/glm.hpp>
 
@@ -17,9 +17,7 @@ namespace Sol
 		MaterialComp() = default;
 		MaterialComp(const MaterialComp&) = default;
 		MaterialComp(const std::string& texturePath) : TexturePath(texturePath) {
-			//TODO ok including material manager causes this to crash, 
-			// so do something similar to model comp and call an interface that can solve thsi for us
-			//m_MaterialIndex = GalaxyDraw::MaterialManager::SetupMaterial(texturePath);
+			m_MaterialIndex = GalaxyDraw::IMaterial::Create(texturePath);
 		}
 
 		uint32_t GetMaterialIndex() { return m_MaterialIndex; }
