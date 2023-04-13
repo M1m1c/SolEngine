@@ -11,8 +11,7 @@ namespace GalaxyDraw
 	{
 	public:
 
-		static uint32_t SetupMaterial(const std::string& texturePath);
-		static uint32_t CreateNewMaterial(const std::string& texturePath);
+		static uint32_t SetupMaterial(const std::string& texturePath, bool shouldCreateNewMaterial = false );	
 		static std::shared_ptr <Material> GetMaterial(uint32_t index);
 		static void DiscardMaterial(uint32_t index);
 
@@ -27,9 +26,12 @@ namespace GalaxyDraw
 
 	private:
 		MaterialManager();
+		static uint32_t CreateNewTexture(const std::string& texturePath);
+		static uint32_t CreateNewMaterial(const uint32_t& textureIndex);
 	private:
-		std::vector < std::shared_ptr<Material>> m_Materials;
+		std::vector <std::shared_ptr<Material>> m_Materials{nullptr};
 		KeyedVector <std::string, std::shared_ptr<Texture>> m_LoadedTextures;
+		std::map<std::string, std::vector<uint32_t>> m_TextureToMaterialsMap;
 	};
 
 

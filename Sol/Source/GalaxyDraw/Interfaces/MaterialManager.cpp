@@ -7,30 +7,65 @@ namespace GalaxyDraw {
 	{
 	}
 
-	uint32_t MaterialManager::SetupMaterial(const std::string& texturePath)
+	uint32_t MaterialManager::SetupMaterial(const std::string& texturePath, bool shouldCreateNewMaterial)
 	{
-		//if there already is a material with this texture then give us that ones index,
-		//otherwise create a new material
-		return uint32_t();
-	}
+		//index 0 is an invalid material
+		uint32_t materialIndex = 0;
 
-	uint32_t MaterialManager::CreateNewMaterial(const std::string& texturePath)
-	{
 		auto& s = MaterialManager::GetInstance();
-		uint32_t materialIndex = s.m_Materials.size();
-		uint32_t textureIndex = s.m_LoadedTextures.size();
 
-		auto texture = Texture2D::Create(texturePath);
-		s.m_LoadedTextures.push_back(texturePath,texture);
+		if (s.m_LoadedTextures.Exists(texturePath) && shouldCreateNewMaterial)
+		{
+			//Creates a new material using the texture that is already loaded
+			uint32_t texIndex = s.m_LoadedTextures.GetIndexFromKey(texturePath);
 
-		auto mat = std::make_shared<Material>(textureIndex);
-		s.m_Materials.push_back(mat);
-		
-		//TODO load texture
-		// store texture index
-		// create and store new material with texture indices
+			materialIndex = CreateNewMaterial(texIndex);
+
+			std::vector<uint32_t>& matIndices = s.m_TextureToMaterialsMap[texturePath];
+			matIndices.push_back(materialIndex);
+		}
+		else if (s.m_LoadedTextures.Exists(texturePath))
+		{
+			//Gets the first material that uses the texture
+			auto it = s.m_TextureToMaterialsMap.find(texturePath);
+			if (it != s.m_TextureToMaterialsMap.end())
+			{
+				std::vector<uint32_t>& matIndices = it->second;
+				materialIndex = matIndices.size() > 0 ? matIndices[0] : 0;
+			}
+		}
+		else
+		{
+			//loads the texture and creates a material that uses it.
+			uint32_t texIndex = CreateNewTexture(texturePath);
+			materialIndex = CreateNewMaterial(texIndex);
+			s.m_TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
+
+		}
 
 		return materialIndex;
 	}
-	
+
+	uint32_t MaterialManager::CreateNewTexture(const std::string& texturePath)
+	{
+		auto& s = MaterialManager::GetInstance();
+
+		uint32_t textureIndex = s.m_LoadedTextures.size();
+		auto texture = Texture2D::Create(texturePath);
+		s.m_LoadedTextures.push_back(texturePath, texture);
+
+		return textureIndex;
+	}
+
+	uint32_t MaterialManager::CreateNewMaterial(const uint32_t& textureIndex)
+	{
+		auto& s = MaterialManager::GetInstance();
+		//TODO we might run into trouble here since the first material index might be 0 if the size is 0
+		uint32_t materialIndex = s.m_Materials.size();
+		auto mat = std::make_shared<Material>(textureIndex);
+		s.m_Materials.push_back(mat);
+
+		return materialIndex;
+	}
+
 }
