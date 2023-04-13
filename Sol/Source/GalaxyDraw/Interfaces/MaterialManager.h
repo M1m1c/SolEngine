@@ -12,7 +12,7 @@ namespace GalaxyDraw
 	public:
 
 		static uint32_t SetupMaterial(const std::string& texturePath, bool shouldCreateNewMaterial = false );	
-		static std::shared_ptr <Material> GetMaterial(uint32_t index);
+		static std::shared_ptr<Material> GetMaterial(uint32_t index);
 		static void DiscardMaterial(uint32_t index);
 
 		static MaterialManager& GetInstance()

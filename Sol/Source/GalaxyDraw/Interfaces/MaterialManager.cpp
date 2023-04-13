@@ -46,6 +46,13 @@ namespace GalaxyDraw {
 		return materialIndex;
 	}
 
+	std::shared_ptr<Material> MaterialManager::GetMaterial(uint32_t index)
+	{
+		auto& s = MaterialManager::GetInstance();
+		if (index >= s.m_Materials.size()) { return nullptr; }
+		return s.m_Materials[index];
+	}
+
 	uint32_t MaterialManager::CreateNewTexture(const std::string& texturePath)
 	{
 		auto& s = MaterialManager::GetInstance();
