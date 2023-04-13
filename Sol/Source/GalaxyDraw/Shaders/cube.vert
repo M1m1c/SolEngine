@@ -28,6 +28,7 @@ struct VertexOutput
 
 layout (location = 0) out VertexOutput Output;
 layout (location = 4) out flat int v_EntityID;
+layout (location = 5) out flat int v_TextureID;
 
 void main()
 {
@@ -35,6 +36,7 @@ void main()
 	Output.Color = a_MeshColor;
 	Output.TexCoord = a_TexCoord;
 	v_EntityID = a_EntityID;
+	v_TextureID = a_TextureID;
 
 	gl_Position = u_ViewProjection * a_EntityTransform * a_MeshTransform * vec4(a_Position, 1.0);
 }
