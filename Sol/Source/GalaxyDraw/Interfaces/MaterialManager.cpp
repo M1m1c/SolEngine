@@ -10,6 +10,7 @@ namespace GalaxyDraw {
 	uint32_t MaterialManager::SetupMaterial(const std::string& texturePath, bool shouldCreateNewMaterial)
 	{
 		//index 0 is an invalid material
+		if (texturePath == "") { return 0; }
 		uint32_t materialIndex = 0;
 
 		auto& s = MaterialManager::GetInstance();
