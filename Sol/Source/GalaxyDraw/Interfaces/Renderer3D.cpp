@@ -203,6 +203,7 @@ namespace GalaxyDraw
 
 		meshData.m_InstanceBuffer->SetLayout({
 		{ ShaderDataType::Int, "a_EntityID"     },
+		{ ShaderDataType::Int, "a_TextureID"     },
 		{ ShaderDataType::Float4, "a_MeshColor"},
 		{ ShaderDataType::Mat4 , "a_EntityTransform"},
 		{ ShaderDataType::Mat4 , "a_MeshTransform"}

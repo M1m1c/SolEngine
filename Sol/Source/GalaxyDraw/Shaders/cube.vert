@@ -7,10 +7,11 @@ layout(location = 3) in vec4 a_Color;
 
 //_____________Instanced attributes
 layout(location = 4) in int a_EntityID;
+layout(location = 5) in int a_TextureID;
 //TODO add materialIndex as a attribute or uniform block
-layout(location = 5) in vec4 a_MeshColor;
-layout(location = 6) in mat4 a_EntityTransform;//when using mat4 the next location is +4 from this location
-layout(location = 10) in mat4 a_MeshTransform;//when using mat4 the next location is +4 from this location
+layout(location = 6) in vec4 a_MeshColor;
+layout(location = 7) in mat4 a_EntityTransform;//when using mat4 the next location is +4 from this location
+layout(location = 11) in mat4 a_MeshTransform;//when using mat4 the next location is +4 from this location
 
 layout(std140, binding = 0) uniform Camera
 {
