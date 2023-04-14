@@ -8,7 +8,7 @@ namespace GalaxyDraw {
 	class TextureArray
 	{
 	public:
-		static Sol::s_ptr<TextureArray> Create(uint32_t numTextures);
+		static Sol::s_ptr<TextureArray> Create(uint32_t maxTextures);
 		virtual ~TextureArray() = default;
 		virtual void addTexture(Sol::s_ptr<Texture> texture) = 0;
 		virtual uint32_t GetRendererID() const = 0;

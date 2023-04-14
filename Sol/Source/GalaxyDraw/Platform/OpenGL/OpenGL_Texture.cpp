@@ -42,7 +42,7 @@ namespace GalaxyDraw
 		glTexParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
-
+		//TODO we can only free this after it has been added to the texture array
 		stbi_image_free(data);
 	}
 
