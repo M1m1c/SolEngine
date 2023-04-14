@@ -44,6 +44,8 @@ namespace GalaxyDraw {
 
 		}
 
+		//TODO this needs to handle the texture array I think
+
 		return materialIndex;
 	}
 
