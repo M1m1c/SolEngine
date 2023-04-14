@@ -19,7 +19,7 @@ namespace GalaxyDraw {
 		virtual bool operator==(const TextureArray& other) const override;
 
 	private:
-		uint32_t m_RendererID;
+		uint32_t m_RendererID; // The ID of the texture array in GPU memory
 	};
 	
 }
