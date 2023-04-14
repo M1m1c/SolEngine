@@ -19,6 +19,7 @@ namespace GalaxyDraw {
 		auto width = texture->GetWidth();
 		auto height = texture->GetHeight();
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
+		//TODO ok so we need to pass the data from the loaded texture here before we free it using stb 
 		//glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, index, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		
 	}
