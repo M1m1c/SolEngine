@@ -1562,6 +1562,8 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Material.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\MaterialManager.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\IMaterial.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\TextureArray.h" />
+    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_TextureArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1724,5 +1726,7 @@
     <ClCompile Include="Source\GalaxyDraw\Interfaces\ModelManager.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\MaterialManager.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\IMaterial.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\TextureArray.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_TextureArray.cpp" />
   </ItemGroup>
 </Project>
