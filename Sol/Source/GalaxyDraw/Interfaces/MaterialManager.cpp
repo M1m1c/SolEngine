@@ -5,6 +5,9 @@ namespace GalaxyDraw {
 
 	MaterialManager::MaterialManager()
 	{
+		//TODO this is temporary and needs to be set elsewhere
+		uint32_t maxTextures = 100;
+		m_TextureArray = TextureArray::Create(maxTextures);
 	}
 
 	uint32_t MaterialManager::SetupMaterial(const std::string& texturePath, bool shouldCreateNewMaterial)
@@ -14,18 +17,19 @@ namespace GalaxyDraw {
 		uint32_t materialIndex = 0;
 
 		auto& s = MaterialManager::GetInstance();
+		bool isTextureLoaded = s.m_TextureArray->IsTextureLoaded(texturePath);
 
-		if (s.m_LoadedTextures.Exists(texturePath) && shouldCreateNewMaterial)
+		if (isTextureLoaded && shouldCreateNewMaterial)
 		{
 			//Creates a new material using the texture that is already loaded
-			uint32_t texIndex = s.m_LoadedTextures.GetIndexFromKey(texturePath);
+			uint32_t texIndex = s.m_TextureArray->GetTextureIndex(texturePath);
 
 			materialIndex = CreateNewMaterial(texIndex);
 
 			std::vector<uint32_t>& matIndices = s.m_TextureToMaterialsMap[texturePath];
 			matIndices.push_back(materialIndex);
 		}
-		else if (s.m_LoadedTextures.Exists(texturePath))
+		else if (isTextureLoaded)
 		{
 			//Gets the first material that uses the texture
 			auto it = s.m_TextureToMaterialsMap.find(texturePath);
@@ -44,8 +48,6 @@ namespace GalaxyDraw {
 
 		}
 
-		//TODO this needs to handle the texture array I think
-
 		return materialIndex;
 	}
 
@@ -59,10 +61,8 @@ namespace GalaxyDraw {
 	uint32_t MaterialManager::CreateNewTexture(const std::string& texturePath)
 	{
 		auto& s = MaterialManager::GetInstance();
-
-		uint32_t textureIndex = s.m_LoadedTextures.size();
-		auto texture = Texture2D::Create(texturePath);
-		s.m_LoadedTextures.push_back(texturePath, texture);
+		
+		uint32_t textureIndex = s.m_TextureArray->AddTexture(texturePath);
 
 		return textureIndex;
 	}
