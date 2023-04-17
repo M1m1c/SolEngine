@@ -10,5 +10,8 @@ namespace GalaxyDraw {
 		uint32_t TextureIndex;//TextureIndices[5];
 		glm::vec4 Color;
 		// Other material properties go here
+
+	private:
+		//TODO make TexureIndex private so we can only manipualte it through functions
 	};
 }

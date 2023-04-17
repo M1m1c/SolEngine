@@ -79,6 +79,7 @@ namespace GalaxyDraw {
 	{
 		auto& s = MaterialManager::GetInstance();
 		if (materialIndex >= s.m_Materials.size()) { return nullptr; }
+		//TOOD add assert to make sure the material index exists
 		return s.m_Materials[materialIndex];
 	}
 

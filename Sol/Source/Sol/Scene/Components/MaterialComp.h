@@ -11,7 +11,7 @@ namespace Sol
 	//TODO make this use and load textures, also every entity with a ModelComp should probably have a material comp
 	struct MaterialComp
 	{
-		//TODO this should only need to hold a material index, whihc we can then use to read from
+		//TODO remove color variable, we now use the materials color to determine color
 		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
 
 		//std::string TexturePath;
