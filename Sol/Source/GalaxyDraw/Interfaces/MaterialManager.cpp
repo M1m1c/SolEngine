@@ -6,23 +6,30 @@ namespace GalaxyDraw {
 	MaterialManager::MaterialManager()
 	{
 		//TODO this is temporary and needs to be set elsewhere
-		uint32_t maxTextures = 100;
-		m_TextureArray = TextureArray::Create(maxTextures);
-		
-		int texIndex = m_TextureArray->GetDefaultTextureIndex();
+		m_TextureArray = nullptr;
+		m_DefaultMaterialIndex = 0;
+	}
+
+	void MaterialManager::Initialize(uint32_t maxTextures)
+	{
+		auto& s = MaterialManager::GetInstance();
+		s.m_TextureArray = TextureArray::Create(maxTextures);
+
+		int texIndex = s.m_TextureArray->GetDefaultTextureIndex();
 
 		uint32_t materialIndex = CreateNewMaterial(texIndex);
-		m_TextureToMaterialsMap.insert(std::make_pair("", std::vector<uint32_t>({materialIndex})));
-		m_TextureIndexToTexturePathMap.insert(std::make_pair(texIndex, ""));
+		s.m_TextureToMaterialsMap.insert(std::make_pair("", std::vector<uint32_t>({ materialIndex })));
+		s.m_TextureIndexToTexturePathMap.insert(std::make_pair(texIndex, ""));
+		s.m_DefaultMaterialIndex = materialIndex;
 	}
 
 	uint32_t MaterialManager::SetupMaterial(const std::string& texturePath, bool shouldCreateNewMaterial)
 	{
-		//index 0 is an invalid material
-		if (texturePath == "") { return 0; }
-		uint32_t materialIndex = 0;
-
 		auto& s = MaterialManager::GetInstance();
+
+		uint32_t materialIndex = s.m_DefaultMaterialIndex;
+		if (texturePath == "") { return materialIndex; }
+
 		bool isTextureLoaded = s.m_TextureArray->IsTextureLoaded(texturePath);
 
 		if (isTextureLoaded && shouldCreateNewMaterial)
@@ -60,6 +67,12 @@ namespace GalaxyDraw {
 		}
 
 		return materialIndex;
+	}
+
+	uint32_t MaterialManager::GetDefaultMaterial()
+	{
+		auto& s = MaterialManager::GetInstance();
+		return s.m_DefaultMaterialIndex;
 	}
 
 	std::shared_ptr<Material> MaterialManager::GetMaterial(uint32_t materialIndex)

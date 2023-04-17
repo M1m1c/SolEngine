@@ -2,8 +2,9 @@
 #include "Material.h"
 #include "Texture.h"
 #include "GalaxyDraw/Interfaces/TextureArray.h"
-#include "Sol/Core/KeyedVector.h"
+
 #include <vector>
+#include <map>
 
 namespace GalaxyDraw
 {
@@ -11,8 +12,9 @@ namespace GalaxyDraw
 	static class MaterialManager
 	{
 	public:
-
+		static void Initialize(uint32_t maxTextures = 100);
 		static uint32_t SetupMaterial(const std::string& texturePath, bool shouldCreateNewMaterial = false);
+		static uint32_t GetDefaultMaterial();
 		static std::shared_ptr<Material> GetMaterial(uint32_t materialIndex);
 		static const std::string GetTexturePath(uint32_t textureIndex);
 		static void DiscardMaterial(uint32_t index);
@@ -38,6 +40,7 @@ namespace GalaxyDraw
 		std::shared_ptr<TextureArray> m_TextureArray;
 		std::map<std::string, std::vector<uint32_t>> m_TextureToMaterialsMap;
 		std::map<uint32_t, std::string> m_TextureIndexToTexturePathMap;
+		uint32_t m_DefaultMaterialIndex;
 	};
 
 
