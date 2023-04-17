@@ -15,8 +15,13 @@ namespace Sol
 
 		//std::string TexturePath;
 
-		MaterialComp() = default;
+		MaterialComp() 
+		{
+			m_MaterialIndex = GalaxyDraw::IMaterial::GetDefaultMaterial();
+		}
+
 		MaterialComp(const MaterialComp&) = default;
+
 		MaterialComp(const std::string& texturePath) 
 		{
 			m_MaterialIndex = GalaxyDraw::IMaterial::Create(texturePath);
