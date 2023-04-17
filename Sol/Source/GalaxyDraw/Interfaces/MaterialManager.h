@@ -30,6 +30,7 @@ namespace GalaxyDraw
 		static uint32_t CreateNewMaterial(const uint32_t& textureIndex);
 	private:
 		std::vector <std::shared_ptr<Material>> m_Materials{nullptr};
+		//TODO instead of thsi holding loaded textures it will hold a texture array which we can access the loaded textures from
 		KeyedVector <std::string, std::shared_ptr<Texture>> m_LoadedTextures;
 		std::map<std::string, std::vector<uint32_t>> m_TextureToMaterialsMap;
 	};
