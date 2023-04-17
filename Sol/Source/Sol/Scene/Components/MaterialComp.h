@@ -1,7 +1,8 @@
 #pragma once
 
 #include "GalaxyDraw/Interfaces/IMaterial.h"
-#include "GalaxyDraw/Interfaces/Texture.h"
+//#include "GalaxyDraw/Interfaces/Texture.h"
+#include "GalaxyDraw/Interfaces/Material.h"
 #include <glm/glm.hpp>
 
 
@@ -28,6 +29,18 @@ namespace Sol
 		}
 
 		uint32_t GetMaterialIndex() { return m_MaterialIndex; }
+
+		glm::vec4& GetMaterialColor() 
+		{ 
+			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
+			return mat->Color;
+		}
+
+		uint32_t& GetMaterialTextureIndex()
+		{
+			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
+			return mat->TextureIndex;
+		}
 		//TODO add set material function that checks with material manager if the material index is valid
 		//TODO add CreateNewMaterialInstance function that asks material manager to create a new material and set it to this
 	private:
