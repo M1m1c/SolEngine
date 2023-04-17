@@ -45,23 +45,34 @@ namespace GalaxyDraw {
 			uint32_t texIndex = CreateNewTexture(texturePath);
 			materialIndex = CreateNewMaterial(texIndex);
 			s.m_TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
+			s.m_TextureIndexToTexturePathMap.insert(std::make_pair(texIndex, texturePath));
 
 		}
 
 		return materialIndex;
 	}
 
-	std::shared_ptr<Material> MaterialManager::GetMaterial(uint32_t index)
+	std::shared_ptr<Material> MaterialManager::GetMaterial(uint32_t materialIndex)
 	{
 		auto& s = MaterialManager::GetInstance();
-		if (index >= s.m_Materials.size()) { return nullptr; }
-		return s.m_Materials[index];
+		if (materialIndex >= s.m_Materials.size()) { return nullptr; }
+		return s.m_Materials[materialIndex];
+	}
+
+	const std::string MaterialManager::GetTexture(uint32_t textureIndex)
+	{
+		auto& s = MaterialManager::GetInstance();
+		auto it = s.m_TextureIndexToTexturePathMap.find(textureIndex);
+		if (it != s.m_TextureIndexToTexturePathMap.end())
+		{
+			return s.m_TextureIndexToTexturePathMap[textureIndex];
+		}
 	}
 
 	uint32_t MaterialManager::CreateNewTexture(const std::string& texturePath)
 	{
 		auto& s = MaterialManager::GetInstance();
-		
+
 		uint32_t textureIndex = s.m_TextureArray->AddTexture(texturePath);
 
 		return textureIndex;
