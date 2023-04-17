@@ -8,8 +8,12 @@ namespace GalaxyDraw {
 		//TODO this is temporary and needs to be set elsewhere
 		uint32_t maxTextures = 100;
 		m_TextureArray = TextureArray::Create(maxTextures);
-		//TODO actually we might need to create a default texture and load that to aviod having to do if checks for every material that ahs a negative texture index
-		m_Materials.push_back(std::make_shared<Material>(-1));
+		
+		int texIndex = m_TextureArray->GetDefaultTextureIndex();
+
+		uint32_t materialIndex = CreateNewMaterial(texIndex);
+		m_TextureToMaterialsMap.insert(std::make_pair("", std::vector<uint32_t>({materialIndex})));
+		m_TextureIndexToTexturePathMap.insert(std::make_pair(texIndex, ""));
 	}
 
 	uint32_t MaterialManager::SetupMaterial(const std::string& texturePath, bool shouldCreateNewMaterial)

@@ -14,6 +14,7 @@ namespace GalaxyDraw {
 		virtual void RemoveTexture(const std::string& path) = 0;
 		virtual bool IsTextureLoaded(const std::string& path) = 0;
 		virtual int GetTextureIndex(const std::string& path) = 0;
+		virtual uint32_t GetDefaultTextureIndex() = 0;
 		virtual uint32_t GetRendererID() const = 0;
 
 		virtual uint32_t Size() const = 0;

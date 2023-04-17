@@ -18,7 +18,9 @@ namespace GalaxyDraw {
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+		m_defaultTextureIndex = CreateDefaultTexture(1, 1);
 	}
 
 	OpenGL_TextureArray::~OpenGL_TextureArray()
@@ -36,18 +38,8 @@ namespace GalaxyDraw {
 
 		SOL_CORE_ASSERT(data, "Failed to Load image!");
 
-		int textureIndex = 0;
 		bool reUsedIndex = false;
-		if (!m_FreeIndices.empty())
-		{
-			textureIndex = m_FreeIndices.front();
-			m_FreeIndices.pop();
-			reUsedIndex = true;
-		}
-		else
-		{
-			textureIndex = m_NextUsableIndex;
-		}
+		uint32_t textureIndex = GetAvailableTextureIndex(reUsedIndex);
 
 		m_LoadedTextures.push_back(path, textureIndex);
 
@@ -66,8 +58,44 @@ namespace GalaxyDraw {
 		stbi_image_free(data);
 
 		// Unbind the texture array
-		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
+		return textureIndex;
+	}
+
+	uint32_t OpenGL_TextureArray::CreateDefaultTexture(uint32_t width, uint32_t height)
+	{
+		
+		bool reUsedIndex = false;
+		uint32_t textureIndex = GetAvailableTextureIndex(reUsedIndex);
+
+		// Create a white texture of the specified size
+		unsigned char whitePixel[] = { 255, 255, 255, 255 }; // RGBA
+		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
+		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, textureIndex, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, whitePixel);
+
+		m_NumTextures++;
+
+		if (!reUsedIndex) { m_NextUsableIndex = m_NumTextures; }
+
+		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+		return textureIndex;
+	}
+
+	uint32_t OpenGL_TextureArray::GetAvailableTextureIndex(bool& reUsedIndex)
+	{
+		uint32_t textureIndex = 0;
+		if (!m_FreeIndices.empty())
+		{
+			textureIndex = m_FreeIndices.front();
+			m_FreeIndices.pop();
+			reUsedIndex = true;
+		}
+		else
+		{
+			textureIndex = m_NextUsableIndex;
+		}
 		return textureIndex;
 	}
 
@@ -108,11 +136,6 @@ namespace GalaxyDraw {
 	{
 		SOL_CORE_ASSERT(IsTextureLoaded(path), "Texture is not loaded! Can't access its index.");
 		return m_LoadedTextures.Get(path);
-	}
-
-	uint32_t OpenGL_TextureArray::GetRendererID() const
-	{
-		return m_RendererID;
 	}
 
 	void OpenGL_TextureArray::Bind(uint32_t textureUnit) const
