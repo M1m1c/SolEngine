@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "UniformBuffer.h"
 #include "RenderCommand.h"
+#include "MaterialManager.h"
 #include "Sol/Core/KeyedVector.h"
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -65,6 +66,9 @@ namespace GalaxyDraw
 		s_3DData.MissingTexture->SetData(&missingTextureData, sizeof(uint32_t));
 
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
+
+		auto& matManager = MaterialManager::GetInstance();
+		matManager.Initialize();
 	}
 
 	void Renderer3D::Shutdown()
