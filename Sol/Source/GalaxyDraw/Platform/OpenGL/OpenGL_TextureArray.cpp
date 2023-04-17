@@ -26,7 +26,7 @@ namespace GalaxyDraw {
 		glDeleteTextures(1, &m_RendererID);
 	}
 
-	void OpenGL_TextureArray::AddTexture(const std::string& path)
+	uint32_t OpenGL_TextureArray::AddTexture(const std::string& path)
 	{
 		int widthImg, heightImg, numColCh;
 		stbi_set_flip_vertically_on_load(true);
@@ -65,6 +65,8 @@ namespace GalaxyDraw {
 
 		// Unbind the texture array
 		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+		return textureIndex;
 	}
 
 	void OpenGL_TextureArray::RemoveTexture(const std::string& filePath)

@@ -10,7 +10,7 @@ namespace GalaxyDraw {
 	public:
 		static Sol::s_ptr<TextureArray> Create(uint32_t maxTextures);
 		virtual ~TextureArray() = default;
-		virtual void AddTexture(const std::string& path) = 0;
+		virtual uint32_t AddTexture(const std::string& path) = 0;
 		virtual void RemoveTexture(const std::string& path) = 0;
 		virtual bool IsTextureLoaded(const std::string& path) = 0;
 		virtual uint32_t GetTextureIndex(const std::string& path) = 0;

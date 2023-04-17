@@ -12,7 +12,7 @@ namespace GalaxyDraw {
 		~OpenGL_TextureArray();
 
 		// Inherited via TextureArray
-		virtual void AddTexture(const std::string& path) override;
+		virtual uint32_t AddTexture(const std::string& path) override;
 
 		virtual void RemoveTexture(const std::string& path) override;
 
