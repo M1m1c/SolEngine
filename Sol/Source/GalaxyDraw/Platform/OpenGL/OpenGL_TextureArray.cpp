@@ -18,7 +18,7 @@ namespace GalaxyDraw {
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 		m_defaultTextureIndex = CreateDefaultTexture(1, 1);
 	}
@@ -30,7 +30,11 @@ namespace GalaxyDraw {
 
 	int OpenGL_TextureArray::AddTexture(const std::string& path)
 	{
-		if (m_NumTextures + 1 > m_MaxTextures) { return -1; }
+		if (m_NumTextures + 1 > m_MaxTextures) 
+		{
+			SOL_CORE_ASSERT(false, "Out of range! Attempting to add more textures than provided maximum. Increase amount allowed when constructing TexureArray.");
+			return -1; 
+		}
 
 		int widthImg, heightImg, numColCh;
 		stbi_set_flip_vertically_on_load(true);
@@ -58,7 +62,7 @@ namespace GalaxyDraw {
 		stbi_image_free(data);
 
 		// Unbind the texture array
-		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 		return textureIndex;
 	}
@@ -78,7 +82,7 @@ namespace GalaxyDraw {
 
 		if (!reUsedIndex) { m_NextUsableIndex = m_NumTextures; }
 
-		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 		return textureIndex;
 	}
