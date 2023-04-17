@@ -67,6 +67,33 @@ namespace GalaxyDraw {
 		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 	}
 
+	void OpenGL_TextureArray::RemoveTexture(const std::string& filePath)
+	{
+		
+		if (IsTextureLoaded(filePath))
+		{
+			uint32_t textureIndex = m_LoadedTextures.Get(filePath);
+
+			// Mark the index as free
+			m_FreeIndices.push(textureIndex);
+
+			// Bind the texture array
+			glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
+
+			// Clear the texture data at the index
+			glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, textureIndex, 0, 0, 1, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+
+			// Remove the entry from the loaded textures container
+			m_LoadedTextures.eraseWithKey(filePath);
+
+			// Update the number of textures in the array
+			m_NumTextures--;
+
+			// Unbind the texture array
+			glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		}
+	}
+
 	bool OpenGL_TextureArray::IsTextureLoaded(const std::string& path)
 	{
 		if (m_LoadedTextures.size() == 0) { return false; }

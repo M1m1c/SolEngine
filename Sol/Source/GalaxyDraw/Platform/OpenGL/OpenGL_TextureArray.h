@@ -14,6 +14,8 @@ namespace GalaxyDraw {
 		// Inherited via TextureArray
 		virtual void AddTexture(const std::string& path) override;
 
+		virtual void RemoveTexture(const std::string& path) override;
+
 		virtual bool IsTextureLoaded(const std::string& path) override;
 
 		virtual uint32_t GetTextureIndex(const std::string& path) override;
@@ -29,7 +31,7 @@ namespace GalaxyDraw {
 	private:
 		uint32_t m_RendererID; // The ID of the texture array in GPU memory
 		uint32_t m_NumTextures = 0;
-		uint32_t m_HighestIndex = 0;
+		uint32_t m_NextUsableIndex = 0;
 		KeyedVector <std::string, uint32_t> m_LoadedTextures;
 		//TODO this queue is to be used for reusing indices of freed textures, 
 		// when a texture is removed its index is added to it.
