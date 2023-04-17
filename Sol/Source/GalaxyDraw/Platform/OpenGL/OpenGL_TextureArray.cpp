@@ -4,7 +4,7 @@
 #include <stb_image.h>
 
 namespace GalaxyDraw {
-	OpenGL_TextureArray::OpenGL_TextureArray(uint32_t maxTextures)
+	OpenGL_TextureArray::OpenGL_TextureArray(uint32_t maxTextures) : m_MaxTextures(maxTextures)
 	{
 		glGenTextures(1, &m_RendererID);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
@@ -26,15 +26,17 @@ namespace GalaxyDraw {
 		glDeleteTextures(1, &m_RendererID);
 	}
 
-	uint32_t OpenGL_TextureArray::AddTexture(const std::string& path)
+	int OpenGL_TextureArray::AddTexture(const std::string& path)
 	{
+		if (m_NumTextures + 1 > m_MaxTextures) { return -1; }
+
 		int widthImg, heightImg, numColCh;
 		stbi_set_flip_vertically_on_load(true);
 		stbi_uc* data = stbi_load(path.c_str(), &widthImg, &heightImg, &numColCh, 0);
 
 		SOL_CORE_ASSERT(data, "Failed to Load image!");
 
-		uint32_t textureIndex = 0;
+		int textureIndex = 0;
 		bool reUsedIndex = false;
 		if (!m_FreeIndices.empty())
 		{
@@ -102,7 +104,7 @@ namespace GalaxyDraw {
 		return m_LoadedTextures.Exists(path);
 	}
 
-	uint32_t OpenGL_TextureArray::GetTextureIndex(const std::string& path)
+	int OpenGL_TextureArray::GetTextureIndex(const std::string& path)
 	{
 		SOL_CORE_ASSERT(IsTextureLoaded(path), "Texture is not loaded! Can't access its index.");
 		return m_LoadedTextures.Get(path);

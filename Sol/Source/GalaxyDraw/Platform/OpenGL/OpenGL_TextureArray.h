@@ -12,13 +12,13 @@ namespace GalaxyDraw {
 		~OpenGL_TextureArray();
 
 		// Inherited via TextureArray
-		virtual uint32_t AddTexture(const std::string& path) override;
+		virtual int AddTexture(const std::string& path) override;
 
 		virtual void RemoveTexture(const std::string& path) override;
 
 		virtual bool IsTextureLoaded(const std::string& path) override;
 
-		virtual uint32_t GetTextureIndex(const std::string& path) override;
+		virtual int GetTextureIndex(const std::string& path) override;
 
 		virtual uint32_t GetRendererID() const override;
 
@@ -30,6 +30,7 @@ namespace GalaxyDraw {
 
 	private:
 		uint32_t m_RendererID; // The ID of the texture array in GPU memory
+		uint32_t m_MaxTextures = 0;
 		uint32_t m_NumTextures = 0;
 		uint32_t m_NextUsableIndex = 0;
 		KeyedVector <std::string, uint32_t> m_LoadedTextures;

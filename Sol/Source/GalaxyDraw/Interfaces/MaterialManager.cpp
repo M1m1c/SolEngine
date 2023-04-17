@@ -8,6 +8,7 @@ namespace GalaxyDraw {
 		//TODO this is temporary and needs to be set elsewhere
 		uint32_t maxTextures = 100;
 		m_TextureArray = TextureArray::Create(maxTextures);
+		m_Materials.push_back(std::make_shared<Material>(-1));
 	}
 
 	uint32_t MaterialManager::SetupMaterial(const std::string& texturePath, bool shouldCreateNewMaterial)
@@ -42,10 +43,14 @@ namespace GalaxyDraw {
 		else
 		{
 			//loads the texture and creates a material that uses it.
-			uint32_t texIndex = CreateNewTexture(texturePath);
-			materialIndex = CreateNewMaterial(texIndex);
-			s.m_TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
-			s.m_TextureIndexToTexturePathMap.insert(std::make_pair(texIndex, texturePath));
+			int texIndex = CreateNewTexture(texturePath);
+
+			if (texIndex != -1) 
+			{
+				materialIndex = CreateNewMaterial(texIndex);
+				s.m_TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
+				s.m_TextureIndexToTexturePathMap.insert(std::make_pair(texIndex, texturePath));
+			}
 
 		}
 
@@ -59,8 +64,10 @@ namespace GalaxyDraw {
 		return s.m_Materials[materialIndex];
 	}
 
-	const std::string MaterialManager::GetTexture(uint32_t textureIndex)
+	const std::string MaterialManager::GetTexturePath(int textureIndex)
 	{
+		if (textureIndex == -1) { return ""; }
+
 		auto& s = MaterialManager::GetInstance();
 		auto it = s.m_TextureIndexToTexturePathMap.find(textureIndex);
 		if (it != s.m_TextureIndexToTexturePathMap.end())
@@ -69,16 +76,16 @@ namespace GalaxyDraw {
 		}
 	}
 
-	uint32_t MaterialManager::CreateNewTexture(const std::string& texturePath)
+	int MaterialManager::CreateNewTexture(const std::string& texturePath)
 	{
 		auto& s = MaterialManager::GetInstance();
 
-		uint32_t textureIndex = s.m_TextureArray->AddTexture(texturePath);
+		int textureIndex = s.m_TextureArray->AddTexture(texturePath);
 
 		return textureIndex;
 	}
 
-	uint32_t MaterialManager::CreateNewMaterial(const uint32_t& textureIndex)
+	uint32_t MaterialManager::CreateNewMaterial(const int& textureIndex)
 	{
 		auto& s = MaterialManager::GetInstance();
 		//TODO we might run into trouble here since the first material index might be 0 if the size is 0
