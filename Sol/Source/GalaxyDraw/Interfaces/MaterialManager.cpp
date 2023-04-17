@@ -65,9 +65,9 @@ namespace GalaxyDraw {
 		return s.m_Materials[materialIndex];
 	}
 
-	const std::string MaterialManager::GetTexturePath(int textureIndex)
+	const std::string MaterialManager::GetTexturePath(uint32_t textureIndex)
 	{
-		if (textureIndex == -1) { return ""; }
+		if (textureIndex == 0) { return ""; }
 
 		auto& s = MaterialManager::GetInstance();
 		auto it = s.m_TextureIndexToTexturePathMap.find(textureIndex);
@@ -86,7 +86,7 @@ namespace GalaxyDraw {
 		return textureIndex;
 	}
 
-	uint32_t MaterialManager::CreateNewMaterial(const int& textureIndex)
+	uint32_t MaterialManager::CreateNewMaterial(const uint32_t& textureIndex)
 	{
 		auto& s = MaterialManager::GetInstance();
 		//TODO we might run into trouble here since the first material index might be 0 if the size is 0
