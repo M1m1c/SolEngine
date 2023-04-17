@@ -39,6 +39,7 @@ namespace GalaxyDraw {
 		int widthImg, heightImg, numColCh;
 		stbi_set_flip_vertically_on_load(true);
 		stbi_uc* data = stbi_load(path.c_str(), &widthImg, &heightImg, &numColCh, 0);
+		//TODO if it can't load the image we should use a missing texutre magenta to show that it is missing
 
 		SOL_CORE_ASSERT(data, "Failed to Load image!");
 
