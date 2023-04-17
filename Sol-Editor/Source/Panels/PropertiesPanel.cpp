@@ -109,7 +109,23 @@ namespace Sol
 			});
 
 		DrawComponent<MaterialComp>("Material", entity, [](MaterialComp& component) {
-			auto& color = component.Color;
+
+			auto& name = component.GetMaterialName();
+
+			char buffer[256];
+			memset(buffer, 0, sizeof(buffer));
+			strcpy_s(buffer, sizeof(buffer), name.c_str());
+
+			ImGui::Columns(2);
+			ImGui::SetColumnWidth(0, 100.f);
+			ImGui::Text("Name");
+			ImGui::NextColumn();
+			if (ImGui::InputText("##MaterialName", buffer, sizeof(buffer))) {
+				name = std::string(buffer);
+			}
+			ImGui::Columns(1);
+
+			auto& color = component.GetMaterialColor();
 			DrawVec4Control("Color", color, 1.f, 0.01f, 0.f, 1.f, { "R","G","B","A" });
 			});
 	}

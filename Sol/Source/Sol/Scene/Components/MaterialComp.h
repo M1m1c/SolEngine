@@ -41,6 +41,13 @@ namespace Sol
 			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
 			return mat->TextureIndex;
 		}
+
+		std::string& GetMaterialName()
+		{
+			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
+			return mat->Name;
+		}
+
 		//TODO add set material function that checks with material manager if the material index is valid
 		//TODO add CreateNewMaterialInstance function that asks material manager to create a new material and set it to this
 	private:

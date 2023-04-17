@@ -31,7 +31,7 @@ namespace GalaxyDraw
 	private:
 		MaterialManager();
 		static int CreateNewTexture(const std::string& texturePath);
-		static uint32_t CreateNewMaterial(const uint32_t& textureIndex);
+		static uint32_t CreateNewMaterial(const uint32_t& textureIndex, std::string matName ="");
 	private:
 		std::vector <std::shared_ptr<Material>> m_Materials;
 		//TODO instead of this holding loaded textures it will hold a texture array which we can access the loaded textures from

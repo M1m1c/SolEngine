@@ -17,7 +17,7 @@ namespace GalaxyDraw {
 
 		int texIndex = s.m_TextureArray->GetDefaultTextureIndex();
 
-		uint32_t materialIndex = CreateNewMaterial(texIndex);
+		uint32_t materialIndex = CreateNewMaterial(texIndex,"DefaultMaterial");
 		s.m_TextureToMaterialsMap.insert(std::make_pair("", std::vector<uint32_t>({ materialIndex })));
 		s.m_TextureIndexToTexturePathMap.insert(std::make_pair(texIndex, ""));
 		s.m_DefaultMaterialIndex = materialIndex;
@@ -104,12 +104,13 @@ namespace GalaxyDraw {
 		return textureIndex;
 	}
 
-	uint32_t MaterialManager::CreateNewMaterial(const uint32_t& textureIndex)
+	uint32_t MaterialManager::CreateNewMaterial(const uint32_t& textureIndex, std::string matName)
 	{
+		if (matName == "") { matName = "newMaterial" + std::to_string(textureIndex); }
 		auto& s = MaterialManager::GetInstance();
 		//TODO we might run into trouble here since the first material index might be 0 if the size is 0
 		uint32_t materialIndex = s.m_Materials.size();
-		auto mat = std::make_shared<Material>(textureIndex);
+		auto mat = std::make_shared<Material>(textureIndex, matName);
 		s.m_Materials.push_back(mat);
 
 		return materialIndex;
