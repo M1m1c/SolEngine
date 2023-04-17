@@ -140,6 +140,11 @@ namespace GalaxyDraw
 				//for (uint32_t i = 0; i < s_3DData.TextureSlotIndex; i++)
 				//	s_3DData.TextureSlots[i]->Bind(i);
 
+				//TODO bind the texture array and set the sampler2dArray to use it, 
+				// look at example layer in sandbox project for info.
+				//shader->Bind();
+				//shader->SetInt("u_Texture", 0);
+
 				meshData.Shader->Bind();
 				RenderCommand::DrawInstanced(meshData.m_VertexArray, meshData.m_Instances.size());
 				s_3DData.Stats.DrawCalls++;
