@@ -10,13 +10,15 @@ namespace Sol
 	//TODO make this use and load textures, also every entity with a ModelComp should probably have a material comp
 	struct MaterialComp
 	{
+		//TODO this should only need to hold a material index, whihc we can then use to read from
 		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
 
-		std::string TexturePath;
+		//std::string TexturePath;
 
 		MaterialComp() = default;
 		MaterialComp(const MaterialComp&) = default;
-		MaterialComp(const std::string& texturePath) : TexturePath(texturePath) {
+		MaterialComp(const std::string& texturePath) 
+		{
 			m_MaterialIndex = GalaxyDraw::IMaterial::Create(texturePath);
 		}
 
@@ -24,7 +26,7 @@ namespace Sol
 		//TODO add set material function that checks with material manager if the material index is valid
 		//TODO add CreateNewMaterialInstance function that asks material manager to create a new material and set it to this
 	private:
-		uint32_t m_MaterialIndex;
+		uint32_t m_MaterialIndex = 0;
 
 	};
 }
