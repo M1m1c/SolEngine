@@ -68,7 +68,7 @@ namespace GalaxyDraw
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 
 		auto& matManager = MaterialManager::GetInstance();
-		matManager.Initialize(1,1,100, 0);
+		matManager.Initialize(10,0);
 	}
 
 	void Renderer3D::Shutdown()

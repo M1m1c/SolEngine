@@ -10,10 +10,10 @@ namespace GalaxyDraw {
 		m_DefaultMaterialIndex = 0;
 	}
 
-	void MaterialManager::Initialize(uint32_t width, uint32_t height,uint32_t maxTextures, uint32_t texureUnit)
+	void MaterialManager::Initialize(uint32_t widthHeight, uint32_t textureUnit)
 	{
 		auto& s = MaterialManager::GetInstance();
-		s.m_TextureArray = TextureArray::Create(width,height,maxTextures, texureUnit);
+		s.m_TextureArray = TextureArray::Create(widthHeight, textureUnit);
 
 		int texIndex = s.m_TextureArray->GetDefaultTextureIndex();
 

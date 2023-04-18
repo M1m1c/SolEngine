@@ -4,15 +4,24 @@
 #include <stb_image.h>
 
 namespace GalaxyDraw {
-	OpenGL_TextureArray::OpenGL_TextureArray(uint32_t width, uint32_t height,uint32_t maxTextures, uint32_t textureUnit) 
-		: m_Width(width), m_Height(height), m_MaxTextures(maxTextures), m_TextureUnit(textureUnit)
+	OpenGL_TextureArray::OpenGL_TextureArray(uint32_t widthHeight, uint32_t textureUnit)
+		: m_Width(widthHeight), m_Height(widthHeight), m_TextureUnit(textureUnit)
 	{
+
+
+		GLint maxArrayTextureLayers;
+		GLint maxTextureSize;
+		glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS, &maxArrayTextureLayers);
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+
+		m_MaxTextures = std::min((uint32_t)maxArrayTextureLayers, maxTextureSize / widthHeight);
+
 		glGenTextures(1, &m_RendererID);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
 		glBindTextureUnit(m_TextureUnit, m_RendererID);
 
 		// Allocate storage for the texture array
-		glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, width, height, maxTextures);
+		glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, m_Width, m_Height, m_MaxTextures);
 
 		// Set texture parameters
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -21,6 +30,9 @@ namespace GalaxyDraw {
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+
+
 
 		m_defaultTextureIndex = CreateDefaultTexture();
 	}
@@ -32,10 +44,10 @@ namespace GalaxyDraw {
 
 	int OpenGL_TextureArray::AddTexture(const std::string& path)
 	{
-		if (m_NumTextures + 1 > m_MaxTextures) 
+		if (m_NumTextures + 1 > m_MaxTextures)
 		{
 			SOL_CORE_ASSERT(false, "Out of range! Attempting to add more textures than provided maximum. Increase amount allowed when constructing TexureArray.");
-			return -1; 
+			return -1;
 		}
 
 		int widthImg, heightImg, numColCh;
@@ -72,8 +84,8 @@ namespace GalaxyDraw {
 
 	uint32_t OpenGL_TextureArray::CreateDefaultTexture()
 	{
-		
-		bool reUsedIndex = false;
+
+
 		uint32_t textureIndex = 0;
 
 		// Create a white texture of the specified size
@@ -82,8 +94,7 @@ namespace GalaxyDraw {
 		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, textureIndex, m_Width, m_Height, 1, GL_RGBA, GL_UNSIGNED_BYTE, whitePixel);
 
 		m_NumTextures++;
-
-		if (!reUsedIndex) { m_NextUsableIndex = m_NumTextures; }
+		m_NextUsableIndex = m_NumTextures;
 
 		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
@@ -108,7 +119,7 @@ namespace GalaxyDraw {
 
 	void OpenGL_TextureArray::RemoveTexture(const std::string& filePath)
 	{
-		
+
 		if (IsTextureLoaded(filePath))
 		{
 			uint32_t textureIndex = m_LoadedTextures.Get(filePath);

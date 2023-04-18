@@ -8,7 +8,7 @@ namespace GalaxyDraw {
 	class OpenGL_TextureArray : public TextureArray
 	{
 	public:
-		OpenGL_TextureArray(uint32_t width, uint32_t height, uint32_t maxTextures, uint32_t textureUnit);
+		OpenGL_TextureArray(uint32_t widthHeight, uint32_t textureUnit);
 		~OpenGL_TextureArray();
 
 		// Inherited via TextureArray
