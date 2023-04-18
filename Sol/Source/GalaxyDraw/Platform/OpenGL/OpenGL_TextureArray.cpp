@@ -4,15 +4,15 @@
 #include <stb_image.h>
 
 namespace GalaxyDraw {
-	OpenGL_TextureArray::OpenGL_TextureArray(uint32_t maxTextures, uint32_t textureUnit) 
-		: m_MaxTextures(maxTextures), m_TextureUnit(textureUnit)
+	OpenGL_TextureArray::OpenGL_TextureArray(uint32_t width, uint32_t height,uint32_t maxTextures, uint32_t textureUnit) 
+		: m_Width(width), m_Height(height), m_MaxTextures(maxTextures), m_TextureUnit(textureUnit)
 	{
 		glGenTextures(1, &m_RendererID);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
 		glBindTextureUnit(m_TextureUnit, m_RendererID);
 
 		// Allocate storage for the texture array
-		glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, 2, 2, maxTextures);
+		glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, width, height, maxTextures);
 
 		// Set texture parameters
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -20,9 +20,9 @@ namespace GalaxyDraw {
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
-		m_defaultTextureIndex = CreateDefaultTexture(2, 2);
+		m_defaultTextureIndex = CreateDefaultTexture();
 	}
 
 	OpenGL_TextureArray::~OpenGL_TextureArray()
@@ -65,12 +65,12 @@ namespace GalaxyDraw {
 		stbi_image_free(data);
 
 		// Unbind the texture array
-		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 		return textureIndex;
 	}
 
-	uint32_t OpenGL_TextureArray::CreateDefaultTexture(uint32_t width, uint32_t height)
+	uint32_t OpenGL_TextureArray::CreateDefaultTexture()
 	{
 		
 		bool reUsedIndex = false;
@@ -79,7 +79,7 @@ namespace GalaxyDraw {
 		// Create a white texture of the specified size
 		uint32_t whiteColor = 0Xffffffff;
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
-		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, textureIndex, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, &whiteColor);
+		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, textureIndex, m_Width, m_Height, 1, GL_RGBA, GL_UNSIGNED_BYTE, &whiteColor);
 
 		m_NumTextures++;
 
@@ -129,7 +129,7 @@ namespace GalaxyDraw {
 			m_NumTextures--;
 
 			// Unbind the texture array
-			//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+			glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 		}
 	}
 
@@ -145,12 +145,12 @@ namespace GalaxyDraw {
 		return m_LoadedTextures.Get(path);
 	}
 
+	//TODO do we actually need to do any of this?
 	void OpenGL_TextureArray::Bind() const
 	{
-		//
-		glActiveTexture(GL_TEXTURE0 + m_TextureUnit);
-		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
-		glBindTextureUnit(m_TextureUnit, m_RendererID);
+		//glActiveTexture(m_TextureUnit);
+		//glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
+		//glBindTextureUnit(m_TextureUnit, m_RendererID);
 		/*glActiveTexture(textureUnit);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);*/
 	}

@@ -6,7 +6,7 @@
 
 
 namespace GalaxyDraw {
-	Sol::s_ptr<TextureArray> TextureArray::Create(uint32_t maxTextures, uint32_t texureUnit)
+	Sol::s_ptr<TextureArray> TextureArray::Create(uint32_t width, uint32_t height, uint32_t maxTextures, uint32_t texureUnit)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -14,7 +14,7 @@ namespace GalaxyDraw {
 			SOL_CORE_ASSERT(false, "RendererAPI::None is not supported!");
 			return nullptr;
 
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_TextureArray>(maxTextures, texureUnit);
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGL_TextureArray>(width,height,maxTextures, texureUnit);
 		}
 		SOL_CORE_ASSERT(false, "Unknown RendererAPI!");
 		return nullptr;

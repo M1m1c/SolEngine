@@ -8,7 +8,7 @@ namespace GalaxyDraw {
 	class OpenGL_TextureArray : public TextureArray
 	{
 	public:
-		OpenGL_TextureArray(uint32_t maxTextures, uint32_t textureUnit);
+		OpenGL_TextureArray(uint32_t width, uint32_t height, uint32_t maxTextures, uint32_t textureUnit);
 		~OpenGL_TextureArray();
 
 		// Inherited via TextureArray
@@ -31,7 +31,7 @@ namespace GalaxyDraw {
 
 		virtual bool operator==(const TextureArray& other) const override;
 	private:
-		uint32_t CreateDefaultTexture(uint32_t width, uint32_t height);
+		uint32_t CreateDefaultTexture();
 
 		uint32_t GetAvailableTextureIndex(bool& reUsedIndex);
 
@@ -42,6 +42,9 @@ namespace GalaxyDraw {
 		uint32_t m_NumTextures = 0;
 		uint32_t m_NextUsableIndex = 0;
 		uint32_t m_defaultTextureIndex=0;
+
+		uint32_t m_Width=0;
+		uint32_t m_Height=0;
 
 		KeyedVector <std::string, uint32_t> m_LoadedTextures;
 		//TODO this queue is to be used for reusing indices of freed textures, 

@@ -68,7 +68,7 @@ namespace GalaxyDraw
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 
 		auto& matManager = MaterialManager::GetInstance();
-		matManager.Initialize(100, 0);
+		matManager.Initialize(2,2,100, 0);
 	}
 
 	void Renderer3D::Shutdown()
@@ -126,11 +126,11 @@ namespace GalaxyDraw
 	void Renderer3D::Flush()
 	{
 		auto uniqueMeshCount = s_3DData.MeshDataCollections.size();
-			auto& matManager = MaterialManager::GetInstance();
-		if (uniqueMeshCount > 0)
+		auto& matManager = MaterialManager::GetInstance();
+		/*if (uniqueMeshCount > 0)
 		{
 			matManager.BindTextureArray();
-		}
+		}*/
 
 		for (size_t i = 0; i < uniqueMeshCount; i++)
 		{
