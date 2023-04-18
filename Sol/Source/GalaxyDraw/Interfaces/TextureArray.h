@@ -8,7 +8,7 @@ namespace GalaxyDraw {
 	class TextureArray
 	{
 	public:
-		static Sol::s_ptr<TextureArray> Create(uint32_t maxTextures);
+		static Sol::s_ptr<TextureArray> Create(uint32_t maxTextures, uint32_t texureUnit);
 		virtual ~TextureArray() = default;
 		virtual int AddTexture(const std::string& path) = 0;
 		virtual void RemoveTexture(const std::string& path) = 0;
@@ -16,10 +16,11 @@ namespace GalaxyDraw {
 		virtual int GetTextureIndex(const std::string& path) = 0;
 		virtual uint32_t GetDefaultTextureIndex() = 0;
 		virtual uint32_t GetRendererID() const = 0;
+		virtual uint32_t GetTextureUnit() const = 0;
 
 		virtual uint32_t Size() const = 0;
 		//virtual void SetData(void* data, uint32_t size) = 0;
-		virtual void Bind(uint32_t textureUnit = 0) const = 0;
+		virtual void Bind() const = 0;
 
 		virtual bool operator==(const TextureArray& other) const = 0;
 
