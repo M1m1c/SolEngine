@@ -12,12 +12,15 @@ namespace GalaxyDraw
 	static class MaterialManager
 	{
 	public:
-		static void Initialize(uint32_t maxTextures = 100);
+		static void Initialize(uint32_t width=2, uint32_t height=2,uint32_t maxTextures = 100, uint32_t textureUnit = 0);
 		static uint32_t SetupMaterial(const std::string& texturePath, bool shouldCreateNewMaterial = false);
 		static uint32_t GetDefaultMaterial();
 		static std::shared_ptr<Material> GetMaterial(uint32_t materialIndex);
 		static const std::string GetTexturePath(uint32_t textureIndex);
 		static void DiscardMaterial(uint32_t index);
+
+		static void BindTextureArray();
+		static uint32_t GetTextureUnit();
 
 		static MaterialManager& GetInstance()
 		{

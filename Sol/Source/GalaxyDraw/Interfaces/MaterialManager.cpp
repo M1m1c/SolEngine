@@ -10,10 +10,10 @@ namespace GalaxyDraw {
 		m_DefaultMaterialIndex = 0;
 	}
 
-	void MaterialManager::Initialize(uint32_t maxTextures)
+	void MaterialManager::Initialize(uint32_t width, uint32_t height,uint32_t maxTextures, uint32_t texureUnit)
 	{
 		auto& s = MaterialManager::GetInstance();
-		s.m_TextureArray = TextureArray::Create(maxTextures);
+		s.m_TextureArray = TextureArray::Create(maxTextures, texureUnit);
 
 		int texIndex = s.m_TextureArray->GetDefaultTextureIndex();
 
@@ -93,6 +93,18 @@ namespace GalaxyDraw {
 		{
 			return s.m_TextureIndexToTexturePathMap[textureIndex];
 		}
+	}
+
+	void MaterialManager::BindTextureArray()
+	{
+		auto& s = MaterialManager::GetInstance();
+		s.m_TextureArray->Bind();
+	}
+
+	uint32_t MaterialManager::GetTextureUnit()
+	{
+		auto& s = MaterialManager::GetInstance();	
+		return s.m_TextureArray->GetTextureUnit();
 	}
 
 	int MaterialManager::CreateNewTexture(const std::string& texturePath)
