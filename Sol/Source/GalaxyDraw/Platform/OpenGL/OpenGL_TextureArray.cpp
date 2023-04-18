@@ -4,23 +4,25 @@
 #include <stb_image.h>
 
 namespace GalaxyDraw {
-	OpenGL_TextureArray::OpenGL_TextureArray(uint32_t maxTextures) : m_MaxTextures(maxTextures)
+	OpenGL_TextureArray::OpenGL_TextureArray(uint32_t maxTextures, uint32_t textureUnit) 
+		: m_MaxTextures(maxTextures), m_TextureUnit(textureUnit)
 	{
 		glGenTextures(1, &m_RendererID);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
+		glBindTextureUnit(m_TextureUnit, m_RendererID);
 
 		// Allocate storage for the texture array
-		glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, 0, 0, maxTextures);
+		glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, 2, 2, maxTextures);
 
 		// Set texture parameters
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
-		m_defaultTextureIndex = CreateDefaultTexture(1, 1);
+		m_defaultTextureIndex = CreateDefaultTexture(2, 2);
 	}
 
 	OpenGL_TextureArray::~OpenGL_TextureArray()
@@ -63,7 +65,7 @@ namespace GalaxyDraw {
 		stbi_image_free(data);
 
 		// Unbind the texture array
-		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 		return textureIndex;
 	}
@@ -72,18 +74,18 @@ namespace GalaxyDraw {
 	{
 		
 		bool reUsedIndex = false;
-		uint32_t textureIndex = GetAvailableTextureIndex(reUsedIndex);
+		uint32_t textureIndex = 0;
 
 		// Create a white texture of the specified size
-		unsigned char whitePixel[] = { 255, 255, 255, 255 }; // RGBA
+		uint32_t whiteColor = 0Xffffffff;
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
-		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, textureIndex, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, whitePixel);
+		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, textureIndex, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, &whiteColor);
 
 		m_NumTextures++;
 
 		if (!reUsedIndex) { m_NextUsableIndex = m_NumTextures; }
 
-		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+		//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 		return textureIndex;
 	}
@@ -127,7 +129,7 @@ namespace GalaxyDraw {
 			m_NumTextures--;
 
 			// Unbind the texture array
-			glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+			//glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 		}
 	}
 
@@ -143,9 +145,12 @@ namespace GalaxyDraw {
 		return m_LoadedTextures.Get(path);
 	}
 
-	void OpenGL_TextureArray::Bind(uint32_t textureUnit) const
+	void OpenGL_TextureArray::Bind() const
 	{
-		glBindTextureUnit(textureUnit, m_RendererID);
+		//
+		glActiveTexture(GL_TEXTURE0 + m_TextureUnit);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
+		glBindTextureUnit(m_TextureUnit, m_RendererID);
 		/*glActiveTexture(textureUnit);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);*/
 	}

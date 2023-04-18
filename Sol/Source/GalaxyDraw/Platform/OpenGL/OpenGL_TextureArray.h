@@ -8,7 +8,7 @@ namespace GalaxyDraw {
 	class OpenGL_TextureArray : public TextureArray
 	{
 	public:
-		OpenGL_TextureArray(uint32_t maxTextures);
+		OpenGL_TextureArray(uint32_t maxTextures, uint32_t textureUnit);
 		~OpenGL_TextureArray();
 
 		// Inherited via TextureArray
@@ -23,10 +23,11 @@ namespace GalaxyDraw {
 		virtual uint32_t GetDefaultTextureIndex() override { return m_defaultTextureIndex; }
 
 		virtual uint32_t GetRendererID() const override { return m_RendererID; }
+		virtual uint32_t GetTextureUnit() const override { return m_TextureUnit; }
 
 		virtual uint32_t Size() const override { return m_NumTextures; }
 
-		virtual void Bind(uint32_t textureUnit = 0) const override;
+		virtual void Bind() const override;
 
 		virtual bool operator==(const TextureArray& other) const override;
 	private:
@@ -36,6 +37,7 @@ namespace GalaxyDraw {
 
 	private:
 		uint32_t m_RendererID; // The ID of the texture array in GPU memory
+		uint32_t m_TextureUnit = 0;
 		uint32_t m_MaxTextures = 0;
 		uint32_t m_NumTextures = 0;
 		uint32_t m_NextUsableIndex = 0;
