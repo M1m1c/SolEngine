@@ -77,9 +77,9 @@ namespace GalaxyDraw {
 		uint32_t textureIndex = 0;
 
 		// Create a white texture of the specified size
-		uint32_t whiteColor = 0Xffffffff;
+		unsigned char whitePixel[] = { 255, 255, 255, 255 };
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
-		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, textureIndex, m_Width, m_Height, 1, GL_RGBA, GL_UNSIGNED_BYTE, &whiteColor);
+		glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, textureIndex, m_Width, m_Height, 1, GL_RGBA, GL_UNSIGNED_BYTE, whitePixel);
 
 		m_NumTextures++;
 
