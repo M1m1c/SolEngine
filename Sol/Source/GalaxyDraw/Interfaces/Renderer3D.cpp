@@ -37,6 +37,13 @@ namespace GalaxyDraw
 		InstanceData* InstanceBufferPtr = nullptr;
 	};
 
+
+	//TODO we should restructure how we do our instanced rendering.
+	// Currently each unique mesh determines teh amount od draw calls.
+	// each unique mesh also holds onto an instance of the shader.
+	// What we instead would want to do is have Materials hold onto shaders and a collection of MeshRenderData.
+	// this way we would have an easier time of rebinding textures before the drawcall is issued,
+	// additionally drawcalls would be dependent on unique materials then unique meshes.
 	struct Renderer3DData
 	{
 		static const uint32_t MaxMeshes = 2000;
@@ -68,7 +75,7 @@ namespace GalaxyDraw
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 
 		auto& matManager = MaterialManager::GetInstance();
-		matManager.Initialize(10,0);
+		matManager.Initialize(1,0);
 	}
 
 	void Renderer3D::Shutdown()

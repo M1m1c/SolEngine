@@ -31,9 +31,6 @@ namespace GalaxyDraw {
 
 		glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
-
-
-
 		m_defaultTextureIndex = CreateDefaultTexture();
 	}
 
@@ -159,8 +156,8 @@ namespace GalaxyDraw {
 	//TODO do we actually need to do any of this?
 	void OpenGL_TextureArray::Bind() const
 	{
-		//glActiveTexture(m_TextureUnit);
-		//glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
+		glActiveTexture(m_TextureUnit);
+		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);
 		//glBindTextureUnit(m_TextureUnit, m_RendererID);
 		/*glActiveTexture(textureUnit);
 		glBindTexture(GL_TEXTURE_2D_ARRAY, m_RendererID);*/
