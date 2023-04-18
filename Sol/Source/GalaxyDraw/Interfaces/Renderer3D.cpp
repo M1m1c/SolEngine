@@ -43,7 +43,7 @@ namespace GalaxyDraw
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
 		KeyedVector<std::string, MeshRenderData> MeshDataCollections;
-		std::shared_ptr<Texture2D> MissingTexture;
+		//std::shared_ptr<Texture2D> MissingTexture;
 
 		Renderer3D::Statistics Stats;
 
@@ -61,14 +61,14 @@ namespace GalaxyDraw
 	{
 		SOL_PROFILE_FUNCTION();
 
-		s_3DData.MissingTexture = Texture2D::Create(1, 1);
-		uint32_t missingTextureData = 0xff00ff;
-		s_3DData.MissingTexture->SetData(&missingTextureData, sizeof(uint32_t));
+		/*	s_3DData.MissingTexture = Texture2D::Create(1, 1);
+			uint32_t missingTextureData = 0xff00ff;
+			s_3DData.MissingTexture->SetData(&missingTextureData, sizeof(uint32_t));*/
 
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 
 		auto& matManager = MaterialManager::GetInstance();
-		matManager.Initialize();
+		matManager.Initialize(100, 0);
 	}
 
 	void Renderer3D::Shutdown()
@@ -125,8 +125,17 @@ namespace GalaxyDraw
 	//each unique mesh results in a new draw call.
 	void Renderer3D::Flush()
 	{
-		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
+		auto uniqueMeshCount = s_3DData.MeshDataCollections.size();
+			auto& matManager = MaterialManager::GetInstance();
+		if (uniqueMeshCount > 0)
 		{
+			matManager.BindTextureArray();
+		}
+
+		for (size_t i = 0; i < uniqueMeshCount; i++)
+		{
+
+
 			auto& meshData = s_3DData.MeshDataCollections[i];
 			if (meshData.m_Instances.size() > 0)
 			{
@@ -136,16 +145,9 @@ namespace GalaxyDraw
 				uint32_t instanceDataSize = (uint32_t)((uint8_t*)meshData.InstanceBufferPtr - (uint8_t*)meshData.InstanceBufferBase);
 				meshData.m_InstanceBuffer->SetData(meshData.InstanceBufferBase, instanceDataSize);
 
-				//// Bind textures
-				//for (uint32_t i = 0; i < s_3DData.TextureSlotIndex; i++)
-				//	s_3DData.TextureSlots[i]->Bind(i);
-
-				//TODO bind the texture array and set the sampler2dArray to use it, 
-				// look at example layer in sandbox project for info.
-				//shader->Bind();
-				//shader->SetInt("u_Texture", 0);
-
 				meshData.Shader->Bind();
+				meshData.Shader->SetInt("u_Textures", matManager.GetTextureUnit());
+
 				RenderCommand::DrawInstanced(meshData.m_VertexArray, meshData.m_Instances.size());
 				s_3DData.Stats.DrawCalls++;
 			}
@@ -298,8 +300,8 @@ namespace GalaxyDraw
 		{
 			auto name = meshes[i]->Name + "_" + modelName;
 
-			
-			
+
+
 			if (s_3DData.MeshDataCollections.Exists(name))
 			{
 				auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
@@ -315,7 +317,7 @@ namespace GalaxyDraw
 				if (meshRenderData.m_Instances.size() == 0)
 				{
 					//TODO figure out how to dealocate the loaded mesh
-					
+
 					delete[] meshRenderData.VertexBufferBase;
 					delete[] meshRenderData.InstanceBufferBase;
 					s_3DData.MeshDataCollections.eraseWithKey(name);
