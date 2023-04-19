@@ -7,7 +7,8 @@
 #include "UniformBuffer.h"
 #include "RenderCommand.h"
 #include "MaterialManager.h"
-#include "Sol/Core/KeyedVector.h"
+//#include "Sol/Core/KeyedVector.h"
+#include "TextureManager.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -89,6 +90,10 @@ namespace GalaxyDraw
 
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 
+		/*auto& texManager = TextureManager::GetInstance();
+		texManager.Initialize();*/
+
+		//TODO remove
 		auto& matManager = MaterialManager::GetInstance();
 		matManager.Initialize(1,0);
 	}
