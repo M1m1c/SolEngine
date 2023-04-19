@@ -4,9 +4,10 @@
 #include "Buffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Texture.h"
 #include "UniformBuffer.h"
 #include "RenderCommand.h"
-#include "MaterialManager.h"
+//#include "MaterialManager.h"
 //#include "Sol/Core/KeyedVector.h"
 #include "TextureManager.h"
 
@@ -27,10 +28,10 @@ namespace GalaxyDraw
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
-		std::shared_ptr<Shader> Shader;//TODO remove
+		//std::shared_ptr<Shader> Shader;//TODO remove
 
 		KeyedVector<EntityID, InstanceData> m_Instances;
-		std::vector<EntityID> m_ContainedEntityIds;
+		//std::vector<EntityID> m_ContainedEntityIds;
 
 		Vertex* VertexBufferBase = nullptr;
 		Vertex* VertexBufferPtr = nullptr;
@@ -43,7 +44,8 @@ namespace GalaxyDraw
 	{
 		std::string Name;
 		KeyedVector<std::string, MeshRenderData> MeshDataCollections;
-		std::shared_ptr<Texture> m_DiffuseTexture;
+		std::vector<EntityID> EntitiesUsingMat;
+		std::string DiffuseTexturePath;
 		std::shared_ptr<Shader> Shader;
 	};
 
@@ -64,9 +66,9 @@ namespace GalaxyDraw
 		static const uint32_t MaxMeshes = 2000;
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
-		KeyedVector<std::string, MeshRenderData> MeshDataCollections;
+		//KeyedVector<std::string, MeshRenderData> MeshDataCollections;
 		//std::shared_ptr<Texture2D> MissingTexture;
-		KeyedVector<uint32_t, MaterialData> MaterialDataCollections;
+		std::vector<MaterialData> MaterialDataCollections;
 
 		Renderer3D::Statistics Stats;
 
@@ -90,21 +92,34 @@ namespace GalaxyDraw
 
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 
-		/*auto& texManager = TextureManager::GetInstance();
+	/*	auto& texManager = TextureManager::GetInstance();
 		texManager.Initialize();*/
 
+		MaterialData defaultMat;
+		defaultMat.Name = "Default";
+		defaultMat.Shader = Shader::Create("cube.vert", "cube.frag", "Default");
+		defaultMat.DiffuseTexturePath = "";
+		s_3DData.MaterialDataCollections.push_back(defaultMat);
+
 		//TODO remove
-		auto& matManager = MaterialManager::GetInstance();
-		matManager.Initialize(1,0);
+	/*	auto& matManager = MaterialManager::GetInstance();
+		matManager.Initialize(1, 0);*/
 	}
 
 	void Renderer3D::Shutdown()
 	{
 		SOL_PROFILE_FUNCTION();
-		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
+
+		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
-			delete[] s_3DData.MeshDataCollections[i].VertexBufferBase;
-			delete[] s_3DData.MeshDataCollections[i].InstanceBufferBase;
+			auto uniqueMeshCount = matData.MeshDataCollections.size();
+			auto& meshDataCollections = matData.MeshDataCollections;
+
+			for (size_t i = 0; i < uniqueMeshCount; i++)
+			{
+				delete[] meshDataCollections[i].VertexBufferBase;
+				delete[] meshDataCollections[i].InstanceBufferBase;
+			}
 		}
 	}
 
@@ -138,54 +153,67 @@ namespace GalaxyDraw
 	//Resets the buffer pointers for each mesh data entry
 	void Renderer3D::Submit()
 	{
-		for (size_t i = 0; i < s_3DData.MeshDataCollections.size(); i++)
+		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
-			auto& meshData = s_3DData.MeshDataCollections[i];
+			auto uniqueMeshCount = matData.MeshDataCollections.size();
+			auto& meshDataCollections = matData.MeshDataCollections;
 
-			meshData.VertexBufferPtr = meshData.VertexBufferBase;
-			meshData.InstanceBufferPtr = meshData.InstanceBufferBase;
-			//s_3DData.TextureSlotIndex = 1;
+			for (size_t i = 0; i < uniqueMeshCount; i++)
+			{
+				auto& meshData = meshDataCollections[i];
+
+				meshData.VertexBufferPtr = meshData.VertexBufferBase;
+				meshData.InstanceBufferPtr = meshData.InstanceBufferBase;
+				//s_3DData.TextureSlotIndex = 1;
+			}
 		}
+		
 	}
 
 	//sets buffer data and calls draw instanced.
 	//each unique mesh results in a new draw call.
 	void Renderer3D::Flush()
 	{
-		auto uniqueMeshCount = s_3DData.MeshDataCollections.size();
-		auto& matManager = MaterialManager::GetInstance();
-		/*if (uniqueMeshCount > 0)
+
+		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
-			matManager.BindTextureArray();
-		}*/
-
-
-		//TODO ok so here is where we need to iterate over materials instead, and then over unique meshes that use thos materials
-		for (size_t i = 0; i < uniqueMeshCount; i++)
-		{
-
-
-			auto& meshData = s_3DData.MeshDataCollections[i];
-			if (meshData.m_Instances.size() > 0)
+			auto uniqueMeshCount = matData.MeshDataCollections.size();
+			//auto& matManager = MaterialManager::GetInstance();
+			/*if (uniqueMeshCount > 0)
 			{
-				uint32_t dataSize = (uint32_t)((uint8_t*)meshData.VertexBufferPtr - (uint8_t*)meshData.VertexBufferBase);
-				meshData.m_VertexBuffer->SetData(meshData.VertexBufferBase, dataSize);
+				matManager.BindTextureArray();
+			}*/
 
-				uint32_t instanceDataSize = (uint32_t)((uint8_t*)meshData.InstanceBufferPtr - (uint8_t*)meshData.InstanceBufferBase);
-				meshData.m_InstanceBuffer->SetData(meshData.InstanceBufferBase, instanceDataSize);
 
-				meshData.Shader->Bind();
-				meshData.Shader->SetInt("u_Textures", matManager.GetTextureUnit());
+			//TODO ok so here is where we need to iterate over materials instead, and then over unique meshes that use thos materials
+			for (size_t i = 0; i < uniqueMeshCount; i++)
+			{
 
-				RenderCommand::DrawInstanced(meshData.m_VertexArray, meshData.m_Instances.size());
-				s_3DData.Stats.DrawCalls++;
+
+				auto& meshData = matData.MeshDataCollections[i];
+				if (meshData.m_Instances.size() > 0)
+				{
+					uint32_t dataSize = (uint32_t)((uint8_t*)meshData.VertexBufferPtr - (uint8_t*)meshData.VertexBufferBase);
+					meshData.m_VertexBuffer->SetData(meshData.VertexBufferBase, dataSize);
+
+					uint32_t instanceDataSize = (uint32_t)((uint8_t*)meshData.InstanceBufferPtr - (uint8_t*)meshData.InstanceBufferBase);
+					meshData.m_InstanceBuffer->SetData(meshData.InstanceBufferBase, instanceDataSize);
+
+					matData.Shader->Bind();
+					//TODO set textures here
+					//matData.Shader->SetInt("u_Textures", matManager.GetTextureUnit());
+
+					RenderCommand::DrawInstanced(meshData.m_VertexArray, meshData.m_Instances.size());
+					s_3DData.Stats.DrawCalls++;
+				}
 			}
 		}
+		
 	}
 
 	//Loads all sub meshes of a model
 	//When we create a model on a modelComp using Model::Create() this also gets called.
-	void Renderer3D::LoadModel(std::shared_ptr<IModel> model, EntityID entityID)
+	void Renderer3D::LoadModel(std::shared_ptr<IModel> model, EntityID entityID, uint32_t materialIndex)
 	{
 		SOL_PROFILE_FUNCTION();
 		auto& meshes = model->GetMeshes();
@@ -193,21 +221,31 @@ namespace GalaxyDraw
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
 			LoadMesh(meshes[i], model->GetName(), entityID);
+
+			auto& matData = s_3DData.MaterialDataCollections[materialIndex];
+			//TODO don't forget to erase it when the entity no longer exists
+			matData.EntitiesUsingMat.push_back(entityID);
 		}
 	}
 
 	//Sets up the mesh data for the mesh, buffers and vertex array.
 	//Duplicate meshes get added to already exisisting mesh data.
-	void Renderer3D::LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID)
+	void Renderer3D::LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID, uint32_t materialIndex)
 	{
 		SOL_PROFILE_FUNCTION();
-		auto name = mesh->Name + "_" + modelName;
 
-		if (s_3DData.MeshDataCollections.Exists(name))
+		auto& matData = s_3DData.MaterialDataCollections[materialIndex];
+		auto& meshDataCollections = matData.MeshDataCollections;
+
+		
+
+		auto name = mesh->Name + "_" + modelName;
+		//TODO check with model manager if mesh exists
+		if (meshDataCollections.Exists(name))
 		{
-			auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
+			auto& meshRenderData = meshDataCollections.Get(name);
 			meshRenderData.m_Instances.push_back(entityID, InstanceData());
-			meshRenderData.m_ContainedEntityIds.push_back(entityID);
+			//meshRenderData.m_ContainedEntityIds.push_back(entityID);
 			return;
 		}
 
@@ -236,7 +274,7 @@ namespace GalaxyDraw
 
 
 		//TODO should use missing texture to color 3d mesh
-		meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
+		//meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
 
 		meshData.m_Instances.push_back(entityID, InstanceData());
 		meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * sizeof(InstanceData));
@@ -250,58 +288,65 @@ namespace GalaxyDraw
 			});
 
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
-		meshData.m_ContainedEntityIds.push_back(entityID);
+		//meshData.m_ContainedEntityIds.push_back(entityID);
 
-		s_3DData.MeshDataCollections.push_back(name, meshData);
+		meshDataCollections.push_back(name, meshData);
 	}
 
 	//Iterates over all mesh data and updates their attributes
 	void Renderer3D::DrawInstances()
 	{
 		SOL_PROFILE_FUNCTION();
-		for (auto& renderData : s_3DData.MeshDataCollections)
+		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
-			SOL_PROFILE_FUNCTION();
+			auto& meshDataCollections = matData.MeshDataCollections;
 
-			auto& mesh = renderData.m_Mesh;
-			uint32_t vertexCount = mesh->Vertices.size();
-
-			for (size_t i = 0; i < vertexCount; i++)
+			for (auto& meshData : meshDataCollections)
 			{
-				auto& vert = mesh->Vertices[i];
-				renderData.VertexBufferPtr->Position = glm::vec4(vert.Position, 0.f);
-				renderData.VertexBufferPtr->Normal = vert.Normal;
-				renderData.VertexBufferPtr->TexCoords = vert.TexCoords;
-				renderData.VertexBufferPtr->Color = glm::vec4(1.f, 1.f, 1.f, 1.f);
-				renderData.VertexBufferPtr++;
+				SOL_PROFILE_FUNCTION();
+
+				auto& mesh = meshData.m_Mesh;
+				uint32_t vertexCount = mesh->Vertices.size();
+
+				for (size_t i = 0; i < vertexCount; i++)
+				{
+					auto& vert = mesh->Vertices[i];
+					meshData.VertexBufferPtr->Position = glm::vec4(vert.Position, 0.f);
+					meshData.VertexBufferPtr->Normal = vert.Normal;
+					meshData.VertexBufferPtr->TexCoords = vert.TexCoords;
+					meshData.VertexBufferPtr->Color = glm::vec4(1.f, 1.f, 1.f, 1.f);
+					meshData.VertexBufferPtr++;
+				}
+
+				for (auto& id : matData.EntitiesUsingMat)
+				{
+					auto& instanceData = meshData.m_Instances.Get(id);
+
+					meshData.InstanceBufferPtr->m_EntityID = (int)id;
+					meshData.InstanceBufferPtr->m_MeshColor = instanceData.m_MeshColor;
+					meshData.InstanceBufferPtr->m_EntityTransform = instanceData.m_EntityTransform;
+					meshData.InstanceBufferPtr->m_MeshTransform = instanceData.m_MeshTransform;
+					meshData.InstanceBufferPtr++;
+				}
+
+				//Mesh count needs to be reset
+				//s_3DData.Stats.MeshCount++;
 			}
-
-			for (auto& id : renderData.m_ContainedEntityIds)
-			{
-				auto& instanceData = renderData.m_Instances.Get(id);
-
-				renderData.InstanceBufferPtr->m_EntityID = (int)id;
-				renderData.InstanceBufferPtr->m_MeshColor = instanceData.m_MeshColor;
-				renderData.InstanceBufferPtr->m_EntityTransform = instanceData.m_EntityTransform;
-				renderData.InstanceBufferPtr->m_MeshTransform = instanceData.m_MeshTransform;
-				renderData.InstanceBufferPtr++;
-			}
-
-			//Mesh count needs to be reset
-			//s_3DData.Stats.MeshCount++;
 		}
+
 
 	}
 
 	//Updates instance specific data, based on entity components in scene.
 	void Renderer3D::UpdateInstanceData(EntityID entityID, const InstanceData& instanceData)
 	{
-		for (auto& collection : s_3DData.MeshDataCollections)
+		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
-			if (collection.m_Instances.size() == 0) { continue; }
+
+			if (matData.EntitiesUsingMat.size() == 0) { continue; }
 
 			bool containsEntityId = false;
-			for (auto id : collection.m_ContainedEntityIds)
+			for (auto id : matData.EntitiesUsingMat)
 			{
 				if (id == entityID)
 				{
@@ -311,11 +356,30 @@ namespace GalaxyDraw
 			}
 
 			if (!containsEntityId) { continue; }
-			auto& collectionData = collection.m_Instances.Get(entityID);
-			collectionData = instanceData;
-			//TODO fix so we can adjust the meshtransform per instance
-			collectionData.m_MeshTransform = collection.m_Mesh->MeshTransform;
+
+			for (auto& meshData : matData.MeshDataCollections)
+			{
+				if (meshData.m_Instances.size() == 0) { continue; }
+
+				/*bool containsEntityId = false;
+				for (auto id : collection.m_ContainedEntityIds)
+				{
+					if (id == entityID)
+					{
+						containsEntityId = true;
+						break;
+					}
+				}
+
+				if (!containsEntityId) { continue; }*/
+				auto& collectionInstanceData = meshData.m_Instances.Get(entityID);
+				collectionInstanceData = instanceData;
+				//TODO fix so we can adjust the meshtransform per instance
+				collectionInstanceData.m_MeshTransform = meshData.m_Mesh->MeshTransform;
+			}
 		}
+
+		
 	}
 
 	//Removes all the model's mesh instances tied to the entityID from the MeshDataCollections
@@ -325,34 +389,58 @@ namespace GalaxyDraw
 
 		auto& meshes = model->GetMeshes();
 
-		for (size_t i = 0; i < meshes.size(); i++)
+		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
-			auto name = meshes[i]->Name + "_" + modelName;
 
+			if (matData.EntitiesUsingMat.size() == 0) { continue; }
 
+			auto& entitiesUsingMat = matData.EntitiesUsingMat;
 
-			if (s_3DData.MeshDataCollections.Exists(name))
+			bool containsEntityId = false;
+			for (auto id : entitiesUsingMat)
 			{
-				auto& meshRenderData = s_3DData.MeshDataCollections.Get(name);
-				meshRenderData.m_Instances.eraseWithKey(entityID);
-
-				auto iterator = std::find(meshRenderData.m_ContainedEntityIds.begin(), meshRenderData.m_ContainedEntityIds.end(), entityID);
-				if (iterator != meshRenderData.m_ContainedEntityIds.end())
+				if (id == entityID)
 				{
-					meshRenderData.m_ContainedEntityIds.erase(iterator);
-				}
-
-				//TODO if there are no more instances in the mesh render data then unload the mesh and delete mesh render data
-				if (meshRenderData.m_Instances.size() == 0)
-				{
-					//TODO figure out how to dealocate the loaded mesh
-
-					delete[] meshRenderData.VertexBufferBase;
-					delete[] meshRenderData.InstanceBufferBase;
-					s_3DData.MeshDataCollections.eraseWithKey(name);
+					containsEntityId = true;
+					break;
 				}
 			}
+
+			if (!containsEntityId) { continue; }
+
+			auto iterator = std::find(entitiesUsingMat.begin(), entitiesUsingMat.end(), entityID);
+			if (iterator != entitiesUsingMat.end())
+			{
+				entitiesUsingMat.erase(iterator);
+			}
+
+			auto& meshDataCollection = matData.MeshDataCollections;
+			for (size_t i = 0; i < meshes.size(); i++)
+			{
+				auto name = meshes[i]->Name + "_" + modelName;
+
+				if (meshDataCollection.Exists(name))
+				{
+					auto& meshRenderData = meshDataCollection.Get(name);
+					meshRenderData.m_Instances.eraseWithKey(entityID);
+
+					
+					//TODO if there are no more instances in the mesh render data then unload the mesh and delete mesh render data
+					if (meshRenderData.m_Instances.size() == 0)
+					{
+						//TODO figure out how to dealocate the loaded mesh
+
+						delete[] meshRenderData.VertexBufferBase;
+						delete[] meshRenderData.InstanceBufferBase;
+						meshDataCollection.eraseWithKey(name);
+					}
+				}
+			}
+
+			
 		}
+
+		
 	}
 
 	void Renderer3D::ResetStats()

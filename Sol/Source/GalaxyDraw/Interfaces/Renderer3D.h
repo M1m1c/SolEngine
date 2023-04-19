@@ -1,7 +1,6 @@
 #pragma once
 
 #include "OrthoCamera.h"
-#include "Texture.h"
 #include "GalaxyDraw/Camera.h"
 //#include "Hazel/Renderer/EditorCamera.h"
 #include "Sol/Scene/Components.h"
@@ -14,15 +13,15 @@ namespace GalaxyDraw {
 	// otherwise the columns will be missaligned.
 	struct InstanceData
 	{
-		InstanceData():
-			m_EntityID(-1), 
+		InstanceData() :
+			m_EntityID(-1),
 			m_TextureID(-1),
-			m_MeshColor(), 
+			m_MeshColor(),
 			m_EntityTransform(),
 			m_MeshTransform()
-		//	m_MeshPosition(),
+			//	m_MeshPosition(),
 		{};
-		
+
 		int m_EntityID;
 		int m_TextureID;
 		glm::vec4 m_MeshColor;
@@ -45,8 +44,8 @@ namespace GalaxyDraw {
 		//Updates all mesh datacollections instanceData containing entityID
 		static void UpdateInstanceData(EntityID entityID, const InstanceData& instanceData);
 
-		static void LoadModel(std::shared_ptr<IModel> model, EntityID entityID);
-		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID);
+		static void LoadModel(std::shared_ptr<IModel> model, EntityID entityID, uint32_t materialIndex = 0);
+		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID, uint32_t materialIndex = 0);
 
 		//TODO create function for handeling when entity is destroyed, needs to remove it self from relevant MeshRenderData m_ContainedEntityIds.
 		//TODO crate function for unloading a model and mesh.
