@@ -9,12 +9,12 @@ namespace GalaxyDraw
 
 	void TextureManager::Initialize()
 	{
-		auto defualtTexture = Texture2D::Create(1, 1);
-		uint32_t whiteColor = 0Xffffffff;
-		defualtTexture->SetData(&whiteColor, sizeof(uint32_t));
+		auto defaultTexture = Texture2D::Create(1, 1);
+		unsigned char whiteColor[] = { 255, 255, 255, 255 };
+		defaultTexture->SetData(&whiteColor, sizeof(uint32_t));
 
 		auto& s = TextureManager::GetInstance();
-		s.m_LoadedTextures.push_back("", { defualtTexture,1 });
+		s.m_LoadedTextures.push_back("", { defaultTexture,1 });
 	}
 
 	std::shared_ptr<Texture> TextureManager::LoadTexture(const std::string& filePath)
