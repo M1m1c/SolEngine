@@ -1,5 +1,6 @@
 #include "solpch.h"
 #include "TextureManager.h"
+#include "Texture.h"
 
 
 
