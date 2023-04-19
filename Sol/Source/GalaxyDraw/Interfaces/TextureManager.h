@@ -33,7 +33,7 @@ namespace GalaxyDraw
 		static void DiscardTextureInstance(std::string filePath);
 
 	private:
-		TextureManager();
+		TextureManager()=default;
 	private:
 
 		//key is FilePath, <Texture, usingCount>

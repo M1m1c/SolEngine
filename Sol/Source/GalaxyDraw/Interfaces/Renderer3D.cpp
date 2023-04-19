@@ -92,8 +92,8 @@ namespace GalaxyDraw
 
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 
-	/*	auto& texManager = TextureManager::GetInstance();
-		texManager.Initialize();*/
+		auto& texManager = TextureManager::GetInstance();
+		texManager.Initialize();
 
 		MaterialData defaultMat;
 		defaultMat.Name = "Default";
