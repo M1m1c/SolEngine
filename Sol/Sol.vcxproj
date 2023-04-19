@@ -182,6 +182,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Shader.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Texture.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\TextureArray.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\TexureManager.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\VertexArray.h" />
     <ClInclude Include="Source\GalaxyDraw\MeshOld.h" />
