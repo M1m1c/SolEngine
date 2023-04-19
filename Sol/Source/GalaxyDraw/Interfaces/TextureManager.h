@@ -1,8 +1,11 @@
 #pragma once
 #include "GalaxyDraw/Interfaces/Texture.h"
-#include "Sol/Core/KeyedVector.h"
+
 #include <string>
 #include <memory>
+
+#include "Sol/Core/KeyedVector.h"
+
 
 namespace GalaxyDraw 
 {

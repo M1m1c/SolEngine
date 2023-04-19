@@ -1,5 +1,7 @@
 #include "solpch.h"
-#include "TexureManager.h"
+#include "TextureManager.h"
+
+
 
 namespace GalaxyDraw 
 {
