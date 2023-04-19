@@ -26,7 +26,7 @@ namespace GalaxyDraw
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
-		std::shared_ptr<Shader> Shader;
+		std::shared_ptr<Shader> Shader;//TODO remove
 
 		KeyedVector<EntityID, InstanceData> m_Instances;
 		std::vector<EntityID> m_ContainedEntityIds;
@@ -37,6 +37,14 @@ namespace GalaxyDraw
 		InstanceData* InstanceBufferPtr = nullptr;
 	};
 
+
+	struct MaterialData
+	{
+		std::string Name;
+		KeyedVector<std::string, MeshRenderData> MeshDataCollections;
+		std::shared_ptr<Texture> m_DiffuseTexture;
+		std::shared_ptr<Shader> Shader;
+	};
 
 	//TODO we should restructure how we do our instanced rendering.
 	// Currently each unique mesh determines teh amount od draw calls.
@@ -57,6 +65,7 @@ namespace GalaxyDraw
 
 		KeyedVector<std::string, MeshRenderData> MeshDataCollections;
 		//std::shared_ptr<Texture2D> MissingTexture;
+		KeyedVector<uint32_t, MaterialData> MaterialDataCollections;
 
 		Renderer3D::Statistics Stats;
 
