@@ -27,7 +27,7 @@ namespace GalaxyDraw
 		static std::shared_ptr<Texture> LoadTexture(const std::string& filePath);
 		static std::shared_ptr<Texture> GetTexture(std::string filePath);
 		//TODO reduce using count, if there are no more then unload the texture
-		static void DiscardTexture(std::string filePath);
+		static void DiscardTextureInstance(std::string filePath);
 
 	private:
 		TextureManager();

@@ -38,7 +38,7 @@ namespace GalaxyDraw
 		
 	}
 
-	void TextureManager::DiscardTexture(std::string filePath)
+	void TextureManager::DiscardTextureInstance(std::string filePath)
 	{
 		auto& s = TextureManager::GetInstance();
 		if (s.m_LoadedTextures.Exists(filePath))
