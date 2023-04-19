@@ -125,7 +125,7 @@ namespace Sol
 			}
 			ImGui::Columns(1);
 
-			auto& color = component.GetMaterialColor();
+			auto& color = component.Color;
 			DrawVec4Control("Color", color, 1.f, 0.01f, 0.f, 1.f, { "R","G","B","A" });
 			});
 	}

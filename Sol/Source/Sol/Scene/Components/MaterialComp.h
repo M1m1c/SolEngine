@@ -11,7 +11,6 @@ namespace Sol
 	//TODO make this use and load textures, also every entity with a ModelComp should probably have a material comp
 	struct MaterialComp
 	{
-		//TODO remove color variable, we now use the materials color to determine color
 		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f };
 
 		//std::string TexturePath;
@@ -30,11 +29,11 @@ namespace Sol
 
 		uint32_t GetMaterialIndex() { return m_MaterialIndex; }
 
-		glm::vec4& GetMaterialColor() 
+		/*glm::vec4& GetMaterialColor() 
 		{ 
 			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
 			return mat->Color;
-		}
+		}*/
 
 		uint32_t& GetMaterialTextureIndex()
 		{
