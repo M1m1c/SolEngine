@@ -219,11 +219,22 @@ namespace GalaxyDraw
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
-			LoadMesh(meshes[i], model->GetName(), entityID);
 
 			auto& matData = s_3DData.MaterialDataCollections[materialIndex];
 			//TODO don't forget to erase it when the entity no longer exists
-			matData.EntitiesUsingMat.push_back(entityID);
+
+			auto& entitesUsingMat = matData.EntitiesUsingMat;
+
+			auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
+			if (iterator == entitesUsingMat.end())
+			{
+				entitesUsingMat.push_back(entityID);
+			}
+
+			
+			LoadMesh(meshes[i], model->GetName(), entityID);
+
+			
 		}
 	}
 
@@ -319,6 +330,7 @@ namespace GalaxyDraw
 
 				for (auto& id : matData.EntitiesUsingMat)
 				{
+					if (!meshData.m_Instances.Exists(id)) { continue; }
 					auto& instanceData = meshData.m_Instances.Get(id);
 
 					meshData.InstanceBufferPtr->m_EntityID = (int)id;
@@ -359,7 +371,7 @@ namespace GalaxyDraw
 			for (auto& meshData : matData.MeshDataCollections)
 			{
 				if (meshData.m_Instances.size() == 0) { continue; }
-
+				if (!meshData.m_Instances.Exists(entityID)) { continue; }
 				/*bool containsEntityId = false;
 				for (auto id : collection.m_ContainedEntityIds)
 				{
