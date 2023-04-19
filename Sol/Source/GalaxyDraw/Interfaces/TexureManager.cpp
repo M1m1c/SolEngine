@@ -1,7 +1,18 @@
 #include "solpch.h"
 #include "TexureManager.h"
 
-namespace GalaxyDraw {
+namespace GalaxyDraw 
+{
+
+	void TextureManager::Initialize()
+	{
+		auto defualtTexture = Texture2D::Create(1, 1);
+		uint32_t whiteColor = 0Xffffffff;
+		defualtTexture->SetData(&whiteColor, sizeof(uint32_t));
+
+		auto& s = TextureManager::GetInstance();
+		s.m_LoadedTextures.push_back("", { defualtTexture,1 });
+	}
 
 	std::shared_ptr<Texture> TextureManager::LoadTexture(const std::string& filePath)
 	{
@@ -35,7 +46,7 @@ namespace GalaxyDraw {
 			auto& textureInstance = s.m_LoadedTextures.Get(filePath);
 			textureInstance.second--;
 			
-			if (textureInstance.second == 0)
+			if (textureInstance.second == 0 && filePath!="")
 			{
 				//TODO removeclear up that index in m_loaded textures
 				s.m_LoadedTextures.eraseWithKey(filePath);

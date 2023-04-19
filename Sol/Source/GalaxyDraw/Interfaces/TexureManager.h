@@ -13,6 +13,8 @@ namespace GalaxyDraw
 	{
 	public:
 		
+		static void Initialize();
+
 		static TextureManager& GetInstance()
 		{
 			static TextureManager instance;
