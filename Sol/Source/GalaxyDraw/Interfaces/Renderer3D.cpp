@@ -177,13 +177,14 @@ namespace GalaxyDraw
 
 		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
+			if (matData.EntitiesUsingMat.size() == 0) { continue; }
 			auto uniqueMeshCount = matData.MeshDataCollections.size();
-			//auto& matManager = MaterialManager::GetInstance();
-			/*if (uniqueMeshCount > 0)
-			{
-				matManager.BindTextureArray();
-			}*/
+		
+			auto& texManager = TextureManager::GetInstance();
+			texManager.GetTexture(matData.DiffuseTexturePath)->Bind(0);
 
+			matData.Shader->Bind();
+			matData.Shader->SetInt("u_Texture",0);
 
 			//TODO ok so here is where we need to iterate over materials instead, and then over unique meshes that use thos materials
 			for (size_t i = 0; i < uniqueMeshCount; i++)
@@ -199,9 +200,7 @@ namespace GalaxyDraw
 					uint32_t instanceDataSize = (uint32_t)((uint8_t*)meshData.InstanceBufferPtr - (uint8_t*)meshData.InstanceBufferBase);
 					meshData.m_InstanceBuffer->SetData(meshData.InstanceBufferBase, instanceDataSize);
 
-					matData.Shader->Bind();
-					//TODO set textures here
-					//matData.Shader->SetInt("u_Textures", matManager.GetTextureUnit());
+					
 
 					RenderCommand::DrawInstanced(meshData.m_VertexArray, meshData.m_Instances.size());
 					s_3DData.Stats.DrawCalls++;
