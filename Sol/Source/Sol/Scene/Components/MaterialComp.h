@@ -15,16 +15,13 @@ namespace Sol
 
 		//std::string TexturePath;
 
-		MaterialComp() 
-		{
-			m_MaterialIndex = GalaxyDraw::IMaterial::GetDefaultMaterial();
-		}
-
+		MaterialComp() = default;
+		
 		MaterialComp(const MaterialComp&) = default;
 
 		MaterialComp(const std::string& texturePath) 
 		{
-			m_MaterialIndex = GalaxyDraw::IMaterial::Create(texturePath);
+			//m_MaterialIndex = GalaxyDraw::IMaterial::Create(texturePath);
 		}
 
 		uint32_t GetMaterialIndex() { return m_MaterialIndex; }
@@ -35,17 +32,17 @@ namespace Sol
 			return mat->Color;
 		}*/
 
-		uint32_t& GetMaterialTextureIndex()
+		/*uint32_t& GetMaterialTextureIndex()
 		{
 			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
 			return mat->TextureIndex;
-		}
+		}*/
 
-		std::string& GetMaterialName()
+		/*std::string& GetMaterialName()
 		{
 			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
 			return mat->Name;
-		}
+		}*/
 
 		//TODO add set material function that checks with material manager if the material index is valid
 		//TODO add CreateNewMaterialInstance function that asks material manager to create a new material and set it to this

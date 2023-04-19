@@ -8,7 +8,7 @@ namespace Sol {
 	struct ModelComp
 	{
 		std::string ModelPath;
-		std::string TexturePath;
+		//std::string TexturePath;
 
 		EntityID GetEntityID() { return m_EntityID; }
 

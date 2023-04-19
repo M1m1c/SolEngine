@@ -110,7 +110,7 @@ namespace Sol
 
 		DrawComponent<MaterialComp>("Material", entity, [](MaterialComp& component) {
 
-			auto& name = component.GetMaterialName();
+			/*auto& name = component.GetMaterialName();
 
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
@@ -123,7 +123,7 @@ namespace Sol
 			if (ImGui::InputText("##MaterialName", buffer, sizeof(buffer))) {
 				name = std::string(buffer);
 			}
-			ImGui::Columns(1);
+			ImGui::Columns(1);*/
 
 			auto& color = component.Color;
 			DrawVec4Control("Color", color, 1.f, 0.01f, 0.f, 1.f, { "R","G","B","A" });
