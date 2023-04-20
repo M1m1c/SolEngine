@@ -33,6 +33,13 @@ namespace GalaxyDraw
 		return newTexture;
 	}
 
+	bool TextureManager::IsTextureLoaded(const std::string& path)
+	{
+		auto& s = TextureManager::GetInstance();
+		if (s.m_LoadedTextures.size() == 0) { return false; }
+		return s.m_LoadedTextures.Exists(path);
+	}
+
 	std::shared_ptr<Texture> TextureManager::GetTexture(std::string filePath)
 	{
 		auto& s = TextureManager::GetInstance();
