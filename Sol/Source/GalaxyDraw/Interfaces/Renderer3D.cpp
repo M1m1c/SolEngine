@@ -10,7 +10,7 @@
 #include "UniformBuffer.h"
 #include "RenderCommand.h"
 
-//#include "Sol/Core/KeyedVector.h"
+#include "Sol/Core/KeyedVector.h"
 #include "TextureManager.h"
 
 #include <glm/gtc/matrix_transform.hpp>
