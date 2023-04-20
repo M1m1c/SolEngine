@@ -14,25 +14,13 @@
 #include "InstanceData.h"
 #include "TextureManager.h"
 #include "MeshRenderData.h"
+#include "MaterialData.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 namespace GalaxyDraw
 {
-
-
-	
-
-
-	struct MaterialData
-	{
-		std::string Name;
-		KeyedVector<std::string, MeshRenderData> MeshDataCollections;
-		std::vector<EntityID> EntitiesUsingMat;
-		std::string DiffuseTexturePath;
-		std::shared_ptr<Shader> Shader;
-	};
 
 	//TODO we should restructure how we do our instanced rendering.
 	// Currently each unique mesh determines teh amount od draw calls.
