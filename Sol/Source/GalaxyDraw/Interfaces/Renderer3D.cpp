@@ -7,7 +7,6 @@
 #include "Texture.h"
 #include "UniformBuffer.h"
 #include "RenderCommand.h"
-//#include "MaterialManager.h"
 //#include "Sol/Core/KeyedVector.h"
 #include "TextureManager.h"
 
@@ -28,11 +27,9 @@ namespace GalaxyDraw
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
-		//std::shared_ptr<Shader> Shader;//TODO remove
-
+		
 		KeyedVector<EntityID, InstanceData> m_Instances;
-		//std::vector<EntityID> m_ContainedEntityIds;
-
+		
 		Vertex* VertexBufferBase = nullptr;
 		Vertex* VertexBufferPtr = nullptr;
 		InstanceData* InstanceBufferBase = nullptr;
@@ -66,8 +63,6 @@ namespace GalaxyDraw
 		static const uint32_t MaxMeshes = 2000;
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
-		//KeyedVector<std::string, MeshRenderData> MeshDataCollections;
-		//std::shared_ptr<Texture2D> MissingTexture;
 		std::vector<MaterialData> MaterialDataCollections;
 
 		Renderer3D::Statistics Stats;
@@ -86,10 +81,6 @@ namespace GalaxyDraw
 	{
 		SOL_PROFILE_FUNCTION();
 
-		/*	s_3DData.MissingTexture = Texture2D::Create(1, 1);
-			uint32_t missingTextureData = 0xff00ff;
-			s_3DData.MissingTexture->SetData(&missingTextureData, sizeof(uint32_t));*/
-
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
 
 		auto& texManager = TextureManager::GetInstance();
@@ -100,10 +91,6 @@ namespace GalaxyDraw
 		defaultMat.Shader = Shader::Create("cube.vert", "cube.frag", "Default");
 		defaultMat.DiffuseTexturePath = "";
 		s_3DData.MaterialDataCollections.push_back(defaultMat);
-
-		//TODO remove
-	/*	auto& matManager = MaterialManager::GetInstance();
-		matManager.Initialize(1, 0);*/
 	}
 
 	void Renderer3D::Shutdown()
@@ -186,7 +173,6 @@ namespace GalaxyDraw
 			matData.Shader->Bind();
 			matData.Shader->SetInt("u_Texture",0);
 
-			//TODO ok so here is where we need to iterate over materials instead, and then over unique meshes that use thos materials
 			for (size_t i = 0; i < uniqueMeshCount; i++)
 			{
 
@@ -199,8 +185,6 @@ namespace GalaxyDraw
 
 					uint32_t instanceDataSize = (uint32_t)((uint8_t*)meshData.InstanceBufferPtr - (uint8_t*)meshData.InstanceBufferBase);
 					meshData.m_InstanceBuffer->SetData(meshData.InstanceBufferBase, instanceDataSize);
-
-					
 
 					RenderCommand::DrawInstanced(meshData.m_VertexArray, meshData.m_Instances.size());
 					s_3DData.Stats.DrawCalls++;
@@ -221,7 +205,6 @@ namespace GalaxyDraw
 		{
 
 			auto& matData = s_3DData.MaterialDataCollections[materialIndex];
-			//TODO don't forget to erase it when the entity no longer exists
 
 			auto& entitesUsingMat = matData.EntitiesUsingMat;
 
@@ -255,7 +238,6 @@ namespace GalaxyDraw
 		{
 			auto& meshRenderData = meshDataCollections.Get(name);
 			meshRenderData.m_Instances.push_back(entityID, InstanceData());
-			//meshRenderData.m_ContainedEntityIds.push_back(entityID);
 			return;
 		}
 
@@ -282,10 +264,6 @@ namespace GalaxyDraw
 		meshData.m_IndexBuffer = IndexBuffer::Create(mesh->Indices.data(), mesh->Indices.size());
 		meshData.m_VertexArray->SetIndexBuffer(meshData.m_IndexBuffer);
 
-
-		//TODO should use missing texture to color 3d mesh
-		//meshData.Shader = Shader::Create("cube.vert", "cube.frag", "Default");//TODO replace this with something we set in the material
-
 		meshData.m_Instances.push_back(entityID, InstanceData());
 		meshData.m_InstanceBuffer = InstanceBuffer::Create(s_3DData.MaxMeshes * sizeof(InstanceData));
 
@@ -298,7 +276,6 @@ namespace GalaxyDraw
 			});
 
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
-		//meshData.m_ContainedEntityIds.push_back(entityID);
 
 		meshDataCollections.push_back(name, meshData);
 	}
@@ -339,9 +316,6 @@ namespace GalaxyDraw
 					meshData.InstanceBufferPtr->m_MeshTransform = instanceData.m_MeshTransform;
 					meshData.InstanceBufferPtr++;
 				}
-
-				//Mesh count needs to be reset
-				//s_3DData.Stats.MeshCount++;
 			}
 		}
 
@@ -372,17 +346,7 @@ namespace GalaxyDraw
 			{
 				if (meshData.m_Instances.size() == 0) { continue; }
 				if (!meshData.m_Instances.Exists(entityID)) { continue; }
-				/*bool containsEntityId = false;
-				for (auto id : collection.m_ContainedEntityIds)
-				{
-					if (id == entityID)
-					{
-						containsEntityId = true;
-						break;
-					}
-				}
-
-				if (!containsEntityId) { continue; }*/
+				
 				auto& collectionInstanceData = meshData.m_Instances.Get(entityID);
 				collectionInstanceData = instanceData;
 				//TODO fix so we can adjust the meshtransform per instance
