@@ -30,9 +30,9 @@ namespace GalaxyDraw
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<InstanceBuffer> m_InstanceBuffer;
-		
+
 		KeyedVector<EntityID, InstanceData> m_Instances;
-		
+
 		Vertex* VertexBufferBase = nullptr;
 		Vertex* VertexBufferPtr = nullptr;
 		InstanceData* InstanceBufferBase = nullptr;
@@ -67,6 +67,7 @@ namespace GalaxyDraw
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
 		std::vector<MaterialData> MaterialDataCollections;
+		uint32_t DefaultMaterialIndex = 0;
 
 		Renderer3D::Statistics Stats;
 
@@ -157,7 +158,7 @@ namespace GalaxyDraw
 				//s_3DData.TextureSlotIndex = 1;
 			}
 		}
-		
+
 	}
 
 	//sets buffer data and calls draw instanced.
@@ -169,12 +170,12 @@ namespace GalaxyDraw
 		{
 			if (matData.EntitiesUsingMat.size() == 0) { continue; }
 			auto uniqueMeshCount = matData.MeshDataCollections.size();
-		
+
 			auto& texManager = TextureManager::GetInstance();
 			texManager.GetTexture(matData.DiffuseTexturePath)->Bind(0);
 
 			matData.Shader->Bind();
-			matData.Shader->SetInt("u_Texture",0);
+			matData.Shader->SetInt("u_Texture", 0);
 
 			for (size_t i = 0; i < uniqueMeshCount; i++)
 			{
@@ -194,7 +195,7 @@ namespace GalaxyDraw
 				}
 			}
 		}
-		
+
 	}
 
 	//Loads all sub meshes of a model
@@ -217,10 +218,10 @@ namespace GalaxyDraw
 				entitesUsingMat.push_back(entityID);
 			}
 
-			
+
 			LoadMesh(meshes[i], model->GetName(), entityID);
 
-			
+
 		}
 	}
 
@@ -233,7 +234,7 @@ namespace GalaxyDraw
 		auto& matData = s_3DData.MaterialDataCollections[materialIndex];
 		auto& meshDataCollections = matData.MeshDataCollections;
 
-		
+
 
 		auto name = mesh->Name + "_" + modelName;
 		//TODO check with model manager if mesh exists
@@ -281,6 +282,95 @@ namespace GalaxyDraw
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
 
 		meshDataCollections.push_back(name, meshData);
+	}
+
+	uint32_t Renderer3D::SetupMaterial(const std::string& texturePath, const EntityID entity, bool shouldCreateNewMaterial)
+	{
+
+		auto& s = s_3DData;
+
+		uint32_t materialIndex = s.DefaultMaterialIndex;
+		if (texturePath == "") { return materialIndex; }
+
+		auto& texManager = TextureManager::GetInstance();
+		bool isTextureLoaded = texManager.IsTextureLoaded(texturePath);
+
+		if (isTextureLoaded && shouldCreateNewMaterial)
+		{
+			//Creates a new material using the texture that is already loaded
+
+
+
+			//TODO check if this entity exists in another material, then remove that instance data
+
+			for (auto& matData : s_3DData.MaterialDataCollections)
+			{
+
+				auto& entitesUsingMat = matData.EntitiesUsingMat;
+
+				auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entity);
+				if (iterator != entitesUsingMat.end())
+				{
+					DiscardMeshInstances(entity);
+					entitesUsingMat.erase(iterator);
+					texManager.DiscardTextureInstance(texturePath);
+					//TODO we now need to toggle here so we can load new mesh when this is done
+				}
+			}
+
+			//TODO extract this inot its own function
+			auto size = s_3DData.MaterialDataCollections.size();
+			std::string matName = "newMaterial";
+			matName += std::to_string(size);
+
+			MaterialData newMat;
+			newMat.Name = matName;
+			newMat.Shader = Shader::Create("cube.vert", "cube.frag", "Default");
+			newMat.DiffuseTexturePath = texturePath;
+			newMat.EntitiesUsingMat.push_back(entity);
+			s_3DData.MaterialDataCollections.push_back(newMat);
+			materialIndex = size;
+		}
+		else if (isTextureLoaded)
+		{
+			//Gets the first material that uses the texture
+			/*auto it = s.m_TextureToMaterialsMap.find(texturePath);
+			if (it != s.m_TextureToMaterialsMap.end())
+			{
+				std::vector<uint32_t>& matIndices = it->second;
+				materialIndex = matIndices.size() > 0 ? matIndices[0] : 0;
+			}*/
+		}
+		else
+		{
+			//loads the texture and creates a material that uses it.
+
+			auto& texManager = TextureManager::GetInstance();
+			texManager.LoadTexture(texturePath);
+
+
+			auto size = s_3DData.MaterialDataCollections.size();
+			std::string matName = "newMaterial";
+			matName += std::to_string(size);
+
+			MaterialData newMat;
+			newMat.Name = matName;
+			newMat.Shader = Shader::Create("cube.vert", "cube.frag", "Default");
+			newMat.DiffuseTexturePath = texturePath;
+			newMat.EntitiesUsingMat.push_back(entity);
+			s_3DData.MaterialDataCollections.push_back(newMat);
+
+			materialIndex = size;
+			/*if (texIndex != -1)
+			{
+				materialIndex = CreateNewMaterial(texIndex);
+				s.m_TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
+				s.m_TextureIndexToTexturePathMap.insert(std::make_pair(texIndex, texturePath));
+			}*/
+
+		}
+
+		return materialIndex;
 	}
 
 	//Iterates over all mesh data and updates their attributes
@@ -349,7 +439,7 @@ namespace GalaxyDraw
 			{
 				if (meshData.m_Instances.size() == 0) { continue; }
 				if (!meshData.m_Instances.Exists(entityID)) { continue; }
-				
+
 				auto& collectionInstanceData = meshData.m_Instances.Get(entityID);
 				collectionInstanceData = instanceData;
 				//TODO fix so we can adjust the meshtransform per instance
@@ -357,7 +447,7 @@ namespace GalaxyDraw
 			}
 		}
 
-		
+
 	}
 
 	//Removes all the model's mesh instances tied to the entityID from the MeshDataCollections
@@ -374,51 +464,82 @@ namespace GalaxyDraw
 
 			auto& entitiesUsingMat = matData.EntitiesUsingMat;
 
-			bool containsEntityId = false;
-			for (auto id : entitiesUsingMat)
+			auto iterator = std::find(entitiesUsingMat.begin(), entitiesUsingMat.end(), entityID);
+			if (iterator != entitiesUsingMat.end())
 			{
-				if (id == entityID)
+				entitiesUsingMat.erase(iterator);
+
+				auto& meshDataCollection = matData.MeshDataCollections;
+				for (size_t i = 0; i < meshes.size(); i++)
 				{
-					containsEntityId = true;
-					break;
+					auto name = meshes[i]->Name + "_" + modelName;
+
+					if (meshDataCollection.Exists(name))
+					{
+						auto& meshRenderData = meshDataCollection.Get(name);
+						meshRenderData.m_Instances.eraseWithKey(entityID);
+
+
+						//TODO if there are no more instances in the mesh render data then unload the mesh and delete mesh render data
+						if (meshRenderData.m_Instances.size() == 0)
+						{
+							//TODO figure out how to dealocate the loaded mesh
+
+							delete[] meshRenderData.VertexBufferBase;
+							delete[] meshRenderData.InstanceBufferBase;
+							meshDataCollection.eraseWithKey(name);
+						}
+					}
 				}
 			}
 
-			if (!containsEntityId) { continue; }
+
+
+
+		}
+
+
+	}
+
+	void Renderer3D::DiscardMeshInstances(EntityID entityID)
+	{
+		for (auto& matData : s_3DData.MaterialDataCollections)
+		{
+
+			if (matData.EntitiesUsingMat.size() == 0) { continue; }
+
+			auto& entitiesUsingMat = matData.EntitiesUsingMat;
+
 
 			auto iterator = std::find(entitiesUsingMat.begin(), entitiesUsingMat.end(), entityID);
 			if (iterator != entitiesUsingMat.end())
 			{
 				entitiesUsingMat.erase(iterator);
-			}
 
-			auto& meshDataCollection = matData.MeshDataCollections;
-			for (size_t i = 0; i < meshes.size(); i++)
-			{
-				auto name = meshes[i]->Name + "_" + modelName;
 
-				if (meshDataCollection.Exists(name))
+
+				auto& meshDataCollection = matData.MeshDataCollections;
+
+
+				for (int i = meshDataCollection.size() - 1; i >= 0; i--)
 				{
-					auto& meshRenderData = meshDataCollection.Get(name);
-					meshRenderData.m_Instances.eraseWithKey(entityID);
+					auto& meshData = meshDataCollection[i];
+					if (!meshDataCollection[i].m_Instances.Exists(entityID)) { continue; }
 
-					
-					//TODO if there are no more instances in the mesh render data then unload the mesh and delete mesh render data
-					if (meshRenderData.m_Instances.size() == 0)
+					meshData.m_Instances.eraseWithKey(entityID);
+
+					if (meshData.m_Instances.size() == 0)
 					{
-						//TODO figure out how to dealocate the loaded mesh
-
-						delete[] meshRenderData.VertexBufferBase;
-						delete[] meshRenderData.InstanceBufferBase;
-						meshDataCollection.eraseWithKey(name);
+						delete[] meshData.VertexBufferBase;
+						delete[] meshData.InstanceBufferBase;
+						meshDataCollection.eraseWithIndex(i);
 					}
+
 				}
+
 			}
 
-			
 		}
-
-		
 	}
 
 	void Renderer3D::ResetStats()
