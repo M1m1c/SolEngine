@@ -1562,6 +1562,7 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\TextureManager.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\InstanceData.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\IMaterial.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\MeshRenderData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
