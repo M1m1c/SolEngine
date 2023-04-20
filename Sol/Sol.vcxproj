@@ -165,9 +165,6 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Framebuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\IMaterial.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\Material.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\MaterialManager.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Mesh.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\IModel.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\ModelManager.h" />
@@ -181,7 +178,6 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\GalaxyDraw\Interfaces\RenderingContext.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Shader.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Texture.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\TextureArray.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\TextureManager.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\VertexArray.h" />
@@ -199,7 +195,6 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Shader.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.h" />
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_TextureArray.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexArray.h" />
     <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexBuffer.h" />
@@ -665,9 +660,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Framebuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\IMaterial.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\IModel.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\MaterialManager.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\ModelManager.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\OrthoCamera.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\ParticleSystem.cpp" />
@@ -679,7 +672,6 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClCompile Include="Source\GalaxyDraw\Interfaces\RenderingContext.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Shader.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Texture.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\TextureArray.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\TextureManager.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\UniformBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\VertexArray.cpp" />
@@ -697,7 +689,6 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_RenderScreen.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Shader.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_Texture.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_TextureArray.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_UniformBuffer.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexArray.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_VertexBuffer.cpp" />

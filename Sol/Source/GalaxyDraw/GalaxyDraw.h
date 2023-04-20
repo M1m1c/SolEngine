@@ -12,7 +12,6 @@
 #include "Interfaces/OrthoCamera.h"
 #include "Interfaces/Framebuffer.h"
 #include "Interfaces/ModelManager.h"
-#include "Interfaces/MaterialManager.h"
 #include "Camera.h"
 #include "SceneCamera.h"
 
@@ -97,9 +96,4 @@ typedef GalaxyDraw::FramebufferTextureFormat GD_FramebufferTextureFormat;
 //Defined in ModelManager.h
 /////////////////////////////////////////////////////
 typedef GalaxyDraw::ModelManager GD_ModelManager;
-/////////////////////////////////////////////////////
-
-//Defined in MaterialManager.h
-/////////////////////////////////////////////////////
-typedef GalaxyDraw::MaterialManager GD_MaterialManager;
 /////////////////////////////////////////////////////

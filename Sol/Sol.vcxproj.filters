@@ -1559,11 +1559,6 @@
     </ClInclude>
     <ClInclude Include="Source\Sol\Math\Math.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\ModelManager.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\Material.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\MaterialManager.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\IMaterial.h" />
-    <ClInclude Include="Source\GalaxyDraw\Interfaces\TextureArray.h" />
-    <ClInclude Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_TextureArray.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -1725,10 +1720,6 @@
     </ClCompile>
     <ClCompile Include="Source\Sol\Math\Math.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\ModelManager.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\MaterialManager.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\IMaterial.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Interfaces\TextureArray.cpp" />
-    <ClCompile Include="Source\GalaxyDraw\Platform\OpenGL\OpenGL_TextureArray.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\TextureManager.cpp" />
   </ItemGroup>
 </Project>

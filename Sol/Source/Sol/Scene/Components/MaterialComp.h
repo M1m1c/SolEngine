@@ -1,8 +1,5 @@
 #pragma once
 
-#include "GalaxyDraw/Interfaces/IMaterial.h"
-//#include "GalaxyDraw/Interfaces/Texture.h"
-#include "GalaxyDraw/Interfaces/Material.h"
 #include <glm/glm.hpp>
 
 
