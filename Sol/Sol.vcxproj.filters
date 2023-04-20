@@ -1560,6 +1560,8 @@
     <ClInclude Include="Source\Sol\Math\Math.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\ModelManager.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\TextureManager.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\InstanceData.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\IMaterial.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\GalaxyDraw\Interfaces\Buffer.cpp">
@@ -1721,5 +1723,6 @@
     <ClCompile Include="Source\Sol\Math\Math.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\ModelManager.cpp" />
     <ClCompile Include="Source\GalaxyDraw\Interfaces\TextureManager.cpp" />
+    <ClCompile Include="Source\GalaxyDraw\Interfaces\IMaterial.cpp" />
   </ItemGroup>
 </Project>
