@@ -3,32 +3,15 @@
 #include "OrthoCamera.h"
 #include "GalaxyDraw/Camera.h"
 //#include "Hazel/Renderer/EditorCamera.h"
-#include "Sol/Scene/Components.h"
+
 #include "Sol/SolDefines.h"
+
 
 namespace GalaxyDraw {
 
-	//!VERY IMPORTANT!
-	// The order of initaliseation needs to match the location order in the shader,
-	// otherwise the columns will be missaligned.
-	struct InstanceData
-	{
-		InstanceData() :
-			m_EntityID(-1),
-			m_TextureID(-1),
-			m_MeshColor(),
-			m_EntityTransform(),
-			m_MeshTransform()
-			//	m_MeshPosition(),
-		{};
-
-		int m_EntityID;
-		int m_TextureID;
-		glm::vec4 m_MeshColor;
-		glm::mat4 m_EntityTransform;
-		glm::mat4 m_MeshTransform;
-		//glm::vec3 m_MeshPosition;
-	};
+	class IModel;
+	struct Mesh;
+	struct InstanceData;
 
 	class Renderer3D
 	{

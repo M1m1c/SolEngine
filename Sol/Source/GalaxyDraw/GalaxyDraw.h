@@ -3,6 +3,7 @@
 #include "Interfaces/Shader.h"
 #include "Interfaces/Buffer.h"
 #include "Interfaces/VertexArray.h"
+#include "Interfaces/InstanceData.h"
 #include "Interfaces/Renderer.h"
 #include "Interfaces/Renderer2D.h"
 #include "Interfaces/Renderer3D.h"

@@ -1,12 +1,15 @@
 #include "solpch.h"
 #include "Renderer3D.h"
 
+#include "InstanceData.h"
 #include "Buffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "IModel.h"
 #include "Texture.h"
 #include "UniformBuffer.h"
 #include "RenderCommand.h"
+
 //#include "Sol/Core/KeyedVector.h"
 #include "TextureManager.h"
 
