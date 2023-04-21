@@ -5,12 +5,13 @@
 
 namespace GalaxyDraw
 {
+	struct MaterialData;
 	class IMaterial
 	{
 	public:
 		static uint32_t Create(const std::string& texturePath, const EntityID entity);
 		static uint32_t GetDefaultMaterialIndex();
-		//static std::shared_ptr<Material> GetMaterial(uint32_t materialIndex);
+		static std::shared_ptr<MaterialData> GetMaterial(uint32_t materialIndex);
 	};
 
 }

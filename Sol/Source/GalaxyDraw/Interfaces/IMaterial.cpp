@@ -1,11 +1,16 @@
 #include "solpch.h"
 #include "IMaterial.h"
+#include "TextureManager.h"
+#include "MaterialData.h"
+#include "Renderer3D.h"
 
 namespace GalaxyDraw {
 
 	uint32_t IMaterial::Create(const std::string& texturePath, const EntityID entity)
 	{
-		return 0;
+		TextureManager::LoadTexture(texturePath);
+
+		return Renderer3D::SetupMaterial(texturePath, entity);
 	}
 
 	uint32_t IMaterial::GetDefaultMaterialIndex()
@@ -13,8 +18,10 @@ namespace GalaxyDraw {
 		return 0;
 	}
 
-	/*std::shared_ptr<Material> IMaterial::GetMaterial(uint32_t materialIndex)
+	std::shared_ptr<MaterialData> IMaterial::GetMaterial(uint32_t materialIndex)
 	{
-		return MaterialManager::GetMaterial(materialIndex);
-	}*/
+		return Renderer3D::GetMaterial(materialIndex);
+	}
+
+	
 }
