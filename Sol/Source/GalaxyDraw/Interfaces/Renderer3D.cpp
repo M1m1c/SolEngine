@@ -63,10 +63,7 @@ namespace GalaxyDraw
 		auto& texManager = TextureManager::GetInstance();
 		texManager.Initialize();
 
-		MaterialData defaultMat;
-		defaultMat.Name = "Default";
-		defaultMat.Shader = Shader::Create("cube.vert", "cube.frag", "Default");
-		defaultMat.DiffuseTexturePath = "";
+		MaterialData defaultMat = CreateMaterial("Default", { "cube.vert", "cube.frag" }, "Default", "");
 		s_3DData.MaterialDataCollections.push_back(defaultMat);
 	}
 
@@ -169,6 +166,15 @@ namespace GalaxyDraw
 			}
 		}
 
+	}
+
+	MaterialData Renderer3D::CreateMaterial(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath)
+	{
+		MaterialData material;
+		material.Name = matName;
+		material.Shader = Shader::Create(shaderFiles.first, shaderFiles.second, shaderName);
+		material.DiffuseTexturePath = texturePath;
+		return material;
 	}
 
 	//Loads all sub meshes of a model
@@ -296,10 +302,8 @@ namespace GalaxyDraw
 			std::string matName = "newMaterial";
 			matName += std::to_string(size);
 
-			MaterialData newMat;
-			newMat.Name = matName;
-			newMat.Shader = Shader::Create("cube.vert", "cube.frag", "Default");
-			newMat.DiffuseTexturePath = texturePath;
+			
+			MaterialData newMat = CreateMaterial(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
 			newMat.EntitiesUsingMat.push_back(entity);
 			s_3DData.MaterialDataCollections.push_back(newMat);
 			materialIndex = size;
@@ -326,10 +330,7 @@ namespace GalaxyDraw
 			std::string matName = "newMaterial";
 			matName += std::to_string(size);
 
-			MaterialData newMat;
-			newMat.Name = matName;
-			newMat.Shader = Shader::Create("cube.vert", "cube.frag", "Default");
-			newMat.DiffuseTexturePath = texturePath;
+			MaterialData newMat = CreateMaterial(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
 			newMat.EntitiesUsingMat.push_back(entity);
 			s_3DData.MaterialDataCollections.push_back(newMat);
 

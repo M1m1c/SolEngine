@@ -12,6 +12,7 @@ namespace GalaxyDraw {
 	class IModel;
 	struct Mesh;
 	struct InstanceData;
+	struct MaterialData;
 
 	class Renderer3D
 	{
@@ -58,6 +59,7 @@ namespace GalaxyDraw {
 		static void Submit();
 		static void Flush();
 
+		static MaterialData CreateMaterial(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath);
 		//static CreateNewMaterial(const std::string& texturePath);
 	};
 }
