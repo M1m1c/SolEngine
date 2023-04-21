@@ -42,7 +42,7 @@ namespace GalaxyDraw
 		static const uint32_t MaxMeshes = 2000;
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
-		std::vector<MaterialData> MaterialDataCollections;
+		std::vector<std::shared_ptr<MaterialData>> MaterialDataCollections;
 		uint32_t DefaultMaterialIndex = 0;
 
 		KeyedVector<EntityID, std::string> EntityToModelPath;
@@ -68,7 +68,7 @@ namespace GalaxyDraw
 		auto& texManager = TextureManager::GetInstance();
 		texManager.Initialize();
 
-		MaterialData defaultMat = CreateMaterial("Default", { "cube.vert", "cube.frag" }, "Default", "");
+		std::shared_ptr<MaterialData> defaultMat = CreateMaterial("Default", { "cube.vert", "cube.frag" }, "Default", "");
 		s_3DData.MaterialDataCollections.push_back(defaultMat);
 	}
 
@@ -78,8 +78,8 @@ namespace GalaxyDraw
 
 		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
-			auto uniqueMeshCount = matData.MeshDataCollections.size();
-			auto& meshDataCollections = matData.MeshDataCollections;
+			auto uniqueMeshCount = matData->MeshDataCollections.size();
+			auto& meshDataCollections = matData->MeshDataCollections;
 
 			for (size_t i = 0; i < uniqueMeshCount; i++)
 			{
@@ -121,8 +121,8 @@ namespace GalaxyDraw
 	{
 		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
-			auto uniqueMeshCount = matData.MeshDataCollections.size();
-			auto& meshDataCollections = matData.MeshDataCollections;
+			auto uniqueMeshCount = matData->MeshDataCollections.size();
+			auto& meshDataCollections = matData->MeshDataCollections;
 
 			for (size_t i = 0; i < uniqueMeshCount; i++)
 			{
@@ -143,20 +143,20 @@ namespace GalaxyDraw
 
 		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
-			if (matData.EntitiesUsingMat.size() == 0) { continue; }
-			auto uniqueMeshCount = matData.MeshDataCollections.size();
+			if (matData->EntitiesUsingMat.size() == 0) { continue; }
+			auto uniqueMeshCount = matData->MeshDataCollections.size();
 
 			auto& texManager = TextureManager::GetInstance();
-			texManager.GetTexture(matData.DiffuseTexturePath)->Bind(0);
+			texManager.GetTexture(matData->DiffuseTexturePath)->Bind(0);
 
-			matData.Shader->Bind();
-			matData.Shader->SetInt("u_Texture", 0);
+			matData->Shader->Bind();
+			matData->Shader->SetInt("u_Texture", 0);
 
 			for (size_t i = 0; i < uniqueMeshCount; i++)
 			{
 
 
-				auto& meshData = matData.MeshDataCollections[i];
+				auto& meshData = matData->MeshDataCollections[i];
 				if (meshData.m_Instances.size() > 0)
 				{
 					uint32_t dataSize = (uint32_t)((uint8_t*)meshData.VertexBufferPtr - (uint8_t*)meshData.VertexBufferBase);
@@ -173,12 +173,12 @@ namespace GalaxyDraw
 
 	}
 
-	MaterialData Renderer3D::CreateMaterial(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath)
+	std::shared_ptr<MaterialData> Renderer3D::CreateMaterial(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath)
 	{
-		MaterialData material;
-		material.Name = matName;
-		material.Shader = Shader::Create(shaderFiles.first, shaderFiles.second, shaderName);
-		material.DiffuseTexturePath = texturePath;
+		std::shared_ptr<MaterialData> material = std::make_shared<MaterialData>();
+		material->Name = matName;
+		material->Shader = Shader::Create(shaderFiles.first, shaderFiles.second, shaderName);
+		material->DiffuseTexturePath = texturePath;
 		return material;
 	}
 
@@ -205,7 +205,7 @@ namespace GalaxyDraw
 
 			auto& matData = s_3DData.MaterialDataCollections[materialIndex];
 
-			auto& entitesUsingMat = matData.EntitiesUsingMat;
+			auto& entitesUsingMat = matData->EntitiesUsingMat;
 
 			auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
 			if (iterator == entitesUsingMat.end())
@@ -227,7 +227,7 @@ namespace GalaxyDraw
 		SOL_PROFILE_FUNCTION();
 
 		auto& matData = s_3DData.MaterialDataCollections[materialIndex];
-		auto& meshDataCollections = matData.MeshDataCollections;
+		auto& meshDataCollections = matData->MeshDataCollections;
 
 
 
@@ -299,7 +299,7 @@ namespace GalaxyDraw
 			for (auto& matData : s_3DData.MaterialDataCollections)
 			{
 
-				auto& entitesUsingMat = matData.EntitiesUsingMat;
+				auto& entitesUsingMat = matData->EntitiesUsingMat;
 
 				auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
 				if (iterator != entitesUsingMat.end())
@@ -320,8 +320,8 @@ namespace GalaxyDraw
 			matName += std::to_string(size);
 
 
-			MaterialData newMat = CreateMaterial(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
-			newMat.EntitiesUsingMat.push_back(entityID);
+			std::shared_ptr<MaterialData> newMat = CreateMaterial(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
+			newMat->EntitiesUsingMat.push_back(entityID);
 			s_3DData.MaterialDataCollections.push_back(newMat);
 			materialIndex = size;
 
@@ -339,7 +339,7 @@ namespace GalaxyDraw
 			{
 				std::vector<uint32_t>& matIndices = it->second;
 				materialIndex = matIndices.size() > 0 ? matIndices[0] : 0;
-				s_3DData.MaterialDataCollections[materialIndex].EntitiesUsingMat.push_back(entityID);
+				s_3DData.MaterialDataCollections[materialIndex]->EntitiesUsingMat.push_back(entityID);
 			}
 		}
 		else
@@ -354,8 +354,8 @@ namespace GalaxyDraw
 			std::string matName = "newMaterial";
 			matName += std::to_string(size);
 
-			MaterialData newMat = CreateMaterial(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
-			newMat.EntitiesUsingMat.push_back(entityID);
+			std::shared_ptr<MaterialData> newMat = CreateMaterial(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
+			newMat->EntitiesUsingMat.push_back(entityID);
 			s_3DData.MaterialDataCollections.push_back(newMat);
 
 			materialIndex = size;
@@ -367,13 +367,24 @@ namespace GalaxyDraw
 		return materialIndex;
 	}
 
+	std::shared_ptr<MaterialData> Renderer3D::GetMaterial(uint32_t materialIndex)
+	{
+		auto& matDataCollections = s_3DData.MaterialDataCollections;
+
+		if (materialIndex < matDataCollections.size())
+		{
+			return matDataCollections[materialIndex];
+		}
+		return nullptr;
+	}
+
 	//Iterates over all mesh data and updates their attributes
 	void Renderer3D::DrawInstances()
 	{
 		SOL_PROFILE_FUNCTION();
 		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
-			auto& meshDataCollections = matData.MeshDataCollections;
+			auto& meshDataCollections = matData->MeshDataCollections;
 
 			for (auto& meshData : meshDataCollections)
 			{
@@ -392,7 +403,7 @@ namespace GalaxyDraw
 					meshData.VertexBufferPtr++;
 				}
 
-				for (auto& id : matData.EntitiesUsingMat)
+				for (auto& id : matData->EntitiesUsingMat)
 				{
 					if (!meshData.m_Instances.Exists(id)) { continue; }
 					auto& instanceData = meshData.m_Instances.Get(id);
@@ -415,10 +426,10 @@ namespace GalaxyDraw
 		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
 
-			if (matData.EntitiesUsingMat.size() == 0) { continue; }
+			if (matData->EntitiesUsingMat.size() == 0) { continue; }
 
 			bool containsEntityId = false;
-			for (auto id : matData.EntitiesUsingMat)
+			for (auto id : matData->EntitiesUsingMat)
 			{
 				if (id == entityID)
 				{
@@ -429,7 +440,7 @@ namespace GalaxyDraw
 
 			if (!containsEntityId) { continue; }
 
-			for (auto& meshData : matData.MeshDataCollections)
+			for (auto& meshData : matData->MeshDataCollections)
 			{
 				if (meshData.m_Instances.size() == 0) { continue; }
 				if (!meshData.m_Instances.Exists(entityID)) { continue; }
@@ -454,9 +465,9 @@ namespace GalaxyDraw
 		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
 
-			if (matData.EntitiesUsingMat.size() == 0) { continue; }
+			if (matData->EntitiesUsingMat.size() == 0) { continue; }
 
-			auto& entitiesUsingMat = matData.EntitiesUsingMat;
+			auto& entitiesUsingMat = matData->EntitiesUsingMat;
 
 			auto iterator = std::find(entitiesUsingMat.begin(), entitiesUsingMat.end(), entityID);
 			if (iterator != entitiesUsingMat.end())
@@ -468,7 +479,7 @@ namespace GalaxyDraw
 					s_3DData.EntityToModelPath.eraseWithKey(entityID);
 				}
 
-				auto& meshDataCollection = matData.MeshDataCollections;
+				auto& meshDataCollection = matData->MeshDataCollections;
 				for (size_t i = 0; i < meshes.size(); i++)
 				{
 					auto name = meshes[i]->Name + "_" + modelName;
@@ -505,9 +516,9 @@ namespace GalaxyDraw
 		for (auto& matData : s_3DData.MaterialDataCollections)
 		{
 
-			if (matData.EntitiesUsingMat.size() == 0) { continue; }
+			if (matData->EntitiesUsingMat.size() == 0) { continue; }
 
-			auto& entitiesUsingMat = matData.EntitiesUsingMat;
+			auto& entitiesUsingMat = matData->EntitiesUsingMat;
 
 
 			auto iterator = std::find(entitiesUsingMat.begin(), entitiesUsingMat.end(), entityID);
@@ -520,7 +531,7 @@ namespace GalaxyDraw
 					s_3DData.EntityToModelPath.eraseWithKey(entityID);
 				}
 
-				auto& meshDataCollection = matData.MeshDataCollections;
+				auto& meshDataCollection = matData->MeshDataCollections;
 
 
 				for (int i = meshDataCollection.size() - 1; i >= 0; i--)

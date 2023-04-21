@@ -31,9 +31,10 @@ namespace GalaxyDraw {
 		static void LoadModel(std::shared_ptr<IModel> model, EntityID entityID, uint32_t materialIndex = 0);
 		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID, uint32_t materialIndex = 0);
 
-
+		//Returns the materialIndex
 		static uint32_t SetupMaterial(const std::string& texturePath, const EntityID entityID, bool shouldCreateNewMaterial = false);
-	
+		
+		static std::shared_ptr<MaterialData> GetMaterial(uint32_t materialIndex);
 
 		//TODO create function for handeling when entity is destroyed, needs to remove it self from relevant MeshRenderData m_ContainedEntityIds.
 		//TODO crate function for unloading a model and mesh.
@@ -59,7 +60,7 @@ namespace GalaxyDraw {
 		static void Submit();
 		static void Flush();
 
-		static MaterialData CreateMaterial(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath);
+		static std::shared_ptr<MaterialData> CreateMaterial(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath);
 		//static CreateNewMaterial(const std::string& texturePath);
 	};
 }
