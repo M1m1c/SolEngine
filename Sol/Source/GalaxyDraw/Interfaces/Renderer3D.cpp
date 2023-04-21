@@ -289,31 +289,12 @@ namespace GalaxyDraw
 
 		auto& texManager = TextureManager::GetInstance();
 		bool isTextureLoaded = texManager.IsTextureLoaded(texturePath);
+		std::string modelPath = RemoveModelFromCurrentMaterial(entityID);
 
 		if (isTextureLoaded && shouldCreateNewMaterial)
 		{
 			//Creates a new material using the texture that is already loaded
 
-			std::string modelPath = "";
-
-			for (auto& matData : s_3DData.MaterialDataCollections)
-			{
-
-				auto& entitesUsingMat = matData->EntitiesUsingMat;
-
-				auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
-				if (iterator != entitesUsingMat.end())
-				{
-					if (s_3DData.EntityToModelPath.Exists(entityID))
-					{
-						modelPath = s_3DData.EntityToModelPath.Get(entityID);
-					}
-
-					DiscardMeshInstances(entityID);
-					entitesUsingMat.erase(iterator);
-					texManager.DiscardTextureInstance(texturePath);
-				}
-			}
 
 			auto size = s_3DData.MaterialDataCollections.size();
 			std::string matName = "newMaterial";
@@ -325,11 +306,7 @@ namespace GalaxyDraw
 			s_3DData.MaterialDataCollections.push_back(newMat);
 			materialIndex = size;
 
-			if (modelPath != "")
-			{
-				auto model = ModelManager::GetModel(modelPath);
-				LoadModel(model, entityID, materialIndex);
-			}
+			
 		}
 		else if (isTextureLoaded)
 		{
@@ -345,10 +322,7 @@ namespace GalaxyDraw
 		else
 		{
 			//loads the texture and creates a material that uses it.
-
-			auto& texManager = TextureManager::GetInstance();
-			texManager.LoadTexture(texturePath);
-
+			TextureManager::LoadTexture(texturePath);
 
 			auto size = s_3DData.MaterialDataCollections.size();
 			std::string matName = "newMaterial";
@@ -364,7 +338,38 @@ namespace GalaxyDraw
 
 		}
 
+		if (modelPath != "")
+		{
+			auto model = ModelManager::GetModel(modelPath);
+			LoadModel(model, entityID, materialIndex);
+		}
+
 		return materialIndex;
+	}
+
+	std::string Renderer3D::RemoveModelFromCurrentMaterial(const EntityID& entityID)
+	{
+		auto& texManager = TextureManager::GetInstance();
+		std::string modelPath = "";
+		for (auto& matData : s_3DData.MaterialDataCollections)
+		{
+
+			auto& entitesUsingMat = matData->EntitiesUsingMat;
+
+			auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
+			if (iterator != entitesUsingMat.end())
+			{
+				if (s_3DData.EntityToModelPath.Exists(entityID))
+				{
+					modelPath = s_3DData.EntityToModelPath.Get(entityID);
+				}
+				
+				DiscardMeshInstances(entityID);
+				entitesUsingMat.erase(iterator);
+				texManager.DiscardTextureInstance(matData->DiffuseTexturePath);
+			}
+		}
+		return modelPath;
 	}
 
 	std::shared_ptr<MaterialData> Renderer3D::GetMaterial(uint32_t materialIndex)

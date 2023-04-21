@@ -33,6 +33,7 @@ namespace GalaxyDraw {
 
 		//Returns the materialIndex
 		static uint32_t SetupMaterial(const std::string& texturePath, const EntityID entityID, bool shouldCreateNewMaterial = false);
+
 		
 		static std::shared_ptr<MaterialData> GetMaterial(uint32_t materialIndex);
 
@@ -59,8 +60,11 @@ namespace GalaxyDraw {
 	private:
 		static void Submit();
 		static void Flush();
-
 		static std::shared_ptr<MaterialData> CreateMaterial(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath);
+		
+		static std::string RemoveModelFromCurrentMaterial(const EntityID& entityID);
+
+
 		//static CreateNewMaterial(const std::string& texturePath);
 	};
 }
