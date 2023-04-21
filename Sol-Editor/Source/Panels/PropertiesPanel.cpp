@@ -108,7 +108,7 @@ namespace Sol
 			ImGui::Columns(1);
 			});
 
-		DrawComponent<MaterialComp>("Material", entity, [](MaterialComp& component) {
+		DrawComponent<MaterialComp>("Material", entity, [&](MaterialComp& component) {
 
 			auto& name = component.GetMaterialName();
 
@@ -117,11 +117,43 @@ namespace Sol
 			strcpy_s(buffer, sizeof(buffer), name.c_str());
 
 			ImGui::Columns(2);
-			ImGui::SetColumnWidth(0, 100.f);
+			ImGui::SetColumnWidth(0, 80.f);
 			ImGui::Text("Name");
 			ImGui::NextColumn();
 			if (ImGui::InputText("##MaterialName", buffer, sizeof(buffer))) {
 				name = std::string(buffer);
+			}
+			ImGui::NextColumn();
+
+
+			ImGui::Columns(2);
+			ImGui::SetColumnWidth(0, 80.f);
+			ImGui::Text("Diffuse");
+			ImGui::NextColumn();
+
+			auto& path = component.GetTexturePath();
+			std::string displayPath = "											";
+			if (path != "") { displayPath = path; }
+
+			if (ImGui::Button(displayPath.c_str())) {
+				std::string filePath = FileDialogs::OpenFile("png (*.png)\0*.png\0");
+				if (!filePath.empty())
+				{
+					auto cleanPath = CleanUpFilePath(filePath);
+
+					//TODO figure out a cleaner way to do this, since we now do this in the scene as well
+					/*if (path != cleanPath)
+					{
+						auto& modelManager = GD_ModelManager::GetInstance();
+
+						
+						GD_Renderer3D::DiscardMeshInstances(entityID, modelManager.GetModel(component.ModelPath));
+						modelManager.DiscardModelInstance(component.ModelPath);
+					}*/
+
+					component = MaterialComp(cleanPath, entityID);
+
+				}
 			}
 			ImGui::Columns(1);
 
