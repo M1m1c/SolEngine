@@ -44,6 +44,13 @@ namespace Sol
 			return mat->Name;
 		}
 
+		std::string& GetTexturePath()
+		{
+			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
+			SOL_CORE_ASSERT(mat, "No material found!");
+			return mat->DiffuseTexturePath;
+		}
+
 		//TODO add set material function that checks with material manager if the material index is valid
 		//TODO add CreateNewMaterialInstance function that asks material manager to create a new material and set it to this
 	private:
