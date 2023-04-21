@@ -339,6 +339,7 @@ namespace GalaxyDraw
 			{
 				std::vector<uint32_t>& matIndices = it->second;
 				materialIndex = matIndices.size() > 0 ? matIndices[0] : 0;
+				s_3DData.MaterialDataCollections[materialIndex].EntitiesUsingMat.push_back(entityID);
 			}
 		}
 		else
