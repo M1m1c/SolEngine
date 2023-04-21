@@ -134,6 +134,7 @@ namespace GalaxyDraw
 
 	void OpenGL_Texture2D::Bind(uint32_t slot) const
 	{
+		glActiveTexture(GL_TEXTURE0+slot);
 		glBindTextureUnit(slot, m_RendererID);
 		/*	GLCall(glActiveTexture(GL_TEXTURE0 + unit));
 			GLCall(glBindTexture(type, m_RendererID));*/
