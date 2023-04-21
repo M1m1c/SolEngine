@@ -8,8 +8,6 @@ namespace GalaxyDraw {
 
 	uint32_t IMaterial::Create(const std::string& texturePath, const EntityID entity)
 	{
-		TextureManager::LoadTexture(texturePath);
-
 		return Renderer3D::SetupMaterial(texturePath, entity);
 	}
 
