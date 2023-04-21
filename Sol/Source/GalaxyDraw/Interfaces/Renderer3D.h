@@ -32,7 +32,7 @@ namespace GalaxyDraw {
 		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID, uint32_t materialIndex = 0);
 
 
-		static uint32_t SetupMaterial(const std::string& texturePath, const EntityID entity, bool shouldCreateNewMaterial = false);
+		static uint32_t SetupMaterial(const std::string& texturePath, const EntityID entityID, bool shouldCreateNewMaterial = false);
 	
 
 		//TODO create function for handeling when entity is destroyed, needs to remove it self from relevant MeshRenderData m_ContainedEntityIds.
