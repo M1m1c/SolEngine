@@ -146,8 +146,8 @@ namespace GalaxyDraw
 			if (matData->EntitiesUsingMat.size() == 0) { continue; }
 			auto uniqueMeshCount = matData->MeshDataCollections.size();
 
-			auto& texManager = TextureManager::GetInstance();
-			texManager.GetTexture(matData->DiffuseTexturePath)->Bind(0);
+			auto diffuseTexture=TextureManager::GetTexture(matData->DiffuseTexturePath);
+			diffuseTexture->Bind(0);
 
 			matData->Shader->Bind();
 			matData->Shader->SetInt("u_Texture", 0);
@@ -214,7 +214,7 @@ namespace GalaxyDraw
 			}
 
 
-			LoadMesh(meshes[i], model->GetName(), entityID);
+			LoadMesh(meshes[i], model->GetName(), entityID, materialIndex);
 
 
 		}
@@ -287,8 +287,7 @@ namespace GalaxyDraw
 		uint32_t materialIndex = s.DefaultMaterialIndex;
 		if (texturePath == "") { return materialIndex; }
 
-		auto& texManager = TextureManager::GetInstance();
-		bool isTextureLoaded = texManager.IsTextureLoaded(texturePath);
+		bool isTextureLoaded = TextureManager::IsTextureLoaded(texturePath);
 		std::string modelPath = RemoveModelFromCurrentMaterial(entityID);
 
 		if (isTextureLoaded && shouldCreateNewMaterial)
@@ -365,7 +364,6 @@ namespace GalaxyDraw
 				}
 				
 				DiscardMeshInstances(entityID);
-				entitesUsingMat.erase(iterator);
 				texManager.DiscardTextureInstance(matData->DiffuseTexturePath);
 			}
 		}
