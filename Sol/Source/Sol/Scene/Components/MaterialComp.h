@@ -1,5 +1,7 @@
 #pragma once
 
+#include "GalaxyDraw/Interfaces/IMaterial.h"
+#include "GalaxyDraw/Interfaces/MaterialData.h"
 #include <glm/glm.hpp>
 
 
@@ -16,9 +18,9 @@ namespace Sol
 		
 		MaterialComp(const MaterialComp&) = default;
 
-		MaterialComp(const std::string& texturePath) 
+		MaterialComp(const std::string& texturePath, EntityID entityID)
 		{
-			//m_MaterialIndex = GalaxyDraw::IMaterial::Create(texturePath);
+			m_MaterialIndex = GalaxyDraw::IMaterial::Create(texturePath,entityID);
 		}
 
 		uint32_t GetMaterialIndex() { return m_MaterialIndex; }
@@ -35,11 +37,12 @@ namespace Sol
 			return mat->TextureIndex;
 		}*/
 
-		/*std::string& GetMaterialName()
+		std::string& GetMaterialName()
 		{
 			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
+			SOL_CORE_ASSERT(mat, "No material found!");
 			return mat->Name;
-		}*/
+		}
 
 		//TODO add set material function that checks with material manager if the material index is valid
 		//TODO add CreateNewMaterialInstance function that asks material manager to create a new material and set it to this
