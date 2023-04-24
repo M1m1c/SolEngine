@@ -9,7 +9,7 @@ namespace GalaxyDraw
 	class IModel
 	{
 	public:
-		static std::shared_ptr<IModel> Create(const std::string& modelpath, EntityID entityID); //TODO add optional texture path
+		static std::shared_ptr<IModel> Create(const std::string& modelpath, EntityID entityID, uint32_t matIndex = 0); //TODO add optional texture path
 
 		virtual ~IModel() = default;	
 		virtual std::vector<std::shared_ptr<Mesh>>& GetMeshes() = 0;
