@@ -79,7 +79,7 @@ namespace Sol
 
 			}, false);
 
-		auto entityID=entity.GetID();
+		auto entityID = entity.GetID();
 		DrawComponent<ModelComp>("Model", entity, [&](ModelComp& component) {
 			ImGui::Columns(2);
 			ImGui::SetColumnWidth(0, 80.f);
@@ -91,18 +91,18 @@ namespace Sol
 				if (!filePath.empty())
 				{
 					auto cleanPath = CleanUpFilePath(filePath);
-					
+
 					//TODO figure out a cleaner way to do this, since we now do this in the scene as well
-					if(component.ModelPath!=cleanPath)
+					if (component.ModelPath != cleanPath)
 					{
 						auto& modelManager = GD_ModelManager::GetInstance();
 
 						GD_Renderer3D::DiscardMeshInstances(entityID, modelManager.GetModel(component.ModelPath));
 						modelManager.DiscardModelInstance(component.ModelPath);
-					}				
+					}
 
 					component = ModelComp(cleanPath, entityID);
-					
+
 				}
 			}
 			ImGui::Columns(1);
@@ -112,22 +112,37 @@ namespace Sol
 
 			auto& name = component.GetMaterialName();
 			auto matIndex = component.GetMaterialIndex();
+			auto entityID = entity.GetID();
 
-			char buffer[256];
-			memset(buffer, 0, sizeof(buffer));
-			strcpy_s(buffer, sizeof(buffer), name.c_str());
+			bool readOnly = matIndex == 0;
 
 			ImGui::Columns(2);
 			ImGui::SetColumnWidth(0, 80.f);
 			ImGui::Text("Name");
 			ImGui::NextColumn();
-			if (ImGui::InputText("##MaterialName", buffer, sizeof(buffer))) {
-				name = std::string(buffer);
+
+			if (readOnly)
+			{
+				ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+				ImGui::TextDisabled(name.c_str());
+				ImGui::PopStyleVar();
+			}
+			else 
+			{
+				char buffer[256];
+				memset(buffer, 0, sizeof(buffer));
+				strcpy_s(buffer, sizeof(buffer), name.c_str());
+
+				if (ImGui::InputText("##MaterialName", buffer, sizeof(buffer))) 
+				{
+					name = std::string(buffer);
+				}
 			}
 
 			std::vector<std::pair<std::string, std::function<void()>>> buttons;
-			buttons.push_back({ "Create New Material", []() {
-				//TODO create new material
+			buttons.push_back({ "Create New Material", [&component,entityID]() {
+				std::string defaultTexture = "";
+				component = MaterialComp(defaultTexture, entityID);
 			} });
 
 			auto& materials = GD_Renderer3D::GetAllMaterials();
@@ -135,36 +150,43 @@ namespace Sol
 			{
 				if (i == matIndex) { continue; }
 				auto& mat = materials[i];
-				buttons.push_back({ mat->Name, []() {
-					//TODO change this material to selected material
+				buttons.push_back({ mat->Name, [&component,i,entityID]() {
+					component = MaterialComp(i, entityID);
 				} });
 			}
-			
+
 			DrawDropDownList("MaterialSelection", "Select Material", buttons);
 			ImGui::NextColumn();
-
 
 			ImGui::Columns(2);
 			ImGui::SetColumnWidth(0, 80.f);
 			ImGui::Text("Diffuse");
 			ImGui::NextColumn();
 
-			auto& path = component.GetTexturePath();
-			std::string displayPath = "											";
-			if (path != "") { displayPath = path; }
+			
 
-			if (ImGui::Button(displayPath.c_str())) {
-				std::string filePath = FileDialogs::OpenFile("png (*.png)\0*.png\0");
-				if (!filePath.empty())
+			if (!readOnly) 
+			{
+				auto& path = component.GetTexturePath();
+				std::string displayPath = "											";
+				if (path != "") { displayPath = path; }
+
+				if (ImGui::Button(displayPath.c_str()))
 				{
-					auto cleanPath = CleanUpFilePath(filePath);
 
-					//TODO add so we can select from avialbe materials in a drop down list, or create a new material.
-					// change so that setting texture updates the current material, not creating a new material.
+					std::string filePath = FileDialogs::OpenFile("png (*.png)\0*.png\0");
+					if (!filePath.empty())
+					{
+						auto cleanPath = CleanUpFilePath(filePath);
+						auto matIndex = component.GetMaterialIndex();
+						component = MaterialComp(cleanPath, matIndex, entityID);
 
-					component = MaterialComp(cleanPath, entityID);
-
+					}
 				}
+			}
+			else
+			{
+				ImGui::TextDisabled("No File Path");
 			}
 			ImGui::Columns(1);
 
