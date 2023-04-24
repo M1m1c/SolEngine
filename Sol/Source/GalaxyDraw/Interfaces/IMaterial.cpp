@@ -6,9 +6,19 @@
 
 namespace GalaxyDraw {
 
-	uint32_t IMaterial::Create(const std::string& texturePath, const EntityID entity)
+	uint32_t IMaterial::CreateNew(const std::string& texturePath, const EntityID entityID)
 	{
-		return Renderer3D::SetupMaterial(texturePath, entity);
+		return Renderer3D::CreateNewMaterial(texturePath, entityID);
+	}
+
+	uint32_t IMaterial::UpdateExisting(const std::string& texturePath, const uint32_t matIndex, const EntityID entityID)
+	{
+		return Renderer3D::UpdateExistingMaterial(texturePath,matIndex, entityID);
+	}
+
+	uint32_t IMaterial::SwapMaterial(const uint32_t matIndex, const EntityID entityID)
+	{
+		return Renderer3D::SwapMaterial(matIndex, entityID);
 	}
 
 	uint32_t IMaterial::GetDefaultMaterialIndex()
