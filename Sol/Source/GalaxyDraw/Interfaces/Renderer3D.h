@@ -36,6 +36,7 @@ namespace GalaxyDraw {
 
 		
 		static std::shared_ptr<MaterialData> GetMaterial(uint32_t materialIndex);
+		static std::vector<std::shared_ptr<MaterialData>>& GetAllMaterials();
 
 		//TODO create function for handeling when entity is destroyed, needs to remove it self from relevant MeshRenderData m_ContainedEntityIds.
 		//TODO crate function for unloading a model and mesh.

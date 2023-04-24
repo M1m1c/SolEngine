@@ -381,6 +381,11 @@ namespace GalaxyDraw
 		return nullptr;
 	}
 
+	std::vector<std::shared_ptr<MaterialData>>& Renderer3D::GetAllMaterials()
+	{
+		return s_3DData.MaterialDataCollections;
+	}
+
 	//Iterates over all mesh data and updates their attributes
 	void Renderer3D::DrawInstances()
 	{
