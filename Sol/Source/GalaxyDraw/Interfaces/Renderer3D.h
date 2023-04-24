@@ -32,7 +32,9 @@ namespace GalaxyDraw {
 		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID, uint32_t materialIndex = 0);
 
 		//Returns the materialIndex
-		static uint32_t SetupMaterial(const std::string& texturePath, const EntityID entityID, bool shouldCreateNewMaterial = false);
+		static uint32_t UpdateExistingMaterial(const std::string& texturePath, const uint32_t matIndex, const EntityID entityID);
+		static uint32_t CreateNewMaterial(const std::string& texturePath, const EntityID entityID);
+		static uint32_t SwapMaterial(const uint32_t matIndex, const EntityID entityID);
 
 		
 		static std::shared_ptr<MaterialData> GetMaterial(uint32_t materialIndex);
@@ -61,7 +63,7 @@ namespace GalaxyDraw {
 	private:
 		static void Submit();
 		static void Flush();
-		static std::shared_ptr<MaterialData> CreateMaterial(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath);
+		static std::shared_ptr<MaterialData> CreateMaterialData(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath);
 		
 		static std::string RemoveModelFromCurrentMaterial(const EntityID& entityID);
 

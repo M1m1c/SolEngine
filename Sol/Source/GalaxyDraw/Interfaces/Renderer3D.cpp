@@ -68,7 +68,7 @@ namespace GalaxyDraw
 		auto& texManager = TextureManager::GetInstance();
 		texManager.Initialize();
 
-		std::shared_ptr<MaterialData> defaultMat = CreateMaterial("Default", { "cube.vert", "cube.frag" }, "Default", "");
+		std::shared_ptr<MaterialData> defaultMat = CreateMaterialData("Default", { "cube.vert", "cube.frag" }, "Default", "");
 		s_3DData.MaterialDataCollections.push_back(defaultMat);
 	}
 
@@ -146,7 +146,7 @@ namespace GalaxyDraw
 			if (matData->EntitiesUsingMat.size() == 0) { continue; }
 			auto uniqueMeshCount = matData->MeshDataCollections.size();
 
-			auto diffuseTexture=TextureManager::GetTexture(matData->DiffuseTexturePath);
+			auto diffuseTexture = TextureManager::GetTexture(matData->DiffuseTexturePath);
 			diffuseTexture->Bind(0);
 
 			matData->Shader->Bind();
@@ -173,7 +173,7 @@ namespace GalaxyDraw
 
 	}
 
-	std::shared_ptr<MaterialData> Renderer3D::CreateMaterial(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath)
+	std::shared_ptr<MaterialData> Renderer3D::CreateMaterialData(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath)
 	{
 		std::shared_ptr<MaterialData> material = std::make_shared<MaterialData>();
 		material->Name = matName;
@@ -279,63 +279,74 @@ namespace GalaxyDraw
 		meshDataCollections.push_back(name, meshData);
 	}
 
-	uint32_t Renderer3D::SetupMaterial(const std::string& texturePath, const EntityID entityID, bool shouldCreateNewMaterial)
+	uint32_t Renderer3D::UpdateExistingMaterial(const std::string& texturePath, const uint32_t materialIndex, const EntityID entityID)
 	{
 
 		auto& s = s_3DData;
 
-		uint32_t materialIndex = s.DefaultMaterialIndex;
-		if (texturePath == "") { return materialIndex; }
+		auto material = s_3DData.MaterialDataCollections[materialIndex];
+		auto currentTexture = material->DiffuseTexturePath;
+		if (currentTexture == texturePath) { return materialIndex; }
+
+		//Removes material from the map to the texure it is currently using
+		auto textureIT = s_3DData.TextureToMaterialsMap.find(currentTexture);
+		if (textureIT != s_3DData.TextureToMaterialsMap.end())
+		{
+			std::vector<uint32_t>& matIndices = textureIT->second;
+			auto indexIT = std::find(matIndices.begin(), matIndices.end(), materialIndex);
+			if (indexIT != matIndices.end())
+			{
+				matIndices.erase(indexIT);
+			}
+		}
 
 		bool isTextureLoaded = TextureManager::IsTextureLoaded(texturePath);
-		std::string modelPath = RemoveModelFromCurrentMaterial(entityID);
-
-		if (isTextureLoaded && shouldCreateNewMaterial)
+		if (isTextureLoaded)
 		{
-			//Creates a new material using the texture that is already loaded
-
-
-			auto size = s_3DData.MaterialDataCollections.size();
-			std::string matName = "newMaterial";
-			matName += std::to_string(size);
-
-
-			std::shared_ptr<MaterialData> newMat = CreateMaterial(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
-			newMat->EntitiesUsingMat.push_back(entityID);
-			s_3DData.MaterialDataCollections.push_back(newMat);
-			materialIndex = size;
-
-			
-		}
-		else if (isTextureLoaded)
-		{
-			//Gets the first material that uses the texture
+			//Adds material's index to the entry of the texture it is now using
 			auto it = s_3DData.TextureToMaterialsMap.find(texturePath);
 			if (it != s_3DData.TextureToMaterialsMap.end())
 			{
 				std::vector<uint32_t>& matIndices = it->second;
-				materialIndex = matIndices.size() > 0 ? matIndices[0] : 0;
-				s_3DData.MaterialDataCollections[materialIndex]->EntitiesUsingMat.push_back(entityID);
+				matIndices.push_back(materialIndex);
 			}
 		}
 		else
 		{
-			//loads the texture and creates a material that uses it.
+			//Loads texture and creates new entry for texture it is now using
 			TextureManager::LoadTexture(texturePath);
-
-			auto size = s_3DData.MaterialDataCollections.size();
-			std::string matName = "newMaterial";
-			matName += std::to_string(size);
-
-			std::shared_ptr<MaterialData> newMat = CreateMaterial(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
-			newMat->EntitiesUsingMat.push_back(entityID);
-			s_3DData.MaterialDataCollections.push_back(newMat);
-
-			materialIndex = size;
-
 			s_3DData.TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
 
 		}
+
+		material->DiffuseTexturePath = texturePath;
+
+		return materialIndex;
+	}
+
+	uint32_t Renderer3D::CreateNewMaterial(const std::string& texturePath, const EntityID entityID)
+	{
+		auto& s = s_3DData;
+
+		uint32_t materialIndex = s.DefaultMaterialIndex;
+
+		bool isTextureLoaded = TextureManager::IsTextureLoaded(texturePath);
+		if (!isTextureLoaded)
+		{
+			TextureManager::LoadTexture(texturePath);
+			s_3DData.TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
+		}
+
+		std::string modelPath = RemoveModelFromCurrentMaterial(entityID);
+
+		auto size = s_3DData.MaterialDataCollections.size();
+		std::string matName = "newMaterial";
+		matName += std::to_string(size);
+
+		std::shared_ptr<MaterialData> newMat = CreateMaterialData(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
+		newMat->EntitiesUsingMat.push_back(entityID);
+		s_3DData.MaterialDataCollections.push_back(newMat);
+		materialIndex = size;
 
 		if (modelPath != "")
 		{
@@ -344,6 +355,24 @@ namespace GalaxyDraw
 		}
 
 		return materialIndex;
+	}
+
+	uint32_t Renderer3D::SwapMaterial(const uint32_t matIndex, const EntityID entityID)
+	{
+		auto& s = s_3DData;
+
+		//TODO check if index exists
+		auto& matDataCollections = s.MaterialDataCollections;
+		if (matIndex >= matDataCollections.size()) { return s.DefaultMaterialIndex; }
+
+		std::string modelPath = RemoveModelFromCurrentMaterial(entityID);
+		if (modelPath != "")
+		{
+			auto model = ModelManager::GetModel(modelPath);
+			LoadModel(model, entityID, matIndex);
+		}
+
+		return matIndex;
 	}
 
 	std::string Renderer3D::RemoveModelFromCurrentMaterial(const EntityID& entityID)
@@ -355,6 +384,11 @@ namespace GalaxyDraw
 
 			auto& entitesUsingMat = matData->EntitiesUsingMat;
 
+			/*for (int i = entitesUsingMat.size() - 1; i >= 0; i--)
+			{
+				auto
+
+			}*/
 			auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
 			if (iterator != entitesUsingMat.end())
 			{
@@ -362,7 +396,7 @@ namespace GalaxyDraw
 				{
 					modelPath = s_3DData.EntityToModelPath.Get(entityID);
 				}
-				
+
 				DiscardMeshInstances(entityID);
 				texManager.DiscardTextureInstance(matData->DiffuseTexturePath);
 			}
