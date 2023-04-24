@@ -50,7 +50,7 @@ namespace Sol
 
 				temp.m_EntityTransform = transform;
 				//temp.m_MeshPosition = transform.Position;
-				temp.m_MeshColor = material.Color;
+				temp.m_MeshColor = material.Properties.Color;
 
 				GD_Renderer3D::UpdateInstanceData(entity, temp);
 				//GD_Renderer3D::DrawModel(model.Model, transform);

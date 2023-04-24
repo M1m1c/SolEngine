@@ -141,8 +141,10 @@ namespace Sol
 
 			std::vector<std::pair<std::string, std::function<void()>>> buttons;
 			buttons.push_back({ "Create New Material", [&component,entityID]() {
+				auto props = component.Properties;
 				std::string defaultTexture = "";
 				component = MaterialComp(defaultTexture, entityID);
+				component.Properties = props;
 			} });
 
 			auto& materials = GD_Renderer3D::GetAllMaterials();
@@ -151,7 +153,9 @@ namespace Sol
 				if (i == matIndex) { continue; }
 				auto& mat = materials[i];
 				buttons.push_back({ mat->Name, [&component,i,entityID]() {
+					auto props = component.Properties;
 					component = MaterialComp(i, entityID);
+					component.Properties = props;
 				} });
 			}
 
@@ -161,9 +165,7 @@ namespace Sol
 			ImGui::Columns(2);
 			ImGui::SetColumnWidth(0, 80.f);
 			ImGui::Text("Diffuse");
-			ImGui::NextColumn();
-
-			
+			ImGui::NextColumn();	
 
 			if (!readOnly) 
 			{
@@ -190,7 +192,7 @@ namespace Sol
 			}
 			ImGui::Columns(1);
 
-			auto& color = component.Color;
+			auto& color = component.Properties.Color;
 			DrawVec4Control("Color", color, 1.f, 0.01f, 0.f, 1.f, { "R","G","B","A" });
 			});
 	}

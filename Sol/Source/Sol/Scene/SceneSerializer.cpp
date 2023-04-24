@@ -111,7 +111,7 @@ namespace Sol
 		{
 			out << YAML::Key << "MaterialComp";
 			out << YAML::BeginMap;
-			auto& color = entity.GetComponent<MaterialComp>().Color;
+			auto& color = entity.GetComponent<MaterialComp>().Properties.Color;
 			out << YAML::Key << "Color" << YAML::Value << color;
 			out << YAML::EndMap;
 		}
@@ -193,7 +193,7 @@ namespace Sol
 				if (materialComp)
 				{
 					auto& material = loadedEntity.AddComponent<MaterialComp>();
-					material.Color = materialComp["Color"].as<glm::vec4>();
+					material.Properties.Color = materialComp["Color"].as<glm::vec4>();
 				}
 
 				auto modelComp = entity["ModelComp"];
