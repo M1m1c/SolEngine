@@ -111,6 +111,7 @@ namespace Sol
 		DrawComponent<MaterialComp>("Material", entity, [&](MaterialComp& component) {
 
 			auto& name = component.GetMaterialName();
+			auto matIndex = component.GetMaterialIndex();
 
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
@@ -125,17 +126,21 @@ namespace Sol
 			}
 
 			std::vector<std::pair<std::string, std::function<void()>>> buttons;
-			buttons.push_back({ "Option 1", []() {
-				// Handle option 1
+			buttons.push_back({ "Create New Material", []() {
+				//TODO create new material
 			} });
-			buttons.push_back({ "Option 2", []() {
-				// Handle option 2
-			} });
-			buttons.push_back({ "Option 3", []() {
-				// Handle option 3
-			} });
+
+			auto& materials = GD_Renderer3D::GetAllMaterials();
+			for (size_t i = 0; i < materials.size(); i++)
+			{
+				if (i == matIndex) { continue; }
+				auto& mat = materials[i];
+				buttons.push_back({ mat->Name, []() {
+					//TODO change this material to selected material
+				} });
+			}
 			
-			DrawDropDownList("MaterialSelection",buttons);
+			DrawDropDownList("MaterialSelection", "Select Material", buttons);
 			ImGui::NextColumn();
 
 
@@ -153,16 +158,6 @@ namespace Sol
 				if (!filePath.empty())
 				{
 					auto cleanPath = CleanUpFilePath(filePath);
-
-					//TODO figure out a cleaner way to do this, since we now do this in the scene as well
-					/*if (path != cleanPath)
-					{
-						auto& modelManager = GD_ModelManager::GetInstance();
-
-						
-						GD_Renderer3D::DiscardMeshInstances(entityID, modelManager.GetModel(component.ModelPath));
-						modelManager.DiscardModelInstance(component.ModelPath);
-					}*/
 
 					//TODO add so we can select from avialbe materials in a drop down list, or create a new material.
 					// change so that setting texture updates the current material, not creating a new material.
