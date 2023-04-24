@@ -7,6 +7,8 @@
 
 namespace Sol
 {
+	//TODO createa a struct instancedMaterial properties that we cna get and set
+
 	//TODO make this use and load textures, also every entity with a ModelComp should probably have a material comp
 	struct MaterialComp
 	{
@@ -18,9 +20,27 @@ namespace Sol
 		
 		MaterialComp(const MaterialComp&) = default;
 
+		//Creates a new material for this component to use
 		MaterialComp(const std::string& texturePath, EntityID entityID)
 		{
-			m_MaterialIndex = GalaxyDraw::IMaterial::Create(texturePath,entityID);
+			m_MaterialIndex = GalaxyDraw::IMaterial::CreateNew(texturePath,entityID);
+		}
+
+		//Updates existing material on component and for all instances using it
+		MaterialComp(const std::string& texturePath, const uint32_t matIndex, const EntityID entityID)
+		{
+			if(matIndex==0)
+			{
+				m_MaterialIndex = 0;
+				return;
+			}
+			m_MaterialIndex = GalaxyDraw::IMaterial::UpdateExisting(texturePath,matIndex, entityID);
+		}
+
+		//Swaps this components material for antother
+		MaterialComp(const uint32_t matIndex, const EntityID entityID)
+		{
+			m_MaterialIndex = GalaxyDraw::IMaterial::SwapMaterial(matIndex, entityID);
 		}
 
 		uint32_t GetMaterialIndex() { return m_MaterialIndex; }
