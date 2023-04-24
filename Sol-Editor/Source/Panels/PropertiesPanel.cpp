@@ -90,6 +90,7 @@ namespace Sol
 				std::string filePath = FileDialogs::OpenFile("fbx (*.fbx)\0*.fbx\0");
 				if (!filePath.empty())
 				{
+					auto matIndex = GD_Renderer3D::GetMaterialIndex(entity);
 					auto cleanPath = CleanUpFilePath(filePath);
 
 					//TODO figure out a cleaner way to do this, since we now do this in the scene as well
@@ -101,7 +102,7 @@ namespace Sol
 						modelManager.DiscardModelInstance(component.ModelPath);
 					}
 
-					component = ModelComp(cleanPath, entityID);
+					component = ModelComp(cleanPath, entityID, matIndex);
 
 				}
 			}
@@ -181,8 +182,9 @@ namespace Sol
 					{
 						auto cleanPath = CleanUpFilePath(filePath);
 						auto matIndex = component.GetMaterialIndex();
+						auto props = component.Properties;
 						component = MaterialComp(cleanPath, matIndex, entityID);
-
+						component.Properties = props;
 					}
 				}
 			}
