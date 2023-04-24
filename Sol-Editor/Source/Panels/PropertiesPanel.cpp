@@ -123,6 +123,19 @@ namespace Sol
 			if (ImGui::InputText("##MaterialName", buffer, sizeof(buffer))) {
 				name = std::string(buffer);
 			}
+
+			std::vector<std::pair<std::string, std::function<void()>>> buttons;
+			buttons.push_back({ "Option 1", []() {
+				// Handle option 1
+			} });
+			buttons.push_back({ "Option 2", []() {
+				// Handle option 2
+			} });
+			buttons.push_back({ "Option 3", []() {
+				// Handle option 3
+			} });
+			
+			DrawDropDownList("MaterialSelection",buttons);
 			ImGui::NextColumn();
 
 
@@ -150,6 +163,9 @@ namespace Sol
 						GD_Renderer3D::DiscardMeshInstances(entityID, modelManager.GetModel(component.ModelPath));
 						modelManager.DiscardModelInstance(component.ModelPath);
 					}*/
+
+					//TODO add so we can select from avialbe materials in a drop down list, or create a new material.
+					// change so that setting texture updates the current material, not creating a new material.
 
 					component = MaterialComp(cleanPath, entityID);
 

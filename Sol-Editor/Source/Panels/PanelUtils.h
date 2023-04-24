@@ -9,6 +9,38 @@
 
 namespace Sol
 {
+	static void DrawDropDownList(const std::string& HashID, const std::vector<std::pair<std::string, std::function<void()>>>& buttons)
+	{
+		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.f;
+		ImVec2 buttonSize = { lineHeight , lineHeight };
+
+		ImGui::SameLine();
+
+		std::string hash = "##" + HashID;
+		if (ImGui::ArrowButtonEx((hash + HashID).c_str(), ImGuiDir_Down, buttonSize)) {
+			
+			
+			ImVec2 mousePos = ImGui::GetIO().MousePos;
+			ImGui::SetNextWindowPos(ImVec2(mousePos.x - 100, mousePos.y));
+
+			ImGui::OpenPopup("Dropdown");
+		}
+
+		if (ImGui::BeginPopup("Dropdown")) {
+			for (int i = 0; i < buttons.size(); i++) {
+				const std::string& buttonLabel = buttons[i].first;
+				const std::function<void()>& buttonAction = buttons[i].second;
+
+				if (ImGui::Button(buttonLabel.c_str())) {
+					buttonAction();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+
+			ImGui::EndPopup();
+		}
+	}
+
 	static void DrawDragFloatWithReset(const std::string& label, ImFont* bold, ImVec2& buttonSize, float& value, std::array<ImVec4, 2> colors, float resetValue = 0.0f, float stepSize = 0.1f, float min = 0.0f, float max = 0.0f)
 	{
 
