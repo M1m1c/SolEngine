@@ -198,20 +198,22 @@ namespace GalaxyDraw
 			path = model->GetDir();
 		}
 
+		auto& matData = s_3DData.MaterialDataCollections[materialIndex];
+
+		auto& entitesUsingMat = matData->EntitiesUsingMat;
+
+		auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
+		if (iterator == entitesUsingMat.end())
+		{
+			entitesUsingMat.push_back(entityID);
+		}
+
 		auto& meshes = model->GetMeshes();
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
 
-			auto& matData = s_3DData.MaterialDataCollections[materialIndex];
-
-			auto& entitesUsingMat = matData->EntitiesUsingMat;
-
-			auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
-			if (iterator == entitesUsingMat.end())
-			{
-				entitesUsingMat.push_back(entityID);
-			}
+			
 
 
 			LoadMesh(meshes[i], model->GetName(), entityID, materialIndex);
@@ -384,11 +386,6 @@ namespace GalaxyDraw
 
 			auto& entitesUsingMat = matData->EntitiesUsingMat;
 
-			/*for (int i = entitesUsingMat.size() - 1; i >= 0; i--)
-			{
-				auto
-
-			}*/
 			auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
 			if (iterator != entitesUsingMat.end())
 			{
@@ -402,6 +399,24 @@ namespace GalaxyDraw
 			}
 		}
 		return modelPath;
+	}
+
+	uint32_t Renderer3D::GetMaterialIndex(EntityID entityID)
+	{
+		uint32_t retval = 0;
+		for (size_t i = 0; i < s_3DData.MaterialDataCollections.size(); i++)
+		{
+			auto& matData = s_3DData.MaterialDataCollections[i];
+			auto& entitesUsingMat = matData->EntitiesUsingMat;
+
+			auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
+			if (iterator != entitesUsingMat.end())
+			{
+				retval = i;
+				break;
+			}
+		}
+		return retval;
 	}
 
 	std::shared_ptr<MaterialData> Renderer3D::GetMaterial(uint32_t materialIndex)

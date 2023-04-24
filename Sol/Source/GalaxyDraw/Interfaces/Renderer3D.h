@@ -37,6 +37,7 @@ namespace GalaxyDraw {
 		static uint32_t SwapMaterial(const uint32_t matIndex, const EntityID entityID);
 
 		
+		static uint32_t GetMaterialIndex(EntityID entityID);
 		static std::shared_ptr<MaterialData> GetMaterial(uint32_t materialIndex);
 		static std::vector<std::shared_ptr<MaterialData>>& GetAllMaterials();
 
