@@ -394,7 +394,7 @@ namespace GalaxyDraw
 		return materialIndex;
 	}
 
-	
+
 
 	//TODO we have a crash that can happen when switching back to default material from a material witha texture,
 	// Figure out what causese it.
@@ -419,7 +419,7 @@ namespace GalaxyDraw
 		return matIndex;
 	}
 
-	std::string Renderer3D::DiscardEntityRenderData(const EntityID& entityID)
+	std::string Renderer3D::DiscardEntityRenderData(const EntityID& entityID, bool shouldDiscardMaterial)
 	{
 		auto& texManager = TextureManager::GetInstance();
 		auto& modelManager = ModelManager::GetInstance();
@@ -439,14 +439,17 @@ namespace GalaxyDraw
 				}
 				entitiesUsingMat.erase(iterator);
 				DiscardMeshInstances(entityID, matData);
-				texManager.DiscardTextureInstance(matData->DiffuseTexturePath);
+				if (shouldDiscardMaterial)
+				{
+					texManager.DiscardTextureInstance(matData->DiffuseTexturePath);
+				}
 				modelManager.DiscardModelInstance(modelPath);
 			}
 
-			if (entitiesUsingMat.empty())
+			bool isNotDefaultMat = i != 0;
+			if (isNotDefaultMat && shouldDiscardMaterial && entitiesUsingMat.empty())
 			{
-				//TODO delete material and remove it form relevant maps
-				//s_3DData.MaterialDataCollections.erase(s_3DData.MaterialDataCollections.begin() + i);
+				s_3DData.MaterialDataCollections.erase(s_3DData.MaterialDataCollections.begin() + i);
 			}
 		}
 		return modelPath;
@@ -563,7 +566,7 @@ namespace GalaxyDraw
 
 	}
 
-	
+
 
 	void Renderer3D::ResetStats()
 	{

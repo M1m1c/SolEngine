@@ -45,7 +45,7 @@ namespace GalaxyDraw {
 		//TODO crate function for unloading a model and mesh.
 		//TODO fix so that when models wiht seperate sub meshes get loadad that each sub mesh instantiates a new entity wiht a transform at that sub meshes location relative to parent model.
 
-		static std::string DiscardEntityRenderData(const EntityID& entityID);
+		static std::string DiscardEntityRenderData(const EntityID& entityID, bool shouldDiscardMaterial=true);
 
 
 		//draws all instances of meshes
