@@ -161,6 +161,9 @@ namespace Sol
 				{
 					//TODO after having done these changes we now seem to get a heap corruption error when closing the window,
 					// look into why this could be.
+					// Upon further investigation, commenting out all use of scene in properties panel removes the error,
+					// therefore it must be due to properties panel holding a shared ptr to scene. 
+					// Figure out how to solve this
 					auto scene = m_CurrentScene;
 					deleteActions.push_back({ mat->Name, [&scene,i]() 
 						{
