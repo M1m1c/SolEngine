@@ -44,8 +44,8 @@ namespace Sol
 			}
 			m_Registry.remove<T>(entityID);
 		}
-
-		const entt::registry& GetRegistry() const { return m_Registry; }
+		//TODO check if it is okay to not have this return const
+		entt::registry& GetRegistry() { return m_Registry; }
 
 	private:
 

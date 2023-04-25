@@ -41,7 +41,7 @@ namespace Sol
 		//Swaps this components material for antother
 		MaterialComp(const uint32_t matIndex, const EntityID entityID)
 		{
-			m_MaterialIndex = GalaxyDraw::IMaterial::SwapMaterial(matIndex, entityID);
+			SwapMaterial(matIndex, entityID);
 		}
 
 		uint32_t GetMaterialIndex() { return m_MaterialIndex; }
@@ -59,6 +59,11 @@ namespace Sol
 			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
 			SOL_CORE_ASSERT(mat, "No material found!");
 			return mat->DiffuseTexturePath;
+		}
+
+		void SwapMaterial(const uint32_t matIndex, const EntityID entityID) 
+		{
+			m_MaterialIndex = GalaxyDraw::IMaterial::SwapMaterial(matIndex, entityID);
 		}
 
 	private:

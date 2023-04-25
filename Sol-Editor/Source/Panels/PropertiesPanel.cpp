@@ -159,10 +159,23 @@ namespace Sol
 
 				if (i != 0)
 				{
-					deleteActions.push_back({ mat->Name, [&component,i,entityID]() {
+					auto scene = m_CurrentScene;
+					deleteActions.push_back({ mat->Name, [&scene,i]() {
 						//TODO call a delete material function
 						SOL_CORE_WARN("delete mat pressed {0}", i);
+						GD_Renderer3D::DeleteMaterial(i, [&scene](uint32_t defaultMat,EntityID entityID)
+							{
+								auto& registry = scene->GetRegistry();
 
+								auto view = registry.view<Sol::MaterialComp>();
+								for (auto viewEntityID : view)
+								{
+									if (viewEntityID != entityID) { continue; }
+									auto& matComp = view.get<Sol::MaterialComp>(viewEntityID);
+									matComp.SwapMaterial(0, entityID);
+								}
+								SOL_CORE_WARN("calling delete mat lambda");
+							});
 					} });
 				}
 			}

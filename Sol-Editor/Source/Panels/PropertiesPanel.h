@@ -2,6 +2,7 @@
 #include "Sol/Core/Core.h"
 #include "Sol/Core/Log.h"
 #include "Sol/Scene/Entity.h"
+#include "Sol/Scene/Scene.h"
 
 namespace Sol 
 {
@@ -15,6 +16,7 @@ namespace Sol
 		void OnImGuiRender();
 
 		void SetCurrentSelection(Entity selection) { m_CurrentSelection = selection; }
+		void SetCurrentScene(s_ptr<Scene> scene) { m_CurrentScene = scene; }
 
 	private:
 		void DrawComponentNodes(Entity entity);
@@ -23,5 +25,6 @@ namespace Sol
 
 	private:
 		Entity m_CurrentSelection;
+		s_ptr<Scene> m_CurrentScene;
 	};
 }
