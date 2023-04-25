@@ -378,7 +378,7 @@ namespace GalaxyDraw
 			s_3DData.TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
 		}
 
-		std::string modelPath = DiscardEntityRenderData(entityID);
+		std::string modelPath = DiscardEntityRenderData(entityID,false,false);
 
 		auto size = s_3DData.MaterialDataCollections.size();
 		std::string matName = "newMaterial";
@@ -410,7 +410,7 @@ namespace GalaxyDraw
 			return s.DefaultMaterialIndex;
 		}
 
-		std::string modelPath = DiscardEntityRenderData(entityID);
+		std::string modelPath = DiscardEntityRenderData(entityID,false,false);
 
 		TextureManager::LoadTexture(matDataCollections[matIndex]->DiffuseTexturePath);
 
@@ -419,7 +419,7 @@ namespace GalaxyDraw
 		return matIndex;
 	}
 
-	std::string Renderer3D::DiscardEntityRenderData(const EntityID& entityID, bool shouldDiscardMaterial)
+	std::string Renderer3D::DiscardEntityRenderData(const EntityID& entityID, bool shouldDiscardMaterial, bool shouldDiscardModel)
 	{
 		auto& texManager = TextureManager::GetInstance();
 		auto& modelManager = ModelManager::GetInstance();
@@ -439,11 +439,12 @@ namespace GalaxyDraw
 				}
 				entitiesUsingMat.erase(iterator);
 				DiscardMeshInstances(entityID, matData);
+
 				if (shouldDiscardMaterial)
-				{
 					texManager.DiscardTextureInstance(matData->DiffuseTexturePath);
-				}
-				modelManager.DiscardModelInstance(modelPath);
+
+				if (shouldDiscardModel)
+					modelManager.DiscardModelInstance(modelPath);
 			}
 
 			bool isNotDefaultMat = i != 0;
