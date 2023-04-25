@@ -128,19 +128,20 @@ namespace Sol
 				ImGui::TextDisabled(name.c_str());
 				ImGui::PopStyleVar();
 			}
-			else 
+			else
 			{
 				char buffer[256];
 				memset(buffer, 0, sizeof(buffer));
 				strcpy_s(buffer, sizeof(buffer), name.c_str());
 
-				if (ImGui::InputText("##MaterialName", buffer, sizeof(buffer))) 
+				if (ImGui::InputText("##MaterialName", buffer, sizeof(buffer)))
 				{
 					name = std::string(buffer);
 				}
 			}
 
 			std::vector<std::pair<std::string, std::function<void()>>> buttons;
+			std::vector<std::pair<std::string, std::function<void()>>> deleteActions;
 			buttons.push_back({ "Create New Material", [&component,entityID]() {
 				auto props = component.Properties;
 				std::string defaultTexture = "";
@@ -158,17 +159,26 @@ namespace Sol
 					component = MaterialComp(i, entityID);
 					component.Properties = props;
 				} });
+
+				if (i != 0)
+				{
+					deleteActions.push_back({ mat->Name, [&component,i,entityID]() {
+						//TODO call a delete material function
+						SOL_CORE_WARN("delete mat pressed {0}", i);
+
+					} });
+				}
 			}
 
-			DrawDropDownList("MaterialSelection", "Select Material", buttons);
+			DrawDropDownList("MaterialSelection", "Select Material", buttons, deleteActions);
 			ImGui::NextColumn();
 
 			ImGui::Columns(2);
 			ImGui::SetColumnWidth(0, 80.f);
 			ImGui::Text("Diffuse");
-			ImGui::NextColumn();	
+			ImGui::NextColumn();
 
-			if (!readOnly) 
+			if (!readOnly)
 			{
 				auto& path = component.GetTexturePath();
 				std::string displayPath = "											";
