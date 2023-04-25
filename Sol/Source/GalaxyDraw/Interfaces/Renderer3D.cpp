@@ -10,6 +10,8 @@
 #include "RenderCommand.h"
 
 #include "Sol/Core/KeyedVector.h"
+#include "Sol/Scene/Scene.h"
+#include "Sol/Scene/Components/MaterialComp.h"
 
 #include "ModelManager.h"
 #include "TextureManager.h"
@@ -418,6 +420,33 @@ namespace GalaxyDraw
 
 		return matIndex;
 	}
+
+	void Renderer3D::DeleteMaterial(uint32_t materialIndex, const std::shared_ptr<Sol::Scene>& currentScene)
+	{
+		if (materialIndex == 0 && currentScene != nullptr) { return; }
+		auto& matDataCollections = s_3DData.MaterialDataCollections;
+
+		if (materialIndex < matDataCollections.size())
+		{
+			auto& material = matDataCollections[materialIndex];
+			for (int i = material->EntitiesUsingMat.size() - 1; i >= 0; i--)
+			{
+				auto entityID = material->EntitiesUsingMat[i];
+				//auto& registry = currentScene->GetRegistry();
+
+				//auto view = registry.view<Sol::MaterialComp>();
+				//for (auto viewEntityID : view)
+				//{
+				//	if (viewEntityID != entityID) { continue; }
+				//	auto& matComp = view.get<Sol::MaterialComp>(viewEntityID);
+				//	matComp.SwapMaterial(0, entityID);
+				//}
+
+			}
+			matDataCollections.erase(matDataCollections.begin() + materialIndex);
+		}
+	}
+
 
 	std::string Renderer3D::DiscardEntityRenderData(const EntityID& entityID, bool shouldDiscardMaterial, bool shouldDiscardModel)
 	{
