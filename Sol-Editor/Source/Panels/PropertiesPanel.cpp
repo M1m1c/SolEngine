@@ -159,10 +159,11 @@ namespace Sol
 
 				if (i != 0)
 				{
+					//TODO after having done these changes we now seem to get a heap corruption error when closing the window,
+					// look into why this could be.
 					auto scene = m_CurrentScene;
-					deleteActions.push_back({ mat->Name, [&scene,i]() {
-						//TODO call a delete material function
-						SOL_CORE_WARN("delete mat pressed {0}", i);
+					deleteActions.push_back({ mat->Name, [&scene,i]() 
+						{
 						GD_Renderer3D::DeleteMaterial(i, [&scene](uint32_t defaultMat,EntityID entityID)
 							{
 								auto& registry = scene->GetRegistry();
@@ -174,7 +175,6 @@ namespace Sol
 									auto& matComp = view.get<Sol::MaterialComp>(viewEntityID);
 									matComp.SwapMaterial(0, entityID);
 								}
-								SOL_CORE_WARN("calling delete mat lambda");
 							});
 					} });
 				}
