@@ -70,6 +70,12 @@ namespace GalaxyDraw
 		return nullptr;
 	}
 
+	bool ModelManager::IsModelLoaded(const std::string& path)
+	{
+		auto& s = ModelManager::GetInstance();
+		return s.m_LoadedModels.Exists(path);
+	}
+
 	void ModelManager::ProcessNode(aiNode* node, const aiScene* scene, std::vector<std::shared_ptr<Mesh>>& meshes)
 	{
 		//node->mt

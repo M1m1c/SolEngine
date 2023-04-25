@@ -45,11 +45,12 @@ namespace GalaxyDraw {
 		//TODO crate function for unloading a model and mesh.
 		//TODO fix so that when models wiht seperate sub meshes get loadad that each sub mesh instantiates a new entity wiht a transform at that sub meshes location relative to parent model.
 
+		static std::string DiscardEntityRenderData(const EntityID& entityID);
+
+
 		//draws all instances of meshes
 		static void DrawInstances();
 
-		static void DiscardMeshInstances(EntityID entityID, std::shared_ptr<IModel> model);
-		static void DiscardMeshInstances(EntityID entityID);
 
 		struct Statistics
 		{
@@ -65,8 +66,8 @@ namespace GalaxyDraw {
 		static void Submit();
 		static void Flush();
 		static std::shared_ptr<MaterialData> CreateMaterialData(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath);
-		
-		static std::string RemoveModelFromCurrentMaterial(const EntityID& entityID);
+		static void DiscardMeshInstances(EntityID entityID, std::shared_ptr<MaterialData> matData);
+		static void ReloadModel(std::string& modelPath, const EntityID& entityID, const uint32_t& materialIndex);
 
 
 		//static CreateNewMaterial(const std::string& texturePath);

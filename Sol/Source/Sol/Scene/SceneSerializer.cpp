@@ -111,8 +111,10 @@ namespace Sol
 		{
 			out << YAML::Key << "MaterialComp";
 			out << YAML::BeginMap;
-			auto& color = entity.GetComponent<MaterialComp>().Properties.Color;
+			auto& materialComp = entity.GetComponent<MaterialComp>();
+			auto& color = materialComp.Properties.Color;
 			out << YAML::Key << "Color" << YAML::Value << color;
+			out << YAML::Key << "MaterialIndex" << YAML::Value << materialComp.GetMaterialIndex();
 			out << YAML::EndMap;
 		}
 
@@ -127,6 +129,7 @@ namespace Sol
 	{
 		YAML::Emitter out;
 		out << YAML::BeginMap;
+		//TODO make sure we save materials present in scene
 		out << YAML::Key << "Scene" << YAML::Value << "Untitled Scene";
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
 		m_Scene->GetRegistry().each([&](auto entityID)
@@ -155,6 +158,8 @@ namespace Sol
 		std::ifstream stream(filePath);
 		std::stringstream strStream;
 		strStream << stream.rdbuf();
+
+		//TODO make sure that we load materials present in scene
 
 		YAML::Node data = YAML::Load(strStream.str());
 		if (!data["Scene"]) { return false; }
@@ -192,6 +197,8 @@ namespace Sol
 				auto materialComp = entity["MaterialComp"];
 				if (materialComp)
 				{
+					//TODO make it so we set the correct material
+					//auto& material = loadedEntity.AddComponent<MaterialComp>(materialComp["MaterialIndex"].as<uint32_t>(), id);
 					auto& material = loadedEntity.AddComponent<MaterialComp>();
 					material.Properties.Color = materialComp["Color"].as<glm::vec4>();
 				}

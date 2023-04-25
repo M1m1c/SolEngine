@@ -182,6 +182,51 @@ namespace GalaxyDraw
 		return material;
 	}
 
+	void Renderer3D::DiscardMeshInstances(EntityID entityID, std::shared_ptr<MaterialData> matData)
+	{
+
+		if (s_3DData.EntityToModelPath.Exists(entityID))
+		{
+			s_3DData.EntityToModelPath.eraseWithKey(entityID);
+		}
+
+		auto& meshDataCollection = matData->MeshDataCollections;
+
+
+		for (int i = meshDataCollection.size() - 1; i >= 0; i--)
+		{
+			auto& meshData = meshDataCollection[i];
+			if (!meshDataCollection[i].m_Instances.Exists(entityID)) { continue; }
+
+			meshData.m_Instances.eraseWithKey(entityID);
+
+			if (meshData.m_Instances.size() == 0)
+			{
+				delete[] meshData.VertexBufferBase;
+				delete[] meshData.InstanceBufferBase;
+				meshDataCollection.eraseWithIndex(i);
+			}
+
+		}
+	}
+
+	void Renderer3D::ReloadModel(std::string& modelPath, const EntityID& entityID, const uint32_t& materialIndex)
+	{
+		if (modelPath != "")
+		{
+			std::shared_ptr<Model> model = nullptr;
+			if (ModelManager::IsModelLoaded(modelPath))
+			{
+				model = ModelManager::GetModel(modelPath);
+			}
+			else
+			{
+				model = ModelManager::ProcessModel(modelPath);
+			}
+			LoadModel(model, entityID, materialIndex);
+		}
+	}
+
 	//Loads all sub meshes of a model
 	//When we create a model on a modelComp using Model::Create() this also gets called.
 	void Renderer3D::LoadModel(std::shared_ptr<IModel> model, EntityID entityID, uint32_t materialIndex)
@@ -212,13 +257,7 @@ namespace GalaxyDraw
 
 		for (size_t i = 0; i < meshes.size(); i++)
 		{
-
-			
-
-
 			LoadMesh(meshes[i], model->GetName(), entityID, materialIndex);
-
-
 		}
 	}
 
@@ -339,7 +378,7 @@ namespace GalaxyDraw
 			s_3DData.TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
 		}
 
-		std::string modelPath = RemoveModelFromCurrentMaterial(entityID);
+		std::string modelPath = DiscardEntityRenderData(entityID);
 
 		auto size = s_3DData.MaterialDataCollections.size();
 		std::string matName = "newMaterial";
@@ -350,14 +389,12 @@ namespace GalaxyDraw
 		s_3DData.MaterialDataCollections.push_back(newMat);
 		materialIndex = size;
 
-		if (modelPath != "")
-		{
-			auto model = ModelManager::GetModel(modelPath);
-			LoadModel(model, entityID, materialIndex);
-		}
+		ReloadModel(modelPath, entityID, materialIndex);
 
 		return materialIndex;
 	}
+
+	
 
 	//TODO we have a crash that can happen when switching back to default material from a material witha texture,
 	// Figure out what causese it.
@@ -367,44 +404,49 @@ namespace GalaxyDraw
 
 		//TODO check if index exists
 		auto& matDataCollections = s.MaterialDataCollections;
-		if (matIndex >= matDataCollections.size()) 
-		{ 
+		if (matIndex >= matDataCollections.size())
+		{
 			TextureManager::LoadTexture(matDataCollections[s.DefaultMaterialIndex]->DiffuseTexturePath);
-			return s.DefaultMaterialIndex; 
+			return s.DefaultMaterialIndex;
 		}
 
-		std::string modelPath = RemoveModelFromCurrentMaterial(entityID);
-		
+		std::string modelPath = DiscardEntityRenderData(entityID);
+
 		TextureManager::LoadTexture(matDataCollections[matIndex]->DiffuseTexturePath);
 
-		if (modelPath != "")
-		{
-			auto model = ModelManager::GetModel(modelPath);
-			LoadModel(model, entityID, matIndex);
-		}
+		ReloadModel(modelPath, entityID, matIndex);
 
 		return matIndex;
 	}
 
-	std::string Renderer3D::RemoveModelFromCurrentMaterial(const EntityID& entityID)
+	std::string Renderer3D::DiscardEntityRenderData(const EntityID& entityID)
 	{
 		auto& texManager = TextureManager::GetInstance();
+		auto& modelManager = ModelManager::GetInstance();
 		std::string modelPath = "";
-		for (auto& matData : s_3DData.MaterialDataCollections)
+
+		for (int i = s_3DData.MaterialDataCollections.size() - 1; i >= 0; i--)
 		{
+			auto& matData = s_3DData.MaterialDataCollections[i];
+			auto& entitiesUsingMat = matData->EntitiesUsingMat;
 
-			auto& entitesUsingMat = matData->EntitiesUsingMat;
-
-			auto iterator = std::find(entitesUsingMat.begin(), entitesUsingMat.end(), entityID);
-			if (iterator != entitesUsingMat.end())
+			auto iterator = std::find(entitiesUsingMat.begin(), entitiesUsingMat.end(), entityID);
+			if (iterator != entitiesUsingMat.end())
 			{
 				if (s_3DData.EntityToModelPath.Exists(entityID))
 				{
 					modelPath = s_3DData.EntityToModelPath.Get(entityID);
 				}
-
-				DiscardMeshInstances(entityID);
+				entitiesUsingMat.erase(iterator);
+				DiscardMeshInstances(entityID, matData);
 				texManager.DiscardTextureInstance(matData->DiffuseTexturePath);
+				modelManager.DiscardModelInstance(modelPath);
+			}
+
+			if (entitiesUsingMat.empty())
+			{
+				//TODO delete material and remove it form relevant maps
+				//s_3DData.MaterialDataCollections.erase(s_3DData.MaterialDataCollections.begin() + i);
 			}
 		}
 		return modelPath;
@@ -521,105 +563,7 @@ namespace GalaxyDraw
 
 	}
 
-	//Removes all the model's mesh instances tied to the entityID from the MeshDataCollections
-	void Renderer3D::DiscardMeshInstances(EntityID entityID, std::shared_ptr<IModel> model)
-	{
-		auto modelName = model->GetName();
-
-		auto& meshes = model->GetMeshes();
-
-		for (auto& matData : s_3DData.MaterialDataCollections)
-		{
-
-			if (matData->EntitiesUsingMat.size() == 0) { continue; }
-
-			auto& entitiesUsingMat = matData->EntitiesUsingMat;
-
-			auto iterator = std::find(entitiesUsingMat.begin(), entitiesUsingMat.end(), entityID);
-			if (iterator != entitiesUsingMat.end())
-			{
-				entitiesUsingMat.erase(iterator);
-
-				if (s_3DData.EntityToModelPath.Exists(entityID))
-				{
-					s_3DData.EntityToModelPath.eraseWithKey(entityID);
-				}
-
-				auto& meshDataCollection = matData->MeshDataCollections;
-				for (size_t i = 0; i < meshes.size(); i++)
-				{
-					auto name = meshes[i]->Name + "_" + modelName;
-
-					if (meshDataCollection.Exists(name))
-					{
-						auto& meshRenderData = meshDataCollection.Get(name);
-						meshRenderData.m_Instances.eraseWithKey(entityID);
-
-
-						//TODO if there are no more instances in the mesh render data then unload the mesh and delete mesh render data
-						if (meshRenderData.m_Instances.size() == 0)
-						{
-							//TODO figure out how to dealocate the loaded mesh
-
-							delete[] meshRenderData.VertexBufferBase;
-							delete[] meshRenderData.InstanceBufferBase;
-							meshDataCollection.eraseWithKey(name);
-						}
-					}
-				}
-			}
-
-
-
-
-		}
-
-
-	}
-
-	void Renderer3D::DiscardMeshInstances(EntityID entityID)
-	{
-		for (auto& matData : s_3DData.MaterialDataCollections)
-		{
-
-			if (matData->EntitiesUsingMat.size() == 0) { continue; }
-
-			auto& entitiesUsingMat = matData->EntitiesUsingMat;
-
-
-			auto iterator = std::find(entitiesUsingMat.begin(), entitiesUsingMat.end(), entityID);
-			if (iterator != entitiesUsingMat.end())
-			{
-				entitiesUsingMat.erase(iterator);
-
-				if (s_3DData.EntityToModelPath.Exists(entityID))
-				{
-					s_3DData.EntityToModelPath.eraseWithKey(entityID);
-				}
-
-				auto& meshDataCollection = matData->MeshDataCollections;
-
-
-				for (int i = meshDataCollection.size() - 1; i >= 0; i--)
-				{
-					auto& meshData = meshDataCollection[i];
-					if (!meshDataCollection[i].m_Instances.Exists(entityID)) { continue; }
-
-					meshData.m_Instances.eraseWithKey(entityID);
-
-					if (meshData.m_Instances.size() == 0)
-					{
-						delete[] meshData.VertexBufferBase;
-						delete[] meshData.InstanceBufferBase;
-						meshDataCollection.eraseWithIndex(i);
-					}
-
-				}
-
-			}
-
-		}
-	}
+	
 
 	void Renderer3D::ResetStats()
 	{

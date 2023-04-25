@@ -25,6 +25,7 @@ namespace GalaxyDraw
         static void DiscardModelInstance(const std::string& path);
         static std::shared_ptr<Model> ProcessModel(const std::string& path);
         static std::shared_ptr<Model> GetModel(const std::string& path);
+        static bool IsModelLoaded(const std::string& path);
         static ModelManager& GetInstance() // static method to get the instance
         {
             static ModelManager instance; // static instance of the class

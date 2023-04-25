@@ -96,10 +96,7 @@ namespace Sol
 					//TODO figure out a cleaner way to do this, since we now do this in the scene as well
 					if (component.ModelPath != cleanPath)
 					{
-						auto& modelManager = GD_ModelManager::GetInstance();
-
-						GD_Renderer3D::DiscardMeshInstances(entityID, modelManager.GetModel(component.ModelPath));
-						modelManager.DiscardModelInstance(component.ModelPath);
+					GD_Renderer3D::DiscardEntityRenderData(entityID);
 					}
 
 					component = ModelComp(cleanPath, entityID, matIndex);
