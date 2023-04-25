@@ -43,9 +43,11 @@ namespace GalaxyDraw
 	std::shared_ptr<Texture> TextureManager::GetTexture(std::string filePath)
 	{
 		auto& s = TextureManager::GetInstance();
-		
-		return s.m_LoadedTextures.Get(filePath).first;
-		
+		if (s.m_LoadedTextures.Exists(filePath))
+		{
+			return s.m_LoadedTextures.Get(filePath).first;
+		}
+		return nullptr;
 	}
 
 	void TextureManager::DiscardTextureInstance(std::string filePath)

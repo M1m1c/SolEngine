@@ -367,9 +367,16 @@ namespace GalaxyDraw
 
 		//TODO check if index exists
 		auto& matDataCollections = s.MaterialDataCollections;
-		if (matIndex >= matDataCollections.size()) { return s.DefaultMaterialIndex; }
+		if (matIndex >= matDataCollections.size()) 
+		{ 
+			TextureManager::LoadTexture(matDataCollections[s.DefaultMaterialIndex]->DiffuseTexturePath);
+			return s.DefaultMaterialIndex; 
+		}
 
 		std::string modelPath = RemoveModelFromCurrentMaterial(entityID);
+		
+		TextureManager::LoadTexture(matDataCollections[matIndex]->DiffuseTexturePath);
+
 		if (modelPath != "")
 		{
 			auto model = ModelManager::GetModel(modelPath);
