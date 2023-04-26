@@ -426,6 +426,8 @@ namespace GalaxyDraw
 		return matIndex;
 	}
 
+	//TODO make sue we unladthe texture if all materials that use it are gone
+	//Right now I am not entierly sure how we remove materials when we open a new scene
 	void Renderer3D::DeleteMaterial(uint32_t materialIndex, std::function<void(uint32_t, EntityID)> function)
 	{
 		if (materialIndex == 0 && function != nullptr) { return; }
