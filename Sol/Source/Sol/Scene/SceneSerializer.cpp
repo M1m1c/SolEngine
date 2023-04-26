@@ -123,12 +123,12 @@ namespace Sol
 		out << YAML::EndMap;
 	}
 
-	static void SerializeMaterial(YAML::Emitter& out,uint32_t matIndex, s_ptr <GD_::MaterialData > matData)
+	static void SerializeMaterial(YAML::Emitter& out, uint32_t matIndex, s_ptr <GD_::MaterialData > matData)
 	{
 		out << YAML::BeginMap;
 		out << YAML::Key << "Material" << YAML::Value << matIndex;
 		out << YAML::Key << "Name" << YAML::Value << matData->Name;
-		out << YAML::Key << "DiffuseTexture" << YAML::Value << matData->DiffuseTexturePath;	
+		out << YAML::Key << "DiffuseTexture" << YAML::Value << matData->DiffuseTexturePath;
 		out << YAML::EndMap;
 	}
 
@@ -184,6 +184,42 @@ namespace Sol
 		//TODO call createMaterial on Renderer3D and make sure it is in the correct order the amterials were created in
 
 		YAML::Node data = YAML::Load(strStream.str());
+
+		if (data["Materials"])
+		{
+			auto materials = data["Materials"];
+
+			for (size_t i = 0; i < materials.size(); i++)
+			{
+				auto mat = materials[i];
+
+				uint32_t matIndex = 0;
+				std::string name = "";
+				std::string diffuseTexture = "";
+
+				auto indexField = mat["Material"];
+				if (indexField)
+				{
+					matIndex = indexField.as<uint32_t>();
+				}
+
+				auto nameField = mat["Name"];
+				if (nameField)
+				{
+					name = nameField.as<std::string>();
+				}
+
+				auto difTexField = mat["DiffuseTexture"];
+				if (true)
+				{
+					diffuseTexture = difTexField.as<std::string>();
+				}
+				SOL_CORE_TRACE("Loading Material: Index = {0}, Name = {1}", matIndex, name);
+				GD_Renderer3D::CreateNewMaterial(diffuseTexture, name);
+			}
+		}
+
+
 		if (!data["Scene"]) { return false; }
 
 		std::string sceneName = data["Scene"].as<std::string>();
@@ -217,11 +253,11 @@ namespace Sol
 				}
 
 				auto materialComp = entity["MaterialComp"];
+				uint32_t matIndex = 0;
 				if (materialComp)
 				{
-					//TODO make it so we set the correct material
-					//auto& material = loadedEntity.AddComponent<MaterialComp>(materialComp["MaterialIndex"].as<uint32_t>(), id);
-					auto& material = loadedEntity.AddComponent<MaterialComp>();
+					matIndex = materialComp["MaterialIndex"].as<uint32_t>();
+					auto& material = loadedEntity.AddComponent<MaterialComp>(matIndex);
 					material.Properties.Color = materialComp["Color"].as<glm::vec4>();
 				}
 
@@ -229,7 +265,7 @@ namespace Sol
 				if (modelComp)
 				{
 					auto path = modelComp["ModelPath"].as<std::string>();
-					auto& model = loadedEntity.AddComponent<ModelComp>(path, loadedEntity.GetID());
+					auto& model = loadedEntity.AddComponent<ModelComp>(path, loadedEntity.GetID(), matIndex);
 				}
 			}
 		}

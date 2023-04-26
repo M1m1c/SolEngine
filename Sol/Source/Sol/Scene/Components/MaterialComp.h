@@ -44,6 +44,8 @@ namespace Sol
 			SwapMaterial(matIndex, entityID);
 		}
 
+		MaterialComp(const uint32_t matIndex) : m_MaterialIndex(matIndex) {}
+
 		uint32_t GetMaterialIndex() { return m_MaterialIndex; }
 
 
