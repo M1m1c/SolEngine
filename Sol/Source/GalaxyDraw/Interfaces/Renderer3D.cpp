@@ -83,6 +83,10 @@ namespace GalaxyDraw
 		s_3DData.CameraBuffer.ViewProjection = projection * view;
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
 
+		//TODO add a way of seing draw calls in imgui
+		SOL_CORE_TRACE("DrawCalls = {0}", s_3DData.Stats.DrawCalls);
+		s_3DData.Stats.DrawCalls = 0;
+
 		Submit();
 	}
 
@@ -92,6 +96,8 @@ namespace GalaxyDraw
 
 		s_3DData.CameraBuffer.ViewProjection = camera.GetViewProjectionMatrix();
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
+
+		s_3DData.Stats.DrawCalls = 0;
 
 		Submit();
 	}
@@ -120,6 +126,7 @@ namespace GalaxyDraw
 				//s_3DData.TextureSlotIndex = 1;
 			}
 		}
+
 
 	}
 
@@ -157,7 +164,6 @@ namespace GalaxyDraw
 				}
 			}
 		}
-
 	}
 
 	std::shared_ptr<MaterialData> Renderer3D::CreateMaterialData(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath)
