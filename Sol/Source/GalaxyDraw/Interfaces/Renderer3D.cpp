@@ -24,19 +24,6 @@
 
 namespace GalaxyDraw
 {
-
-	//TODO we should restructure how we do our instanced rendering.
-	// Currently each unique mesh determines teh amount od draw calls.
-	// each unique mesh also holds onto an instance of the shader.
-	// What we instead would want to do is have Materials hold onto shaders and a collection of MeshRenderData.
-	// this way we would have an easier time of rebinding textures before the drawcall is issued,
-	// additionally drawcalls would be dependent on unique materials and then unique meshes.
-	// another cool thing we could do is have a collection of active materials and one of inactive,
-	// when we remove instances we check if it is the last instance that uses that material and then we free it,
-	// then if there are no more meshes of any kind we remove it form active, then after a set number of time we discard/unload all inactive materials,
-	// freeing up the memory on the gpu, alternativley we frre them up imedietly when the last mesh using the material has been deleted.
-	// btw we might be able to use the regular texture pipleline instead of using texture arrays,
-	// since each material will bind those texutres to its shader.
 	struct Renderer3DData
 	{
 		static const uint32_t MaxMeshes = 2000;
