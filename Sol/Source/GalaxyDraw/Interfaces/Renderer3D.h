@@ -1,33 +1,17 @@
 #pragma once
 
 #include "OrthoCamera.h"
-#include "Texture.h"
 #include "GalaxyDraw/Camera.h"
 //#include "Hazel/Renderer/EditorCamera.h"
-#include "Sol/Scene/Components.h"
+
 #include "Sol/SolDefines.h"
 
 namespace GalaxyDraw {
 
-	//!VERY IMPORTANT!
-	// The order of initaliseation needs to match the location order in the shader,
-	// otherwise the columns will be missaligned.
-	struct InstanceData
-	{
-		InstanceData():
-			m_EntityID(-1), 
-			m_MeshColor(), 
-			m_EntityTransform(),
-			m_MeshTransform()
-		//	m_MeshPosition(),
-		{};
-	
-		int m_EntityID;
-		glm::vec4 m_MeshColor;
-		glm::mat4 m_EntityTransform;
-		glm::mat4 m_MeshTransform;
-		//glm::vec3 m_MeshPosition;
-	};
+	class IModel;
+	struct Mesh;
+	struct InstanceData;
+	struct MaterialData;
 
 	class Renderer3D
 	{
@@ -43,19 +27,31 @@ namespace GalaxyDraw {
 		//Updates all mesh datacollections instanceData containing entityID
 		static void UpdateInstanceData(EntityID entityID, const InstanceData& instanceData);
 
-		static void LoadModel(std::shared_ptr<IModel> model, EntityID entityID);
-		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID);
+		static void LoadModel(std::shared_ptr<IModel> model, EntityID entityID, uint32_t materialIndex = 0);
+		static void LoadMesh(const std::shared_ptr<Mesh>& mesh, const std::string& modelName, EntityID entityID, uint32_t materialIndex = 0);
+
+		//Returns the materialIndex
+		static uint32_t UpdateExistingMaterial(const std::string& texturePath, const uint32_t matIndex, const EntityID entityID);
+		static uint32_t CreateNewMaterial(const std::string& texturePath, const EntityID entityID);
+		static uint32_t CreateNewMaterial(const std::string& texturePath,std::string matName = "");
+		static uint32_t SwapMaterial(const uint32_t matIndex, const EntityID entityID);
+		static void DeleteMaterial(uint32_t materialIndex, std::function<void(uint32_t, EntityID)> function);
+		static std::vector<std::shared_ptr<MaterialData>>& GetMaterials();
+
+		static uint32_t GetMaterialIndex(EntityID entityID);
+		static std::shared_ptr<MaterialData> GetMaterial(uint32_t materialIndex);
+		static std::vector<std::shared_ptr<MaterialData>>& GetAllMaterials();
 
 		//TODO create function for handeling when entity is destroyed, needs to remove it self from relevant MeshRenderData m_ContainedEntityIds.
 		//TODO crate function for unloading a model and mesh.
 		//TODO fix so that when models wiht seperate sub meshes get loadad that each sub mesh instantiates a new entity wiht a transform at that sub meshes location relative to parent model.
 
+		static std::string DiscardEntityRenderData(const EntityID& entityID, bool shouldDiscardMaterial=true,bool shouldDiscardModel=true);
+
+
 		//draws all instances of meshes
 		static void DrawInstances();
-		static void DrawModel(std::shared_ptr<IModel> model, const glm::mat4& transform);
-		static void DrawMesh(const std::string& modelName,const std::shared_ptr<Mesh>& mesh, const glm::mat4& transform);
 
-		static void DiscardMeshInstances(EntityID entityID, std::shared_ptr<IModel> model);
 
 		struct Statistics
 		{
@@ -70,5 +66,12 @@ namespace GalaxyDraw {
 	private:
 		static void Submit();
 		static void Flush();
+		static std::shared_ptr<MaterialData> CreateMaterialData(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath);
+		static void DiscardMeshInstances(EntityID entityID, std::shared_ptr<MaterialData> matData);
+		static void ReloadModel(std::string& modelPath, const EntityID& entityID, const uint32_t& materialIndex);
+		static void LoadTextureForMaterial(const std::string& texturePath, const uint32_t& materialIndex);
+
+
+		//static CreateNewMaterial(const std::string& texturePath);
 	};
 }

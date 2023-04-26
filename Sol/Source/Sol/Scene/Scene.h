@@ -28,21 +28,24 @@ namespace Sol
 		template<typename T>
 		void RemoveComponent(EntityID entityID)
 		{
-			if constexpr (std::is_same<T, ModelComp>::value)
+			if constexpr (std::is_same<T, ModelComp>::value || std::is_same<T, MaterialComp>::value)
 			{
-				if (m_Registry.any_of<ModelComp>(entityID))
+				if (m_Registry.all_of<ModelComp, MaterialComp>(entityID))
 				{
-					auto& modelManager = GD_ModelManager::GetInstance();
 					auto& modelComp = m_Registry.get<ModelComp>(entityID);
+					auto& materialComp = m_Registry.get<MaterialComp>(entityID);
 
-					GD_Renderer3D::DiscardMeshInstances(entityID, modelManager.GetModel(modelComp.ModelPath));
-					modelManager.DiscardModelInstance(modelComp.ModelPath);
+					GD_Renderer3D::DiscardEntityRenderData(entityID);
+
+					m_Registry.remove<ModelComp>(entityID);
+					m_Registry.remove<MaterialComp>(entityID);
+					return;
 				}
 			}
 			m_Registry.remove<T>(entityID);
 		}
-
-		const entt::registry& GetRegistry() const { return m_Registry; }
+		//TODO check if it is okay to not have this return const
+		entt::registry& GetRegistry() { return m_Registry; }
 
 	private:
 

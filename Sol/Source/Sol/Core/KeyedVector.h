@@ -1,3 +1,4 @@
+#pragma once
 #include <map>
 #include <vector>
 
@@ -35,6 +36,19 @@ public:
 			return m_Vector[it->second];
 		}
 		else {
+			throw std::out_of_range("Key not found in KeyedVector");
+		}
+	}
+
+	size_t GetIndexFromKey(const Key& key) const
+	{
+		auto it = m_KeyToIndex.find(key);
+		if (it != m_KeyToIndex.end())
+		{
+			return it->second;
+		}
+		else
+		{
 			throw std::out_of_range("Key not found in KeyedVector");
 		}
 	}

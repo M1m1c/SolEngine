@@ -50,7 +50,7 @@ namespace Sol
 
 				temp.m_EntityTransform = transform;
 				//temp.m_MeshPosition = transform.Position;
-				temp.m_MeshColor = material.Color;
+				temp.m_MeshColor = material.Properties.Color;
 
 				GD_Renderer3D::UpdateInstanceData(entity, temp);
 				//GD_Renderer3D::DrawModel(model.Model, transform);
@@ -102,14 +102,9 @@ namespace Sol
 
 	void Scene::DestroyEntity(EntityID entityID)
 	{
-		//TODO it needs to call destroy on all the components too
-		if (m_Registry.any_of<ModelComp>(entityID))
+		if (m_Registry.any_of<ModelComp,MaterialComp>(entityID))
 		{
-			auto& modelManager = GD_ModelManager::GetInstance();
-			auto& modelComp = m_Registry.get<ModelComp>(entityID);
-
-			GD_Renderer3D::DiscardMeshInstances(entityID, modelManager.GetModel(modelComp.ModelPath));
-			modelManager.DiscardModelInstance(modelComp.ModelPath);
+			GD_Renderer3D::DiscardEntityRenderData(entityID);			
 		}
 		m_Registry.destroy(entityID);
 	}

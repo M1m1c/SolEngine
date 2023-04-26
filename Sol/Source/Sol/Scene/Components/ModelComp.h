@@ -8,7 +8,7 @@ namespace Sol {
 	struct ModelComp
 	{
 		std::string ModelPath;
-		std::string TexturePath;
+		//std::string TexturePath;
 
 		EntityID GetEntityID() { return m_EntityID; }
 
@@ -16,9 +16,9 @@ namespace Sol {
 		ModelComp(const ModelComp&) = default;
 		//Sets up model based on providde file path
 		//Keep in mind that you should apply transforms to 3D meshes before exporting, or else meshes might be skewed or rotated weirdly
-		ModelComp(const std::string& modelPath, EntityID entityID) : ModelPath(modelPath), m_EntityID(entityID)
+		ModelComp(const std::string& modelPath, EntityID entityID, uint32_t matIndex=0) : ModelPath(modelPath), m_EntityID(entityID)
 		{
-			GalaxyDraw::IModel::Create(modelPath, entityID);
+			GalaxyDraw::IModel::Create(modelPath, entityID, matIndex);
 		}
 
 		~ModelComp() = default;
