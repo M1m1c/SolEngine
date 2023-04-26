@@ -84,7 +84,7 @@ namespace GalaxyDraw
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
 
 		//TODO add a way of seing draw calls in imgui
-		SOL_CORE_TRACE("DrawCalls = {0}", s_3DData.Stats.DrawCalls);
+		//SOL_CORE_TRACE("DrawCalls = {0}", s_3DData.Stats.DrawCalls);
 		s_3DData.Stats.DrawCalls = 0;
 
 		Submit();
