@@ -214,6 +214,22 @@ namespace GalaxyDraw
 		}
 	}
 
+	void Renderer3D::LoadTextureForMaterial(const std::string& texturePath, const uint32_t& materialIndex)
+	{
+		bool isTextureLoaded = TextureManager::IsTextureLoaded(texturePath);
+
+		TextureManager::LoadTexture(texturePath);
+
+		if (!isTextureLoaded)
+		{
+			s_3DData.TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
+		}
+		else
+		{
+			s_3DData.TextureToMaterialsMap[texturePath].push_back(materialIndex);
+		}
+	}
+
 	//Loads all sub meshes of a model
 	//When we create a model on a modelComp using Model::Create() this also gets called.
 	void Renderer3D::LoadModel(std::shared_ptr<IModel> model, EntityID entityID, uint32_t materialIndex)
@@ -328,24 +344,7 @@ namespace GalaxyDraw
 			}
 		}
 
-		bool isTextureLoaded = TextureManager::IsTextureLoaded(texturePath);
-		if (isTextureLoaded)
-		{
-			//Adds material's index to the entry of the texture it is now using
-			auto it = s_3DData.TextureToMaterialsMap.find(texturePath);
-			if (it != s_3DData.TextureToMaterialsMap.end())
-			{
-				std::vector<uint32_t>& matIndices = it->second;
-				matIndices.push_back(materialIndex);
-			}
-		}
-		else
-		{
-			//Loads texture and creates new entry for texture it is now using
-			TextureManager::LoadTexture(texturePath);
-			s_3DData.TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
-
-		}
+		LoadTextureForMaterial(texturePath, materialIndex);
 
 		material->DiffuseTexturePath = texturePath;
 
@@ -356,30 +355,28 @@ namespace GalaxyDraw
 	{
 		auto& s = s_3DData;
 
-		uint32_t materialIndex = s.DefaultMaterialIndex;
-
-		bool isTextureLoaded = TextureManager::IsTextureLoaded(texturePath);
-		if (!isTextureLoaded)
-		{
-			TextureManager::LoadTexture(texturePath);
-			s_3DData.TextureToMaterialsMap.insert(std::make_pair(texturePath, std::vector<uint32_t>({ materialIndex })));
-		}
-
-		std::string modelPath = DiscardEntityRenderData(entityID,false,false);
-
 		auto size = s_3DData.MaterialDataCollections.size();
+
+		uint32_t materialIndex = size;
+
+		LoadTextureForMaterial(texturePath, materialIndex);
+
+		std::string modelPath = DiscardEntityRenderData(entityID, false, false);
+
 		std::string matName = "newMaterial";
 		matName += std::to_string(size);
 
 		std::shared_ptr<MaterialData> newMat = CreateMaterialData(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
 		newMat->EntitiesUsingMat.push_back(entityID);
 		s_3DData.MaterialDataCollections.push_back(newMat);
-		materialIndex = size;
+
 
 		ReloadModel(modelPath, entityID, materialIndex);
 
 		return materialIndex;
 	}
+
+
 
 
 
@@ -393,20 +390,21 @@ namespace GalaxyDraw
 		auto& matDataCollections = s.MaterialDataCollections;
 		if (matIndex >= matDataCollections.size())
 		{
-			TextureManager::LoadTexture(matDataCollections[s.DefaultMaterialIndex]->DiffuseTexturePath);
+			LoadTextureForMaterial(matDataCollections[s.DefaultMaterialIndex]->DiffuseTexturePath, s.DefaultMaterialIndex);
+
 			return s.DefaultMaterialIndex;
 		}
 
-		std::string modelPath = DiscardEntityRenderData(entityID,false,false);
+		std::string modelPath = DiscardEntityRenderData(entityID, false, false);
 
-		TextureManager::LoadTexture(matDataCollections[matIndex]->DiffuseTexturePath);
+		LoadTextureForMaterial(matDataCollections[matIndex]->DiffuseTexturePath, matIndex);
 
 		ReloadModel(modelPath, entityID, matIndex);
 
 		return matIndex;
 	}
 
-	void Renderer3D::DeleteMaterial(uint32_t materialIndex, std::function<void(uint32_t,EntityID)> function)
+	void Renderer3D::DeleteMaterial(uint32_t materialIndex, std::function<void(uint32_t, EntityID)> function)
 	{
 		if (materialIndex == 0 && function != nullptr) { return; }
 		auto& matDataCollections = s_3DData.MaterialDataCollections;

@@ -67,6 +67,7 @@ namespace GalaxyDraw {
 		static std::shared_ptr<MaterialData> CreateMaterialData(std::string matName, std::pair<std::string, std::string> shaderFiles, std::string shaderName, std::string texturePath);
 		static void DiscardMeshInstances(EntityID entityID, std::shared_ptr<MaterialData> matData);
 		static void ReloadModel(std::string& modelPath, const EntityID& entityID, const uint32_t& materialIndex);
+		static void LoadTextureForMaterial(const std::string& texturePath, const uint32_t& materialIndex);
 
 
 		//static CreateNewMaterial(const std::string& texturePath);
