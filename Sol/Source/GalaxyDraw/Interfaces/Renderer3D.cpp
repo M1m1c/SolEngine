@@ -376,6 +376,25 @@ namespace GalaxyDraw
 		return materialIndex;
 	}
 
+	uint32_t Renderer3D::CreateNewMaterial(const std::string& texturePath)
+	{
+		auto& s = s_3DData;
+
+		auto size = s_3DData.MaterialDataCollections.size();
+
+		uint32_t materialIndex = size;
+
+		LoadTextureForMaterial(texturePath, materialIndex);
+
+		std::string matName = "newMaterial";
+		matName += std::to_string(size);
+
+		std::shared_ptr<MaterialData> newMat = CreateMaterialData(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
+		s_3DData.MaterialDataCollections.push_back(newMat);
+
+		return materialIndex;
+	}
+
 	uint32_t Renderer3D::SwapMaterial(const uint32_t matIndex, const EntityID entityID)
 	{
 		auto& s = s_3DData;

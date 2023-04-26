@@ -33,6 +33,7 @@ namespace GalaxyDraw {
 		//Returns the materialIndex
 		static uint32_t UpdateExistingMaterial(const std::string& texturePath, const uint32_t matIndex, const EntityID entityID);
 		static uint32_t CreateNewMaterial(const std::string& texturePath, const EntityID entityID);
+		static uint32_t CreateNewMaterial(const std::string& texturePath);
 		static uint32_t SwapMaterial(const uint32_t matIndex, const EntityID entityID);
 		static void DeleteMaterial(uint32_t materialIndex, std::function<void(uint32_t, EntityID)> function);
 		
