@@ -376,12 +376,6 @@ namespace GalaxyDraw
 		return materialIndex;
 	}
 
-
-
-
-
-	//TODO we have a crash that can happen when switching back to default material from a material witha texture,
-	// Figure out what causese it.
 	uint32_t Renderer3D::SwapMaterial(const uint32_t matIndex, const EntityID entityID)
 	{
 		auto& s = s_3DData;
