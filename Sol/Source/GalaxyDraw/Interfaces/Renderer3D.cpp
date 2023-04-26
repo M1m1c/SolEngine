@@ -376,7 +376,7 @@ namespace GalaxyDraw
 		return materialIndex;
 	}
 
-	uint32_t Renderer3D::CreateNewMaterial(const std::string& texturePath)
+	uint32_t Renderer3D::CreateNewMaterial(const std::string& texturePath, std::string matName)
 	{
 		auto& s = s_3DData;
 
@@ -386,8 +386,11 @@ namespace GalaxyDraw
 
 		LoadTextureForMaterial(texturePath, materialIndex);
 
-		std::string matName = "newMaterial";
-		matName += std::to_string(size);
+		if (matName == "") 
+		{
+			matName = "newMaterial";
+			matName += std::to_string(size);
+		}
 
 		std::shared_ptr<MaterialData> newMat = CreateMaterialData(matName, { "cube.vert", "cube.frag" }, "Default", texturePath);
 		s_3DData.MaterialDataCollections.push_back(newMat);
@@ -432,6 +435,11 @@ namespace GalaxyDraw
 			}
 			matDataCollections.erase(matDataCollections.begin() + materialIndex);
 		}
+	}
+
+	std::vector<std::shared_ptr<MaterialData>>& Renderer3D::GetMaterials()
+	{
+		return s_3DData.MaterialDataCollections;
 	}
 
 
