@@ -2,6 +2,8 @@
 #include "SceneSerializer.h"
 #include "Entity.h"
 
+#include "GalaxyDraw/Interfaces/MaterialData.h"
+
 #include <yaml-cpp/yaml.h>
 
 
@@ -121,6 +123,15 @@ namespace Sol
 		out << YAML::EndMap;
 	}
 
+	static void SerializeMaterial(YAML::Emitter& out,uint32_t matIndex, s_ptr <GD_::MaterialData > matData)
+	{
+		out << YAML::BeginMap;
+		out << YAML::Key << "Material" << YAML::Value << matIndex;
+		out << YAML::Key << "Name" << YAML::Value << matData->Name;
+		out << YAML::Key << "DiffuseTexture" << YAML::Value << matData->DiffuseTexturePath;	
+		out << YAML::EndMap;
+	}
+
 	SceneSerializer::SceneSerializer(const s_ptr<Scene>& scene) : m_Scene(scene)
 	{
 	}
@@ -129,7 +140,16 @@ namespace Sol
 	{
 		YAML::Emitter out;
 		out << YAML::BeginMap;
-		//TODO make sure we save materials present in scene
+
+		out << YAML::Key << "Materials" << YAML::Value << YAML::BeginSeq;
+		auto& materials = GD_Renderer3D::GetMaterials();
+		for (size_t i = 0; i < materials.size(); i++)
+		{
+			if (i == 0) { continue; }
+			SerializeMaterial(out, i, materials[i]);
+		}
+		out << YAML::EndSeq;
+
 		out << YAML::Key << "Scene" << YAML::Value << "Untitled Scene";
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
 		m_Scene->GetRegistry().each([&](auto entityID)
@@ -143,6 +163,7 @@ namespace Sol
 				}
 			});
 		out << YAML::EndSeq;
+
 		out << YAML::EndMap;
 		std::ofstream fOut(filePath);
 		fOut << out.c_str();
@@ -160,6 +181,7 @@ namespace Sol
 		strStream << stream.rdbuf();
 
 		//TODO make sure that we load materials present in scene
+		//TODO call createMaterial on Renderer3D and make sure it is in the correct order the amterials were created in
 
 		YAML::Node data = YAML::Load(strStream.str());
 		if (!data["Scene"]) { return false; }
