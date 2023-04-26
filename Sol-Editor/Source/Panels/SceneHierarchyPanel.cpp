@@ -69,7 +69,7 @@ namespace Sol
 		{
 			m_OldSelection = m_CurrentSelection;
 			m_PropertiesPanel->SetCurrentSelection(m_CurrentSelection);
-			m_PropertiesPanel->SetCurrentScene(m_CurrentScene);
+			m_PropertiesPanel->SetCurrentScene(m_CurrentScene.get());
 		}
 	}
 

@@ -13,7 +13,10 @@ namespace Sol
 			PushLayer(new EditorLayer());
 		}
 
-		~SolEditorApp() {}
+		~SolEditorApp() 
+		{
+			SOL_CORE_WARN("Application Editor close");
+		}
 	};
 
 	Application* CreateApplication()

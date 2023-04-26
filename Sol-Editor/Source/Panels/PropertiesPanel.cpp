@@ -1,6 +1,7 @@
 #include "PropertiesPanel.h"
 
 #include "PanelUtils.h"
+#include "Sol/Scene/Scene.h"
 #include "Sol/Scene/Components.h"
 #include "Sol/Utils/PlatformUtils.h"
 

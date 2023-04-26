@@ -2,21 +2,22 @@
 #include "Sol/Core/Core.h"
 #include "Sol/Core/Log.h"
 #include "Sol/Scene/Entity.h"
-#include "Sol/Scene/Scene.h"
+
 
 namespace Sol 
 {
+	class Scene;
 	class PropertiesPanel
 	{
 	public:
 		PropertiesPanel() = default;
-		~PropertiesPanel() = default;
+		~PropertiesPanel() { m_CurrentScene = nullptr; }
 
 
 		void OnImGuiRender();
 
 		void SetCurrentSelection(Entity selection) { m_CurrentSelection = selection; }
-		void SetCurrentScene(s_ptr<Scene> scene) { m_CurrentScene = scene; }
+		void SetCurrentScene(Scene* scene) { m_CurrentScene = scene; }
 
 	private:
 		void DrawComponentNodes(Entity entity);
@@ -25,6 +26,6 @@ namespace Sol
 
 	private:
 		Entity m_CurrentSelection;
-		s_ptr<Scene> m_CurrentScene;
+		Scene* m_CurrentScene;
 	};
 }
