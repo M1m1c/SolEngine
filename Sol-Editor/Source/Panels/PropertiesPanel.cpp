@@ -189,7 +189,7 @@ namespace Sol
 
 			if (!readOnly)
 			{
-				auto& path = component.GetTexturePath();
+				auto& path = component.GetBaseTexturePath();
 				std::string displayPath = "											";
 				if (path != "") { displayPath = path; }
 
