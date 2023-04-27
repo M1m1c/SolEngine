@@ -1,0 +1,40 @@
+Materials:
+  []
+Scene: Untitled Scene
+Entities:
+  - Entity: 3
+    NameComp:
+      Name: Sphere
+    TransformComp:
+      Position: [3, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    ModelComp:
+      ModelPath: assets/models/sphere.fbx
+    MaterialComp:
+      Color: [1, 1, 1, 1]
+      MaterialIndex: 0
+  - Entity: 2
+    NameComp:
+      Name: Floor
+    TransformComp:
+      Position: [0, -1.03222108, 0]
+      Rotation: [0, 0, 0]
+      Scale: [10, 1, 10]
+    ModelComp:
+      ModelPath: assets/models/plane.fbx
+    MaterialComp:
+      Color: [0.400000006, 0.5, 0.560000002, 1]
+      MaterialIndex: 0
+  - Entity: 1
+    NameComp:
+      Name: Cube
+    TransformComp:
+      Position: [-3, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    ModelComp:
+      ModelPath: assets/models/cube.fbx
+    MaterialComp:
+      Color: [1, 1, 1, 1]
+      MaterialIndex: 0
