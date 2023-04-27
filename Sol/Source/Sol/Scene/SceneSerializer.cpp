@@ -128,7 +128,7 @@ namespace Sol
 		out << YAML::BeginMap;
 		out << YAML::Key << "Material" << YAML::Value << matIndex;
 		out << YAML::Key << "Name" << YAML::Value << matData->Name;
-		out << YAML::Key << "DiffuseTexture" << YAML::Value << matData->BaseTexturePath;
+		out << YAML::Key << "BaseTexture" << YAML::Value << matData->BaseTexturePath;
 		out << YAML::EndMap;
 	}
 
@@ -209,7 +209,7 @@ namespace Sol
 					name = nameField.as<std::string>();
 				}
 
-				auto difTexField = mat["DiffuseTexture"];
+				auto difTexField = mat["BaseTexture"];
 				if (true)
 				{
 					diffuseTexture = difTexField.as<std::string>();
