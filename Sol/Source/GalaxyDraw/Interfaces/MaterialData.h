@@ -14,7 +14,7 @@ namespace GalaxyDraw
 		std::string Name;
 		KeyedVector<std::string, MeshRenderData> MeshDataCollections;
 		std::vector<EntityID> EntitiesUsingMat;
-		std::string DiffuseTexturePath;
+		std::string BaseTexturePath;
 		std::shared_ptr<Shader> Shader;
 	};
 }

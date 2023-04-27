@@ -140,7 +140,7 @@ namespace GalaxyDraw
 			if (matData->EntitiesUsingMat.size() == 0) { continue; }
 			auto uniqueMeshCount = matData->MeshDataCollections.size();
 
-			auto diffuseTexture = TextureManager::GetTexture(matData->DiffuseTexturePath);
+			auto diffuseTexture = TextureManager::GetTexture(matData->BaseTexturePath);
 			diffuseTexture->Bind(0);
 
 			matData->Shader->Bind();
@@ -171,7 +171,7 @@ namespace GalaxyDraw
 		std::shared_ptr<MaterialData> material = std::make_shared<MaterialData>();
 		material->Name = matName;
 		material->Shader = Shader::Create(shaderFiles.first, shaderFiles.second, shaderName);
-		material->DiffuseTexturePath = texturePath;
+		material->BaseTexturePath = texturePath;
 		return material;
 	}
 
@@ -335,7 +335,7 @@ namespace GalaxyDraw
 		auto& s = s_3DData;
 
 		auto material = s_3DData.MaterialDataCollections[materialIndex];
-		auto currentTexture = material->DiffuseTexturePath;
+		auto currentTexture = material->BaseTexturePath;
 		if (currentTexture == texturePath) { return materialIndex; }
 
 		//Removes material from the map to the texure it is currently using
@@ -352,7 +352,7 @@ namespace GalaxyDraw
 
 		LoadTextureForMaterial(texturePath, materialIndex);
 
-		material->DiffuseTexturePath = texturePath;
+		material->BaseTexturePath = texturePath;
 
 		return materialIndex;
 	}
@@ -412,14 +412,14 @@ namespace GalaxyDraw
 		auto& matDataCollections = s.MaterialDataCollections;
 		if (matIndex >= matDataCollections.size())
 		{
-			LoadTextureForMaterial(matDataCollections[s.DefaultMaterialIndex]->DiffuseTexturePath, s.DefaultMaterialIndex);
+			LoadTextureForMaterial(matDataCollections[s.DefaultMaterialIndex]->BaseTexturePath, s.DefaultMaterialIndex);
 
 			return s.DefaultMaterialIndex;
 		}
 
 		std::string modelPath = DiscardEntityRenderData(entityID, false, false);
 
-		LoadTextureForMaterial(matDataCollections[matIndex]->DiffuseTexturePath, matIndex);
+		LoadTextureForMaterial(matDataCollections[matIndex]->BaseTexturePath, matIndex);
 
 		ReloadModel(modelPath, entityID, matIndex);
 
@@ -473,7 +473,7 @@ namespace GalaxyDraw
 				DiscardMeshInstances(entityID, matData);
 
 				if (shouldDiscardMaterial)
-					texManager.DiscardTextureInstance(matData->DiffuseTexturePath);
+					texManager.DiscardTextureInstance(matData->BaseTexturePath);
 
 				if (shouldDiscardModel)
 					modelManager.DiscardModelInstance(modelPath);

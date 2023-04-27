@@ -128,7 +128,7 @@ namespace Sol
 		out << YAML::BeginMap;
 		out << YAML::Key << "Material" << YAML::Value << matIndex;
 		out << YAML::Key << "Name" << YAML::Value << matData->Name;
-		out << YAML::Key << "DiffuseTexture" << YAML::Value << matData->DiffuseTexturePath;
+		out << YAML::Key << "DiffuseTexture" << YAML::Value << matData->BaseTexturePath;
 		out << YAML::EndMap;
 	}
 
