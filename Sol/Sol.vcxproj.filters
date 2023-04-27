@@ -1564,7 +1564,7 @@
     <ClInclude Include="Source\GalaxyDraw\Interfaces\IMaterial.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\MeshRenderData.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\MaterialData.h" />
-    <ClInclude Include="Source\Sol\Scene\Components\LightComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\DirectionalLightComp.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\LightStructures.h" />
   </ItemGroup>
   <ItemGroup>

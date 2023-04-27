@@ -232,7 +232,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\Sol\Math\Math.h" />
     <ClInclude Include="Source\Sol\Scene\Components.h" />
     <ClInclude Include="Source\Sol\Scene\Components\CameraComp.h" />
-    <ClInclude Include="Source\Sol\Scene\Components\LightComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\DirectionalLightComp.h" />
     <ClInclude Include="Source\Sol\Scene\Components\MaterialComp.h" />
     <ClInclude Include="Source\Sol\Scene\Components\ModelComp.h" />
     <ClInclude Include="Source\Sol\Scene\Components\NameComp.h" />
