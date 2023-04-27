@@ -25,15 +25,8 @@ struct VertexOutput
 	vec2 TexCoord;
 };
 
-struct AmbientLight
-{
-	float Intentsity;
-	vec3 Color;
-};
-
 layout (location = 0) out VertexOutput v_VertOutput;
-layout (location = 4) out AmbientLight v_LightOutput;
-layout (location = 6) out flat int v_EntityID;
+layout (location = 4) out flat int v_EntityID;
 
 void main()
 {

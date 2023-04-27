@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "IModel.h"
 #include "Texture.h"
+#include "LightStructures.h"
 #include "UniformBuffer.h"
 #include "RenderCommand.h"
 
@@ -42,6 +43,9 @@ namespace GalaxyDraw
 		};
 		CameraData CameraBuffer;
 		std::shared_ptr<UniformBuffer> CameraUniformBuffer;
+
+		AmbientLight AmbientLightBuffer;
+		std::shared_ptr<UniformBuffer> AmbientLightUniformBuffer;
 	};
 
 	static Renderer3DData s_3DData;
@@ -51,6 +55,11 @@ namespace GalaxyDraw
 		SOL_PROFILE_FUNCTION();
 
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
+		s_3DData.AmbientLightUniformBuffer = UniformBuffer::Create(sizeof(GalaxyDraw::AmbientLight), 4);
+
+		//TODO remove this and have it be set by light in scene
+		s_3DData.AmbientLightBuffer.Intensity = 1.f;
+		s_3DData.AmbientLightBuffer.AmbientColor = glm::vec3(1.f, 1.f, 1.f);
 
 		auto& texManager = TextureManager::GetInstance();
 		texManager.Initialize();
@@ -82,6 +91,7 @@ namespace GalaxyDraw
 
 		s_3DData.CameraBuffer.ViewProjection = projection * view;
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
+		s_3DData.AmbientLightUniformBuffer->SetData(&s_3DData.AmbientLightBuffer, sizeof(GalaxyDraw::AmbientLight));
 
 		//TODO add a way of seing draw calls in imgui
 		//SOL_CORE_TRACE("DrawCalls = {0}", s_3DData.Stats.DrawCalls);
@@ -96,6 +106,7 @@ namespace GalaxyDraw
 
 		s_3DData.CameraBuffer.ViewProjection = camera.GetViewProjectionMatrix();
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
+		s_3DData.AmbientLightUniformBuffer->SetData(&s_3DData.AmbientLightBuffer, sizeof(GalaxyDraw::AmbientLight));
 
 		s_3DData.Stats.DrawCalls = 0;
 

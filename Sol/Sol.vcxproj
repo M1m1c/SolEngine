@@ -165,6 +165,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Buffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\Framebuffer.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\GalaxyMacros.h" />
+    <ClInclude Include="Source\GalaxyDraw\Interfaces\LightStructures.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\MaterialData.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\MeshRenderData.h" />
     <ClInclude Include="Source\GalaxyDraw\Interfaces\IMaterial.h" />
@@ -231,7 +232,7 @@ IF EXIST ..\Sol\thirdparty\assimp\lib\*.dll\ (xcopy /Q /E /Y /I ..\Sol\thirdpart
     <ClInclude Include="Source\Sol\Math\Math.h" />
     <ClInclude Include="Source\Sol\Scene\Components.h" />
     <ClInclude Include="Source\Sol\Scene\Components\CameraComp.h" />
-    <ClInclude Include="Source\Sol\Scene\Components\AmbientLightComp.h" />
+    <ClInclude Include="Source\Sol\Scene\Components\LightComp.h" />
     <ClInclude Include="Source\Sol\Scene\Components\MaterialComp.h" />
     <ClInclude Include="Source\Sol\Scene\Components\ModelComp.h" />
     <ClInclude Include="Source\Sol\Scene\Components\NameComp.h" />
