@@ -17,4 +17,10 @@ namespace GalaxyDraw {
 			: Intensity(intensity), AmbientColor(ambientColor)
 		{}
 	};
+
+	struct DirectionalLight
+	{
+		AmbientLight Ambient;
+		float DiffuseIntensity=1.f;
+	};
 }

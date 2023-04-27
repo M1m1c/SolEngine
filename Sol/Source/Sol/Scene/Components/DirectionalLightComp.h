@@ -5,8 +5,8 @@
 
 namespace Sol
 {
-	struct LightComp
+	struct DirectionalLightComp
 	{
-		GalaxyDraw::AmbientLight A_Light;
+		GalaxyDraw::DirectionalLight Dir_Light;
 	};
 }
