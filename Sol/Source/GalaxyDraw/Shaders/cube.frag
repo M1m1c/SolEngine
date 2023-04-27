@@ -10,16 +10,22 @@ struct VertexOutput
 	vec2 TexCoord;
 };
 
-layout (location = 0) in VertexOutput v_Input;
-layout (location = 4) in flat int v_EntityID;
-layout(location = 5) in flat int v_TextureID;
+struct AmbientLight
+{
+	float Intentsity;
+	vec3 Color;
+};
+
+layout (location = 0) in VertexOutput v_VertInput;
+layout (location = 4) in AmbientLight v_LightInput;
+layout (location = 6) in flat int v_EntityID;
 
 layout(binding = 0) uniform sampler2D u_Texture;
 //TODO add more bindings for different texture types we might want
 
 void main()
 {
-	vec4 texColor = v_Input.Color*texture(u_Texture, v_Input.TexCoord);
+	vec4 texColor = v_VertInput.Color*texture(u_Texture, v_VertInput.TexCoord);
 	//TODO make sure this below is correct and works across instances
 	//texColor *= texture(u_diffuseTexture[v_TextureID], v_Input.TexCoord);
 

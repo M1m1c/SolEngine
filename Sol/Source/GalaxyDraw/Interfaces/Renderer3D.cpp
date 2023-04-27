@@ -318,7 +318,6 @@ namespace GalaxyDraw
 
 		meshData.m_InstanceBuffer->SetLayout({
 		{ ShaderDataType::Int, "a_EntityID"     },
-		{ ShaderDataType::Int, "a_TextureID"     },
 		{ ShaderDataType::Float4, "a_MeshColor"},
 		{ ShaderDataType::Mat4 , "a_EntityTransform"},
 		{ ShaderDataType::Mat4 , "a_MeshTransform"}
@@ -551,7 +550,6 @@ namespace GalaxyDraw
 				{
 					if (!meshData.m_Instances.Exists(id)) { continue; }
 					auto& instanceData = meshData.m_Instances.Get(id);
-
 					meshData.InstanceBufferPtr->m_EntityID = (int)id;
 					meshData.InstanceBufferPtr->m_MeshColor = instanceData.m_MeshColor;
 					meshData.InstanceBufferPtr->m_EntityTransform = instanceData.m_EntityTransform;
