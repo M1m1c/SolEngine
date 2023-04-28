@@ -6,6 +6,7 @@
 #include "Sol/Scene/Components/CameraComp.h"
 #include "Sol/Scene/Components/ModelComp.h"
 #include "Sol/Scene/Components/MaterialComp.h"
+#include "Sol/Scene/Components/DirectionalLightComp.h"
 
 namespace Sol {
 	struct InternalComp
