@@ -2,31 +2,31 @@ Materials:
   []
 Scene: Untitled Scene
 Entities:
+  - Entity: 5
+    NameComp:
+      Name: sphere rotated
+    TransformComp:
+      Position: [-1.16699362, 0, -4.4383812]
+      Rotation: [-180, 67.9778061, -180]
+      Scale: [1.00000012, 1, 1.00000012]
+    ModelComp:
+      ModelPath: assets/models/sphere.fbx
+    MaterialComp:
+      Color: [1, 0.769999981, 0.699999988, 1]
+      MaterialIndex: 0
   - Entity: 4
     NameComp:
-      Name: DirLight
+      Name: Sphere
     TransformComp:
-      Position: [0, 0, 0]
-      Rotation: [-40.235569, 15.7011604, -12.8972416]
-      Scale: [0.257741958, 0.257742077, 0.257742077]
+      Position: [3, 0, 0]
+      Rotation: [0.000271520461, 0, 0]
+      Scale: [1.00000024, 1.00000036, 1]
     ModelComp:
-      ModelPath: assets/models/arrow.fbx
+      ModelPath: assets/models/sphere.fbx
     MaterialComp:
-      Color: [1, 0.00999999978, 1, 1]
+      Color: [1, 1, 1, 1]
       MaterialIndex: 0
   - Entity: 3
-    NameComp:
-      Name: Cube
-    TransformComp:
-      Position: [-3, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    ModelComp:
-      ModelPath: assets/models/cube.fbx
-    MaterialComp:
-      Color: [1, 0.449999988, 0, 1]
-      MaterialIndex: 0
-  - Entity: 2
     NameComp:
       Name: Floor
     TransformComp:
@@ -38,15 +38,27 @@ Entities:
     MaterialComp:
       Color: [0.400000006, 0.5, 0.560000002, 1]
       MaterialIndex: 0
-  - Entity: 1
+  - Entity: 2
     NameComp:
-      Name: Sphere
+      Name: Cube
     TransformComp:
-      Position: [3, 0, 0]
+      Position: [-3, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
     ModelComp:
-      ModelPath: assets/models/sphere.fbx
+      ModelPath: assets/models/cube.fbx
     MaterialComp:
-      Color: [1, 1, 1, 1]
+      Color: [1, 0.449999988, 0, 1]
+      MaterialIndex: 0
+  - Entity: 1
+    NameComp:
+      Name: DirLight
+    TransformComp:
+      Position: [0, 0, 0]
+      Rotation: [-39.6726608, 13.0826044, -10.633029]
+      Scale: [0.257742077, 0.257742077, 0.257742077]
+    ModelComp:
+      ModelPath: assets/models/arrow.fbx
+    MaterialComp:
+      Color: [1, 0.00999999978, 1, 1]
       MaterialIndex: 0
