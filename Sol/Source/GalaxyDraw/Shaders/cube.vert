@@ -38,5 +38,7 @@ void main()
 	v_EntityID = a_EntityID;
 	v_LocalLightDirection = a_LocalLightDirection;
 
+	//TODO make sure that light is per fragment instead of per vertex
+
 	gl_Position = u_ViewProjection * a_EntityTransform * a_MeshTransform * vec4(a_Position, 1.0);
 }
