@@ -26,33 +26,28 @@ layout(binding = 0) uniform sampler2D u_Texture;
 void main()
 {
 
-	vec4 texColor = texture(u_Texture, v_VertInput.TexCoord);
+	vec4 textureSample = texture(u_Texture, v_VertInput.TexCoord);
 
 
-	vec3 textureColor = vec3(texColor.x,texColor.y,texColor.z);
+	vec3 textureColor = vec3(textureSample.x,textureSample.y,textureSample.z);
 	vec3 meshColor = vec3(v_VertInput.Color.x,v_VertInput.Color.y,v_VertInput.Color.z);
-
 
 	vec3 normal = normalize(v_VertInput.Normal);
 	vec3 lightDirection = normalize(-v_LocalLightDirection);
 	float diffuse = max(dot(normal, lightDirection), 0.0f);
+	vec3 diffuseColor = vec3(diffuse);
 
-	vec3 ambientColor = textureColor * meshColor * u_AmbientColor * u_Intensity; 
-	vec3 diffuseColor = textureColor * meshColor * vec3(diffuse);
-
+	vec3 ambientColor = u_AmbientColor * u_Intensity; 
 	
-	vec3 finalColor = ambientColor + diffuseColor ;
+	vec3 finalColor = (textureColor * meshColor) * (ambientColor + diffuseColor) ;
 
-	float alpha = texColor.w * v_VertInput.Color.w;
+	float alpha = textureSample.w * v_VertInput.Color.w;
 
-	//TODO make sure this below is correct and works across instances
-	//texColor *= texture(u_diffuseTexture[v_TextureID], v_Input.TexCoord);
 
-	if (texColor.a == 0.0)
+	if (textureSample.a == 0.0)
 		discard;
 
-
-
+	
 	o_Color = vec4(finalColor,alpha);
 	o_EntityID = v_EntityID;
 }

@@ -340,7 +340,7 @@ namespace GalaxyDraw
 		{ ShaderDataType::Float4, "a_MeshColor"},
 		{ ShaderDataType::Mat4 , "a_EntityTransform"},
 		{ ShaderDataType::Mat4 , "a_MeshTransform"},
-		{ ShaderDataType::Float3 , "a_LocalLightDirection"}
+		{ ShaderDataType::Float3 , "a_WorldLightDirection"}
 			});
 
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
