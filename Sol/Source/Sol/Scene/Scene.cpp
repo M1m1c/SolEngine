@@ -41,6 +41,15 @@ namespace Sol
 			glm::mat4 projectionMat = mainCamera->GetProjection();
 			GD_Renderer3D::BeginScene(projectionMat, cameraViewMat);
 
+			//TODO get light sourcec and pass its values to the renderer
+			auto directionalLight = m_Registry.view<TransformComp, DirectionalLightComp>();
+			for (auto entity : directionalLight)
+			{
+				auto& [transform, light] = directionalLight.get<TransformComp, DirectionalLightComp>(entity);
+				GD_Renderer3D::UpdateDirectionalLight(transform.GetForward(), light.Dir_Light);
+				break;
+			}
+
 			auto group3D = m_Registry.group<ModelComp>(entt::get<TransformComp, MaterialComp>);
 			for (auto entity : group3D)
 			{
