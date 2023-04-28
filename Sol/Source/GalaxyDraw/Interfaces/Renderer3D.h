@@ -12,12 +12,15 @@ namespace GalaxyDraw {
 	struct Mesh;
 	struct InstanceData;
 	struct MaterialData;
+	struct DirectionalLight;
 
 	class Renderer3D
 	{
 	public:
 		static void Init();
 		static void Shutdown();
+
+		static void UpdateDirectionalLight(const glm::vec3& lightDirectionWorld, const DirectionalLight& lightProperties);
 
 		static void BeginScene(const glm::mat4& projection, const glm::mat4& transform);
 		//static void BeginScene(const EditorCamera& camera);

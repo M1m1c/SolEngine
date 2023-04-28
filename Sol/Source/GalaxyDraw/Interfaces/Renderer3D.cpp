@@ -19,6 +19,7 @@
 #include "TextureManager.h"
 #include "MeshRenderData.h"
 #include "MaterialData.h"
+#include "LightStructures.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -46,6 +47,8 @@ namespace GalaxyDraw
 
 		AmbientLight AmbientLightBuffer;
 		std::shared_ptr<UniformBuffer> AmbientLightUniformBuffer;
+
+		glm::vec3 LightDirectionWorld;
 	};
 
 	static Renderer3DData s_3DData;
@@ -58,7 +61,7 @@ namespace GalaxyDraw
 		s_3DData.AmbientLightUniformBuffer = UniformBuffer::Create(sizeof(GalaxyDraw::AmbientLight), 4);
 
 		//TODO remove this and have it be set by light in scene
-		s_3DData.AmbientLightBuffer.Intensity = 1.f;
+		s_3DData.AmbientLightBuffer.Intensity = 0.1f;
 		s_3DData.AmbientLightBuffer.AmbientColor = glm::vec3(1.f, 1.f, 1.f);
 
 		auto& texManager = TextureManager::GetInstance();
@@ -83,6 +86,11 @@ namespace GalaxyDraw
 				delete[] meshDataCollections[i].InstanceBufferBase;
 			}
 		}
+	}
+
+	void Renderer3D::UpdateDirectionalLight(const glm::vec3& lightDirectionWorld, const DirectionalLight& lightProperties)
+	{
+		s_3DData.LightDirectionWorld = lightDirectionWorld;
 	}
 
 	void Renderer3D::BeginScene(const glm::mat4& projection, const glm::mat4& view)
@@ -561,6 +569,13 @@ namespace GalaxyDraw
 				{
 					if (!meshData.m_Instances.Exists(id)) { continue; }
 					auto& instanceData = meshData.m_Instances.Get(id);
+
+					//TODO add m_LocalLightDirection to instance buffer and shader instanced attributes
+					glm::mat4 inverseModelMatrix = glm::inverse(instanceData.m_EntityTransform * instanceData.m_MeshTransform);
+					glm::vec3 lightDirectionLocal = glm::normalize(glm::vec3(inverseModelMatrix * glm::vec4(s_3DData.LightDirectionWorld, 0.0f)));
+					//meshData.InstanceBufferPtr->m_LocalLightDirection = lightDirectionLocal;
+
+
 					meshData.InstanceBufferPtr->m_EntityID = (int)id;
 					meshData.InstanceBufferPtr->m_MeshColor = instanceData.m_MeshColor;
 					meshData.InstanceBufferPtr->m_EntityTransform = instanceData.m_EntityTransform;
