@@ -14,14 +14,14 @@ namespace GalaxyDraw
 			m_EntityID(-1),
 			m_MeshColor(),
 			m_EntityTransform(),
-			m_MeshTransform()
-			//	m_MeshPosition(),
+			m_MeshTransform(),
+			m_LocalLightDirection()
 		{};
 
 		int m_EntityID;
 		glm::vec4 m_MeshColor;
 		glm::mat4 m_EntityTransform;
 		glm::mat4 m_MeshTransform;
-		//glm::vec3 m_MeshPosition;
+		glm::vec3 m_LocalLightDirection;
 	};
 }

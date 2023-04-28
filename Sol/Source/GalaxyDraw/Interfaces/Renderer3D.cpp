@@ -339,7 +339,8 @@ namespace GalaxyDraw
 		{ ShaderDataType::Int, "a_EntityID"     },
 		{ ShaderDataType::Float4, "a_MeshColor"},
 		{ ShaderDataType::Mat4 , "a_EntityTransform"},
-		{ ShaderDataType::Mat4 , "a_MeshTransform"}
+		{ ShaderDataType::Mat4 , "a_MeshTransform"},
+		{ ShaderDataType::Float3 , "a_LocalLightDirection"}
 			});
 
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
@@ -569,17 +570,16 @@ namespace GalaxyDraw
 				{
 					if (!meshData.m_Instances.Exists(id)) { continue; }
 					auto& instanceData = meshData.m_Instances.Get(id);
-
-					//TODO add m_LocalLightDirection to instance buffer and shader instanced attributes
-					glm::mat4 inverseModelMatrix = glm::inverse(instanceData.m_EntityTransform * instanceData.m_MeshTransform);
-					glm::vec3 lightDirectionLocal = glm::normalize(glm::vec3(inverseModelMatrix * glm::vec4(s_3DData.LightDirectionWorld, 0.0f)));
-					//meshData.InstanceBufferPtr->m_LocalLightDirection = lightDirectionLocal;
-
-
 					meshData.InstanceBufferPtr->m_EntityID = (int)id;
 					meshData.InstanceBufferPtr->m_MeshColor = instanceData.m_MeshColor;
 					meshData.InstanceBufferPtr->m_EntityTransform = instanceData.m_EntityTransform;
 					meshData.InstanceBufferPtr->m_MeshTransform = instanceData.m_MeshTransform;
+
+					//TODO make sure that this translates it into mesh local space
+					glm::mat4 inverseModelMatrix = glm::inverse(instanceData.m_EntityTransform * instanceData.m_MeshTransform);
+					glm::vec3 lightDirectionLocal = glm::normalize(glm::vec3(inverseModelMatrix * glm::vec4(s_3DData.LightDirectionWorld, 0.0f)));
+					meshData.InstanceBufferPtr->m_LocalLightDirection = lightDirectionLocal;
+
 					meshData.InstanceBufferPtr++;
 				}
 			}
