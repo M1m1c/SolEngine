@@ -40,6 +40,16 @@ namespace Sol
 					}
 				}
 
+				if (!m_CurrentSelection.HasComponent<DirectionalLightComp>())
+				{
+					if (ImGui::MenuItem("Directional Light Component"))
+					{
+						//TODO provide a path to model file
+						m_CurrentSelection.AddComponent<DirectionalLightComp>();
+						ImGui::CloseCurrentPopup();
+					}
+				}
+
 				ImGui::EndPopup();
 			}
 		}
@@ -78,6 +88,10 @@ namespace Sol
 			auto& scale = component.Scale;
 			DrawVec3Control("Scale", scale, 1.f);
 
+			}, false);
+
+		DrawComponent<DirectionalLightComp>("DirectionalLight", entity, [](DirectionalLightComp& component) {
+			ImGui::Text("Directional Light");
 			}, false);
 
 		auto entityID = entity.GetID();
