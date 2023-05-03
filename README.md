@@ -1,7 +1,7 @@
 # SolEngine
 An experiment at making a game engine. Based on the tutorials from [The Cherno's](https://www.youtube.com/c/TheChernoProject) [Hazel engine](https://github.com/TheCherno/Hazel). With the goal of going beyond what the tutorials cover in order to make an editor where a 3D scene full of props can be setup, saved, loaded and navigated.
 
-![A showcase of what the engines editor looks like](https://imgur.com/a/mFbYv8R)
+![A showcase of what the engines editor looks like](https://i.imgur.com/UFWDSlY.png)
 
 Quick instructions for setting up
 
