@@ -6,6 +6,7 @@
 #include "Shader.h"
 #include "IModel.h"
 #include "Texture.h"
+#include "LightStructures.h"
 #include "UniformBuffer.h"
 #include "RenderCommand.h"
 
@@ -18,6 +19,7 @@
 #include "TextureManager.h"
 #include "MeshRenderData.h"
 #include "MaterialData.h"
+#include "LightStructures.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -42,6 +44,11 @@ namespace GalaxyDraw
 		};
 		CameraData CameraBuffer;
 		std::shared_ptr<UniformBuffer> CameraUniformBuffer;
+
+		AmbientLight AmbientLightBuffer;
+		std::shared_ptr<UniformBuffer> AmbientLightUniformBuffer;
+
+		glm::vec3 LightDirectionWorld;
 	};
 
 	static Renderer3DData s_3DData;
@@ -51,6 +58,11 @@ namespace GalaxyDraw
 		SOL_PROFILE_FUNCTION();
 
 		s_3DData.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer3DData::CameraData), 0);
+		s_3DData.AmbientLightUniformBuffer = UniformBuffer::Create(sizeof(GalaxyDraw::AmbientLight), 4);
+
+		//TODO remove this and have it be set by light in scene
+		s_3DData.AmbientLightBuffer.Intensity = 0.1f;
+		s_3DData.AmbientLightBuffer.AmbientColor = glm::vec3(1.f, 1.f, 1.f);
 
 		auto& texManager = TextureManager::GetInstance();
 		texManager.Initialize();
@@ -76,12 +88,18 @@ namespace GalaxyDraw
 		}
 	}
 
+	void Renderer3D::UpdateDirectionalLight(const glm::vec3& lightDirectionWorld, const DirectionalLight& lightProperties)
+	{
+		s_3DData.LightDirectionWorld = lightDirectionWorld;
+	}
+
 	void Renderer3D::BeginScene(const glm::mat4& projection, const glm::mat4& view)
 	{
 		SOL_PROFILE_FUNCTION();
 
 		s_3DData.CameraBuffer.ViewProjection = projection * view;
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
+		s_3DData.AmbientLightUniformBuffer->SetData(&s_3DData.AmbientLightBuffer, sizeof(GalaxyDraw::AmbientLight));
 
 		//TODO add a way of seing draw calls in imgui
 		//SOL_CORE_TRACE("DrawCalls = {0}", s_3DData.Stats.DrawCalls);
@@ -96,6 +114,7 @@ namespace GalaxyDraw
 
 		s_3DData.CameraBuffer.ViewProjection = camera.GetViewProjectionMatrix();
 		s_3DData.CameraUniformBuffer->SetData(&s_3DData.CameraBuffer, sizeof(Renderer3DData::CameraData));
+		s_3DData.AmbientLightUniformBuffer->SetData(&s_3DData.AmbientLightBuffer, sizeof(GalaxyDraw::AmbientLight));
 
 		s_3DData.Stats.DrawCalls = 0;
 
@@ -140,7 +159,7 @@ namespace GalaxyDraw
 			if (matData->EntitiesUsingMat.size() == 0) { continue; }
 			auto uniqueMeshCount = matData->MeshDataCollections.size();
 
-			auto diffuseTexture = TextureManager::GetTexture(matData->DiffuseTexturePath);
+			auto diffuseTexture = TextureManager::GetTexture(matData->BaseTexturePath);
 			diffuseTexture->Bind(0);
 
 			matData->Shader->Bind();
@@ -171,7 +190,7 @@ namespace GalaxyDraw
 		std::shared_ptr<MaterialData> material = std::make_shared<MaterialData>();
 		material->Name = matName;
 		material->Shader = Shader::Create(shaderFiles.first, shaderFiles.second, shaderName);
-		material->DiffuseTexturePath = texturePath;
+		material->BaseTexturePath = texturePath;
 		return material;
 	}
 
@@ -318,10 +337,10 @@ namespace GalaxyDraw
 
 		meshData.m_InstanceBuffer->SetLayout({
 		{ ShaderDataType::Int, "a_EntityID"     },
-		{ ShaderDataType::Int, "a_TextureID"     },
 		{ ShaderDataType::Float4, "a_MeshColor"},
 		{ ShaderDataType::Mat4 , "a_EntityTransform"},
-		{ ShaderDataType::Mat4 , "a_MeshTransform"}
+		{ ShaderDataType::Mat4 , "a_MeshTransform"},
+		{ ShaderDataType::Float3 , "a_WorldLightDirection"}
 			});
 
 		meshData.m_VertexArray->SetInstanceBuffer(meshData.m_InstanceBuffer);
@@ -335,7 +354,7 @@ namespace GalaxyDraw
 		auto& s = s_3DData;
 
 		auto material = s_3DData.MaterialDataCollections[materialIndex];
-		auto currentTexture = material->DiffuseTexturePath;
+		auto currentTexture = material->BaseTexturePath;
 		if (currentTexture == texturePath) { return materialIndex; }
 
 		//Removes material from the map to the texure it is currently using
@@ -352,7 +371,7 @@ namespace GalaxyDraw
 
 		LoadTextureForMaterial(texturePath, materialIndex);
 
-		material->DiffuseTexturePath = texturePath;
+		material->BaseTexturePath = texturePath;
 
 		return materialIndex;
 	}
@@ -412,14 +431,14 @@ namespace GalaxyDraw
 		auto& matDataCollections = s.MaterialDataCollections;
 		if (matIndex >= matDataCollections.size())
 		{
-			LoadTextureForMaterial(matDataCollections[s.DefaultMaterialIndex]->DiffuseTexturePath, s.DefaultMaterialIndex);
+			LoadTextureForMaterial(matDataCollections[s.DefaultMaterialIndex]->BaseTexturePath, s.DefaultMaterialIndex);
 
 			return s.DefaultMaterialIndex;
 		}
 
 		std::string modelPath = DiscardEntityRenderData(entityID, false, false);
 
-		LoadTextureForMaterial(matDataCollections[matIndex]->DiffuseTexturePath, matIndex);
+		LoadTextureForMaterial(matDataCollections[matIndex]->BaseTexturePath, matIndex);
 
 		ReloadModel(modelPath, entityID, matIndex);
 
@@ -473,7 +492,7 @@ namespace GalaxyDraw
 				DiscardMeshInstances(entityID, matData);
 
 				if (shouldDiscardMaterial)
-					texManager.DiscardTextureInstance(matData->DiffuseTexturePath);
+					texManager.DiscardTextureInstance(matData->BaseTexturePath);
 
 				if (shouldDiscardModel)
 					modelManager.DiscardModelInstance(modelPath);
@@ -551,11 +570,16 @@ namespace GalaxyDraw
 				{
 					if (!meshData.m_Instances.Exists(id)) { continue; }
 					auto& instanceData = meshData.m_Instances.Get(id);
-
 					meshData.InstanceBufferPtr->m_EntityID = (int)id;
 					meshData.InstanceBufferPtr->m_MeshColor = instanceData.m_MeshColor;
 					meshData.InstanceBufferPtr->m_EntityTransform = instanceData.m_EntityTransform;
 					meshData.InstanceBufferPtr->m_MeshTransform = instanceData.m_MeshTransform;
+
+					//TODO make sure that this translates it into mesh local space
+					glm::mat4 inverseModelMatrix = glm::inverse(instanceData.m_EntityTransform * instanceData.m_MeshTransform);
+					glm::vec3 lightDirectionLocal = glm::normalize(glm::vec3(inverseModelMatrix * glm::vec4(s_3DData.LightDirectionWorld, 0.0f)));
+					meshData.InstanceBufferPtr->m_LocalLightDirection = lightDirectionLocal;
+
 					meshData.InstanceBufferPtr++;
 				}
 			}

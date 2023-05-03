@@ -350,6 +350,7 @@ namespace Sol
 		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		m_HierarchyPanel.SetCurrentScene(m_ActiveScene);
 		CreateEditorCamera(m_ActiveScene);
+		//TODO create a lightdirection entity or make it so we cna set on up through imgui
 	}
 
 	void EditorLayer::CreateEditorCamera(s_ptr<Scene> activeScene)

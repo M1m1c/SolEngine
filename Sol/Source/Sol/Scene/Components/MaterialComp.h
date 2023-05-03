@@ -56,11 +56,11 @@ namespace Sol
 			return mat->Name;
 		}
 
-		std::string& GetTexturePath()
+		std::string& GetBaseTexturePath()
 		{
 			auto mat = GalaxyDraw::IMaterial::GetMaterial(m_MaterialIndex);
 			SOL_CORE_ASSERT(mat, "No material found!");
-			return mat->DiffuseTexturePath;
+			return mat->BaseTexturePath;
 		}
 
 		void SwapMaterial(const uint32_t matIndex, const EntityID entityID) 
